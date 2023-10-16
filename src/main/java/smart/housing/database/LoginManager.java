@@ -13,6 +13,6 @@ public interface LoginManager {
      * @param password password must match the password stored for the username
      * @return entity manager connected to the database
      */
-    public EntityManager login(String username, String password);
+    EntityManager login(String username, String password);
 
 }
