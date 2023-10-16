@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
  * @author I551381
  * @version 1.0
  */
-public interface SmartLivingEntityManagerInterface {
+public interface DatabaseConnector {
 
     /**
      * Name of the <code>driver</code> property in the <code>persistence.xml</code> file

@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.Properties;
 
-public class SmartLivingEntityManagerFactory implements SmartLivingEntityManagerInterface {
+public class DatabaseConnectorImplementation implements DatabaseConnector {
 
     /**
      * private <code>EntityManagerFactory</code> used to create <code>EntityManager</code> objects.
@@ -23,7 +23,7 @@ public class SmartLivingEntityManagerFactory implements SmartLivingEntityManager
      * driver and url properties defined in the <code>db.properties</code> file.
      * @param loginProperties <code>Map</code> object with persistence unit properties
      */
-    public SmartLivingEntityManagerFactory(Map<String, String> loginProperties) {
+    public DatabaseConnectorImplementation(Map<String, String> loginProperties) {
         //check if user property is set
         if(! loginProperties.containsKey(USER_PROPERTY))
             throw new PropertyNotFoundException(missingProperty(USER_PROPERTY, "loginProperties"));

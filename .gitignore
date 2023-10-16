@@ -3,6 +3,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+src/main/resources/smart.housing/access.properties
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml

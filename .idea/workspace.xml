@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="jpa works really" />
+    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="5">
+      <change beforePath="$PROJECT_DIR$/src/main/resources/smart.housing/access.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smart.housing/access.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="database/db-connection" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -40,7 +42,7 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/I551381/intelliJ/smart-living/src/main/resources/smart.housing"
+    "last_opened_file_path": "C:/Users/I551381/intelliJ/smart-living/src/test/java"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -51,7 +53,7 @@
       <recent name="C:\Users\I551381\intelliJ\smart-living\src\main\java\smart\housing" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.Project">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.App" />
       <module name="smart-living" />
@@ -78,42 +80,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SimpleHashAlgorithmTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Project" type="JUnit" factoryName="JUnit">
       <module name="smart-living" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="smart.housing.security.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="smart.housing.security" />
-      <option name="MAIN_CLASS_NAME" value="smart.housing.security.SimpleHashAlgorithmTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="smart-living" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="smart.housing.entities.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="smart.housing.entities" />
-      <option name="MAIN_CLASS_NAME" value="smart.housing.entities.UserTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+    <list>
+      <item itemvalue="Application.App" />
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.Project" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.UserTest" />
-        <item itemvalue="JUnit.SimpleHashAlgorithmTest" />
         <item itemvalue="Application.App" />
+        <item itemvalue="JUnit.UserTest" />
       </list>
     </recent_temporary>
   </component>
@@ -161,7 +147,56 @@
       <option name="project" value="LOCAL" />
       <updated>1697452590837</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="jpa works really">
+      <created>1697457245476</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1697457245476</updated>
+    </task>
+    <task id="LOCAL-00007" summary="jpa works really">
+      <created>1697466154747</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1697466154747</updated>
+    </task>
+    <task id="LOCAL-00008" summary="2">
+      <created>1697466188849</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1697466188849</updated>
+    </task>
+    <task id="LOCAL-00009" summary="3">
+      <created>1697466194477</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1697466194477</updated>
+    </task>
+    <task id="LOCAL-00010" summary="4">
+      <created>1697466318877</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1697466318877</updated>
+    </task>
+    <task id="LOCAL-00011" summary="5">
+      <created>1697466386086</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1697466386086</updated>
+    </task>
+    <task id="LOCAL-00012" summary="5">
+      <created>1697466508342</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1697466508342</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -171,15 +206,19 @@
     <MESSAGE value="update" />
     <MESSAGE value="jpa works" />
     <MESSAGE value="jpa works really" />
-    <option name="LAST_COMMIT_MESSAGE" value="jpa works really" />
+    <MESSAGE value="2" />
+    <MESSAGE value="3" />
+    <MESSAGE value="4" />
+    <MESSAGE value="5" />
+    <option name="LAST_COMMIT_MESSAGE" value="5" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/smart/housing/database/Main.java</url>
-          <line>15</line>
-          <option name="timeStamp" value="6" />
+          <line>17</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
