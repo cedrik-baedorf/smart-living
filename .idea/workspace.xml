@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="jpa works">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Database/SQL/Database_Test_Data.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/SmartLivingEntityManagerFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/SmartLivingEntityManagerFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Database/SQL/Database_Setup.SQL" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Database/SQL/Database_Setup.sql" afterDir="false" />
-    </list>
+    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="jpa works really" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -161,7 +154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697452062006</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="jpa works really">
+      <created>1697452590837</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1697452590837</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -170,7 +170,8 @@
     <MESSAGE value="all works" />
     <MESSAGE value="update" />
     <MESSAGE value="jpa works" />
-    <option name="LAST_COMMIT_MESSAGE" value="jpa works" />
+    <MESSAGE value="jpa works really" />
+    <option name="LAST_COMMIT_MESSAGE" value="jpa works really" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
