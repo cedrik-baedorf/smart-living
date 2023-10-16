@@ -1,6 +1,7 @@
 package smart.housing.database;
 
 import smart.housing.entities.User;
+import smart.housing.security.HashAlgorithm;
 import smart.housing.security.SimpleHashAlgorithm;
 
 import javax.persistence.EntityManager;
@@ -10,6 +11,8 @@ import java.util.Map;
 import java.util.Properties;
 
 public class LoginManagerImplementation implements LoginManager {
+
+    private static final HashAlgorithm HASH_ALGORITHM = new SimpleHashAlgorithm();
 
     @Override
     public EntityManager login(String username, String password) {
@@ -22,7 +25,31 @@ public class LoginManagerImplementation implements LoginManager {
         DatabaseConnector connector = new DatabaseConnectorImplementation(map);
         EntityManager em = connector.createEntityManager();
         User user = em.find(User.class, username);
-        return user.getPassword().equals(new SimpleHashAlgorithm().hash(password)) ? em : null;
+        return user.getPassword().equals(HASH_ALGORITHM.hash(password)) ? em : null;
+    }
+
+    @Override
+    public void create(User user, EntityManager entityManager) {
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.persist(user);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            System.out.println(e.getStackTrace());
+        }
+    }
+
+    @Override
+    public void delete(String username, String password) {
+        EntityManager entityManager = login(username, password);
+        User user = entityManager.find(User.class, username);
+        if(HASH_ALGORITHM.hash(password).equals(user.getPassword())) {
+            entityManager.getTransaction().begin();
+            entityManager.remove(user);
+            entityManager.getTransaction().commit();
+        } else {
+            throw new RuntimeException("User " + username + " could not be deleted");
+        }
     }
 
     private Properties getAccessProperties(String dbPropertiesPath) {

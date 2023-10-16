@@ -1,5 +1,7 @@
 package smart.housing.database;
 
+import smart.housing.entities.User;
+
 import javax.persistence.EntityManager;
 
 public interface LoginManager {
@@ -14,5 +16,16 @@ public interface LoginManager {
      * @return entity manager connected to the database
      */
     EntityManager login(String username, String password);
+
+    /**
+     * This method takes an object of class <code>User</code> and persists it in the database, if
+     *  its <i>username</i> is not equal to <code>null</code>,
+     *  its <i>username</i> does not exist in the database
+     *  its <i>password</i> is not equal to <code>null</code>
+     * @param user user to be persisted in the database
+     */
+    void create(User user, EntityManager entityManager);
+
+    void delete(String username, String password);
 
 }
