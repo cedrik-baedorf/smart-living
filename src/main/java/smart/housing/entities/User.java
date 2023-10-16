@@ -27,6 +27,18 @@ public class User {
     @Column(name = "password")
     private String password;
 
+    /**
+     * Last name of the user
+     */
+    @Column(name = "last_name")
+    private String lastName;
+
+    /**
+     * First name of the user
+     */
+    @Column(name = "first_name")
+    private String firstName;
+
     public User(String username, String password, HashAlgorithm algorithm) {
         this(username);
         this.setPassword(password, algorithm);
@@ -42,6 +54,14 @@ public class User {
         this.password = algorithm.hash(password);
     }
 
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setFirstName(String fistName) {
+        this.firstName = firstName;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -50,9 +70,21 @@ public class User {
         return password;
     }
 
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
     @Override
     public String toString() {
-        return "(" + username + ";" + password + ")";
+        return "("
+            + username + ";"
+            + password + ";"
+            + lastName + ";"
+            + firstName + ")";
     }
 
     @Override

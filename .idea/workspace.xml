@@ -4,17 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/entities/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/security/HashAlgorithm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/security/SimpleHashAlgorithm.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/smart/housing/entities/UserTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/smart/housing/security/SimpleHashAlgorithmTest.java" afterDir="false" />
+    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="first file transfer">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/AppTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/entities/User.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,11 +31,12 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/I551381/intelliJ/smart-living/src/test/java/smart/housing"
+    "last_opened_file_path": "C:/Users/I551381/intelliJ/smart-living/src/main/resources"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\I551381\intelliJ\smart-living\src\main\resources" />
       <recent name="C:\Users\I551381\intelliJ\smart-living\src\test\java\smart\housing" />
       <recent name="C:\Users\I551381\intelliJ\smart-living\src\main\java\smart\housing" />
     </key>
@@ -107,9 +102,19 @@
       <option name="presentableId" value="Default" />
       <updated>1697191987031</updated>
     </task>
+    <task id="LOCAL-00001" summary="first file transfer">
+      <created>1697192793837</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1697192793837</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="first file transfer" />
+    <option name="LAST_COMMIT_MESSAGE" value="first file transfer" />
   </component>
 </project>
