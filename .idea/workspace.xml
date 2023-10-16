@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="jpa works really">
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManager.java" afterDir="false" />
+    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="3">
+      <change beforePath="$PROJECT_DIR$/src/main/resources/smart.housing/access.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smart.housing/access.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,7 +161,21 @@
       <option name="project" value="LOCAL" />
       <updated>1697466154747</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="2">
+      <created>1697466188849</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1697466188849</updated>
+    </task>
+    <task id="LOCAL-00009" summary="3">
+      <created>1697466194477</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1697466194477</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -171,7 +185,9 @@
     <MESSAGE value="update" />
     <MESSAGE value="jpa works" />
     <MESSAGE value="jpa works really" />
-    <option name="LAST_COMMIT_MESSAGE" value="jpa works really" />
+    <MESSAGE value="2" />
+    <MESSAGE value="3" />
+    <option name="LAST_COMMIT_MESSAGE" value="3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
