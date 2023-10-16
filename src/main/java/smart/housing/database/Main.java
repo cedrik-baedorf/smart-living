@@ -1,6 +1,7 @@
 package smart.housing.database;
 
 import smart.housing.entities.User;
+import smart.housing.security.SimpleHashAlgorithm;
 
 import javax.persistence.EntityManager;
 import java.util.HashMap;
@@ -9,11 +10,8 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args) {
-        Map<String, String> props = new HashMap<>();
-        props.put("javax.persistence.jdbc.user", "DEMO_USER");
-        props.put("javax.persistence.jdbc.password", "PASSWORD");
-        DatabaseConnector emf = new DatabaseConnectorImplementation(props);
-        EntityManager em = emf.createEntityManager();
+        LoginManager login = new LoginManagerImplementation();
+        EntityManager em = login.login("cbaedorf", "password");
         User user = em.find(User.class, "cbaedorf");
         System.out.println(user.toString());
     }
