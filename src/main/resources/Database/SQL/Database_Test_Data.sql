@@ -18,7 +18,7 @@
 -- export data of table smart-living.users: 5 rows
 DELETE FROM `users`;
 INSERT INTO `users` (`username`, `password`, `last_name`, `first_name`) VALUES
-	("cbaedorf", "00000000000000000000000000000000", "Baedorf", "Cedrik");
+	("cbaedorf", "0000000000000000000000000000000000000000000000000000001216985755", "Baedorf", "Cedrik");
 
 -- Data exporting was unselected.
 
