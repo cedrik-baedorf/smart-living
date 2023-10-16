@@ -66,7 +66,7 @@ public class SmartLivingEntityManagerFactory implements SmartLivingEntityManager
 
     @Override
     public EntityManager createEntityManager() {
-        return null;
+        return entityManagerFactory.createEntityManager();
     }
 
     private Properties getDBAccessProperties(String dbPropertiesPath) {

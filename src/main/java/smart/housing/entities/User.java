@@ -39,6 +39,10 @@ public class User {
     @Column(name = "first_name")
     private String firstName;
 
+    public User() {
+        this("default");
+    }
+
     public User(String username, String password, HashAlgorithm algorithm) {
         this(username);
         this.setPassword(password, algorithm);

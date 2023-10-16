@@ -4,15 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="update">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/SmartLivingEntityManagerFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/SmartLivingEntityManagerInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Database/SQL/Database_Setup.SQL" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Database/SQL/Demo_User_Setup.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/smart.housing/db.properties" afterDir="false" />
+    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="jpa works">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/Database/SQL/Database_Test_Data.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/SmartLivingEntityManagerFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/SmartLivingEntityManagerFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/entities/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Database/SQL/Database_Setup.SQL" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Database/SQL/Database_Setup.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,7 +154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697446779335</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="jpa works">
+      <created>1697452062006</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1697452062006</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -164,15 +169,16 @@
     <MESSAGE value="first file transfer" />
     <MESSAGE value="all works" />
     <MESSAGE value="update" />
-    <option name="LAST_COMMIT_MESSAGE" value="update" />
+    <MESSAGE value="jpa works" />
+    <option name="LAST_COMMIT_MESSAGE" value="jpa works" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/smart/housing/database/Main.java</url>
-          <line>12</line>
-          <option name="timeStamp" value="3" />
+          <line>15</line>
+          <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
