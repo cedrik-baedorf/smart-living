@@ -5,18 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="jpa works really">
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManagerImplementation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/smart.housing/access.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/SmartLivingEntityManagerFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/DatabaseConnectorImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/SmartLivingEntityManagerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/DatabaseConnector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/security/HashAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/security/HashAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/security/SimpleHashAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/security/SimpleHashAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Database/SQL/Database_Setup.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Database/SQL/Database_Setup.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/smart/housing/security/SimpleHashAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/smart/housing/security/SimpleHashAlgorithmTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697457245476</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="jpa works really">
+      <created>1697466154747</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1697466154747</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
