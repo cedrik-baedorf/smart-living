@@ -30,13 +30,9 @@ public class LoginManagerImplementation implements LoginManager {
 
     @Override
     public void create(User user, EntityManager entityManager) {
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(user);
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            System.out.println(e.getStackTrace());
-        }
+        entityManager.getTransaction().begin();
+        entityManager.persist(user);
+        entityManager.getTransaction().commit();
     }
 
     @Override

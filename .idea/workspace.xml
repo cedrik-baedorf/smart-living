@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="2">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManager.java" afterDir="false" />
+    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="1">
       <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManagerImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManagerImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Database/SQL/Demo_User_Setup.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Database/SQL/Demo_User_Setup.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="git/ignore-access-file" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -233,7 +229,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697468008101</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="1">
+      <created>1697481987828</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1697481987828</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -246,19 +249,8 @@
     <MESSAGE value="3" />
     <MESSAGE value="4" />
     <MESSAGE value="5" />
-    <MESSAGE value="1" />
     <MESSAGE value="2" />
-    <option name="LAST_COMMIT_MESSAGE" value="2" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManagerImplementation.java</url>
-          <line>37</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="1" />
+    <option name="LAST_COMMIT_MESSAGE" value="1" />
   </component>
 </project>
