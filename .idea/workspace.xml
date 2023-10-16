@@ -4,7 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="jpa works really" />
+    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="jpa works really">
+      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManagerImplementation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/smart.housing/access.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/SmartLivingEntityManagerFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/DatabaseConnectorImplementation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/SmartLivingEntityManagerInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/DatabaseConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/security/HashAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/security/HashAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/security/SimpleHashAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/security/SimpleHashAlgorithm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/Database/SQL/Database_Setup.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Database/SQL/Database_Setup.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/smart/housing/security/SimpleHashAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/smart/housing/security/SimpleHashAlgorithmTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,7 +35,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="database/db-connection" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -40,7 +53,7 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/I551381/intelliJ/smart-living/src/main/resources/smart.housing"
+    "last_opened_file_path": "C:/Users/I551381/intelliJ/smart-living/src/test/java"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -51,7 +64,7 @@
       <recent name="C:\Users\I551381\intelliJ\smart-living\src\main\java\smart\housing" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Main">
+  <component name="RunManager" selected="JUnit.Project">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.App" />
       <module name="smart-living" />
@@ -78,42 +91,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SimpleHashAlgorithmTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="Project" type="JUnit" factoryName="JUnit">
       <module name="smart-living" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="smart.housing.security.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="smart.housing.security" />
-      <option name="MAIN_CLASS_NAME" value="smart.housing.security.SimpleHashAlgorithmTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/src/test/java" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="UserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="smart-living" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="smart.housing.entities.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="smart.housing.entities" />
-      <option name="MAIN_CLASS_NAME" value="smart.housing.entities.UserTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+    <list>
+      <item itemvalue="Application.App" />
+      <item itemvalue="Application.Main" />
+      <item itemvalue="JUnit.Project" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.UserTest" />
-        <item itemvalue="JUnit.SimpleHashAlgorithmTest" />
         <item itemvalue="Application.App" />
+        <item itemvalue="JUnit.UserTest" />
       </list>
     </recent_temporary>
   </component>
@@ -161,7 +158,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697452590837</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="jpa works really">
+      <created>1697457245476</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1697457245476</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -178,8 +182,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/smart/housing/database/Main.java</url>
-          <line>15</line>
-          <option name="timeStamp" value="6" />
+          <line>17</line>
+          <option name="timeStamp" value="7" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

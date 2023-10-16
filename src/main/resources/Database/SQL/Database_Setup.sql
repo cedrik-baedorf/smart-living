@@ -22,7 +22,7 @@ USE `smart-living`;
 -- Dumping structure for table smart-living.users
 CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(8) NOT NULL,
-  `password` char(32) NOT NULL,
+  `password` char(64) NOT NULL,
   `last_name` varchar(24) DEFAULT NULL,
   `first_name` varchar(24) DEFAULT NULL,
 PRIMARY KEY (`username`)

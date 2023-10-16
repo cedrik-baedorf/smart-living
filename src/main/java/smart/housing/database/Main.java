@@ -12,7 +12,7 @@ public class Main {
         Map<String, String> props = new HashMap<>();
         props.put("javax.persistence.jdbc.user", "DEMO_USER");
         props.put("javax.persistence.jdbc.password", "PASSWORD");
-        SmartLivingEntityManagerInterface emf = new SmartLivingEntityManagerFactory(props);
+        DatabaseConnector emf = new DatabaseConnectorImplementation(props);
         EntityManager em = emf.createEntityManager();
         User user = em.find(User.class, "cbaedorf");
         System.out.println(user.toString());

@@ -29,7 +29,7 @@ public class SimpleHashAlgorithmTest {
 
     @Test
     public void testHashLength() {
-        int expectedLength = 32;
+        int expectedLength = HashAlgorithm.HASH_LENGTH;
         int actualLength = algorithm.hash(PASSWORD).length();
         assertEquals(expectedLength, actualLength);
     }
