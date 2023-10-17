@@ -14,11 +14,12 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+USE `smart-living`;
 
 -- export data of table smart-living.users: 5 rows
 DELETE FROM `users`;
 INSERT INTO `users` (`username`, `password`, `last_name`, `first_name`) VALUES
-	("cbaedorf", "0000000000000000000000000000000000000000000000000000001216985755", "Baedorf", "Cedrik");
+	('cbaedorf', '0000000000000000000000000000000000000000000000000000001216985755', 'Baedorf', 'Cedrik');
 
 -- Data exporting was unselected.
 
