@@ -4,7 +4,7 @@ import javax.persistence.EntityManager;
 
 /**
  * This interface defines a service which can be used to create entities managers
- * for the persistence unit defined in the <code>db.properties</code> file.
+ * for the persistence unit defined in the <code>persistence-unit.properties</code> file.
  * @author I551381
  * @version 1.0
  */
@@ -31,8 +31,18 @@ public interface DatabaseConnector {
     String PASSWORD_PROPERTY = "javax.persistence.jdbc.password";
 
     /**
+     * File path for database access properties
+     */
+    String DB_ACCESS_PROPERTIES = "smart.housing/db-access.properties";
+
+    /**
+     * File path for the persistence unit properties
+     */
+    String PERSISTENCE_UNIT_PROPERTIES = "smart.housing/persistence-unit.properties";
+
+    /**
      * This public method shall return an <code>EntityManager</code> connected to the persistence unit
-     * specified in the <code>db.properties</code> file
+     * specified in the <code>persistence-unit.properties</code> file
      * @return <code>EntityManager</code> object to be used to find and persist entities
      */
     EntityManager createEntityManager();

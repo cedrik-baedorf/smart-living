@@ -6,7 +6,10 @@ import org.hibernate.service.spi.ServiceException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -15,51 +18,96 @@ public class DatabaseConnectorImplementation implements DatabaseConnector {
     /**
      * private <code>EntityManagerFactory</code> used to create <code>EntityManager</code> objects.
      */
-    private final EntityManagerFactory entityManagerFactory;
+    private EntityManagerFactory entityManagerFactory;
 
     /**
-     * This constructor creates a <code>TravelAgencyEntityManagerFactory</code> object which is connected to the
-     * persistence unit specified in the <code>db.properties</code> file using the login properties provided and
-     * driver and url properties defined in the <code>db.properties</code> file.
-     * @param loginProperties <code>Map</code> object with persistence unit properties
+     * This constructor creates a <code>DatabaseConnectionImplementation</code> object which is connected to the
+     * persistence unit specified in the <code>persistence-unit.properties</code> file using the database access
+     * properties specified in the <code>db-access.properties</code> file.
      */
-    public DatabaseConnectorImplementation(Map<String, String> loginProperties) {
-        //check if user property is set
-        if(! loginProperties.containsKey(USER_PROPERTY))
+    public DatabaseConnectorImplementation() {
+        Map<String, String> loginProperties = new HashMap<>();
+        Properties dbAccessProperties = getProperties(DB_ACCESS_PROPERTIES);
+
+        //load database username
+        if(dbAccessProperties.containsKey(USER_PROPERTY))
+            loginProperties.put(USER_PROPERTY, dbAccessProperties.getProperty(USER_PROPERTY));
+        else
             throw new PropertyNotFoundException(missingProperty(USER_PROPERTY, "loginProperties"));
 
-        //check if password property is set
-        if(! loginProperties.containsKey(PASSWORD_PROPERTY))
+        //load database uesr password
+        if(dbAccessProperties.containsKey(PASSWORD_PROPERTY))
+            loginProperties.put(PASSWORD_PROPERTY, dbAccessProperties.getProperty(PASSWORD_PROPERTY));
+        else
             throw new PropertyNotFoundException(missingProperty(PASSWORD_PROPERTY, "loginProperties"));
 
-        //load db properties
-        String dbPropertiesPath = "smart.housing/db.properties";
-        String persistenceUnit = null;
-        Properties p = getDBAccessProperties(dbPropertiesPath);
-
         //load jdbc driver
-        if(p.containsKey(DRIVER_PROPERTY))
-            loginProperties.put(DRIVER_PROPERTY, p.getProperty(DRIVER_PROPERTY));
+        if(dbAccessProperties.containsKey(DRIVER_PROPERTY))
+            loginProperties.put(DRIVER_PROPERTY, dbAccessProperties.getProperty(DRIVER_PROPERTY));
         else
             throw new PropertyNotFoundException(missingProperty(DRIVER_PROPERTY, "loginProperties"));
 
         //load jdbc url
-        if(p.containsKey(URL_PROPERTY))
-            loginProperties.put(URL_PROPERTY, p.getProperty(URL_PROPERTY));
+        if(dbAccessProperties.containsKey(URL_PROPERTY))
+            loginProperties.put(URL_PROPERTY, dbAccessProperties.getProperty(URL_PROPERTY));
         else
             throw new PropertyNotFoundException(missingProperty(URL_PROPERTY, "loginProperties"));
 
         //try creating EntityManagerFactory
+        entityManagerFactory = createEntityManagerFactory(loginProperties);
+    }
+
+    public DatabaseConnectorImplementation(Map<String, String> loginProperties) {
         try {
-            persistenceUnit = p.getProperty("persistence_unit");
+            //try creating EntityManagerFactory
+            entityManagerFactory = createEntityManagerFactory(loginProperties);
+
+            //write login properties into the file after successfull completion
+            FileWriter propertiesWriter = new FileWriter("src/main/resources/" + DB_ACCESS_PROPERTIES);
+            propertiesWriter.write(USER_PROPERTY + '=' + loginProperties.get(USER_PROPERTY) + '\n');
+            propertiesWriter.write(PASSWORD_PROPERTY + '=' + loginProperties.get(PASSWORD_PROPERTY) + '\n');
+            propertiesWriter.write(URL_PROPERTY + '=' + loginProperties.get(URL_PROPERTY) + '\n');
+            propertiesWriter.write(DRIVER_PROPERTY + '=' + loginProperties.get(DRIVER_PROPERTY));
+
+            propertiesWriter.close();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        } catch (PropertyNotFoundException notFoundException) {
+            notFoundException.printStackTrace();
+        } catch (ServiceException serviceException) {
+            serviceException.printStackTrace();
+        }
+    }
+
+    private EntityManagerFactory createEntityManagerFactory(Map<String, String> accessProperties) {
+        //check if user property is set
+        if(! accessProperties.containsKey(USER_PROPERTY))
+            throw new PropertyNotFoundException(missingProperty(USER_PROPERTY, "loginProperties"));
+
+        //check if password property is set
+        if(! accessProperties.containsKey(PASSWORD_PROPERTY))
+            throw new PropertyNotFoundException(missingProperty(PASSWORD_PROPERTY, "loginProperties"));
+
+        //check if url property is set
+        if(! accessProperties.containsKey(URL_PROPERTY))
+            throw new PropertyNotFoundException(missingProperty(URL_PROPERTY, "loginProperties"));
+
+        //check if driver property is set
+        if(! accessProperties.containsKey(DRIVER_PROPERTY))
+            throw new PropertyNotFoundException(missingProperty(DRIVER_PROPERTY, "loginProperties"));
+
+        String persistenceUnit = null;
+        try {
+            Properties persistenceUnitProperties = getProperties(PERSISTENCE_UNIT_PROPERTIES);
+            persistenceUnit = persistenceUnitProperties.getProperty("persistence_unit");
             if (persistenceUnit != null)
-                entityManagerFactory = Persistence.createEntityManagerFactory(persistenceUnit, loginProperties);
+                return Persistence.createEntityManagerFactory(persistenceUnit, accessProperties);
             else {
                 final String MSG = "'persistence_unit' property not found in database properties";
                 throw new RuntimeException(MSG);
             }
         } catch (Exception e) {
-            final String MSG = "Unable to create connection using " + loginProperties + " and " + persistenceUnit;
+            final String MSG = "Unable to create connection using " + accessProperties + " and " + persistenceUnit;
             throw new ServiceException(MSG);
         }
     }
@@ -69,16 +117,16 @@ public class DatabaseConnectorImplementation implements DatabaseConnector {
         return entityManagerFactory.createEntityManager();
     }
 
-    private Properties getDBAccessProperties(String dbPropertiesPath) {
-        Properties dbAccessProperties;
-        try(InputStream is = getClass().getClassLoader().getResourceAsStream(dbPropertiesPath)) {
-            dbAccessProperties = new Properties();
-            dbAccessProperties.load( is );
+    private Properties getProperties(String propertiesPath) {
+        Properties properties;
+        try(InputStream is = getClass().getClassLoader().getResourceAsStream(propertiesPath)) {
+            properties = new Properties();
+            properties.load( is );
         } catch (Exception e) {
-            final String msg = "Loading database connection properties failed";
+            final String msg = "Loading properties file " + propertiesPath + " failed";
             throw new RuntimeException(msg);
         }
-        return dbAccessProperties;
+        return properties;
     }
 
     private String missingProperty(String property, String properties) {

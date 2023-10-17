@@ -1,25 +1,29 @@
 package smart.housing.database;
 
 import smart.housing.entities.User;
-import smart.housing.security.SimpleHashAlgorithm;
 
 import javax.persistence.EntityManager;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
     public static void main(String[] args) {
-        LoginManager login = new LoginManagerImplementation();
+        Map<String, String> loginData = new HashMap<>();
+        loginData.put(DatabaseConnector.USER_PROPERTY, "DEMO_USER");
+        loginData.put(DatabaseConnector.PASSWORD_PROPERTY, "PASSWORD");
+        loginData.put(DatabaseConnector.DRIVER_PROPERTY, "org.mariadb.jdbc.Driver");
+        loginData.put(DatabaseConnector.URL_PROPERTY, "jdbc:mariadb://localhost:3306/smart-living");
+
+        DatabaseConnector connector =
+            new File("src/main/resources/" + DatabaseConnector.DB_ACCESS_PROPERTIES).exists() ?
+                    new DatabaseConnectorImplementation() : new DatabaseConnectorImplementation(loginData);
+
+        LoginManager login = new LoginManagerImplementation(connector);
         EntityManager em = login.login("cbaedorf", "password");
         User user = em.find(User.class, "cbaedorf");
         System.out.println(user.toString());
-
-        User anna = new User("nrg", "software", new SimpleHashAlgorithm());
-        anna.setFirstName("Anna");
-        anna.setLastName("Gossner");
-        login.create(anna, em);
-
-
-        System.out.println(em.find(User.class, "nrg"));
     }
 
 }
