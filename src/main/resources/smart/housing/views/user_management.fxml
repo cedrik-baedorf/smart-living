@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<BorderPane style="-fx-background-color: RED;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.UserManagementController">
+   <center>
+      <ScrollPane fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER" minHeight="150.0" minWidth="300.0" BorderPane.alignment="CENTER">
+        <content>
+            <TableView fx:id="userTable" onMouseClicked="#_userTable_onMouseClicked">
+                <columns>
+                    <TableColumn text="Username">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="username"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Last Name">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="lastName"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="First Name">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="firstName"/>
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+        </content>
+         <BorderPane.margin>
+            <Insets bottom="100.0" left="200.0" right="200.0" top="100.0" />
+         </BorderPane.margin>
+      </ScrollPane>
+   </center>
+    <bottom>
+        <GridPane>
+            <Button text="Delete" fx:id="deleteButton" GridPane.columnIndex="0"/>
+            <Button text="Modify" fx:id="modifyButton" GridPane.columnIndex="1"/>
+            <Button text="Create" fx:id="createButton" GridPane.columnIndex="2"/>
+        </GridPane>
+    </bottom>
+</BorderPane>

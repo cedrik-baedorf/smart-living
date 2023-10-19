@@ -2,17 +2,39 @@ package smart.housing.entities;
 
 import smart.housing.security.HashAlgorithm;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * This entity represents one row of table <i>Users</i>
  */
 @Entity
 @Table(name= "Users")
+@NamedQueries({
+        @NamedQuery(
+                name = User.FIND_ALL,
+                query = "SELECT user FROM User user"
+        ),
+        @NamedQuery(
+                name = User.FIND_WITH_FILTERS,
+                query = """
+                        SELECT user FROM User user
+                        WHERE   user.username   = coalesce(:username, user.username)
+                        AND     user.lastName   = coalesce(:lastName, user.lastName)
+                        AND     user.firstName  = coalesce(:firstName, user.firstName)
+                        """
+        )
+})
 public class User {
+
+    /**
+     * Name of named query to return all users
+     */
+    public static final String FIND_ALL = "User.findAll";
+
+    /**
+     * Name of named query to return all filtered users
+     */
+    public static final String FIND_WITH_FILTERS = "User.findWithFilters";
 
     /**
      * Unique username
