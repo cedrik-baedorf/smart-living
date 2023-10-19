@@ -21,8 +21,10 @@ public class LoginManagerImplementation implements LoginManager {
     @Override
     public EntityManager login(String username, String password) {
         EntityManager em = databaseConnector.createEntityManager();
+        if(username.length() > 8)
+            return null;
         User user = em.find(User.class, username);
-        return user.getPassword().equals(HASH_ALGORITHM.hash(password)) ? em : null;
+        return user != null && user.getPassword().equals(HASH_ALGORITHM.hash(password)) ? em : null;
     }
 
     @Override

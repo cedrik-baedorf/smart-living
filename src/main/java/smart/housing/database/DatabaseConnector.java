@@ -33,12 +33,12 @@ public interface DatabaseConnector {
     /**
      * File path for database access properties
      */
-    String DB_ACCESS_PROPERTIES = "smart.housing/db-access.properties";
+    String DB_ACCESS_PROPERTIES = "smart/housing/db-access.properties";
 
     /**
      * File path for the persistence unit properties
      */
-    String PERSISTENCE_UNIT_PROPERTIES = "smart.housing/persistence-unit.properties";
+    String PERSISTENCE_UNIT_PROPERTIES = "smart/housing/persistence-unit.properties";
 
     /**
      * This public method shall return an <code>EntityManager</code> connected to the persistence unit

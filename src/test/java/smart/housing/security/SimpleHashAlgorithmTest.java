@@ -13,12 +13,7 @@ public class SimpleHashAlgorithmTest {
         COPY_PASSWORD = "password",
         DIFFERENT_PASSWORD = "different password";
 
-    private static SimpleHashAlgorithm algorithm;
-
-    @BeforeAll
-    public static void initialize() {
-        algorithm = new SimpleHashAlgorithm();
-    }
+    private static SimpleHashAlgorithm algorithm = new SimpleHashAlgorithm();
 
     @Test
     public void testEqualHash() {
