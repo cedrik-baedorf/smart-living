@@ -1,18 +1,14 @@
 package smart.housing.controllers;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Pane;
-import org.hibernate.boot.jaxb.mapping.spi.NamedQuery;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.User;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 

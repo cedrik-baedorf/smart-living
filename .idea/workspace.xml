@@ -4,16 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="lots of work 2">
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/UserManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="lots of work 3">
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/MyApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/SmartLivingApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/HomePageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/HomePageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/LoginPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/LoginPageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/smart/housing/views/home_page.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/home_page.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/smart/housing/views/user_management.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/user_management.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/UserManagementController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +74,7 @@
       <recent name="smart.housing" />
     </key>
   </component>
-  <component name="RunManager" selected="Maven.JavaFX Debug">
+  <component name="RunManager" selected="Maven.JavaFX Run">
     <configuration name="Project" type="JUnit" factoryName="JUnit">
       <module name="smart-living" />
       <option name="MAIN_CLASS_NAME" value="" />
@@ -322,7 +315,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697714996052</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="lots of work 3">
+      <created>1697732989042</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1697732989042</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -339,19 +339,15 @@
     <MESSAGE value="2" />
     <MESSAGE value="lots of work" />
     <MESSAGE value="lots of work 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="lots of work 2" />
+    <MESSAGE value="lots of work 3" />
+    <option name="LAST_COMMIT_MESSAGE" value="lots of work 3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/smart/housing/controllers/UserManagementController.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/smart/housing/controllers/UserManagementController.java</url>
-          <line>70</line>
+          <line>66</line>
           <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
