@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 import smart.housing.controllers.LoginPageController;
 import smart.housing.controllers.SmartHousingController;
 
-import java.awt.*;
 import java.io.IOException;
 
 public class MyApp extends Application {
@@ -25,7 +24,7 @@ public class MyApp extends Application {
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) {
         this.stage = stage;
         stage.setMaximized(true);
         stage.setTitle("Smart Living Application");

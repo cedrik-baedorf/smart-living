@@ -5,23 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="lots of work">
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/MyApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/HomePageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/LoginPageController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/SmartHousingController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/home_page.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/login_page.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/my.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/user_management.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/DatabaseConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/DatabaseConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/MyApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/MyApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/HomePageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/HomePageController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManagerImplementation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/database/LoginManagerImplementation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/database/Test.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/smart.housing/persistence-unit.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/persistence-unit.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/smart/housing/views/home_page.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/home_page.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/smart/housing/views/user_management.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/user_management.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/java/smart/housing/security/SimpleHashAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/smart/housing/security/SimpleHashAlgorithmTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -317,7 +307,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697534083816</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="lots of work">
+      <created>1697714495457</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1697714495457</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -334,17 +331,6 @@
     <MESSAGE value="2" />
     <MESSAGE value="lots of work" />
     <option name="LAST_COMMIT_MESSAGE" value="lots of work" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/smart/housing/Main.java</url>
-          <line>8</line>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

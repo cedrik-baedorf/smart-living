@@ -3,27 +3,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.HomePageController">
-    <tabs>
+<TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea"
+         xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.HomePageController">
     <Tab closable="false" text="User Management">
-      <content>
         <Pane fx:id="userManagement"/>
-      </content>
     </Tab>
     <Tab closable="false" text="Tasks">
-        <content>
-            <Pane fx:id="tasks" />
-        </content>
+        <Pane fx:id="tasks"/>
     </Tab>
-      <Tab closable="false" text="Accounting">
-          <content>
-              <Pane fx:id="accounting" />
-          </content>
-      </Tab>
-      <Tab closable="false" text="Shopping">
-          <content>
-              <Pane fx:id="shopping" />
-          </content>
-      </Tab>
-  </tabs>
+    <Tab closable="false" text="Accounting">
+        <Pane fx:id="accounting"/>
+    </Tab>
+    <Tab closable="false" text="Shopping">
+        <Pane fx:id="shopping"/>
+    </Tab>
 </TabPane>

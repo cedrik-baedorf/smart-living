@@ -5,8 +5,6 @@ import smart.housing.security.HashAlgorithm;
 import smart.housing.security.SimpleHashAlgorithm;
 
 import javax.persistence.EntityManager;
-import java.io.InputStream;
-import java.util.Properties;
 
 public class LoginManagerImplementation implements LoginManager {
 

@@ -1,6 +1,5 @@
 package smart.housing.security;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,26 +12,26 @@ public class SimpleHashAlgorithmTest {
         COPY_PASSWORD = "password",
         DIFFERENT_PASSWORD = "different password";
 
-    private static SimpleHashAlgorithm algorithm = new SimpleHashAlgorithm();
+    private static final SimpleHashAlgorithm ALGORITHM = new SimpleHashAlgorithm();
 
     @Test
     public void testEqualHash() {
-        String firstHash = algorithm.hash(PASSWORD);
-        String secondHash = algorithm.hash(COPY_PASSWORD);
+        String firstHash = ALGORITHM.hash(PASSWORD);
+        String secondHash = ALGORITHM.hash(COPY_PASSWORD);
         assertEquals(firstHash, secondHash);
     }
 
     @Test
     public void testHashLength() {
         int expectedLength = HashAlgorithm.HASH_LENGTH;
-        int actualLength = algorithm.hash(PASSWORD).length();
+        int actualLength = ALGORITHM.hash(PASSWORD).length();
         assertEquals(expectedLength, actualLength);
     }
 
     @Test
     public void testDifferentStrings() {
-        String firstHash = algorithm.hash(PASSWORD);
-        String secondHash = algorithm.hash(DIFFERENT_PASSWORD);
+        String firstHash = ALGORITHM.hash(PASSWORD);
+        String secondHash = ALGORITHM.hash(DIFFERENT_PASSWORD);
         assertNotEquals(firstHash, secondHash);
     }
 

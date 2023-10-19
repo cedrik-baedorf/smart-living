@@ -1,11 +1,8 @@
 package smart.housing.controllers;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Pane;
 import smart.housing.MyApp;
-
-import java.io.IOException;
 
 /**
  * Controller to view 'login_page.fxml'
