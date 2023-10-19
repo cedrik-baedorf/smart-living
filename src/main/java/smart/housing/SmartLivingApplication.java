@@ -7,11 +7,14 @@ import javafx.stage.Stage;
 import smart.housing.controllers.LoginPageController;
 import smart.housing.controllers.SmartHousingController;
 
+import javax.persistence.EntityManager;
 import java.io.IOException;
 
-public class MyApp extends Application {
+public class SmartLivingApplication extends Application {
 
     private final SmartHousingController START_CONTROLLER = new LoginPageController(this);
+
+    private EntityManager entityManager;
 
     private final String
         START_VIEW = START_CONTROLLER.getViewName(),
@@ -53,16 +56,25 @@ public class MyApp extends Application {
     }
 
     private FXMLLoader createFXMLLoader(String fxmlFile) {
-        return new FXMLLoader(MyApp.class.getResource(VIEW_DIR + fxmlFile));
+        return new FXMLLoader(SmartLivingApplication.class.getResource(VIEW_DIR + fxmlFile));
     }
 
-    public <T> T loadFXML(String fxmlFile) {
+    public <T> T loadFXML(String fxmlFile, SmartHousingController controller) {
         FXMLLoader loader = createFXMLLoader(fxmlFile);
         try {
+            loader.setControllerFactory(c -> controller);
             return loader.load();
         } catch (IOException e) {
             throw new RuntimeException("Unable to load fxml file at location " + loader.getLocation());
         }
+    }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
 }

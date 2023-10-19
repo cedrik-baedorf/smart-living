@@ -1,8 +1,9 @@
 package smart.housing.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
-import smart.housing.MyApp;
+import smart.housing.SmartLivingApplication;
 
 /**
  * Controller to view 'login_page.fxml'
@@ -16,7 +17,10 @@ public class HomePageController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "home_page.fxml";
 
-    private MyApp application;
+    private SmartLivingApplication application;
+
+    @FXML
+    public TabPane tabPane;
 
     @FXML
     public Pane userManagement;
@@ -42,7 +46,7 @@ public class HomePageController extends SmartHousingController {
      * instance belongs to
      * @param application Application calling the constructor
      */
-    public HomePageController(MyApp application) {
+    public HomePageController(SmartLivingApplication application) {
         this.application = application;
     }
 
@@ -58,18 +62,21 @@ public class HomePageController extends SmartHousingController {
     }
 
     public void loadUserManagement() {
-        loadSubPane(userManagement, application.loadFXML("user_management.fxml"));
+        userManagement.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
+        loadSubPane(userManagement, application.loadFXML("user_management.fxml", new UserManagementController(application)));
     }
 
     public void loadTasks() {
-
+        tasks.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
     }
 
     public void loadAccounting() {
+        accounting.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
 
     }
 
     public void loadShopping() {
+        shopping.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
 
     }
 

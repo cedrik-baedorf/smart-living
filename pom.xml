@@ -79,13 +79,13 @@
           <execution>
             <id>run</id>
             <configuration>
-              <mainClass>smart.housing.MyApp</mainClass>
+              <mainClass>smart.housing.SmartLivingApplication</mainClass>
             </configuration>
           </execution>
           <execution>
             <id>debug</id>
             <configuration>
-              <mainClass>smart.housing.MyApp</mainClass>
+              <mainClass>smart.housing.SmartLivingApplication</mainClass>
               <options>
                 <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:8000</option>
               </options>

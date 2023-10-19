@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import smart.housing.MyApp;
+import smart.housing.SmartLivingApplication;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.database.DatabaseConnectorImplementation;
 import smart.housing.database.LoginManager;
@@ -24,7 +24,7 @@ public class LoginPageController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "login_page.fxml";
 
-    private MyApp application;
+    private SmartLivingApplication application;
 
     @FXML
     public PasswordField passwordField;
@@ -43,7 +43,7 @@ public class LoginPageController extends SmartHousingController {
      * instance belongs to
      * @param application Application calling the contructor
      */
-    public LoginPageController(MyApp application) {
+    public LoginPageController(SmartLivingApplication application) {
         this.application = application;
     }
 
@@ -65,6 +65,7 @@ public class LoginPageController extends SmartHousingController {
         DatabaseConnector connector = new DatabaseConnectorImplementation();
         LoginManager loginManager = new LoginManagerImplementation(connector);
         EntityManager entityManager = loginManager.login(username, password);
+        application.setEntityManager(entityManager);
         passwordField.clear();
         usernameField.clear();
         if(entityManager != null)
