@@ -1,0 +1,92 @@
+package smart.housing.controllers;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import smart.housing.SmartLivingApplication;
+
+public class ShoppingListController extends SmartHousingController {
+
+    public static final String VIEW_NAME = "shopping_list.fxml";
+
+    private SmartLivingApplication application;
+
+    @FXML
+    private TextField artikelTextField;
+
+    @FXML
+    private Button hinzufuegenButton;
+
+    @FXML
+    private Button loeschenButton;
+
+    @FXML
+    private ComboBox<String> anzahlComboBox;
+
+    @FXML
+    private ComboBox<String> einheitComboBox;
+
+    @FXML
+    private Button aenderungButton;
+
+    @FXML
+    private TableView<Item> tableView;
+
+    public ShoppingListController(SmartLivingApplication application) {
+        this.application = application;
+    }
+
+    @Override
+    public String getViewName() {
+        return VIEW_NAME;
+    }
+
+    public void initialize () {
+        clearFields();
+        loadShoppingList();
+    }
+
+    private void loadShoppingList () {
+        tableView.setItems(Item.getList());
+
+        TableColumn<Item,String> itemCol = new TableColumn<Item,String>("Artikel");
+        itemCol.setCellValueFactory(new PropertyValueFactory("artikel"));
+        TableColumn<Item,Double> quantityCol = new TableColumn<Item,Double>("Anzahl");
+        quantityCol.setCellValueFactory(new PropertyValueFactory("anzahl"));
+        TableColumn<Item,String> unitCol = new TableColumn<Item,String>("Einheit");
+        unitCol.setCellValueFactory(new PropertyValueFactory("einheit"));
+
+        tableView.getColumns().setAll(itemCol, quantityCol, unitCol);
+    }
+
+    private void clearFields () {
+        artikelTextField.clear();
+        anzahlComboBox.getSelectionModel().clearSelection();
+        einheitComboBox.getSelectionModel().clearSelection();
+    }
+
+    private void hinzufuegenButtonClicked() {
+        String artikel = artikelTextField.getText();
+        double anzahl = Double.parseDouble(anzahlComboBox.getValue());
+        String einheit = einheitComboBox.getValue();
+
+        // Überprüfen, ob alle benötigten Felder ausgefüllt sind
+        if (artikel != null && !artikel.isEmpty() && anzahl != 0.0 && !einheit.isEmpty()
+                && einheit != null && !einheit.isEmpty()) {
+            hinzufuegenButton.setDisable(true);
+
+            // Fügen Sie den neuen Eintrag in die TableView hinzu
+            Item item = new Item(artikel,anzahl,einheit);
+
+            // Optional: Löschen Sie die Eingaben nach dem Hinzufügen
+            clearFields();
+
+        } else {
+            // Zeigen Sie eine Fehlermeldung an oder ergreifen Sie andere Maßnahmen, wenn Felder leer sind
+            System.out.println("Bitte füllen Sie alle Felder aus.");
+        }
+    }
+}
