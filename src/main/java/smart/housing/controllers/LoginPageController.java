@@ -61,6 +61,11 @@ public class LoginPageController extends SmartHousingController {
         attemptLogin(usernameField.getText(), passwordField.getText());
     }
 
+    public void _loginButton_onAction(ActionEvent event) {
+        event.consume();
+        attemptLogin(usernameField.getText(), passwordField.getText());
+    }
+
     private void attemptLogin(String username, String password) {
         DatabaseConnector connector = new DatabaseConnectorImplementation();
         LoginManager loginManager = new LoginManagerImplementation(connector);
