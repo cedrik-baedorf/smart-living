@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="lots of work 4">
-      <change afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/DeleteDialogController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/delete_dialog.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/images/login_background.jpg" afterDir="false" />
+    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="tried to add image">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/SmartLivingApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/SmartLivingApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/HomePageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/HomePageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/LoginPageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/LoginPageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/DeleteDialogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/DeleteDialogController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/UserManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/smart/housing/views/login_page.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/login_page.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/smart/housing/views/user_management.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/user_management.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/smart/housing/views/delete_dialog.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/delete_dialog.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="database/properties-refactoring" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -368,7 +362,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697733206427</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="tried to add image">
+      <created>1697785955158</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1697785955158</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -387,7 +388,8 @@
     <MESSAGE value="lots of work 2" />
     <MESSAGE value="lots of work 3" />
     <MESSAGE value="lots of work 4" />
-    <option name="LAST_COMMIT_MESSAGE" value="lots of work 4" />
+    <MESSAGE value="tried to add image" />
+    <option name="LAST_COMMIT_MESSAGE" value="tried to add image" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -1,21 +1,12 @@
 package smart.housing.controllers;
 
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.GridPane;
-import org.hibernate.dialect.Database;
 import smart.housing.SmartLivingApplication;
-import smart.housing.database.DatabaseConnector;
 import smart.housing.database.LoginManager;
 import smart.housing.database.LoginManagerImplementation;
 import smart.housing.entities.User;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import java.util.List;
 
 /**
  * Controller to view 'delete_dialog.fxml'
@@ -31,7 +22,7 @@ public class DeleteDialogController extends SmartHousingController {
 
     private SmartLivingApplication application;
 
-    private User userAtDeletion;
+    private final User userAtDeletion;
 
     @FXML
     DialogPane dialogPane;

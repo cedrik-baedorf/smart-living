@@ -71,7 +71,7 @@ public class SmartLivingApplication extends Application {
     }
 
     public void setDatabaseConnector(DatabaseConnector connector) {
-        this.connector = this.connector;
+        this.connector = connector;
     }
 
     public DatabaseConnector getDatabaseConnector() {
