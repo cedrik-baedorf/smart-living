@@ -28,6 +28,13 @@ CREATE TABLE IF NOT EXISTS `users` (
 PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE IF NOT EXISTS `shopping_list_items` (
+    ´item´ varchar(8) NOT NULL,
+    `amount` float(24) NOT NULL,
+    `unit` varchar(2) NOT NULL,
+    PRIMARY KEY (´artikel´)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- Data exporting was unselected.
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;

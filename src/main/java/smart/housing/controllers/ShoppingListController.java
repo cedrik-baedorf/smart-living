@@ -1,11 +1,11 @@
 package smart.housing.controllers;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import smart.housing.entities.*;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
 import smart.housing.SmartLivingApplication;
 
 public class ShoppingListController extends SmartHousingController {
@@ -33,7 +33,7 @@ public class ShoppingListController extends SmartHousingController {
     private Button aenderungButton;
 
     @FXML
-    private TableView<Item> tableView;
+    private TableView<ShoppingListItem> tableView;
 
     public ShoppingListController(SmartLivingApplication application) {
         this.application = application;
@@ -50,16 +50,17 @@ public class ShoppingListController extends SmartHousingController {
     }
 
     private void loadShoppingList () {
-        tableView.setItems(Item.getList());
 
-        TableColumn<Item,String> itemCol = new TableColumn<Item,String>("Artikel");
+        //tableView.setItems(ShoppingListItem.getList());
+
+        TableColumn<ShoppingListItem,String> itemCol = new TableColumn<ShoppingListItem,String>("Artikel");
         itemCol.setCellValueFactory(new PropertyValueFactory("artikel"));
-        TableColumn<Item,Double> quantityCol = new TableColumn<Item,Double>("Anzahl");
+        TableColumn<ShoppingListItem,Double> quantityCol = new TableColumn<ShoppingListItem,Double>("Anzahl");
         quantityCol.setCellValueFactory(new PropertyValueFactory("anzahl"));
-        TableColumn<Item,String> unitCol = new TableColumn<Item,String>("Einheit");
+        TableColumn<ShoppingListItem,String> unitCol = new TableColumn<ShoppingListItem,String>("Einheit");
         unitCol.setCellValueFactory(new PropertyValueFactory("einheit"));
 
-        tableView.getColumns().setAll(itemCol, quantityCol, unitCol);
+        //tableView.getColumns().setAll(itemCol, quantityCol, unitCol);
     }
 
     private void clearFields () {
@@ -79,7 +80,7 @@ public class ShoppingListController extends SmartHousingController {
             hinzufuegenButton.setDisable(true);
 
             // Fügen Sie den neuen Eintrag in die TableView hinzu
-            Item item = new Item(artikel,anzahl,einheit);
+            ShoppingListItem item = new ShoppingListItem(artikel,anzahl,einheit);
 
             // Optional: Löschen Sie die Eingaben nach dem Hinzufügen
             clearFields();
@@ -89,4 +90,6 @@ public class ShoppingListController extends SmartHousingController {
             System.out.println("Bitte füllen Sie alle Felder aus.");
         }
     }
+
+
 }
