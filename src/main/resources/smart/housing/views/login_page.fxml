@@ -11,19 +11,24 @@
     <center>
       <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
-            <Label GridPane.rowIndex="0" alignment="CENTER" text="Welcome" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+            <Label alignment="CENTER" text="Welcome" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" />
             <Separator GridPane.rowIndex="1" />
-            <TextField fx:id="usernameField" GridPane.rowIndex="2" promptText="username" onAction="#_onUsernameFieldAction"/>
-            <PasswordField fx:id="passwordField" GridPane.rowIndex="3" promptText="password" onAction="#_onPasswordFieldAction"/>
+            <TextField fx:id="usernameField" onAction="#_onUsernameFieldAction" promptText="username" GridPane.rowIndex="2" />
+            <PasswordField fx:id="passwordField" onAction="#_onPasswordFieldAction" promptText="password" GridPane.rowIndex="3" />
+            <Button onAction="#_loginButton_onAction" style="-fx-background-color: LIME; -fx-text-fill: WHITE;" text="LOGIN" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
          </children>
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </BorderPane.margin>
          <rowConstraints>
-            <RowConstraints prefHeight="40.0"/>
+            <RowConstraints prefHeight="40.0" />
             <RowConstraints prefHeight="10.0" />
             <RowConstraints prefHeight="40.0" />
             <RowConstraints prefHeight="40.0" />
-         </rowConstraints></GridPane>
+            <RowConstraints />
+         </rowConstraints>
+         <columnConstraints>
+            <ColumnConstraints />
+         </columnConstraints></GridPane>
     </center>
 </BorderPane>
