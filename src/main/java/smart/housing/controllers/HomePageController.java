@@ -77,7 +77,7 @@ public class HomePageController extends SmartHousingController {
 
     public void loadShopping() {
         shopping.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
-        loadSubPane(userManagement, application.loadFXML("shopping_list.fxml", new ShoppingListController(application)));
+        loadSubPane(shopping, application.loadFXML("shopping_list.fxml", new ShoppingListController(application)));
     }
 
     private void loadSubPane(Pane parent, Pane child) {
