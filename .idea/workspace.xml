@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="tried to add image">
+    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="tried again">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/SmartLivingApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/SmartLivingApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/DeleteDialogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/DeleteDialogController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/UserManagementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/smart/housing/controllers/UserManagementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/smart/housing/views/delete_dialog.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/delete_dialog.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/smart/housing/views/login_page.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/login_page.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +74,7 @@
       <recent name="smart.housing" />
     </key>
   </component>
-  <component name="RunManager" selected="Maven.JavaFX Debug">
+  <component name="RunManager" selected="Maven.JavaFX Run">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.App" />
       <module name="smart-living" />
@@ -369,7 +366,14 @@
       <option name="project" value="LOCAL" />
       <updated>1697785955158</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="tried again">
+      <created>1697786311796</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1697786311796</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -389,7 +393,8 @@
     <MESSAGE value="lots of work 3" />
     <MESSAGE value="lots of work 4" />
     <MESSAGE value="tried to add image" />
-    <option name="LAST_COMMIT_MESSAGE" value="tried to add image" />
+    <MESSAGE value="tried again" />
+    <option name="LAST_COMMIT_MESSAGE" value="tried again" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

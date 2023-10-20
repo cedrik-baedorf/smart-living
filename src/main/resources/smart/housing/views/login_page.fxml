@@ -13,24 +13,22 @@
     <center>
         <StackPane>
             <GridPane alignment="CENTER" BorderPane.alignment="CENTER">
-                <ImageView>
-                    <Image url="images/login_background.jpg"/>
-                </ImageView>
                 <children>
                     <Label GridPane.rowIndex="0" alignment="CENTER" text="Welcome" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
                     <Separator GridPane.rowIndex="1" />
                     <TextField fx:id="usernameField" GridPane.rowIndex="2" promptText="username" onAction="#_onUsernameFieldAction"/>
                     <PasswordField fx:id="passwordField" GridPane.rowIndex="3" promptText="password" onAction="#_onPasswordFieldAction"/>
                 </children>
-            <BorderPane.margin>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </BorderPane.margin>
-            <rowConstraints>
-                <RowConstraints prefHeight="40.0"/>
-                <RowConstraints prefHeight="10.0" />
-                <RowConstraints prefHeight="40.0" />
-                <RowConstraints prefHeight="40.0" />
-            </rowConstraints></GridPane>
+                <BorderPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </BorderPane.margin>
+                <rowConstraints>
+                    <RowConstraints prefHeight="40.0"/>
+                    <RowConstraints prefHeight="10.0" />
+                    <RowConstraints prefHeight="40.0" />
+                    <RowConstraints prefHeight="40.0" />
+                </rowConstraints>
+            </GridPane>
         </StackPane>
     </center>
 </BorderPane>
