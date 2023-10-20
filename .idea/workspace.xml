@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="tried again 2">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="17a419ce-9a0c-4b24-a06f-b0f078df9821" name="Changes" comment="image">
       <change beforePath="$PROJECT_DIR$/src/main/resources/smart/housing/views/login_page.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/smart/housing/views/login_page.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -380,7 +379,21 @@
       <option name="project" value="LOCAL" />
       <updated>1697789885845</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="image">
+      <created>1697792160184</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1697792160184</updated>
+    </task>
+    <task id="LOCAL-00028" summary="image">
+      <created>1697792239788</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1697792239788</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -402,7 +415,8 @@
     <MESSAGE value="tried to add image" />
     <MESSAGE value="tried again" />
     <MESSAGE value="tried again 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="tried again 2" />
+    <MESSAGE value="image" />
+    <option name="LAST_COMMIT_MESSAGE" value="image" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
