@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 import smart.housing.SmartLivingApplication;
 
 /**
- * Controller to view 'login_page.fxml'
+ * Controller to view 'home_page.fxml'
  * @author I551381
  * @version 1.0
  */

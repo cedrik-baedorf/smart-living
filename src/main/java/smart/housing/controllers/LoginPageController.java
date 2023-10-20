@@ -65,11 +65,12 @@ public class LoginPageController extends SmartHousingController {
         DatabaseConnector connector = new DatabaseConnectorImplementation();
         LoginManager loginManager = new LoginManagerImplementation(connector);
         EntityManager entityManager = loginManager.login(username, password);
-        application.setEntityManager(entityManager);
         passwordField.clear();
         usernameField.clear();
-        if(entityManager != null)
+        if(entityManager != null) {
+            application.setDatabaseConnector(connector);
             application.setRoot(HomePageController.VIEW_NAME, new HomePageController(application));
+        }
     }
 
 }
