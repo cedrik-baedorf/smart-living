@@ -1,5 +1,6 @@
 package smart.housing.database;
 
+import smart.housing.entities.Task;
 import smart.housing.entities.User;
 
 import javax.persistence.EntityManager;
@@ -24,6 +25,12 @@ public class Main {
         EntityManager em = login.login("cbaedorf", "password");
         User user = em.find(User.class, "cbaedorf");
         System.out.println(user.toString());
+
+        Task task = new Task("Putzen");
+        task.addAssignee(user);
+        em.getTransaction().begin();
+        em.persist(task);
+        em.getTransaction().commit();
     }
 
 }
