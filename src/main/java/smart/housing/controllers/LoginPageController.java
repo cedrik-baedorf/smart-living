@@ -14,7 +14,6 @@ import smart.housing.database.LoginManager;
 import smart.housing.database.LoginManagerImplementation;
 
 import javax.persistence.EntityManager;
-import java.util.Optional;
 
 /**
  * Controller to view 'login_page.fxml'
@@ -28,7 +27,7 @@ public class LoginPageController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "login_page.fxml";
 
-    private SmartLivingApplication application;
+    private final SmartLivingApplication APPLICATION;
 
     @FXML
     public PasswordField passwordField;
@@ -41,12 +40,12 @@ public class LoginPageController extends SmartHousingController {
      * @param application Application calling the contructor
      */
     public LoginPageController(SmartLivingApplication application) {
-        this.application = application;
+        this.APPLICATION = application;
     }
 
     public void initialize() {
         try {
-            application.setDatabaseConnector(new DatabaseConnectorImplementation());
+            APPLICATION.setDatabaseConnector(new DatabaseConnectorImplementation());
         } catch (ServiceException | PropertyNotFoundException exception) {
             configureDatabaseProperties();
         }
@@ -72,26 +71,27 @@ public class LoginPageController extends SmartHousingController {
     }
 
     private void attemptLogin(String username, String password) {
-        DatabaseConnector connector = application.getDatabaseConnector();
+        DatabaseConnector connector = APPLICATION.getDatabaseConnector();
         LoginManager loginManager = new LoginManagerImplementation(connector);
         EntityManager entityManager = loginManager.login(username, password);
         passwordField.clear();
         usernameField.clear();
         if (entityManager != null) {
-            application.setDatabaseConnector(connector);
-            application.setRoot(HomePageController.VIEW_NAME, new HomePageController(application));
+            APPLICATION.setDatabaseConnector(connector);
+            APPLICATION.setRoot(HomePageController.VIEW_NAME, new HomePageController(APPLICATION));
         }
     }
 
-    public void _confDBase_onAction(ActionEvent actionEvent) {
+    public void _confDBase_onAction(ActionEvent event) {
+        event.consume();
         configureDatabaseProperties();
     }
 
     private void configureDatabaseProperties() {
         Dialog<DatabaseConnector> dialog = new Dialog<>();
-        dialog.setDialogPane(application.loadFXML(DatabaseDialogController.VIEW_NAME, new DatabaseDialogController(dialog)));
+        dialog.setDialogPane(APPLICATION.loadFXML(DatabaseDialogController.VIEW_NAME, new DatabaseDialogController(dialog)));
 
-        dialog.showAndWait().ifPresent(databaseConnector -> application.setDatabaseConnector(databaseConnector));
+        dialog.showAndWait().ifPresent(databaseConnector -> APPLICATION.setDatabaseConnector(databaseConnector));
     }
 }
 

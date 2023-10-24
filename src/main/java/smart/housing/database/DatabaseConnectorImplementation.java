@@ -70,10 +70,8 @@ public class DatabaseConnectorImplementation implements DatabaseConnector {
             propertiesWriter.write(DRIVER_PROPERTY + '=' + loginProperties.get(DRIVER_PROPERTY));
 
             propertiesWriter.close();
-        } catch (IOException ioException) {
+        } catch (IOException | PropertyNotFoundException ioException) {
             ioException.printStackTrace();
-        } catch (PropertyNotFoundException notFoundException) {
-            notFoundException.printStackTrace();
         }
     }
 

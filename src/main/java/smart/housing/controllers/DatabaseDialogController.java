@@ -23,7 +23,7 @@ public class DatabaseDialogController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "database_dialog.fxml";
 
-    private Dialog<DatabaseConnector> dialog;
+    private final Dialog<DatabaseConnector> DIALOG;
 
     @FXML
     DialogPane dialogPane;
@@ -40,7 +40,7 @@ public class DatabaseDialogController extends SmartHousingController {
      * @param dialog Dialog to this DialogPane
      */
     public DatabaseDialogController(Dialog<DatabaseConnector> dialog) {
-        this.dialog = dialog;
+        this.DIALOG = dialog;
     }
 
     public void initialize() {
@@ -64,8 +64,8 @@ public class DatabaseDialogController extends SmartHousingController {
         dbProperties.put(DatabaseConnector.DRIVER_PROPERTY, jdbcDriverField.getText());
         dbProperties.put(DatabaseConnector.URL_PROPERTY, urlField.getText());
         try {
-            dialog.setResult(new DatabaseConnectorImplementation(dbProperties));
-            dialog.close();
+            DIALOG.setResult(new DatabaseConnectorImplementation(dbProperties));
+            DIALOG.close();
         } catch (ServiceException serviceException) {
             errorMessage.setText("Unable to connect to database");
             errorMessage.setTextFill(Color.RED);
