@@ -4,7 +4,6 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -104,7 +103,7 @@ public class Task {
         return assignees;
     }
 
-    public void setCompleted(){
+    private void setCompleted(){
         isCompleted = true;
     }
 
