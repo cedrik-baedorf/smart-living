@@ -57,7 +57,7 @@ public class DatabaseConnectorImplementation implements DatabaseConnector {
         entityManagerFactory = createEntityManagerFactory(loginProperties);
     }
 
-    public DatabaseConnectorImplementation(Map<String, String> loginProperties) {
+    public DatabaseConnectorImplementation(Map<String, String> loginProperties) throws ServiceException {
         try {
             //try creating EntityManagerFactory
             entityManagerFactory = createEntityManagerFactory(loginProperties);
@@ -70,12 +70,8 @@ public class DatabaseConnectorImplementation implements DatabaseConnector {
             propertiesWriter.write(DRIVER_PROPERTY + '=' + loginProperties.get(DRIVER_PROPERTY));
 
             propertiesWriter.close();
-        } catch (IOException ioException) {
+        } catch (IOException | PropertyNotFoundException ioException) {
             ioException.printStackTrace();
-        } catch (PropertyNotFoundException notFoundException) {
-            notFoundException.printStackTrace();
-        } catch (ServiceException serviceException) {
-            serviceException.printStackTrace();
         }
     }
 
