@@ -32,7 +32,7 @@ public class Task {
     /**
      * To which roommate is the task assigned
      */
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
         name = "assignments",
         joinColumns = @JoinColumn(name = "task_id"),
@@ -58,13 +58,14 @@ public class Task {
     @Column(name = "end_date")
     private LocalDate endDate;
 
-
-
     /**
      * Information about whether the task is completed or not
      */
     @Column(name = "completed")
     private boolean isCompleted;
+
+    @OneToMany(mappedBy = "task_id")
+    private Set <Assignment> assignments;
 
     public Task (String taskName, Set<User> assignees){
         this.taskName = taskName;
@@ -85,12 +86,29 @@ public class Task {
         assignees.add(roommate);
     }
 
-    public void removeAssignee(User roomate) {
-        assignees.remove(roomate);
+    public void removeAssignee(User roommate) {
+        assignees.remove(roommate);
     }
 
     public void markAsCompleted(){
-        this.isCompleted = true;
+        if (this.getAssignees().isEmpty())
+            throw new IllegalStateException("A task must be completed to at least one roommate before marking it as completed");
+        else
+            this.setCompleted();
+
+            // MISSING: database update to mark task as completed
+    }
+
+    private Set<User> getAssignees() {
+        return assignees;
+    }
+
+    private void setCompleted(){
+        isCompleted = true;
+    }
+
+    public boolean getCompleted(){
+        return assignees!= null && !assignees.isEmpty() && isCompleted;
     }
 
 }

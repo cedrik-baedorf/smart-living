@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
    PRIMARY KEY (`task_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE IF NOT EXISTS `assignment` (
+CREATE TABLE IF NOT EXISTS `assignments` (
    `assignment_id` INT NOT NULL AUTO_INCREMENT,
    `task_id` INT NOT NULL,
    `username` CHAR(8) DEFAULT NULL,
@@ -47,6 +47,28 @@ CREATE TABLE IF NOT EXISTS `assignment` (
    CONSTRAINT `fk_task_id` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
    CONSTRAINT `fk_username` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+DELIMITER //
+CREATE TRIGGER task_completed_check
+    BEFORE INSERT ON tasks
+    FOR EACH ROW
+BEGIN
+    DECLARE assignee_count INT;
+    SET assignee_count = (SELECT COUNT(*) FROM assignment WHERE task_id = NEW.task_id);
+    IF NEW.completed = 1 AND assignee_count = 0 THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'A task cannot be marked as completed without assignees';
+    END IF;
+END;
+//
+DELIMITER ;
+
+
+ALTER TABLE assignment
+ADD CONSTRAINT fk_task_id FOREIGN KEY (task_id) REFERENCES tasks (task_id) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+ALTER TABLE assignment
+ADD CONSTRAINT fk_username FOREIGN KEY (username) REFERENCES users (username) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
