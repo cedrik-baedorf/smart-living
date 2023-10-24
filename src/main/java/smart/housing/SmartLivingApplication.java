@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import smart.housing.controllers.LoginPageController;
 import smart.housing.controllers.SmartHousingController;
+import smart.housing.database.DatabaseConnector;
 
 import javax.persistence.EntityManager;
 import java.io.IOException;
@@ -14,7 +15,7 @@ public class SmartLivingApplication extends Application {
 
     private final SmartHousingController START_CONTROLLER = new LoginPageController(this);
 
-    private EntityManager entityManager;
+    private DatabaseConnector connector;
 
     private final String
         START_VIEW = START_CONTROLLER.getViewName(),
@@ -69,12 +70,16 @@ public class SmartLivingApplication extends Application {
         }
     }
 
-    public void setEntityManager(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public void setDatabaseConnector(DatabaseConnector connector) {
+        this.connector = connector;
+    }
+
+    public DatabaseConnector getDatabaseConnector() {
+        return connector;
     }
 
     public EntityManager getEntityManager() {
-        return entityManager;
+        return connector.createEntityManager();
     }
 
 }
