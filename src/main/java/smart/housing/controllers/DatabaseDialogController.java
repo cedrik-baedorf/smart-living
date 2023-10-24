@@ -4,13 +4,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import org.hibernate.service.spi.ServiceException;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.database.DatabaseConnectorImplementation;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 
 /**
@@ -80,7 +78,7 @@ public class DatabaseDialogController extends SmartHousingController {
             passwordField.clear();
             jdbcDriverField.clear();
             urlField.clear();
-        };
+        }
     }
 
 
