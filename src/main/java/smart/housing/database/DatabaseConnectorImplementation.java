@@ -57,7 +57,7 @@ public class DatabaseConnectorImplementation implements DatabaseConnector {
         entityManagerFactory = createEntityManagerFactory(loginProperties);
     }
 
-    public DatabaseConnectorImplementation(Map<String, String> loginProperties) {
+    public DatabaseConnectorImplementation(Map<String, String> loginProperties) throws ServiceException {
         try {
             //try creating EntityManagerFactory
             entityManagerFactory = createEntityManagerFactory(loginProperties);
@@ -74,8 +74,6 @@ public class DatabaseConnectorImplementation implements DatabaseConnector {
             ioException.printStackTrace();
         } catch (PropertyNotFoundException notFoundException) {
             notFoundException.printStackTrace();
-        } catch (ServiceException serviceException) {
-            serviceException.printStackTrace();
         }
     }
 

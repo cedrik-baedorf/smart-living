@@ -1,9 +1,13 @@
 package smart.housing.controllers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.hibernate.PropertyNotFoundException;
+import org.hibernate.service.spi.ServiceException;
 import smart.housing.SmartLivingApplication;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.database.DatabaseConnectorImplementation;
@@ -11,6 +15,7 @@ import smart.housing.database.LoginManager;
 import smart.housing.database.LoginManagerImplementation;
 
 import javax.persistence.EntityManager;
+import java.util.Optional;
 
 /**
  * Controller to view 'login_page.fxml'
@@ -32,19 +37,22 @@ public class LoginPageController extends SmartHousingController {
     public TextField usernameField;
 
     /**
-     * Default constructor for this controller
-     */
-    public LoginPageController() {
-        this(null);
-    }
-
-    /**
      * Constructor for this controller passing the <code>Application</code> object this
      * instance belongs to
      * @param application Application calling the contructor
      */
     public LoginPageController(SmartLivingApplication application) {
         this.application = application;
+    }
+
+    public void initialize() {
+        DatabaseConnector connector;
+        try {
+            connector = new DatabaseConnectorImplementation();
+        } catch (ServiceException | PropertyNotFoundException exception) {
+            connector = createDatabaseConnector();
+        }
+        application.setDatabaseConnector(connector);
     }
 
     public String getViewName() {
@@ -67,16 +75,34 @@ public class LoginPageController extends SmartHousingController {
     }
 
     private void attemptLogin(String username, String password) {
-        DatabaseConnector connector = new DatabaseConnectorImplementation();
+        application.setDatabaseConnector(application.getDatabaseConnector());
+        DatabaseConnector connector = application.getDatabaseConnector();
         LoginManager loginManager = new LoginManagerImplementation(connector);
         EntityManager entityManager = loginManager.login(username, password);
         passwordField.clear();
         usernameField.clear();
-        if(entityManager != null) {
+        if (entityManager != null) {
             application.setDatabaseConnector(connector);
             application.setRoot(HomePageController.VIEW_NAME, new HomePageController(application));
         }
     }
 
+    public void _confDBase_onAction(ActionEvent actionEvent) {
+        application.setDatabaseConnector(createDatabaseConnector());
+    }
+
+
+
+    private Optional<DatabaseConnector> collectDatabasePropertiesResults() {
+        Dialog<DatabaseConnector> dialog = new Dialog<>();
+        dialog.setDialogPane(application.loadFXML(DatabaseDialogController.VIEW_NAME, new DatabaseDialogController(dialog)));
+
+        return dialog.showAndWait();
+    }
+
+    private DatabaseConnector createDatabaseConnector() {
+        Optional<DatabaseConnector> result = collectDatabasePropertiesResults();
+        return result.get();
+    }
 }
 
