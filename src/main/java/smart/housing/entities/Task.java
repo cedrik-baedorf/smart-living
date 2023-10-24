@@ -64,9 +64,6 @@ public class Task {
     @Column(name = "completed")
     private boolean isCompleted;
 
-    @OneToMany(mappedBy = "task_id")
-    private Set <Assignment> assignments;
-
     public Task (String taskName, Set<User> assignees){
         this.taskName = taskName;
         this.assignees = assignees;

@@ -33,8 +33,8 @@ VALUES (1, 'Bathroom', 'Clean shower, toilet and sink', '2023-09-01', 3, true);
 INSERT INTO tasks (task_id, task_name, description, start_date, end_date, reoccurrence)
 VALUES (2, 'Kitchen', 'Do the dishes and clean the working tables', '2023-01-01', '2024-12-31', 9);
 
-DELETE FROM assignment;
-INSERT INTO assignment (assignment_id, task_id, username) VALUES (0, 0, 'cbaedorf');
+DELETE FROM assignments;
+INSERT INTO assignments (assignment_id, task_id, username) VALUES (0, 0, 'cbaedorf');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
