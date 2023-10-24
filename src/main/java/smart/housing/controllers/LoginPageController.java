@@ -45,13 +45,11 @@ public class LoginPageController extends SmartHousingController {
     }
 
     public void initialize() {
-        DatabaseConnector connector;
         try {
-            connector = new DatabaseConnectorImplementation();
+            application.setDatabaseConnector(new DatabaseConnectorImplementation());
         } catch (ServiceException | PropertyNotFoundException exception) {
-            connector = createDatabaseConnector();
+            configureDatabaseProperties();
         }
-        application.setDatabaseConnector(connector);
     }
 
     public String getViewName() {
@@ -74,7 +72,6 @@ public class LoginPageController extends SmartHousingController {
     }
 
     private void attemptLogin(String username, String password) {
-        application.setDatabaseConnector(application.getDatabaseConnector());
         DatabaseConnector connector = application.getDatabaseConnector();
         LoginManager loginManager = new LoginManagerImplementation(connector);
         EntityManager entityManager = loginManager.login(username, password);
@@ -87,21 +84,14 @@ public class LoginPageController extends SmartHousingController {
     }
 
     public void _confDBase_onAction(ActionEvent actionEvent) {
-        application.setDatabaseConnector(createDatabaseConnector());
+        configureDatabaseProperties();
     }
 
-
-
-    private Optional<DatabaseConnector> collectDatabasePropertiesResults() {
+    private void configureDatabaseProperties() {
         Dialog<DatabaseConnector> dialog = new Dialog<>();
         dialog.setDialogPane(application.loadFXML(DatabaseDialogController.VIEW_NAME, new DatabaseDialogController(dialog)));
 
-        return dialog.showAndWait();
-    }
-
-    private DatabaseConnector createDatabaseConnector() {
-        Optional<DatabaseConnector> result = collectDatabasePropertiesResults();
-        return result.get();
+        dialog.showAndWait().ifPresent(databaseConnector -> application.setDatabaseConnector(databaseConnector));
     }
 }
 

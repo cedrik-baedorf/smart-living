@@ -45,10 +45,6 @@ public class DatabaseDialogController extends SmartHousingController {
 
     public void initialize() {
         clearErrorMessage();
-        dialog.setOnCloseRequest(event -> {
-            dialog.setResult(null);
-            dialog.close();
-        });
     }
 
     private void clearErrorMessage() {
