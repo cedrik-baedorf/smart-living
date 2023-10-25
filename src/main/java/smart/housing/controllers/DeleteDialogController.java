@@ -20,7 +20,7 @@ public class DeleteDialogController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "delete_dialog.fxml";
 
-    private SmartLivingApplication application;
+    private final SmartLivingApplication APPLICATION;
 
     private final User userAtDeletion;
 
@@ -37,7 +37,7 @@ public class DeleteDialogController extends SmartHousingController {
      * @param application Application calling the constructor
      */
     public DeleteDialogController(SmartLivingApplication application, User userAtDeletion) {
-        this.application = application;
+        this.APPLICATION = application;
         this.userAtDeletion = userAtDeletion;
     }
 
@@ -49,9 +49,10 @@ public class DeleteDialogController extends SmartHousingController {
         return VIEW_NAME;
     }
 
-    public void _confirmDeletion(ActionEvent actionEvent) {
+    public void _confirmDeletion(ActionEvent event) {
+        event.consume();
         if(usernameField.getText().equals(userAtDeletion.getUsername())) {
-            LoginManager loginManager = new LoginManagerImplementation(application.getDatabaseConnector());
+            LoginManager loginManager = new LoginManagerImplementation(APPLICATION.getDatabaseConnector());
             loginManager.delete(usernameField.getText(), passwordField.getText());
         }
         usernameField.clear();

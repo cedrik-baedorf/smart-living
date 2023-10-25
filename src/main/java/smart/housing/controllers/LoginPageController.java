@@ -14,7 +14,6 @@ import smart.housing.database.LoginManager;
 import smart.housing.database.LoginManagerImplementation;
 
 import javax.persistence.EntityManager;
-import java.lang.reflect.InvocationTargetException;
 
 /**
  * Controller to view 'login_page.fxml'
@@ -92,7 +91,7 @@ public class LoginPageController extends SmartHousingController {
         Dialog<DatabaseConnector> dialog = new Dialog<>();
         dialog.setDialogPane(APPLICATION.loadFXML(DatabaseDialogController.VIEW_NAME, new DatabaseDialogController(dialog)));
 
-        dialog.showAndWait().ifPresent(databaseConnector -> APPLICATION.setDatabaseConnector(databaseConnector));
+        dialog.showAndWait().ifPresent(APPLICATION::setDatabaseConnector);
     }
 }
 
