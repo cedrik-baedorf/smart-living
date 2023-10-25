@@ -4,13 +4,20 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
+import smart.housing.SmartLivingApplication;
+import smart.housing.database.LoginManager;
+import smart.housing.database.LoginManagerImplementation;
+import smart.housing.entities.User;
+import smart.housing.security.HashAlgorithm;
+
+import javax.persistence.EntityManager;
 
 /**
  * Controller to view 'delete_dialog.fxml'
  * @author I551381
  * @version 1.0
  */
-public class DeleteDialogController extends SmartHousingController {
+public class DeleteDialogController extends DialogController {
 
     /**
      * Name of the corresponding <code>.fxml</code> file
@@ -24,9 +31,10 @@ public class DeleteDialogController extends SmartHousingController {
         DELETE_USER = "Confirm deletion of user %s",
         ENTER_PASSWORD = "Please enter a password";
 
-    private final Dialog<String> DIALOG;
+    private final SmartLivingApplication APPLICATION;
+    private final Dialog<Boolean> DIALOG;
 
-    private final String username;
+    private final User USER;
 
     @FXML
     DialogPane dialogPane;
@@ -40,13 +48,15 @@ public class DeleteDialogController extends SmartHousingController {
      * instance belongs to
      * @param dialog Dialog to this <code>DialogPane</code>
      */
-    public DeleteDialogController(Dialog<String> dialog, String username) {
+    public DeleteDialogController(SmartLivingApplication application, Dialog<Boolean> dialog, User user) {
+        this.APPLICATION = application;
         this.DIALOG = dialog;
-        this.username = username;
+        this.USER = user;
     }
 
     public void initialize() {
-        usernameLabel.setText(String.format(DELETE_USER, username));
+        super.setOnCloseRequest(DIALOG);
+        usernameLabel.setText(String.format(DELETE_USER, USER.getUsername()));
         clearErrorMessage();
     }
 
@@ -62,14 +72,9 @@ public class DeleteDialogController extends SmartHousingController {
     public void _confirmDeletion(ActionEvent event) {
         event.consume();
         clearErrorMessage();
-        String password = passwordField.getText();
-        if(password != null && password.length() > 0)
-            DIALOG.setResult(passwordField.getText());
-        else {
-            errorMessage.setText(ENTER_PASSWORD);
-            errorMessage.setTextFill(Color.RED);
-            return;
-        }
+        LoginManager loginManager = new LoginManagerImplementation(APPLICATION.getDatabaseConnector());
+        loginManager.delete(USER.getUsername(), passwordField.getText());
+        DIALOG.setResult(true);
         usernameLabel.setText("");
         passwordField.clear();
     }

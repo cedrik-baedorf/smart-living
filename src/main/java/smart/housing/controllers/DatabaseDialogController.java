@@ -16,7 +16,7 @@ import java.util.Map;
  * @author I551381
  * @version 1.0
  */
-public class DatabaseDialogController extends SmartHousingController {
+public class DatabaseDialogController extends DialogController {
 
     /**
      * Name of the corresponding <code>.fxml</code> file
@@ -44,6 +44,7 @@ public class DatabaseDialogController extends SmartHousingController {
     }
 
     public void initialize() {
+        super.setOnCloseRequest(DIALOG);
         clearErrorMessage();
     }
 

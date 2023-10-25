@@ -3,8 +3,12 @@ package smart.housing.database;
 import smart.housing.entities.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceException;
 
 public interface LoginManager {
+
+    String MSG_CREATE_USER_NULL = "Attempted to persist User but %s was null";
+    String MSG_CREATE_USERNAME_EXISTS = "Attempted to persist User but username %s already exists";
 
     /**
      * This method takes a username and a password and checks whether they match.
@@ -22,9 +26,10 @@ public interface LoginManager {
      *  its <i>username</i> is not equal to <code>null</code>,
      *  its <i>username</i> does not exist in the database
      *  its <i>password</i> is not equal to <code>null</code>
+     * Otherwise, this method will throw a <code>RuntimeException</code>
      * @param user user to be persisted in the database
      */
-    void create(User user, EntityManager entityManager);
+    void create(User user) throws RuntimeException;
 
     void delete(String username, String password);
 

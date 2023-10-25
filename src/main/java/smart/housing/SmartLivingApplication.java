@@ -1,6 +1,7 @@
 package smart.housing;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -33,6 +34,7 @@ public class SmartLivingApplication extends Application {
         stage.setMaximized(true);
         stage.setTitle("Smart Living Application");
         setRoot(START_VIEW, START_CONTROLLER);
+        stage.setOnCloseRequest(event -> Platform.exit());
         stage.show();
     }
 

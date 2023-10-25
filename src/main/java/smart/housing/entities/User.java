@@ -41,7 +41,7 @@ public class User {
      */
     @Id
     @Column(name = "username")
-    private final String username;
+    private final String USERNAME;
 
     /**
      * Hashed password to the username
@@ -62,7 +62,7 @@ public class User {
     private String firstName;
 
     public User() {
-        this("default");
+        this("standard");
     }
 
     public User(String username, String password, HashAlgorithm algorithm) {
@@ -72,8 +72,8 @@ public class User {
 
     public User(String username) {
         if(username == null)
-            throw new NullPointerException("Username cannot be equal to null");
-        this.username = username;
+            throw new RuntimeException("Username cannot be equal to null");
+        this.USERNAME = username;
     }
 
     public void setPassword(String password, HashAlgorithm algorithm) {
@@ -89,7 +89,7 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return USERNAME;
     }
 
     public String getPassword() {
@@ -107,7 +107,7 @@ public class User {
     @Override
     public String toString() {
         return "("
-            + username + ";"
+            + USERNAME + ";"
             + password + ";"
             + lastName + ";"
             + firstName + ")";

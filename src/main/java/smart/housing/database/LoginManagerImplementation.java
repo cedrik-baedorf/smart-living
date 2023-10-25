@@ -26,10 +26,18 @@ public class LoginManagerImplementation implements LoginManager {
     }
 
     @Override
-    public void create(User user, EntityManager entityManager) {
+    public void create(User user) {
+        if(user == null)
+            throw new RuntimeException(String.format(MSG_CREATE_USER_NULL, "User.class"));
+        if(user.getUsername() == null)
+            throw new RuntimeException(String.format(MSG_CREATE_USER_NULL, "user.getUsername()"));
+        EntityManager entityManager = databaseConnector.createEntityManager();
+        if(entityManager.find(User.class, user.getUsername()) != null)
+            throw new RuntimeException(String.format(MSG_CREATE_USERNAME_EXISTS, user.getUsername()));
         entityManager.getTransaction().begin();
         entityManager.persist(user);
         entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     @Override

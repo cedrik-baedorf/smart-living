@@ -80,21 +80,13 @@ public class UserManagementController extends SmartHousingController {
     }
 
     private void deleteSelectedUser() {
-        User userAtDeletion = userTable.getSelectionModel().getSelectedItem();
-        Dialog<String> dialog = new Dialog<>();
+        User userToBeDeleted = userTable.getSelectionModel().getSelectedItem();
+        Dialog<Boolean> dialog = new Dialog<>();
         dialog.setDialogPane(APPLICATION.loadFXML(
                 DeleteDialogController.VIEW_NAME,
-                new DeleteDialogController(dialog, userAtDeletion.getUsername())
+                new DeleteDialogController(APPLICATION, dialog, userToBeDeleted)
         ));
-        dialog.showAndWait().ifPresent(password -> {
-            LoginManager loginManager = new LoginManagerImplementation(APPLICATION.getDatabaseConnector());
-            try {
-                loginManager.delete(userAtDeletion.getUsername(), password);
-                loadUsers();
-            } catch (ServiceException exception) {
-                deleteSelectedUser();
-            }
-        });
+        dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
     }
 
     public void _createButton_onAction(ActionEvent event) {

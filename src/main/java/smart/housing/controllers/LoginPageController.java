@@ -1,5 +1,6 @@
 package smart.housing.controllers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
@@ -14,6 +15,7 @@ import smart.housing.database.LoginManager;
 import smart.housing.database.LoginManagerImplementation;
 
 import javax.persistence.EntityManager;
+import java.util.Optional;
 
 /**
  * Controller to view 'login_page.fxml'
@@ -47,7 +49,11 @@ public class LoginPageController extends SmartHousingController {
         try {
             APPLICATION.setDatabaseConnector(new DatabaseConnectorImplementation());
         } catch (ServiceException | PropertyNotFoundException exception) {
-            configureDatabaseProperties();
+            DatabaseConnector connector = createDatabaseConnector();
+            if(connector != null)
+                APPLICATION.setDatabaseConnector(connector);
+            else
+                Platform.exit();
         }
     }
 
@@ -84,14 +90,17 @@ public class LoginPageController extends SmartHousingController {
 
     public void _confDBase_onAction(ActionEvent event) {
         event.consume();
-        configureDatabaseProperties();
+        DatabaseConnector connector = createDatabaseConnector();
+        if(connector != null)
+            APPLICATION.setDatabaseConnector(connector);
     }
 
-    private void configureDatabaseProperties() {
+    private DatabaseConnector createDatabaseConnector() {
         Dialog<DatabaseConnector> dialog = new Dialog<>();
         dialog.setDialogPane(APPLICATION.loadFXML(DatabaseDialogController.VIEW_NAME, new DatabaseDialogController(dialog)));
 
-        dialog.showAndWait().ifPresent(databaseConnector -> APPLICATION.setDatabaseConnector(databaseConnector));
+        Optional<DatabaseConnector> result = dialog.showAndWait();
+        return result.orElse(null);
     }
 }
 
