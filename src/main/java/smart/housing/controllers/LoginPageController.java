@@ -11,8 +11,8 @@ import org.hibernate.service.spi.ServiceException;
 import smart.housing.SmartLivingApplication;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.database.DatabaseConnectorImplementation;
-import smart.housing.database.LoginManager;
-import smart.housing.database.LoginManagerImplementation;
+import smart.housing.services.LoginService;
+import smart.housing.services.LoginServiceImplementation;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
@@ -78,8 +78,8 @@ public class LoginPageController extends SmartHousingController {
 
     private void attemptLogin(String username, String password) {
         DatabaseConnector connector = APPLICATION.getDatabaseConnector();
-        LoginManager loginManager = new LoginManagerImplementation(connector);
-        EntityManager entityManager = loginManager.login(username, password);
+        LoginService loginService = new LoginServiceImplementation(connector);
+        EntityManager entityManager = loginService.login(username, password);
         passwordField.clear();
         usernameField.clear();
         if (entityManager != null) {

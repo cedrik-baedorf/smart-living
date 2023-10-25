@@ -1,12 +1,13 @@
-package smart.housing.database;
+package smart.housing.services;
 
 import smart.housing.entities.User;
+import smart.housing.exceptions.LoginServiceException;
 
 import javax.persistence.EntityManager;
 
-public interface LoginManager {
+public interface LoginService {
 
-    String MSG_CREATE_USER_NULL = "Attempted to persist User but %s was null";
+    String MSG_CREATE_NULL = "Attempted to persist User but %s was null";
     String MSG_CREATE_USERNAME_EXISTS = "Attempted to persist User but username %s already exists";
 
     /**
@@ -18,18 +19,18 @@ public interface LoginManager {
      * @param password password must match the password stored for the username
      * @return entity manager connected to the database
      */
-    EntityManager login(String username, String password);
+    EntityManager login(String username, String password) throws LoginServiceException;
 
     /**
      * This method takes an object of class <code>User</code> and persists it in the database, if
-     *  its <i>username</i> is not equal to <code>null</code>,
+     *  its <i>user</i> is not equal to <code>null</code>,
      *  its <i>username</i> does not exist in the database
      *  its <i>password</i> is not equal to <code>null</code>
-     * Otherwise, this method will throw a <code>RuntimeException</code>
+     * Otherwise, this method will throw a <code>LoginServiceException</code>
      * @param user user to be persisted in the database
      */
-    void create(User user) throws RuntimeException;
+    void create(User user) throws LoginServiceException;
 
-    void delete(String username, String password);
+    void delete(String username, String password) throws LoginServiceException;
 
 }

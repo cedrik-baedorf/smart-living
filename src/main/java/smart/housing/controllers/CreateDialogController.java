@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import smart.housing.SmartLivingApplication;
-import smart.housing.database.LoginManager;
-import smart.housing.database.LoginManagerImplementation;
+import smart.housing.services.LoginService;
+import smart.housing.services.LoginServiceImplementation;
 import smart.housing.entities.User;
 import smart.housing.security.HashAlgorithm;
 
@@ -66,8 +66,8 @@ public class CreateDialogController extends DialogController {
         newUser.setPassword(passwordField.getText(), HashAlgorithm.DEFAULT);
         newUser.setLastName(lastNameField.getText());
         newUser.setFirstName(firstNameField.getText());
-        LoginManager loginManager = new LoginManagerImplementation(APPLICATION.getDatabaseConnector());
-        loginManager.create(newUser);
+        LoginService loginService = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
+        loginService.create(newUser);
         DIALOG.setResult(true);
         usernameField.clear();
         passwordField.clear();

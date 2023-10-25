@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import smart.housing.SmartLivingApplication;
-import smart.housing.database.LoginManager;
-import smart.housing.database.LoginManagerImplementation;
+import smart.housing.services.LoginService;
+import smart.housing.services.LoginServiceImplementation;
 import smart.housing.entities.User;
 
 /**
@@ -69,8 +69,8 @@ public class DeleteDialogController extends DialogController {
     public void _confirmDeletion(ActionEvent event) {
         event.consume();
         clearErrorMessage();
-        LoginManager loginManager = new LoginManagerImplementation(APPLICATION.getDatabaseConnector());
-        loginManager.delete(USER.getUsername(), passwordField.getText());
+        LoginService loginService = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
+        loginService.delete(USER.getUsername(), passwordField.getText());
         DIALOG.setResult(true);
         usernameLabel.setText("");
         passwordField.clear();

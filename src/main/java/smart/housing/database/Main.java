@@ -2,6 +2,8 @@ package smart.housing.database;
 
 import smart.housing.entities.Task;
 import smart.housing.entities.User;
+import smart.housing.services.LoginService;
+import smart.housing.services.LoginServiceImplementation;
 
 import javax.persistence.EntityManager;
 import java.io.File;
@@ -21,7 +23,7 @@ public class Main {
             new File("src/main/resources/" + DatabaseConnector.DB_ACCESS_PROPERTIES).exists() ?
                     new DatabaseConnectorImplementation() : new DatabaseConnectorImplementation(loginData);
 
-        LoginManager login = new LoginManagerImplementation(connector);
+        LoginService login = new LoginServiceImplementation(connector);
         EntityManager em = login.login("cbaedorf", "password");
         User user = em.find(User.class, "cbaedorf");
         System.out.println(user.toString());

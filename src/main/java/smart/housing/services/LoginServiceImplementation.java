@@ -1,18 +1,20 @@
-package smart.housing.database;
+package smart.housing.services;
 
 import org.hibernate.service.spi.ServiceException;
+import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.User;
+import smart.housing.exceptions.LoginServiceException;
 import smart.housing.security.HashAlgorithm;
 
 import javax.persistence.EntityManager;
 
-public class LoginManagerImplementation implements LoginManager {
+public class LoginServiceImplementation implements LoginService {
 
     private static final HashAlgorithm HASH_ALGORITHM = HashAlgorithm.DEFAULT;
 
     private final DatabaseConnector databaseConnector;
 
-    public LoginManagerImplementation(DatabaseConnector databaseConnector) {
+    public LoginServiceImplementation(DatabaseConnector databaseConnector) {
         this.databaseConnector = databaseConnector;
     }
 
@@ -28,12 +30,12 @@ public class LoginManagerImplementation implements LoginManager {
     @Override
     public void create(User user) {
         if(user == null)
-            throw new RuntimeException(String.format(MSG_CREATE_USER_NULL, "User.class"));
-        if(user.getUsername() == null)
-            throw new RuntimeException(String.format(MSG_CREATE_USER_NULL, "user.getUsername()"));
+            throw new LoginServiceException(String.format(MSG_CREATE_NULL, "User.class"));
+        if(user.getPassword() == null)
+            throw new LoginServiceException(String.format(MSG_CREATE_NULL, "user.getPassword()"));
         EntityManager entityManager = databaseConnector.createEntityManager();
         if(entityManager.find(User.class, user.getUsername()) != null)
-            throw new RuntimeException(String.format(MSG_CREATE_USERNAME_EXISTS, user.getUsername()));
+            throw new LoginServiceException(String.format(MSG_CREATE_USERNAME_EXISTS, user.getUsername()));
         entityManager.getTransaction().begin();
         entityManager.persist(user);
         entityManager.getTransaction().commit();
