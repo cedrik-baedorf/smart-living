@@ -27,7 +27,7 @@ public class UserManagementController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "user_management.fxml";
 
-    private SmartLivingApplication application;
+    private final SmartLivingApplication APPLICATION;
 
     @FXML
     public TableView<User> userTable;
@@ -41,7 +41,7 @@ public class UserManagementController extends SmartHousingController {
      * @param application Application calling the constructor
      */
     public UserManagementController(SmartLivingApplication application) {
-        this.application = application;
+        this.APPLICATION = application;
     }
 
     public void initialize() {
@@ -54,7 +54,7 @@ public class UserManagementController extends SmartHousingController {
     }
 
     private void loadUsers() {
-        EntityManager entityManager = application.getEntityManager();
+        EntityManager entityManager = APPLICATION.getEntityManager();
         TypedQuery<User> userQuery = entityManager.createNamedQuery(User.FIND_ALL, User.class);
         List<User> userList = userQuery.getResultList();
         userTable.setItems(FXCollections.observableList(userList));
@@ -67,6 +67,7 @@ public class UserManagementController extends SmartHousingController {
     }
 
     public void _userTable_onMouseClicked(MouseEvent mouseEvent) {
+        mouseEvent.consume();
         User selectedUser = userTable.getSelectionModel().getSelectedItem();
         if(selectedUser != null) {
             initializeButtons(true);
@@ -81,12 +82,12 @@ public class UserManagementController extends SmartHousingController {
     private void deleteSelectedUser() {
         User userAtDeletion = userTable.getSelectionModel().getSelectedItem();
         Dialog<String> dialog = new Dialog<>();
-        dialog.setDialogPane(application.loadFXML(
+        dialog.setDialogPane(APPLICATION.loadFXML(
                 DeleteDialogController.VIEW_NAME,
                 new DeleteDialogController(dialog, userAtDeletion.getUsername())
         ));
         dialog.showAndWait().ifPresent(password -> {
-            LoginManager loginManager = new LoginManagerImplementation(application.getDatabaseConnector());
+            LoginManager loginManager = new LoginManagerImplementation(APPLICATION.getDatabaseConnector());
             try {
                 loginManager.delete(userAtDeletion.getUsername(), password);
                 loadUsers();
@@ -103,13 +104,11 @@ public class UserManagementController extends SmartHousingController {
 
     public void createUser() {
         Dialog<Boolean> dialog = new Dialog<>();
-        dialog.setDialogPane(application.loadFXML(
+        dialog.setDialogPane(APPLICATION.loadFXML(
                 CreateDialogController.VIEW_NAME,
-                new CreateDialogController(application, dialog)
+                new CreateDialogController(APPLICATION, dialog)
         ));
-        dialog.showAndWait().ifPresent(aBoolean -> {
-            loadUsers();
-        });
+        dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
     }
 
 }

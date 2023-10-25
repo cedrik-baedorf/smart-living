@@ -3,7 +3,6 @@ package smart.housing.database;
 import org.hibernate.service.spi.ServiceException;
 import smart.housing.entities.User;
 import smart.housing.security.HashAlgorithm;
-import smart.housing.security.SimpleHashAlgorithm;
 
 import javax.persistence.EntityManager;
 
