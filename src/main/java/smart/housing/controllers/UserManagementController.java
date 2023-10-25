@@ -5,10 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import org.hibernate.service.spi.ServiceException;
 import smart.housing.SmartLivingApplication;
-import smart.housing.database.LoginManager;
-import smart.housing.database.LoginManagerImplementation;
 import smart.housing.entities.User;
 
 import javax.persistence.EntityManager;

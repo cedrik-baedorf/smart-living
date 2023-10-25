@@ -8,9 +8,6 @@ import smart.housing.SmartLivingApplication;
 import smart.housing.database.LoginManager;
 import smart.housing.database.LoginManagerImplementation;
 import smart.housing.entities.User;
-import smart.housing.security.HashAlgorithm;
-
-import javax.persistence.EntityManager;
 
 /**
  * Controller to view 'delete_dialog.fxml'

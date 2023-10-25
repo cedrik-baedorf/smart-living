@@ -3,7 +3,6 @@ package smart.housing.database;
 import smart.housing.entities.User;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceException;
 
 public interface LoginManager {
 
