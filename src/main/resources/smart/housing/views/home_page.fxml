@@ -9,8 +9,8 @@
     <Tab closable="false" text="User Management">
         <Pane fx:id="userManagement"/>
     </Tab>
-    <Tab closable="false" text="Tasks">
-        <Pane fx:id="tasks"/>
+    <Tab closable="false" text="Task Management">
+        <Pane fx:id="taskManagement"/>
     </Tab>
     <Tab closable="false" text="Accounting">
         <Pane fx:id="accounting"/>

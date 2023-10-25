@@ -19,23 +19,37 @@
 CREATE DATABASE IF NOT EXISTS `smart-living` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci */;
 USE `smart-living`;
 
--- Dumping structure for table smart-living.users
+DROP TABLE IF EXISTS `assignments`;
+DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `tasks`;
+
 CREATE TABLE IF NOT EXISTS `users` (
-  `username` varchar(8) NOT NULL,
-  `password` char(64) NOT NULL,
-  `last_name` varchar(24) DEFAULT NULL,
-  `first_name` varchar(24) DEFAULT NULL,
+  `username` VARCHAR(8) NOT NULL,
+  `password` CHAR(64) NOT NULL,
+  `last_name` VARCHAR(24) DEFAULT NULL,
+  `first_name` VARCHAR(24) DEFAULT NULL,
 PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE IF NOT EXISTS `shopping_list_items` (
-    ´item´ varchar(8) NOT NULL,
-    `amount` float(24) NOT NULL,
-    `unit` varchar(2) NOT NULL,
-    PRIMARY KEY (´artikel´)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE IF NOT EXISTS `tasks` (
+   `task_id` INT NOT NULL AUTO_INCREMENT,
+   `task_name` CHAR(32) NOT NULL,
+   `description` CHAR(128) DEFAULT NULL,
+   `start_date` DATE NOT NULL,
+   `end_date` DATE DEFAULT NULL,
+   `reoccurrence` INT NOT NULL,
+   `completed` BOOLEAN DEFAULT FALSE,
+   PRIMARY KEY (`task_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Data exporting was unselected.
+CREATE TABLE IF NOT EXISTS `assignments` (
+   `assignment_id` INT NOT NULL AUTO_INCREMENT,
+   `task_id` INT NOT NULL,
+   `username` CHAR(8) DEFAULT NULL,
+   PRIMARY KEY (`assignment_id`),
+   CONSTRAINT `fk_task_id` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+   CONSTRAINT `fk_username` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

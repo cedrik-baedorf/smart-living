@@ -6,6 +6,7 @@ import org.hibernate.service.spi.ServiceException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,25 +58,25 @@ public class DatabaseConnectorImplementation implements DatabaseConnector {
         entityManagerFactory = createEntityManagerFactory(loginProperties);
     }
 
-    public DatabaseConnectorImplementation(Map<String, String> loginProperties) {
+    public DatabaseConnectorImplementation(Map<String, String> loginProperties) throws ServiceException {
         try {
             //try creating EntityManagerFactory
             entityManagerFactory = createEntityManagerFactory(loginProperties);
 
-            //write login properties into the file after successfull completion
-            FileWriter propertiesWriter = new FileWriter("src/main/resources/" + DB_ACCESS_PROPERTIES);
-            propertiesWriter.write(USER_PROPERTY + '=' + loginProperties.get(USER_PROPERTY) + '\n');
-            propertiesWriter.write(PASSWORD_PROPERTY + '=' + loginProperties.get(PASSWORD_PROPERTY) + '\n');
-            propertiesWriter.write(URL_PROPERTY + '=' + loginProperties.get(URL_PROPERTY) + '\n');
-            propertiesWriter.write(DRIVER_PROPERTY + '=' + loginProperties.get(DRIVER_PROPERTY));
+            File propertiesFile = new File("src/main/resources/" + DB_ACCESS_PROPERTIES);
+            if(! propertiesFile.exists())
+                propertiesFile.createNewFile();
 
-            propertiesWriter.close();
-        } catch (IOException ioException) {
+            //write login properties into the file after successfull completion
+            FileWriter propertiesFileWriter = new FileWriter(propertiesFile);
+            propertiesFileWriter.write(USER_PROPERTY + '=' + loginProperties.get(USER_PROPERTY) + '\n');
+            propertiesFileWriter.write(PASSWORD_PROPERTY + '=' + loginProperties.get(PASSWORD_PROPERTY) + '\n');
+            propertiesFileWriter.write(URL_PROPERTY + '=' + loginProperties.get(URL_PROPERTY) + '\n');
+            propertiesFileWriter.write(DRIVER_PROPERTY + '=' + loginProperties.get(DRIVER_PROPERTY));
+
+            propertiesFileWriter.close();
+        } catch (IOException | PropertyNotFoundException ioException) {
             ioException.printStackTrace();
-        } catch (PropertyNotFoundException notFoundException) {
-            notFoundException.printStackTrace();
-        } catch (ServiceException serviceException) {
-            serviceException.printStackTrace();
         }
     }
 
@@ -124,7 +125,7 @@ public class DatabaseConnectorImplementation implements DatabaseConnector {
             properties.load( is );
         } catch (Exception e) {
             final String msg = "Loading properties file " + propertiesPath + " failed";
-            throw new RuntimeException(msg);
+            throw new ServiceException(msg);
         }
         return properties;
     }

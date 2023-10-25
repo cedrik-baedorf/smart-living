@@ -2,8 +2,11 @@ package smart.housing.controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import org.hibernate.PropertyNotFoundException;
+import org.hibernate.service.spi.ServiceException;
 import smart.housing.SmartLivingApplication;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.database.DatabaseConnectorImplementation;
@@ -24,7 +27,7 @@ public class LoginPageController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "login_page.fxml";
 
-    private SmartLivingApplication application;
+    private final SmartLivingApplication APPLICATION;
 
     @FXML
     public PasswordField passwordField;
@@ -32,19 +35,20 @@ public class LoginPageController extends SmartHousingController {
     public TextField usernameField;
 
     /**
-     * Default constructor for this controller
-     */
-    public LoginPageController() {
-        this(null);
-    }
-
-    /**
      * Constructor for this controller passing the <code>Application</code> object this
      * instance belongs to
      * @param application Application calling the contructor
      */
     public LoginPageController(SmartLivingApplication application) {
-        this.application = application;
+        this.APPLICATION = application;
+    }
+
+    public void initialize() {
+        try {
+            APPLICATION.setDatabaseConnector(new DatabaseConnectorImplementation());
+        } catch (ServiceException | PropertyNotFoundException exception) {
+            configureDatabaseProperties();
+        }
     }
 
     public String getViewName() {
@@ -61,16 +65,33 @@ public class LoginPageController extends SmartHousingController {
         attemptLogin(usernameField.getText(), passwordField.getText());
     }
 
-    private void attemptLogin(String username, String password) {
-        DatabaseConnector connector = new DatabaseConnectorImplementation();
-        LoginManager loginManager = new LoginManagerImplementation(connector);
-        EntityManager entityManager = loginManager.login(username, password);
-        application.setEntityManager(entityManager);
-        passwordField.clear();
-        usernameField.clear();
-        if(entityManager != null)
-            application.setRoot(HomePageController.VIEW_NAME, new HomePageController(application));
+    public void _loginButton_onAction(ActionEvent event) {
+        event.consume();
+        attemptLogin(usernameField.getText(), passwordField.getText());
     }
 
+    private void attemptLogin(String username, String password) {
+        DatabaseConnector connector = APPLICATION.getDatabaseConnector();
+        LoginManager loginManager = new LoginManagerImplementation(connector);
+        EntityManager entityManager = loginManager.login(username, password);
+        passwordField.clear();
+        usernameField.clear();
+        if (entityManager != null) {
+            APPLICATION.setDatabaseConnector(connector);
+            APPLICATION.setRoot(HomePageController.VIEW_NAME, new HomePageController(APPLICATION));
+        }
+    }
+
+    public void _confDBase_onAction(ActionEvent event) {
+        event.consume();
+        configureDatabaseProperties();
+    }
+
+    private void configureDatabaseProperties() {
+        Dialog<DatabaseConnector> dialog = new Dialog<>();
+        dialog.setDialogPane(APPLICATION.loadFXML(DatabaseDialogController.VIEW_NAME, new DatabaseDialogController(dialog)));
+
+        dialog.showAndWait().ifPresent(APPLICATION::setDatabaseConnector);
+    }
 }
 

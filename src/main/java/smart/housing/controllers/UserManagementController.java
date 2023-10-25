@@ -1,9 +1,9 @@
 package smart.housing.controllers;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.User;
@@ -13,7 +13,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Controller to view 'login_page.fxml'
+ * Controller to view 'user_management.fxml'
  * @author I551381
  * @version 1.0
  */
@@ -43,7 +43,7 @@ public class UserManagementController extends SmartHousingController {
 
     public void initialize() {
         loadUsers();
-        initializeButtons();
+        initializeButtons(false);
     }
 
     public String getViewName() {
@@ -57,14 +57,25 @@ public class UserManagementController extends SmartHousingController {
         userTable.setItems(FXCollections.observableList(userList));
     }
 
-    private void initializeButtons() {
-        deleteButton.setDisable(true);
-        modifyButton.setDisable(true);
+    private void initializeButtons(boolean itemSelected) {
+        deleteButton.setDisable(! itemSelected);
+        modifyButton.setDisable(! itemSelected);
         createButton.setDisable(false);
     }
 
     public void _userTable_onMouseClicked(MouseEvent mouseEvent) {
-        System.out.println("hi");
+        User selectedUser = userTable.getSelectionModel().getSelectedItem();
+        if(selectedUser != null) {
+            initializeButtons(true);
+        }
     }
-}
 
+    public void _deleteButton_onAction(ActionEvent actionEvent) {
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setDialogPane(application.loadFXML("delete_dialog.fxml", new DeleteDialogController(application, userTable.getSelectionModel().getSelectedItem())));
+        dialog.show();
+    }
+
+
+
+}

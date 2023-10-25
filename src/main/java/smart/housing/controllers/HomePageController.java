@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 import smart.housing.SmartLivingApplication;
 
 /**
- * Controller to view 'login_page.fxml'
+ * Controller to view 'home_page.fxml'
  * @author I551381
  * @version 1.0
  */
@@ -26,20 +26,13 @@ public class HomePageController extends SmartHousingController {
     public Pane userManagement;
 
     @FXML
-    public Pane tasks;
+    public Pane taskManagement;
 
     @FXML
     public Pane accounting;
 
     @FXML
     public Pane shopping;
-
-    /**
-     * Default constructor for this controller
-     */
-    public HomePageController() {
-        this(null);
-    }
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -52,7 +45,7 @@ public class HomePageController extends SmartHousingController {
 
     public void initialize() {
         loadUserManagement();
-        loadTasks();
+        loadTaskManagement();
         loadAccounting();
         loadShopping();
     }
@@ -63,11 +56,12 @@ public class HomePageController extends SmartHousingController {
 
     public void loadUserManagement() {
         userManagement.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
-        loadSubPane(userManagement, application.loadFXML("user_management.fxml", new UserManagementController(application)));
+        loadSubPane(userManagement, application.loadFXML(UserManagementController.VIEW_NAME, new UserManagementController(application)));
     }
 
-    public void loadTasks() {
-        tasks.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
+    public void loadTaskManagement() {
+        taskManagement.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
+        loadSubPane(taskManagement, application.loadFXML(TaskManagementController.VIEW_NAME, new TaskManagementController(application)));
     }
 
     public void loadAccounting() {
