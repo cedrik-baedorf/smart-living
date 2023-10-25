@@ -58,6 +58,4 @@ public class DeleteDialogController extends SmartHousingController {
         passwordField.clear();
     }
 
-
-
 }

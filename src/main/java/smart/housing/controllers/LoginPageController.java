@@ -14,6 +14,7 @@ import smart.housing.database.LoginManager;
 import smart.housing.database.LoginManagerImplementation;
 
 import javax.persistence.EntityManager;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Controller to view 'login_page.fxml'
