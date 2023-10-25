@@ -5,7 +5,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import org.hibernate.service.spi.ServiceException;
 import smart.housing.SmartLivingApplication;
+import smart.housing.database.LoginManager;
+import smart.housing.database.LoginManagerImplementation;
 import smart.housing.entities.User;
 
 import javax.persistence.EntityManager;
@@ -70,12 +73,43 @@ public class UserManagementController extends SmartHousingController {
         }
     }
 
-    public void _deleteButton_onAction(ActionEvent actionEvent) {
-        Dialog<String> dialog = new Dialog<>();
-        dialog.setDialogPane(application.loadFXML("delete_dialog.fxml", new DeleteDialogController(application, userTable.getSelectionModel().getSelectedItem())));
-        dialog.show();
+    public void _deleteButton_onAction(ActionEvent event) {
+        event.consume();
+        deleteSelectedUser();
     }
 
+    private void deleteSelectedUser() {
+        User userAtDeletion = userTable.getSelectionModel().getSelectedItem();
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setDialogPane(application.loadFXML(
+                DeleteDialogController.VIEW_NAME,
+                new DeleteDialogController(dialog, userAtDeletion.getUsername())
+        ));
+        dialog.showAndWait().ifPresent(password -> {
+            LoginManager loginManager = new LoginManagerImplementation(application.getDatabaseConnector());
+            try {
+                loginManager.delete(userAtDeletion.getUsername(), password);
+                loadUsers();
+            } catch (ServiceException exception) {
+                deleteSelectedUser();
+            }
+        });
+    }
 
+    public void _createButton_onAction(ActionEvent event) {
+        event.consume();
+        createUser();
+    }
+
+    public void createUser() {
+        Dialog<Boolean> dialog = new Dialog<>();
+        dialog.setDialogPane(application.loadFXML(
+                CreateDialogController.VIEW_NAME,
+                new CreateDialogController(application, dialog)
+        ));
+        dialog.showAndWait().ifPresent(aBoolean -> {
+            loadUsers();
+        });
+    }
 
 }

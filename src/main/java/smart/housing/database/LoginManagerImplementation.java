@@ -1,5 +1,6 @@
 package smart.housing.database;
 
+import org.hibernate.service.spi.ServiceException;
 import smart.housing.entities.User;
 import smart.housing.security.HashAlgorithm;
 import smart.housing.security.SimpleHashAlgorithm;
@@ -8,7 +9,7 @@ import javax.persistence.EntityManager;
 
 public class LoginManagerImplementation implements LoginManager {
 
-    private static final HashAlgorithm HASH_ALGORITHM = new SimpleHashAlgorithm();
+    private static final HashAlgorithm HASH_ALGORITHM = HashAlgorithm.DEFAULT;
 
     private final DatabaseConnector databaseConnector;
 
@@ -41,7 +42,7 @@ public class LoginManagerImplementation implements LoginManager {
             entityManager.remove(user);
             entityManager.getTransaction().commit();
         } else {
-            throw new RuntimeException("User " + username + " could not be deleted");
+            throw new ServiceException("User " + username + " could not be deleted");
         }
     }
 }

@@ -37,7 +37,7 @@ public class DatabaseDialogController extends SmartHousingController {
     /**
      * Constructor for this controller passing the <code>Application</code> object this
      * instance belongs to
-     * @param dialog Dialog to this DialogPane
+     * @param dialog Dialog to this <code>DialogPane</code>
      */
     public DatabaseDialogController(Dialog<DatabaseConnector> dialog) {
         this.DIALOG = dialog;
