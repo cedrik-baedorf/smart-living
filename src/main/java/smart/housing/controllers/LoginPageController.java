@@ -13,7 +13,6 @@ import org.hibernate.service.spi.ServiceException;
 import smart.housing.SmartLivingApplication;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.database.DatabaseConnectorImplementation;
-import smart.housing.entities.User;
 import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.exceptions.LoginServiceException;
 import smart.housing.services.LoginService;

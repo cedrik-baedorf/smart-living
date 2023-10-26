@@ -10,7 +10,6 @@ import smart.housing.exceptions.LoginServiceException;
 import smart.housing.services.LoginService;
 import smart.housing.services.LoginServiceImplementation;
 import smart.housing.entities.User;
-import smart.housing.security.HashAlgorithm;
 
 /**
  * Controller to view 'create_dialog.fxml'
