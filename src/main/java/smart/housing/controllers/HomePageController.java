@@ -19,7 +19,7 @@ public class HomePageController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "home_page.fxml";
 
-    private SmartLivingApplication application;
+    private final SmartLivingApplication APPLICATION;
 
     private SmartHousingController
         userManagementController, taskManagementController,
@@ -42,7 +42,7 @@ public class HomePageController extends SmartHousingController {
      * @param application Application calling the constructor
      */
     public HomePageController(SmartLivingApplication application) {
-        this.application = application;
+        this.APPLICATION = application;
     }
 
     public void initialize() {
@@ -58,20 +58,20 @@ public class HomePageController extends SmartHousingController {
 
     public void loadUserManagement() {
         userManagement.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
-        userManagementController = new UserManagementController(application);
-        loadSubPane(userManagement, application.loadFXML(UserManagementController.VIEW_NAME, userManagementController));
+        userManagementController = new UserManagementController(APPLICATION);
+        loadSubPane(userManagement, APPLICATION.loadFXML(UserManagementController.VIEW_NAME, userManagementController));
     }
 
     public void loadTaskManagement() {
         taskManagement.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
-        taskManagementController = new TaskManagementController(application);
-        loadSubPane(taskManagement, application.loadFXML(TaskManagementController.VIEW_NAME, taskManagementController));
+        taskManagementController = new TaskManagementController(APPLICATION);
+        loadSubPane(taskManagement, APPLICATION.loadFXML(TaskManagementController.VIEW_NAME, taskManagementController));
     }
 
     public void loadBudgetManagement() {
         budgetManagement.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
-        budgetManagementController = new BudgetManagementController(application);
-        loadSubPane(budgetManagement, application.loadFXML(BudgetManagementController.VIEW_NAME, budgetManagementController));
+        budgetManagementController = new BudgetManagementController(APPLICATION);
+        loadSubPane(budgetManagement, APPLICATION.loadFXML(BudgetManagementController.VIEW_NAME, budgetManagementController));
     }
 
     public void loadShoppingManagement() {
