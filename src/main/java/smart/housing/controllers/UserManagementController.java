@@ -51,7 +51,7 @@ public class UserManagementController extends SmartHousingController {
     }
 
     private void loadUsers() {
-        EntityManager entityManager = APPLICATION.getEntityManager();
+        EntityManager entityManager = APPLICATION.getDatabaseConnector().createEntityManager();
         TypedQuery<User> userQuery = entityManager.createNamedQuery(User.FIND_ALL, User.class);
         List<User> userList = userQuery.getResultList();
         userTable.setItems(FXCollections.observableList(userList));

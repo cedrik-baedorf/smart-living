@@ -67,15 +67,15 @@ public class User {
         this("standard");
     }
 
-    public User(String username, String password, HashAlgorithm algorithm) {
-        this(username);
-        this.setPassword(password, algorithm);
-    }
-
     public User(String username) {
         if(username == null)
             throw new RuntimeException("Username cannot be equal to null");
         this.USERNAME = username;
+    }
+
+    public User(String username, String password, HashAlgorithm algorithm) {
+        this(username);
+        this.setPassword(password, algorithm);
     }
 
     public void setPassword(String password, HashAlgorithm algorithm) {

@@ -21,8 +21,12 @@ public class LoginServiceImplementation implements LoginService {
     @Override
     public User login(String username, String password) {
         EntityManager entityManager = databaseConnector.createEntityManager();
+        if(username == null || username.length() == 0)
+            throw new LoginServiceException(String.format(MSG_LOGIN_EMPTY, "username"));
+        if(password == null || password.length() == 0)
+            throw new LoginServiceException(String.format(MSG_LOGIN_EMPTY, "password"));
         if(username.length() > User.USERNAME_LENGTH)
-            throw new LoginServiceException(String.format(MSG_LOGIN_LENGTH, "username", User.USERNAME_LENGTH));
+            throw new IncorrectCredentialsException(String.format(MSG_LOGIN_LENGTH, "username", User.USERNAME_LENGTH));
         User user = entityManager.find(User.class, username);
         if(user == null || ! user.getPassword().equals(HASH_ALGORITHM.hash(password)))
             throw new IncorrectCredentialsException(String.format(MSG_LOGIN_FAILED, username));
@@ -57,5 +61,10 @@ public class LoginServiceImplementation implements LoginService {
         } else {
             throw new IncorrectCredentialsException(String.format(MSG_DELETE_UNSUCCESSFUL, username));
         }
+    }
+
+    @Override
+    public HashAlgorithm getHashAlgorithm() {
+        return HASH_ALGORITHM;
     }
 }

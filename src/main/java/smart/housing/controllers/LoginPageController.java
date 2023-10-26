@@ -88,6 +88,9 @@ public class LoginPageController extends SmartHousingController {
     }
 
     private void attemptLogin(String username, String password) {
+        clearErrorMessage();
+        errorMessage.setText("Attempting login...");
+
         DatabaseConnector connector = APPLICATION.getDatabaseConnector();
         LoginService loginService = new LoginServiceImplementation(connector);
         try {
@@ -95,9 +98,11 @@ public class LoginPageController extends SmartHousingController {
             APPLICATION.setDatabaseConnector(connector);
             APPLICATION.setRoot(HomePageController.VIEW_NAME, new HomePageController(APPLICATION));
         } catch (IncorrectCredentialsException exception) {
-
+            errorMessage.setTextFill(Color.RED);
+            errorMessage.setText("Invalid Credentials");
         } catch (LoginServiceException exception) {
-
+            errorMessage.setTextFill(Color.RED);
+            errorMessage.setText("Missing Credentials");
         } finally {
             passwordField.clear();
             usernameField.clear();

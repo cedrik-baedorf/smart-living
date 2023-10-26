@@ -2,9 +2,11 @@ package smart.housing.services;
 
 import smart.housing.entities.User;
 import smart.housing.exceptions.LoginServiceException;
+import smart.housing.security.HashAlgorithm;
 
 public interface LoginService {
 
+    String MSG_LOGIN_EMPTY = "Login failed using empty %s property";
     String MSG_LOGIN_LENGTH = "Length of %s cannot be longer that %s characters";
     String MSG_LOGIN_FAILED = "Login failed for username '%s'";
     String MSG_CREATE_NULL = "Attempted to persist User but %s was null";
@@ -33,5 +35,7 @@ public interface LoginService {
     void create(User user) throws LoginServiceException;
 
     void delete(String username, String password) throws LoginServiceException;
+
+    HashAlgorithm getHashAlgorithm();
 
 }

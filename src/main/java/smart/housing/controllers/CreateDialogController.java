@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import smart.housing.SmartLivingApplication;
+import smart.housing.exceptions.EmptyFieldException;
+import smart.housing.exceptions.LoginServiceException;
 import smart.housing.services.LoginService;
 import smart.housing.services.LoginServiceImplementation;
 import smart.housing.entities.User;
@@ -25,6 +27,8 @@ public class CreateDialogController extends DialogController {
     private final SmartLivingApplication APPLICATION;
 
     private final Dialog<Boolean> DIALOG;
+
+    private static final String MSG_EMPTY_FIELD = "%s must not be empty";
 
     @FXML
     DialogPane dialogPane;
@@ -61,18 +65,38 @@ public class CreateDialogController extends DialogController {
 
     public void _createUser(ActionEvent event) {
         event.consume();
+        try {
+            createUser();
+        } catch (LoginServiceException exception) {
+            errorMessage.setText(exception.getMessage());
+            errorMessage.setTextFill(Color.RED);
+        } finally {
+            usernameField.clear();
+            passwordField.clear();
+            lastNameField.clear();
+            firstNameField.clear();
+        }
+    }
+
+    public void createUser() {
         clearErrorMessage();
-        User newUser = new User(usernameField.getText());
-        newUser.setPassword(passwordField.getText(), HashAlgorithm.DEFAULT);
+        LoginService loginService = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
+
+        checkForEmptyInput(usernameField.getText(), "username");
+        checkForEmptyInput(passwordField.getText(), "password");
+        checkForEmptyInput(lastNameField.getText(), "surname");
+        checkForEmptyInput(firstNameField.getText(), "first name");
+
+        User newUser = new User(usernameField.getText(), passwordField.getText(), loginService.getHashAlgorithm());
         newUser.setLastName(lastNameField.getText());
         newUser.setFirstName(firstNameField.getText());
-        LoginService loginService = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
         loginService.create(newUser);
         DIALOG.setResult(true);
-        usernameField.clear();
-        passwordField.clear();
-        lastNameField.clear();
-        firstNameField.clear();
+    }
+
+    private void checkForEmptyInput(String input, String fieldName) throws EmptyFieldException {
+        if(input == null || input.length() == 0)
+            throw new EmptyFieldException(String.format(MSG_EMPTY_FIELD, fieldName), fieldName);
     }
 
 
