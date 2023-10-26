@@ -1,19 +1,23 @@
 package smart.housing.controllers;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import org.hibernate.PropertyNotFoundException;
 import org.hibernate.service.spi.ServiceException;
 import smart.housing.SmartLivingApplication;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.database.DatabaseConnectorImplementation;
-import smart.housing.database.LoginManager;
-import smart.housing.database.LoginManagerImplementation;
-
-import javax.persistence.EntityManager;
+import smart.housing.exceptions.IncorrectCredentialsException;
+import smart.housing.exceptions.LoginServiceException;
+import smart.housing.services.LoginService;
+import smart.housing.services.LoginServiceImplementation;
+import java.util.Optional;
 
 /**
  * Controller to view 'login_page.fxml'
@@ -33,6 +37,8 @@ public class LoginPageController extends SmartHousingController {
     public PasswordField passwordField;
     @FXML
     public TextField usernameField;
+    @FXML
+    public Label errorMessage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -47,8 +53,18 @@ public class LoginPageController extends SmartHousingController {
         try {
             APPLICATION.setDatabaseConnector(new DatabaseConnectorImplementation());
         } catch (ServiceException | PropertyNotFoundException exception) {
-            configureDatabaseProperties();
+            DatabaseConnector connector = createDatabaseConnector();
+            if(connector != null)
+                APPLICATION.setDatabaseConnector(connector);
+            else
+                Platform.exit();
         }
+        clearErrorMessage();
+    }
+
+    private void clearErrorMessage() {
+        errorMessage.setTextFill(Color.BLACK);
+        errorMessage.setText("");
     }
 
     public String getViewName() {
@@ -71,27 +87,40 @@ public class LoginPageController extends SmartHousingController {
     }
 
     private void attemptLogin(String username, String password) {
+        clearErrorMessage();
+        errorMessage.setText("Attempting login...");
+
         DatabaseConnector connector = APPLICATION.getDatabaseConnector();
-        LoginManager loginManager = new LoginManagerImplementation(connector);
-        EntityManager entityManager = loginManager.login(username, password);
-        passwordField.clear();
-        usernameField.clear();
-        if (entityManager != null) {
+        LoginService loginService = new LoginServiceImplementation(connector);
+        try {
+            APPLICATION.setUser(loginService.login(username, password));
             APPLICATION.setDatabaseConnector(connector);
             APPLICATION.setRoot(HomePageController.VIEW_NAME, new HomePageController(APPLICATION));
+        } catch (IncorrectCredentialsException exception) {
+            errorMessage.setTextFill(Color.RED);
+            errorMessage.setText("Invalid Credentials");
+        } catch (LoginServiceException exception) {
+            errorMessage.setTextFill(Color.RED);
+            errorMessage.setText("Missing Credentials");
+        } finally {
+            passwordField.clear();
+            usernameField.clear();
         }
     }
 
     public void _confDBase_onAction(ActionEvent event) {
         event.consume();
-        configureDatabaseProperties();
+        DatabaseConnector connector = createDatabaseConnector();
+        if(connector != null)
+            APPLICATION.setDatabaseConnector(connector);
     }
 
-    private void configureDatabaseProperties() {
+    private DatabaseConnector createDatabaseConnector() {
         Dialog<DatabaseConnector> dialog = new Dialog<>();
         dialog.setDialogPane(APPLICATION.loadFXML(DatabaseDialogController.VIEW_NAME, new DatabaseDialogController(dialog)));
 
-        dialog.showAndWait().ifPresent(APPLICATION::setDatabaseConnector);
+        Optional<DatabaseConnector> result = dialog.showAndWait();
+        return result.orElse(null);
     }
 }
 

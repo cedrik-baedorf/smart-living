@@ -44,7 +44,7 @@
             <GridPane.margin>
                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
             </GridPane.margin></Button>
-            <Button fx:id="createButton" text="Create" GridPane.columnIndex="2">
+            <Button fx:id="createButton" text="Create" GridPane.columnIndex="2" onAction="#_createButton_onAction">
             <GridPane.margin>
                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
             </GridPane.margin></Button>
