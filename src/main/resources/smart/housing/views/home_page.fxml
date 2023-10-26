@@ -13,7 +13,7 @@
         <Pane fx:id="taskManagement"/>
     </Tab>
     <Tab closable="false" text="Accounting">
-        <Pane fx:id="accounting"/>
+        <Pane fx:id="budgetManagement"/>
     </Tab>
     <Tab closable="false" text="Shopping">
         <Pane fx:id="shopping"/>

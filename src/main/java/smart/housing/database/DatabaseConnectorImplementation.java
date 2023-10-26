@@ -6,6 +6,7 @@ import org.hibernate.service.spi.ServiceException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,14 +63,18 @@ public class DatabaseConnectorImplementation implements DatabaseConnector {
             //try creating EntityManagerFactory
             entityManagerFactory = createEntityManagerFactory(loginProperties);
 
-            //write login properties into the file after successfull completion
-            FileWriter propertiesWriter = new FileWriter("src/main/resources/" + DB_ACCESS_PROPERTIES);
-            propertiesWriter.write(USER_PROPERTY + '=' + loginProperties.get(USER_PROPERTY) + '\n');
-            propertiesWriter.write(PASSWORD_PROPERTY + '=' + loginProperties.get(PASSWORD_PROPERTY) + '\n');
-            propertiesWriter.write(URL_PROPERTY + '=' + loginProperties.get(URL_PROPERTY) + '\n');
-            propertiesWriter.write(DRIVER_PROPERTY + '=' + loginProperties.get(DRIVER_PROPERTY));
+            File propertiesFile = new File("src/main/resources/" + DB_ACCESS_PROPERTIES);
+            if(! propertiesFile.exists())
+                propertiesFile.createNewFile();
 
-            propertiesWriter.close();
+            //write login properties into the file after successfull completion
+            FileWriter propertiesFileWriter = new FileWriter(propertiesFile);
+            propertiesFileWriter.write(USER_PROPERTY + '=' + loginProperties.get(USER_PROPERTY) + '\n');
+            propertiesFileWriter.write(PASSWORD_PROPERTY + '=' + loginProperties.get(PASSWORD_PROPERTY) + '\n');
+            propertiesFileWriter.write(URL_PROPERTY + '=' + loginProperties.get(URL_PROPERTY) + '\n');
+            propertiesFileWriter.write(DRIVER_PROPERTY + '=' + loginProperties.get(DRIVER_PROPERTY));
+
+            propertiesFileWriter.close();
         } catch (IOException | PropertyNotFoundException ioException) {
             ioException.printStackTrace();
         }
@@ -102,9 +107,9 @@ public class DatabaseConnectorImplementation implements DatabaseConnector {
                 final String MSG = "'persistence_unit' property not found in database properties";
                 throw new RuntimeException(MSG);
             }
-        } catch (Exception e) {
+        } catch (Exception exception) {
             final String MSG = "Unable to create connection using " + accessProperties + " and " + persistenceUnit;
-            throw new ServiceException(MSG);
+            throw new ServiceException(MSG, exception);
         }
     }
 
@@ -120,7 +125,7 @@ public class DatabaseConnectorImplementation implements DatabaseConnector {
             properties.load( is );
         } catch (Exception e) {
             final String msg = "Loading properties file " + propertiesPath + " failed";
-            throw new RuntimeException(msg);
+            throw new ServiceException(msg);
         }
         return properties;
     }
