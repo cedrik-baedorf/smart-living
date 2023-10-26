@@ -1,6 +1,12 @@
 package smart.housing.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.scene.control.TableView;
 import smart.housing.SmartLivingApplication;
+import smart.housing.entities.Task;
+import smart.housing.services.TaskManagementService;
+import smart.housing.services.TaskManagementServiceImplementation;
 
 /**
  * Controller to view 'task_management.fxml'
@@ -14,7 +20,21 @@ public class TaskManagementController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "task_management.fxml";
 
-    private SmartLivingApplication application;
+    private final SmartLivingApplication APPLICATION;
+
+    private final TaskManagementService TASK_SERVICE;
+
+    @FXML
+    public TableView<Task> taskTable;
+
+    @FXML
+    public TableView<Task> currentTasks;
+
+    @FXML
+    public TableView<Task> nextTasks;
+
+    @FXML
+    public TableView<Task> completedTasks;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -22,7 +42,16 @@ public class TaskManagementController extends SmartHousingController {
      * @param application Application calling the constructor
      */
     public TaskManagementController(SmartLivingApplication application) {
-        this.application = application;
+        this.APPLICATION = application;
+        this.TASK_SERVICE = new TaskManagementServiceImplementation(APPLICATION.getDatabaseConnector());
+    }
+
+    public void initialize() {
+        loadTasks();
+    }
+
+    public void loadTasks(){
+        taskTable.setItems(FXCollections.observableList(TASK_SERVICE.getAllTasks()));
     }
 
     @Override

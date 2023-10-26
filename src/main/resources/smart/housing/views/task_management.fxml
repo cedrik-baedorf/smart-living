@@ -7,18 +7,22 @@
 
 <?import javafx.collections.FXCollections?>
 <?import java.lang.String?>
-<BorderPane prefHeight="600" prefWidth="1000" style="-fx-background-color: GREEN;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.UserManagementController">
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<BorderPane prefHeight="600" prefWidth="1000" style="-fx-background-color: GREEN;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.TaskManagementController">
     <center>
         <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="150.0" minWidth="300.0" prefHeight="400.0" prefWidth="697.0" BorderPane.alignment="CENTER">
             <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0">
                     <children>
-                        <Pane layoutX="46.0" layoutY="85.0" style="-fx-background-color: black;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="200.0">
-                            <children>
-                                <Label alignment="CENTER" layoutX="259.0" layoutY="24.0" text="CALENDAR" style="-fx-text-fill: white" textAlignment="CENTER">
-                                </Label>
-                            </children>
-                        </Pane>
+                        <TableView fx:id="taskTable" layoutX="60.0" layoutY="206.0" prefHeight="271.0" prefWidth="641.0">
+                            <columns>
+                                <TableColumn text="Task Name">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="taskName" />
+                                    </cellValueFactory>
+                                </TableColumn>
+                            </columns>
+                        </TableView>
                         <Button layoutX="80.0" layoutY="156.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="53.0" text="+ NEW">
                             <font>
                                 <Font size="12.0" />
@@ -51,20 +55,20 @@
                                 </FXCollections>
                             </items>
                         </ChoiceBox>
-                        <TableView layoutX="504.0" layoutY="23.0" prefHeight="111.0" prefWidth="300.0" AnchorPane.rightAnchor="50.0">
+                        <TableView fx:id="completedTasks" layoutX="504.0" layoutY="23.0" prefHeight="111.0" prefWidth="300.0" AnchorPane.rightAnchor="50.0">
                             <columns>
                                 <TableColumn prefWidth="75.0" text="Task" />
                                 <TableColumn prefWidth="137.0" text="Completed By" />
                                 <TableColumn prefWidth="87.0" text="Date" />
                             </columns>
                         </TableView>
-                        <TableView layoutX="265.0" layoutY="23.0" prefHeight="111.0" prefWidth="300.0" AnchorPane.leftAnchor="380.0">
+                        <TableView fx:id="nextTasks" layoutX="265.0" layoutY="23.0" prefHeight="111.0" prefWidth="300.0" AnchorPane.leftAnchor="380.0">
                             <columns>
                                 <TableColumn prefWidth="87.0" text="Next Task" />
                                 <TableColumn prefWidth="212.0" text="Assigned To" />
                             </columns>
                         </TableView>
-                        <TableView layoutX="39.0" layoutY="22.0" prefHeight="113.0" prefWidth="300.0" AnchorPane.leftAnchor="50.0">
+                        <TableView fx:id="currentTasks" layoutX="39.0" layoutY="22.0" prefHeight="113.0" prefWidth="300.0" AnchorPane.leftAnchor="50.0">
                             <columns>
                                 <TableColumn prefWidth="110.0" text="Tasks This Week" />
                                 <TableColumn prefWidth="189.0" text="Assigned To" />

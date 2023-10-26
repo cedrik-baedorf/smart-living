@@ -12,7 +12,28 @@ import java.util.Set;
  */
 @Entity
 @Table(name= "tasks")
+@NamedQueries({
+        @NamedQuery(
+                name = Task.FIND_ALL,
+                query = "SELECT task FROM Task task"
+        ),
+        @NamedQuery(
+                name = Task.FIND_WITH_FILTERS,
+                query = "SELECT task FROM Task task"
+        )
+})
+
 public class Task {
+
+    /**
+     * Name of named query to return all tasks
+     */
+    public static final String FIND_ALL = "Task.findAll";
+
+    /**
+     * Name of named query to return all tasks filtered by
+     */
+    public static final String FIND_WITH_FILTERS = "Task.findWithFilters";
 
     /**
      * Unique id of the task
@@ -96,16 +117,48 @@ public class Task {
             // MISSING: database update to mark task as completed
     }
 
-    private Set<User> getAssignees() {
+    public String getTaskName(){
+        return this.taskName;
+    }
+
+    public void setTaskName(String taskName){
+        this.taskName = taskName;
+    }
+
+    public Set<User> getAssignees() {
         return assignees;
     }
 
-    private void setCompleted(){
+    public LocalDate getStartDate(){
+        return this.startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public int getReoccurrence(){
+        return this.reoccurrence;
+    }
+
+    public void setReoccurrence(int reoccurrence){
+        this.reoccurrence = reoccurrence;
+    }
+
+    public LocalDate getEndDate(){
+        return this.endDate;
+    }
+
+    public void setEndDate(LocalDate endDate){
+        this.endDate = endDate;
+    }
+
+    public void setCompleted(){
         isCompleted = true;
     }
 
-    public boolean getCompleted(){
-        return assignees!= null && !assignees.isEmpty() && isCompleted;
+    public boolean getCompleted() {
+        return assignees != null && !assignees.isEmpty() && isCompleted;
     }
 
 }
