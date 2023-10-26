@@ -10,18 +10,9 @@
         <BorderPane.margin>
             <Insets bottom="100.0" left="200.0" right="200.0" top="100.0" />
         </BorderPane.margin>
+        <content>
+            <ChoiceBox fx:id="creditors" GridPane.rowIndex="0"/>
+        </content>
     </ScrollPane>
 </center>
-<bottom>
-    <GridPane>
-         <columnConstraints>
-            <ColumnConstraints />
-            <ColumnConstraints />
-            <ColumnConstraints />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-         </rowConstraints>
-    </GridPane>
-</bottom>
 </BorderPane>
