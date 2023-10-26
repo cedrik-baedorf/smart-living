@@ -108,11 +108,10 @@ public class User {
 
     @Override
     public String toString() {
-        return "("
-            + USERNAME + ";"
-            + password + ";"
-            + lastName + ";"
-            + firstName + ")";
+        return
+            firstName + " "
+            + lastName + " ("
+            + username + ")";
     }
 
     @Override

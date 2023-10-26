@@ -1,6 +1,12 @@
 package smart.housing.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.fxml.FXML;
+import javafx.scene.control.ChoiceBox;
 import smart.housing.SmartLivingApplication;
+import smart.housing.entities.User;
+import smart.housing.services.BudgetManagementService;
+import smart.housing.services.BudgetManagementServiceImplementation;
 
 /**
  * Controller to view 'budget_management.fxml'
@@ -16,6 +22,9 @@ public class BudgetManagementController extends SmartHousingController {
 
     private final SmartLivingApplication APPLICATION;
 
+    @FXML
+    ChoiceBox<User> creditors;
+
     /**
      * Constructor for this controller passing the <code>Application</code> object this
      * instance belongs to
@@ -23,6 +32,11 @@ public class BudgetManagementController extends SmartHousingController {
      */
     public BudgetManagementController(SmartLivingApplication application) {
         this.APPLICATION = application;
+    }
+
+    public void initialize() {
+        BudgetManagementService service = new BudgetManagementServiceImplementation(APPLICATION.getDatabaseConnector());
+        creditors.setItems(FXCollections.observableList(service.getCurrentUsers()));
     }
 
     public String getViewName() {
