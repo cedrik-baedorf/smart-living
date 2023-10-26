@@ -63,6 +63,11 @@ public class UserManagementController extends SmartHousingController {
         createButton.setDisable(false);
     }
 
+    @Override
+    public void update() {
+        loadUsers();
+    }
+
     public void _userTable_onMouseClicked(MouseEvent mouseEvent) {
         mouseEvent.consume();
         User selectedUser = userTable.getSelectionModel().getSelectedItem();

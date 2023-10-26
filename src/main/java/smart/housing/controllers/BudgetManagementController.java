@@ -35,6 +35,11 @@ public class BudgetManagementController extends SmartHousingController {
     }
 
     public void initialize() {
+        update();
+    }
+
+    @Override
+    public void update() {
         BudgetManagementService service = new BudgetManagementServiceImplementation(APPLICATION.getDatabaseConnector());
         creditors.setItems(FXCollections.observableList(service.getCurrentUsers()));
     }
