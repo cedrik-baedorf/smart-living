@@ -28,6 +28,7 @@ public class DeleteDialogController extends DialogController {
         DELETE_USER = "Confirm deletion of user %s",
         ENTER_PASSWORD = "Please enter a password";
 
+
     private final SmartLivingApplication APPLICATION;
     private final Dialog<Boolean> DIALOG;
 
@@ -49,6 +50,7 @@ public class DeleteDialogController extends DialogController {
         this.APPLICATION = application;
         this.DIALOG = dialog;
         this.USER = user;
+
     }
 
     public void initialize() {
@@ -73,9 +75,8 @@ public class DeleteDialogController extends DialogController {
         loginService.delete(USER.getUsername(), passwordField.getText());
         DIALOG.setResult(true);
         usernameLabel.setText("");
+
         passwordField.clear();
     }
-
-
 
 }

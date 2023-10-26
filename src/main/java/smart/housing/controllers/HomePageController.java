@@ -29,7 +29,7 @@ public class HomePageController extends SmartHousingController {
     public Pane taskManagement;
 
     @FXML
-    public Pane accounting;
+    public Pane budgetManagement;
 
     @FXML
     public Pane shopping;
@@ -65,8 +65,8 @@ public class HomePageController extends SmartHousingController {
     }
 
     public void loadAccounting() {
-        accounting.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
-
+        budgetManagement.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
+        loadSubPane(budgetManagement, application.loadFXML(BudgetManagementController.VIEW_NAME, new BudgetManagementController(application)));
     }
 
     public void loadShopping() {
