@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import smart.housing.SmartLivingApplication;
+import smart.housing.exceptions.EmptyFieldException;
+import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.services.LoginService;
 import smart.housing.services.LoginServiceImplementation;
 import smart.housing.entities.User;
@@ -68,15 +70,31 @@ public class DeleteDialogController extends DialogController {
         return VIEW_NAME;
     }
 
-    public void _confirmDeletion(ActionEvent event) {
+    public void _deleteUser(ActionEvent event) {
         event.consume();
         clearErrorMessage();
+        try {
+            deleteUser();
+        } catch (EmptyFieldException exception) {
+            errorMessage.setTextFill(Color.RED);
+            errorMessage.setText(exception.getMessage());
+        } catch (IncorrectCredentialsException exception) {
+            errorMessage.setTextFill(Color.RED);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            usernameLabel.setText("");
+            passwordField.clear();
+        }
+    }
+
+    public void deleteUser() {
+        checkForEmptyInput(passwordField.getText(), "password");
+
         LoginService loginService = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
         loginService.delete(USER.getUsername(), passwordField.getText());
         DIALOG.setResult(true);
-        usernameLabel.setText("");
-
-        passwordField.clear();
     }
 
 }

@@ -38,19 +38,20 @@ public class SmartLivingApplication extends Application {
         stage.setTitle("Smart Living Application");
         setRoot(START_VIEW, START_CONTROLLER);
         stage.setOnCloseRequest(event -> Platform.exit());
-        stage.show();
     }
 
     public void setRoot(String rootView, SmartHousingController controller) {
+        boolean maximized = stage.isMaximized();
         double width = stage.getWidth();
         double height = stage.getHeight();
         FXMLLoader loader = createFXMLLoader(rootView);
         loader.setControllerFactory(c -> controller);
         Scene scene = createScene(loader);
         stage.setScene(scene);
+        stage.show();
         stage.setWidth(width);
         stage.setHeight(height);
-        stage.setMaximized(stage.isMaximized());
+        stage.setMaximized(maximized);
     }
 
     private Scene createScene(FXMLLoader loader) {

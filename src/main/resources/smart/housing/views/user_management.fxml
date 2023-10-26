@@ -40,7 +40,7 @@
             <GridPane.margin>
                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
             </GridPane.margin></Button>
-            <Button fx:id="modifyButton" text="Modify" GridPane.columnIndex="1">
+            <Button fx:id="modifyButton" text="Modify" GridPane.columnIndex="1" onAction="#_modifyButton_onAction">
             <GridPane.margin>
                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
             </GridPane.margin></Button>

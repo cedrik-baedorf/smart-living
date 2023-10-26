@@ -86,6 +86,21 @@ public class UserManagementController extends SmartHousingController {
         dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
     }
 
+    public void _modifyButton_onAction(ActionEvent event) {
+        event.consume();
+        modifyUser();
+    }
+
+    public void modifyUser() {
+        User userToBeModified = userTable.getSelectionModel().getSelectedItem();
+        Dialog<Boolean> dialog = new Dialog<>();
+        dialog.setDialogPane(APPLICATION.loadFXML(
+                ModifyDialogController.VIEW_NAME,
+                new ModifyDialogController(APPLICATION, dialog, userToBeModified)
+        ));
+        dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
+    }
+
     public void _createButton_onAction(ActionEvent event) {
         event.consume();
         createUser();
