@@ -18,7 +18,7 @@ import javax.persistence.*;
                 name = User.FIND_WITH_FILTERS,
                 query = """
                         SELECT user FROM User user
-                        WHERE   user.username   = coalesce(:username, user.username)
+                        WHERE   user.USERNAME   = coalesce(:username, user.USERNAME)
                         AND     user.lastName   = coalesce(:lastName, user.lastName)
                         AND     user.firstName  = coalesce(:firstName, user.firstName)
                         """
@@ -35,6 +35,8 @@ public class User {
      * Name of named query to return all filtered users
      */
     public static final String FIND_WITH_FILTERS = "User.findWithFilters";
+
+    public static final int USERNAME_LENGTH = 8;
 
     /**
      * Unique username

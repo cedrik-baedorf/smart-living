@@ -7,19 +7,22 @@ import javax.persistence.EntityManager;
 
 public interface LoginService {
 
+    String MSG_LOGIN_LENGTH = "Length of %s cannot be longer that %s characters";
+    String MSG_LOGIN_FAILED = "Login failed for username '%s'";
     String MSG_CREATE_NULL = "Attempted to persist User but %s was null";
     String MSG_CREATE_USERNAME_EXISTS = "Attempted to persist User but username %s already exists";
+    String MSG_DELETE_UNSUCCESSFUL = "Attempt to delete user '%s' was unsuccessful";
 
     /**
      * This method takes a username and a password and checks whether they match.
-     * If they match, the method shall return an <code>EntityManager</code> object connected to the database.
-     * If they do not match, this method shall return <code>null</code>.
-     * If the username does not exist in the database, this method shall return <code>null</code>.
+     * If they match, the method shall return the <code>User</code> object from the database.
+     * If they do not match, this method shall throw a <code>IncorrectCredentialsException</code>.
+     * If the username does not exist in the database, this method shall throw a <code>LoginServiceException</code>.
      * @param username username determines the user that is attempted to log in
      * @param password password must match the password stored for the username
-     * @return entity manager connected to the database
+     * @return <code>User</code> object related to the username and password provided
      */
-    EntityManager login(String username, String password) throws LoginServiceException;
+    User login(String username, String password) throws LoginServiceException;
 
     /**
      * This method takes an object of class <code>User</code> and persists it in the database, if

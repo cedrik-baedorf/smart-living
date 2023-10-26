@@ -4,13 +4,18 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import org.hibernate.PropertyNotFoundException;
 import org.hibernate.service.spi.ServiceException;
 import smart.housing.SmartLivingApplication;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.database.DatabaseConnectorImplementation;
+import smart.housing.entities.User;
+import smart.housing.exceptions.IncorrectCredentialsException;
+import smart.housing.exceptions.LoginServiceException;
 import smart.housing.services.LoginService;
 import smart.housing.services.LoginServiceImplementation;
 
@@ -35,6 +40,8 @@ public class LoginPageController extends SmartHousingController {
     public PasswordField passwordField;
     @FXML
     public TextField usernameField;
+    @FXML
+    public Label errorMessage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -55,6 +62,12 @@ public class LoginPageController extends SmartHousingController {
             else
                 Platform.exit();
         }
+        clearErrorMessage();
+    }
+
+    private void clearErrorMessage() {
+        errorMessage.setTextFill(Color.BLACK);
+        errorMessage.setText("");
     }
 
     public String getViewName() {
@@ -79,12 +92,17 @@ public class LoginPageController extends SmartHousingController {
     private void attemptLogin(String username, String password) {
         DatabaseConnector connector = APPLICATION.getDatabaseConnector();
         LoginService loginService = new LoginServiceImplementation(connector);
-        EntityManager entityManager = loginService.login(username, password);
-        passwordField.clear();
-        usernameField.clear();
-        if (entityManager != null) {
+        try {
+            User user = loginService.login(username, password);
             APPLICATION.setDatabaseConnector(connector);
             APPLICATION.setRoot(HomePageController.VIEW_NAME, new HomePageController(APPLICATION));
+        } catch (IncorrectCredentialsException exception) {
+
+        } catch (LoginServiceException exception) {
+
+        } finally {
+            passwordField.clear();
+            usernameField.clear();
         }
     }
 

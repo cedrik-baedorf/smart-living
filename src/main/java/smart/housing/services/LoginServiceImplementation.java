@@ -3,6 +3,7 @@ package smart.housing.services;
 import org.hibernate.service.spi.ServiceException;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.User;
+import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.exceptions.LoginServiceException;
 import smart.housing.security.HashAlgorithm;
 
@@ -10,7 +11,7 @@ import javax.persistence.EntityManager;
 
 public class LoginServiceImplementation implements LoginService {
 
-    private static final HashAlgorithm HASH_ALGORITHM = HashAlgorithm.DEFAULT;
+    public static final HashAlgorithm HASH_ALGORITHM = HashAlgorithm.DEFAULT;
 
     private final DatabaseConnector databaseConnector;
 
@@ -19,12 +20,15 @@ public class LoginServiceImplementation implements LoginService {
     }
 
     @Override
-    public EntityManager login(String username, String password) {
-        EntityManager em = databaseConnector.createEntityManager();
-        if(username.length() > 8)
-            return null;
-        User user = em.find(User.class, username);
-        return user != null && user.getPassword().equals(HASH_ALGORITHM.hash(password)) ? em : null;
+    public User login(String username, String password) {
+        EntityManager entityManager = databaseConnector.createEntityManager();
+        if(username.length() > User.USERNAME_LENGTH)
+            throw new LoginServiceException(String.format(MSG_LOGIN_LENGTH, "username", User.USERNAME_LENGTH));
+        User user = entityManager.find(User.class, username);
+        if(user == null || ! user.getPassword().equals(HASH_ALGORITHM.hash(password)))
+            throw new IncorrectCredentialsException(String.format(MSG_LOGIN_FAILED, username));
+        entityManager.close();
+        return user;
     }
 
     @Override
@@ -44,14 +48,15 @@ public class LoginServiceImplementation implements LoginService {
 
     @Override
     public void delete(String username, String password) {
-        EntityManager entityManager = login(username, password);
-        User user = entityManager.find(User.class, username);
-        if(HASH_ALGORITHM.hash(password).equals(user.getPassword())) {
+        User userToBeDeleted = login(username, password);
+        if(HASH_ALGORITHM.hash(password).equals(userToBeDeleted.getPassword())) {
+            EntityManager entityManager = databaseConnector.createEntityManager();
             entityManager.getTransaction().begin();
-            entityManager.remove(user);
+            entityManager.remove(userToBeDeleted);
             entityManager.getTransaction().commit();
+            entityManager.close();
         } else {
-            throw new ServiceException("User " + username + " could not be deleted");
+            throw new IncorrectCredentialsException(String.format(MSG_DELETE_UNSUCCESSFUL, username));
         }
     }
 }
