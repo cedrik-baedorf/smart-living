@@ -4,4 +4,8 @@ public abstract class SmartHousingController {
 
     public abstract String getViewName();
 
+    public void update() {
+
+    }
+
 }
