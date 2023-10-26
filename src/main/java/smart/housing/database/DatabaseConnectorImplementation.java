@@ -107,9 +107,9 @@ public class DatabaseConnectorImplementation implements DatabaseConnector {
                 final String MSG = "'persistence_unit' property not found in database properties";
                 throw new RuntimeException(MSG);
             }
-        } catch (Exception e) {
+        } catch (Exception exception) {
             final String MSG = "Unable to create connection using " + accessProperties + " and " + persistenceUnit;
-            throw new ServiceException(MSG);
+            throw new ServiceException(MSG, exception);
         }
     }
 

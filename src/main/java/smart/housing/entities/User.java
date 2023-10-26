@@ -18,7 +18,7 @@ import javax.persistence.*;
                 name = User.FIND_WITH_FILTERS,
                 query = """
                         SELECT user FROM User user
-                        WHERE   user.username   = coalesce(:username, user.username)
+                        WHERE   user.USERNAME   = coalesce(:username, user.USERNAME)
                         AND     user.lastName   = coalesce(:lastName, user.lastName)
                         AND     user.firstName  = coalesce(:firstName, user.firstName)
                         """
@@ -36,12 +36,14 @@ public class User {
      */
     public static final String FIND_WITH_FILTERS = "User.findWithFilters";
 
+    public static final int USERNAME_LENGTH = 8;
+
     /**
      * Unique username
      */
     @Id
     @Column(name = "username")
-    private final String username;
+    private final String USERNAME;
 
     /**
      * Hashed password to the username
@@ -62,18 +64,18 @@ public class User {
     private String firstName;
 
     public User() {
-        this("default");
+        this("standard");
+    }
+
+    public User(String username) {
+        if(username == null)
+            throw new RuntimeException("Username cannot be equal to null");
+        this.USERNAME = username;
     }
 
     public User(String username, String password, HashAlgorithm algorithm) {
         this(username);
         this.setPassword(password, algorithm);
-    }
-
-    public User(String username) {
-        if(username == null)
-            throw new NullPointerException("Username cannot be equal to null");
-        this.username = username;
     }
 
     public void setPassword(String password, HashAlgorithm algorithm) {
@@ -89,7 +91,7 @@ public class User {
     }
 
     public String getUsername() {
-        return username;
+        return USERNAME;
     }
 
     public String getPassword() {

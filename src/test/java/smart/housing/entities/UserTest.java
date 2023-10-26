@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import smart.housing.security.HashAlgorithm;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest {
 
@@ -22,6 +22,11 @@ public class UserTest {
         String actualHash = user.getPassword();
 
         assertEquals(expectedHash, actualHash);
+    }
+
+    @Test
+    public void testUser_usernameEqualNull() {
+        assertThrows(RuntimeException.class, () -> new User(null));
     }
 
 }

@@ -3,9 +3,10 @@ package smart.housing.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.paint.Color;
 import smart.housing.SmartLivingApplication;
-import smart.housing.database.LoginManager;
-import smart.housing.database.LoginManagerImplementation;
+import smart.housing.services.LoginService;
+import smart.housing.services.LoginServiceImplementation;
 import smart.housing.entities.User;
 
 /**
@@ -13,36 +14,54 @@ import smart.housing.entities.User;
  * @author I551381
  * @version 1.0
  */
-public class DeleteDialogController extends SmartHousingController {
+public class DeleteDialogController extends DialogController {
 
     /**
      * Name of the corresponding <code>.fxml</code> file
      */
     public static final String VIEW_NAME = "delete_dialog.fxml";
 
-    private final SmartLivingApplication APPLICATION;
+    /**
+     * Prepared <code>String</code> messages
+     */
+    private static final String
+        DELETE_USER = "Confirm deletion of user %s",
+        ENTER_PASSWORD = "Please enter a password";
 
-    private final User userAtDeletion;
+
+    private final SmartLivingApplication APPLICATION;
+    private final Dialog<Boolean> DIALOG;
+
+    private final User USER;
 
     @FXML
     DialogPane dialogPane;
     @FXML
-    TextField usernameField;
+    Label usernameLabel, errorMessage;
     @FXML
     PasswordField passwordField;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
      * instance belongs to
-     * @param application Application calling the constructor
+     * @param dialog Dialog to this <code>DialogPane</code>
      */
-    public DeleteDialogController(SmartLivingApplication application, User userAtDeletion) {
+    public DeleteDialogController(SmartLivingApplication application, Dialog<Boolean> dialog, User user) {
         this.APPLICATION = application;
-        this.userAtDeletion = userAtDeletion;
+        this.DIALOG = dialog;
+        this.USER = user;
+
     }
 
     public void initialize() {
+        super.setOnCloseRequest(DIALOG);
+        usernameLabel.setText(String.format(DELETE_USER, USER.getUsername()));
+        clearErrorMessage();
+    }
 
+    private void clearErrorMessage() {
+        errorMessage.setTextFill(Color.BLACK);
+        errorMessage.setText("");
     }
 
     public String getViewName() {
@@ -51,11 +70,12 @@ public class DeleteDialogController extends SmartHousingController {
 
     public void _confirmDeletion(ActionEvent event) {
         event.consume();
-        if(usernameField.getText().equals(userAtDeletion.getUsername())) {
-            LoginManager loginManager = new LoginManagerImplementation(APPLICATION.getDatabaseConnector());
-            loginManager.delete(usernameField.getText(), passwordField.getText());
-        }
-        usernameField.clear();
+        clearErrorMessage();
+        LoginService loginService = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
+        loginService.delete(USER.getUsername(), passwordField.getText());
+        DIALOG.setResult(true);
+        usernameLabel.setText("");
+
         passwordField.clear();
     }
 

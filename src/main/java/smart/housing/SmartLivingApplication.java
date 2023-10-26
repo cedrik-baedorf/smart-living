@@ -1,12 +1,14 @@
 package smart.housing;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import smart.housing.controllers.LoginPageController;
 import smart.housing.controllers.SmartHousingController;
 import smart.housing.database.DatabaseConnector;
+import smart.housing.entities.User;
 
 import javax.persistence.EntityManager;
 import java.io.IOException;
@@ -16,6 +18,8 @@ public class SmartLivingApplication extends Application {
     private final SmartHousingController START_CONTROLLER = new LoginPageController(this);
 
     private DatabaseConnector connector;
+
+    private User user;
 
     private final String
         START_VIEW = START_CONTROLLER.getViewName(),
@@ -33,6 +37,7 @@ public class SmartLivingApplication extends Application {
         stage.setMaximized(true);
         stage.setTitle("Smart Living Application");
         setRoot(START_VIEW, START_CONTROLLER);
+        stage.setOnCloseRequest(event -> Platform.exit());
         stage.show();
     }
 
@@ -74,12 +79,14 @@ public class SmartLivingApplication extends Application {
         this.connector = connector;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public DatabaseConnector getDatabaseConnector() {
         return connector;
     }
 
-    public EntityManager getEntityManager() {
-        return connector.createEntityManager();
-    }
+    public User getUser() { return user; }
 
 }
