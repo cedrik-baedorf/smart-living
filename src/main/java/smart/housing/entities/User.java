@@ -111,7 +111,7 @@ public class User {
         return
             firstName + " "
             + lastName + " ("
-            + username + ")";
+            + USERNAME + ")";
     }
 
     @Override
