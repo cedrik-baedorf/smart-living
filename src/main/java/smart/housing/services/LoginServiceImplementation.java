@@ -51,9 +51,9 @@ public class LoginServiceImplementation implements LoginService {
 
     @Override
     public void delete(String username, String password) {
-        User userToBeDeleted = login(username, password);
+        EntityManager entityManager = databaseConnector.createEntityManager();
+        User userToBeDeleted = entityManager.find(User.class, username);
         if(HASH_ALGORITHM.hash(password).equals(userToBeDeleted.getPassword())) {
-            EntityManager entityManager = databaseConnector.createEntityManager();
             entityManager.getTransaction().begin();
             entityManager.remove(userToBeDeleted);
             entityManager.getTransaction().commit();
