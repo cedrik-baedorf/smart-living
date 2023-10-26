@@ -6,7 +6,6 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import smart.housing.SmartLivingApplication;
 import smart.housing.exceptions.EmptyFieldException;
-import smart.housing.exceptions.LoginServiceException;
 import smart.housing.services.LoginService;
 import smart.housing.services.LoginServiceImplementation;
 import smart.housing.entities.User;

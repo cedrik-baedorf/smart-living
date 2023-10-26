@@ -27,8 +27,7 @@ public class DeleteDialogController extends DialogController {
      * Prepared <code>String</code> messages
      */
     private static final String
-        DELETE_USER = "Confirm deletion of user %s",
-        ENTER_PASSWORD = "Please enter a password";
+        DELETE_USER = "Confirm deletion of user %s";
 
 
     private final SmartLivingApplication APPLICATION;

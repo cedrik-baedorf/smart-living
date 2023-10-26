@@ -9,8 +9,6 @@ import smart.housing.controllers.LoginPageController;
 import smart.housing.controllers.SmartHousingController;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.User;
-
-import javax.persistence.EntityManager;
 import java.io.IOException;
 
 public class SmartLivingApplication extends Application {

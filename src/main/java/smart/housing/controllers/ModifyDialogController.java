@@ -8,7 +8,6 @@ import smart.housing.SmartLivingApplication;
 import smart.housing.entities.User;
 import smart.housing.exceptions.EmptyFieldException;
 import smart.housing.exceptions.IncorrectCredentialsException;
-import smart.housing.exceptions.LoginServiceException;
 import smart.housing.services.LoginService;
 import smart.housing.services.LoginServiceImplementation;
 
