@@ -3,8 +3,6 @@ package smart.housing.services;
 import smart.housing.entities.User;
 import smart.housing.exceptions.LoginServiceException;
 
-import javax.persistence.EntityManager;
-
 public interface LoginService {
 
     String MSG_LOGIN_LENGTH = "Length of %s cannot be longer that %s characters";

@@ -18,8 +18,6 @@ import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.exceptions.LoginServiceException;
 import smart.housing.services.LoginService;
 import smart.housing.services.LoginServiceImplementation;
-
-import javax.persistence.EntityManager;
 import java.util.Optional;
 
 /**
@@ -93,7 +91,7 @@ public class LoginPageController extends SmartHousingController {
         DatabaseConnector connector = APPLICATION.getDatabaseConnector();
         LoginService loginService = new LoginServiceImplementation(connector);
         try {
-            User user = loginService.login(username, password);
+            APPLICATION.setUser(loginService.login(username, password));
             APPLICATION.setDatabaseConnector(connector);
             APPLICATION.setRoot(HomePageController.VIEW_NAME, new HomePageController(APPLICATION));
         } catch (IncorrectCredentialsException exception) {

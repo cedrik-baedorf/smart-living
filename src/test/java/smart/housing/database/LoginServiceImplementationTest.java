@@ -13,8 +13,6 @@ import smart.housing.services.LoginServiceImplementation;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class LoginServiceImplementationTest {

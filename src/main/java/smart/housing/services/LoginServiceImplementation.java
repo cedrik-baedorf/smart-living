@@ -1,6 +1,5 @@
 package smart.housing.services;
 
-import org.hibernate.service.spi.ServiceException;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.User;
 import smart.housing.exceptions.IncorrectCredentialsException;
