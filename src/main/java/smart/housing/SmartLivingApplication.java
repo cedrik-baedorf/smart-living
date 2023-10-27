@@ -11,7 +11,6 @@ import smart.housing.controllers.SmartHousingController;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.User;
 import java.io.IOException;
-import java.net.URL;
 
 public class SmartLivingApplication extends Application {
 
