@@ -33,7 +33,7 @@ public class SmartLivingApplication extends Application {
     @Override
     public void start(Stage stage) {
         this.stage = stage;
-        addStageIcon("smart/housing/views/images/icon.png");
+        addStageIcon("smart/housing/views/images/icon_plain.png");
         stage.setMaximized(true);
         stage.setTitle("Smart Living Application");
         setRoot(START_VIEW, START_CONTROLLER);
