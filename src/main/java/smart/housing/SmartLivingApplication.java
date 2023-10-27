@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import smart.housing.controllers.LoginPageController;
 import smart.housing.controllers.SmartHousingController;
@@ -32,10 +33,19 @@ public class SmartLivingApplication extends Application {
     @Override
     public void start(Stage stage) {
         this.stage = stage;
+        addStageIcon("smart/housing/views/images/icon_plain.png");
         stage.setMaximized(true);
         stage.setTitle("Smart Living Application");
         setRoot(START_VIEW, START_CONTROLLER);
         stage.setOnCloseRequest(event -> Platform.exit());
+    }
+
+    private void addStageIcon(String path) {
+        try {
+            stage.getIcons().add(new Image(path));
+        } catch (RuntimeException exception) {
+            exception.printStackTrace();
+        }
     }
 
     public void setRoot(String rootView, SmartHousingController controller) {

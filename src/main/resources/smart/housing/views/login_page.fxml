@@ -2,42 +2,58 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.LoginPageController">
-    <top>
-        <Pane minHeight="20.0" prefHeight="40.0" style="-fx-background-color: RED;" BorderPane.alignment="CENTER" />
-    </top>
-    <center>
-        <GridPane alignment="CENTER" style="-fx-background-color: rgba(255, 255, 255, 0); -fx-padding: 20px;" BorderPane.alignment="CENTER">
-            <children>
-                <Label alignment="CENTER" text="Welcome" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" />
-                <Separator GridPane.rowIndex="1" />
-                <TextField fx:id="usernameField" onAction="#_onUsernameFieldAction" opacity="0.7" promptText="username" GridPane.rowIndex="2" />
-                <PasswordField fx:id="passwordField" onAction="#_onPasswordFieldAction" opacity="0.7" promptText="password" GridPane.rowIndex="3" />
-                <Label fx:id="errorMessage" alignment="CENTER" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4"/>
-                <Button onAction="#_loginButton_onAction" style="-fx-background-color: LIME; -fx-text-fill: WHITE;" text="LOGIN" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-            </children>
-            <BorderPane.margin>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </BorderPane.margin>
-            <rowConstraints>
-                <RowConstraints prefHeight="40.0" />
-                <RowConstraints prefHeight="10.0" />
-                <RowConstraints prefHeight="40.0" />
-                <RowConstraints prefHeight="40.0" />
-            <RowConstraints />
-            </rowConstraints>
-         <columnConstraints>
-            <ColumnConstraints />
-         </columnConstraints>
-        </GridPane>
-    </center>
-   <bottom>
-      <Button text="Configure Database" BorderPane.alignment="CENTER_LEFT" onAction="#_confDBase_onAction">
-         <BorderPane.margin>
+<StackPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="smart.housing.controllers.LoginPageController" fx:id="mainPane" stylesheets="@style_sheets/style.css"
+>
+    <background>
+        <Background>
+            <images>
+                <BackgroundImage>
+                    <image>
+                        <Image fx:id="backgroundImage" url="@images/login_background.jpg" />
+                    </image>
+                </BackgroundImage>
+            </images>
+        </Background>
+    </background>
+    <GridPane alignment="CENTER" style="-fx-background-color: rgba(255, 255, 255, 0); -fx-padding: 20px;" fx:id="gridPane">
+        <children>
+            <Label fx:id="welcomeLabel" alignment="CENTER" text="WELCOME" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" styleClass="welcome-label"/>
+            <Separator GridPane.rowIndex="1" />
+            <TextField fx:id="usernameField" onAction="#_onUsernameFieldAction" opacity="0.7" promptText="username" GridPane.rowIndex="2" styleClass="standard-layout, text-field">
+                <GridPane.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </GridPane.margin>
+            </TextField>
+            <PasswordField fx:id="passwordField" onAction="#_onPasswordFieldAction" opacity="0.7" promptText="password" GridPane.rowIndex="3" styleClass="standard-layout, text-field">
+                <GridPane.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </GridPane.margin>
+            </PasswordField>
+            <Label fx:id="errorMessage" wrapText="true" alignment="CENTER" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" styleClass="standard-layout, error-message">
+                <GridPane.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </GridPane.margin>
+            </Label>
+            <Button onAction="#_loginButton_onAction" styleClass="standard-layout, login-button" text="LOGIN" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                <GridPane.margin>
+                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                </GridPane.margin>
+            </Button>
+            <Button onAction="#_confDBase_onAction" styleClass="standard-layout" text="Configure Database" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
+                <BorderPane.margin>
+                    <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                </BorderPane.margin>
+            </Button>
+        </children>
+        <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </BorderPane.margin>
-      </Button>
-   </bottom>
-</BorderPane>
+        </BorderPane.margin>
+        <columnConstraints>
+            <ColumnConstraints minWidth="150" maxWidth="250" percentWidth="25.0"/>
+        </columnConstraints>
+    </GridPane>
+</StackPane>

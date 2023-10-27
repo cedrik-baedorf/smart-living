@@ -1,12 +1,16 @@
 package smart.housing.controllers;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.DoubleBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.hibernate.PropertyNotFoundException;
 import org.hibernate.service.spi.ServiceException;
@@ -33,12 +37,13 @@ public class LoginPageController extends SmartHousingController {
 
     private final SmartLivingApplication APPLICATION;
 
-    @FXML
-    public PasswordField passwordField;
-    @FXML
-    public TextField usernameField;
-    @FXML
-    public Label errorMessage;
+    @FXML StackPane mainPane;
+    @FXML GridPane gridPane;
+    @FXML Label welcomeLabel;
+    @FXML PasswordField passwordField;
+    @FXML TextField usernameField;
+    @FXML Label errorMessage;
+    @FXML Image backgroundImage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -59,12 +64,49 @@ public class LoginPageController extends SmartHousingController {
             else
                 Platform.exit();
         }
+        setBackgroundImage();
+        bindGridPaneProperties();
         clearErrorMessage();
+    }
+
+    private void setBackgroundImage() {
+        Background background;
+        try {
+            background = new Background(new BackgroundImage(
+                new Image("smart/housing/views/images/login_background.jpg"),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                new BackgroundSize(100, 100, true, true, true, true)
+            ));
+        } catch (RuntimeException exception) {
+            background = new Background(
+                new BackgroundFill(Color.WHITE, null, null)
+            );
+        }
+        mainPane.setBackground(background);
+    }
+
+    private void bindGridPaneProperties() {
+        ColumnConstraints columnConstraints;
+        try {
+            columnConstraints = gridPane.getColumnConstraints().get(0);
+        } catch (RuntimeException exception) {
+            return;
+        }
+        DoubleBinding fontSizeBinding = Bindings.createDoubleBinding(() -> {
+            double calculatedWidth = (columnConstraints.getPercentWidth() / 100) * mainPane.getWidth();
+            double actualWidth = Math.min(Math.max(calculatedWidth, columnConstraints.getMinWidth()), columnConstraints.getMaxWidth());
+            return actualWidth * (0.1);
+        }, mainPane.widthProperty());
+
+        welcomeLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeBinding.asString(), "px;"));
     }
 
     private void clearErrorMessage() {
         errorMessage.setTextFill(Color.BLACK);
         errorMessage.setText("");
+        errorMessage.setVisible(false);
     }
 
     public String getViewName() {
@@ -88,7 +130,6 @@ public class LoginPageController extends SmartHousingController {
 
     private void attemptLogin(String username, String password) {
         clearErrorMessage();
-        errorMessage.setText("Attempting login...");
 
         DatabaseConnector connector = APPLICATION.getDatabaseConnector();
         LoginService loginService = new LoginServiceImplementation(connector);
@@ -99,9 +140,11 @@ public class LoginPageController extends SmartHousingController {
         } catch (IncorrectCredentialsException exception) {
             errorMessage.setTextFill(Color.RED);
             errorMessage.setText("Invalid Credentials");
+            errorMessage.setVisible(true);
         } catch (LoginServiceException exception) {
             errorMessage.setTextFill(Color.RED);
             errorMessage.setText("Missing Credentials");
+            errorMessage.setVisible(true);
         } finally {
             passwordField.clear();
             usernameField.clear();
