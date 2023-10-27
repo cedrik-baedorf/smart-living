@@ -7,6 +7,8 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import org.hibernate.PropertyNotFoundException;
 import org.hibernate.service.spi.ServiceException;
@@ -34,11 +36,15 @@ public class LoginPageController extends SmartHousingController {
     private final SmartLivingApplication APPLICATION;
 
     @FXML
+    StackPane mainPane;
+    @FXML
     public PasswordField passwordField;
     @FXML
     public TextField usernameField;
     @FXML
     public Label errorMessage;
+    @FXML
+    public Image backgroundImage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -58,6 +64,19 @@ public class LoginPageController extends SmartHousingController {
                 APPLICATION.setDatabaseConnector(connector);
             else
                 Platform.exit();
+        }
+        try {
+            BackgroundImage backgroundImage = new BackgroundImage(
+                    new Image("smart/housing/views/images/login_background.jpg"),
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.CENTER,
+                    new BackgroundSize(100, 100, true, true, true, true)
+            );
+            Background background = new Background(backgroundImage);
+            mainPane.setBackground(background);
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
         clearErrorMessage();
     }
