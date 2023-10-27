@@ -6,57 +6,47 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import smart.housing.SmartLivingApplication;
 import smart.housing.exceptions.EmptyFieldException;
-import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.services.LoginService;
 import smart.housing.services.LoginServiceImplementation;
 import smart.housing.entities.User;
 
 /**
- * Controller to view 'delete_dialog.fxml'
+ * Controller to view 'create_dialog.fxml'
  * @author I551381
  * @version 1.0
  */
-public class DeleteDialogController extends DialogController {
+public class CreateDialogController extends DialogController {
 
     /**
      * Name of the corresponding <code>.fxml</code> file
      */
-    public static final String VIEW_NAME = "delete_dialog.fxml";
-
-    /**
-     * Prepared <code>String</code> messages
-     */
-    private static final String
-        DELETE_USER = "Confirm deletion of user %s";
-
+    public static final String VIEW_NAME = "create_dialog.fxml";
 
     private final SmartLivingApplication APPLICATION;
-    private final Dialog<Boolean> DIALOG;
 
-    private final User USER;
+    private final Dialog<Boolean> DIALOG;
 
     @FXML
     DialogPane dialogPane;
     @FXML
-    Label usernameLabel, errorMessage;
+    TextField usernameField, lastNameField, firstNameField;
     @FXML
     PasswordField passwordField;
+    @FXML
+    Label errorMessage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
      * instance belongs to
      * @param dialog Dialog to this <code>DialogPane</code>
      */
-    public DeleteDialogController(SmartLivingApplication application, Dialog<Boolean> dialog, User user) {
+    public CreateDialogController(SmartLivingApplication application, Dialog<Boolean> dialog) {
         this.APPLICATION = application;
         this.DIALOG = dialog;
-        this.USER = user;
-
     }
 
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
-        usernameLabel.setText(String.format(DELETE_USER, USER.getUsername()));
         clearErrorMessage();
     }
 
@@ -69,30 +59,35 @@ public class DeleteDialogController extends DialogController {
         return VIEW_NAME;
     }
 
-    public void _deleteUser(ActionEvent event) {
+    public void _createUser(ActionEvent event) {
         event.consume();
         clearErrorMessage();
         try {
-            deleteUser();
+            createUser();
         } catch (EmptyFieldException exception) {
             errorMessage.setTextFill(Color.RED);
             errorMessage.setText(exception.getMessage());
-        } catch (IncorrectCredentialsException exception) {
-            errorMessage.setTextFill(Color.RED);
-
-        } catch (Exception e) {
-            e.printStackTrace();
         } finally {
-            usernameLabel.setText("");
+            usernameField.clear();
             passwordField.clear();
+            lastNameField.clear();
+            firstNameField.clear();
         }
     }
 
-    public void deleteUser() {
+    public void createUser() {
+        checkForEmptyInput(usernameField.getText(), "username");
         checkForEmptyInput(passwordField.getText(), "password");
+        checkForEmptyInput(lastNameField.getText(), "surname");
+        checkForEmptyInput(firstNameField.getText(), "first name");
 
         LoginService loginService = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
-        loginService.delete(USER.getUsername(), passwordField.getText());
+
+        User newUser = new User(usernameField.getText(), passwordField.getText(), loginService.getHashAlgorithm());
+        newUser.setLastName(lastNameField.getText());
+        newUser.setFirstName(firstNameField.getText());
+
+        loginService.create(newUser);
         DIALOG.setResult(true);
     }
 

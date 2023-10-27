@@ -16,7 +16,7 @@ import java.util.Map;
  * @author I551381
  * @version 1.0
  */
-public class DatabaseDialogController extends SmartHousingController {
+public class DatabaseDialogController extends DialogController {
 
     /**
      * Name of the corresponding <code>.fxml</code> file
@@ -37,13 +37,14 @@ public class DatabaseDialogController extends SmartHousingController {
     /**
      * Constructor for this controller passing the <code>Application</code> object this
      * instance belongs to
-     * @param dialog Dialog to this DialogPane
+     * @param dialog Dialog to this <code>DialogPane</code>
      */
     public DatabaseDialogController(Dialog<DatabaseConnector> dialog) {
         this.DIALOG = dialog;
     }
 
     public void initialize() {
+        super.setOnCloseRequest(DIALOG);
         clearErrorMessage();
     }
 

@@ -9,19 +9,19 @@
 >
     <content>
         <GridPane alignment="CENTER">
-            <TextField fx:id="usernameField" promptText="username" GridPane.rowIndex="0">
+            <TextField fx:id="usernameField" promptText="username" GridPane.rowIndex="0" onAction="#_confirmDatabaseConfiguration">
             <GridPane.margin>
                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </GridPane.margin></TextField>
-            <PasswordField fx:id="passwordField" promptText="password" GridPane.rowIndex="1">
+            <PasswordField fx:id="passwordField" promptText="password" GridPane.rowIndex="1" onAction="#_confirmDatabaseConfiguration">
             <GridPane.margin>
                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </GridPane.margin></PasswordField>
-            <TextField fx:id="jdbcDriverField" promptText="jdbc driver" GridPane.rowIndex="2">
+            <TextField fx:id="jdbcDriverField" promptText="jdbc driver" GridPane.rowIndex="2" onAction="#_confirmDatabaseConfiguration">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin></TextField>
-            <TextField fx:id="urlField" promptText="url" GridPane.rowIndex="3">
+            <TextField fx:id="urlField" promptText="url" GridPane.rowIndex="3" onAction="#_confirmDatabaseConfiguration">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin></TextField>
@@ -32,7 +32,7 @@
                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </Button>
-            <Label fx:id="errorMessage" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+            <Label fx:id="errorMessage" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="5" wrapText="true">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>

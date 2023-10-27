@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane style="-fx-background-color: RED;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.BudgetManagementController">
+<center>
+    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" minHeight="150.0" minWidth="300.0" BorderPane.alignment="CENTER">
+        <BorderPane.margin>
+            <Insets bottom="100.0" left="200.0" right="200.0" top="100.0" />
+        </BorderPane.margin>
+        <content>
+            <ChoiceBox fx:id="creditors" GridPane.rowIndex="0"/>
+        </content>
+    </ScrollPane>
+</center>
+</BorderPane>

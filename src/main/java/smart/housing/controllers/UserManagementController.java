@@ -24,7 +24,7 @@ public class UserManagementController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "user_management.fxml";
 
-    private SmartLivingApplication application;
+    private final SmartLivingApplication APPLICATION;
 
     @FXML
     public TableView<User> userTable;
@@ -38,7 +38,7 @@ public class UserManagementController extends SmartHousingController {
      * @param application Application calling the constructor
      */
     public UserManagementController(SmartLivingApplication application) {
-        this.application = application;
+        this.APPLICATION = application;
     }
 
     public void initialize() {
@@ -51,7 +51,7 @@ public class UserManagementController extends SmartHousingController {
     }
 
     private void loadUsers() {
-        EntityManager entityManager = application.getEntityManager();
+        EntityManager entityManager = APPLICATION.getDatabaseConnector().createEntityManager();
         TypedQuery<User> userQuery = entityManager.createNamedQuery(User.FIND_ALL, User.class);
         List<User> userList = userQuery.getResultList();
         userTable.setItems(FXCollections.observableList(userList));
@@ -63,19 +63,61 @@ public class UserManagementController extends SmartHousingController {
         createButton.setDisable(false);
     }
 
+    @Override
+    public void update() {
+        loadUsers();
+    }
+
     public void _userTable_onMouseClicked(MouseEvent mouseEvent) {
+        mouseEvent.consume();
         User selectedUser = userTable.getSelectionModel().getSelectedItem();
         if(selectedUser != null) {
             initializeButtons(true);
         }
     }
 
-    public void _deleteButton_onAction(ActionEvent actionEvent) {
-        Dialog<String> dialog = new Dialog<>();
-        dialog.setDialogPane(application.loadFXML("delete_dialog.fxml", new DeleteDialogController(application, userTable.getSelectionModel().getSelectedItem())));
-        dialog.show();
+    public void _deleteButton_onAction(ActionEvent event) {
+        event.consume();
+        deleteSelectedUser();
     }
 
+    private void deleteSelectedUser() {
+        User userToBeDeleted = userTable.getSelectionModel().getSelectedItem();
+        Dialog<Boolean> dialog = new Dialog<>();
+        dialog.setDialogPane(APPLICATION.loadFXML(
+                DeleteDialogController.VIEW_NAME,
+                new DeleteDialogController(APPLICATION, dialog, userToBeDeleted)
+        ));
+        dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
+    }
 
+    public void _modifyButton_onAction(ActionEvent event) {
+        event.consume();
+        modifyUser();
+    }
+
+    public void modifyUser() {
+        User userToBeModified = userTable.getSelectionModel().getSelectedItem();
+        Dialog<Boolean> dialog = new Dialog<>();
+        dialog.setDialogPane(APPLICATION.loadFXML(
+                ModifyDialogController.VIEW_NAME,
+                new ModifyDialogController(APPLICATION, dialog, userToBeModified)
+        ));
+        dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
+    }
+
+    public void _createButton_onAction(ActionEvent event) {
+        event.consume();
+        createUser();
+    }
+
+    public void createUser() {
+        Dialog<Boolean> dialog = new Dialog<>();
+        dialog.setDialogPane(APPLICATION.loadFXML(
+                CreateDialogController.VIEW_NAME,
+                new CreateDialogController(APPLICATION, dialog)
+        ));
+        dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
+    }
 
 }

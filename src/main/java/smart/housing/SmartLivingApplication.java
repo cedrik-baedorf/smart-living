@@ -1,14 +1,15 @@
 package smart.housing;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import smart.housing.controllers.LoginPageController;
 import smart.housing.controllers.SmartHousingController;
 import smart.housing.database.DatabaseConnector;
-
-import javax.persistence.EntityManager;
+import smart.housing.entities.User;
 import java.io.IOException;
 
 public class SmartLivingApplication extends Application {
@@ -16,6 +17,8 @@ public class SmartLivingApplication extends Application {
     private final SmartHousingController START_CONTROLLER = new LoginPageController(this);
 
     private DatabaseConnector connector;
+
+    private User user;
 
     private final String
         START_VIEW = START_CONTROLLER.getViewName(),
@@ -30,22 +33,33 @@ public class SmartLivingApplication extends Application {
     @Override
     public void start(Stage stage) {
         this.stage = stage;
+        addStageIcon("smart/housing/views/images/icon_plain.png");
         stage.setMaximized(true);
         stage.setTitle("Smart Living Application");
         setRoot(START_VIEW, START_CONTROLLER);
-        stage.show();
+        stage.setOnCloseRequest(event -> Platform.exit());
+    }
+
+    private void addStageIcon(String path) {
+        try {
+            stage.getIcons().add(new Image(path));
+        } catch (RuntimeException exception) {
+            exception.printStackTrace();
+        }
     }
 
     public void setRoot(String rootView, SmartHousingController controller) {
+        boolean maximized = stage.isMaximized();
         double width = stage.getWidth();
         double height = stage.getHeight();
         FXMLLoader loader = createFXMLLoader(rootView);
         loader.setControllerFactory(c -> controller);
         Scene scene = createScene(loader);
         stage.setScene(scene);
+        stage.show();
         stage.setWidth(width);
         stage.setHeight(height);
-        stage.setMaximized(stage.isMaximized());
+        stage.setMaximized(maximized);
     }
 
     private Scene createScene(FXMLLoader loader) {
@@ -74,12 +88,14 @@ public class SmartLivingApplication extends Application {
         this.connector = connector;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public DatabaseConnector getDatabaseConnector() {
         return connector;
     }
 
-    public EntityManager getEntityManager() {
-        return connector.createEntityManager();
-    }
+    public User getUser() { return user; }
 
 }

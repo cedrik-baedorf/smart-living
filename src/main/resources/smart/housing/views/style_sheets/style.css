@@ -1,0 +1,28 @@
+.standard-layout {
+    -fx-padding: 5 12 5 12;
+    -fx-background-radius: 10;
+}
+
+.welcome-label {
+    -fx-font-size: 30px;
+    -fx-text-fill: black;
+    -fx-font-family: "Verdana";
+    -fx-font-weight: bold;
+}
+
+.text-field {
+    -fx-font-size: 14;
+}
+
+.error-message {
+    -fx-background-color: WHITE;
+    -fx-text-fill: RED;
+    -fx-font-size: 12px;
+}
+
+.login-button {
+    -fx-background-color: BLACK;
+    -fx-text-fill: WHITE;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
