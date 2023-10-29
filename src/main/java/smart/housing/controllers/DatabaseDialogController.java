@@ -3,10 +3,15 @@ package smart.housing.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
+import javafx.stage.StageStyle;
 import org.hibernate.service.spi.ServiceException;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.database.DatabaseConnectorImplementation;
+import smart.housing.ui.BackgroundDialogPane;
+import smart.housing.ui.ErrorMessage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,13 +31,13 @@ public class DatabaseDialogController extends DialogController {
     private final Dialog<DatabaseConnector> DIALOG;
 
     @FXML
-    DialogPane dialogPane;
+    BackgroundDialogPane dialogPane;
     @FXML
     TextField usernameField, jdbcDriverField, urlField;
     @FXML
     PasswordField passwordField;
     @FXML
-    Label errorMessage;
+    ErrorMessage errorMessage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -45,12 +50,8 @@ public class DatabaseDialogController extends DialogController {
 
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
-        clearErrorMessage();
-    }
-
-    private void clearErrorMessage() {
-        errorMessage.setTextFill(Color.BLACK);
-        errorMessage.setText("");
+        dialogPane.setBackgroundImage("smart/housing/views/images/database_dialog_background.jpg");
+        errorMessage.clear();
     }
 
     public String getViewName() {
@@ -59,6 +60,7 @@ public class DatabaseDialogController extends DialogController {
 
     public void _confirmDatabaseConfiguration(ActionEvent event) {
         event.consume();
+        errorMessage.clear();
         Map<String, String> dbProperties = new HashMap<>();
         dbProperties.put(DatabaseConnector.USER_PROPERTY, usernameField.getText());
         dbProperties.put(DatabaseConnector.PASSWORD_PROPERTY, passwordField.getText());
@@ -68,8 +70,7 @@ public class DatabaseDialogController extends DialogController {
             DIALOG.setResult(new DatabaseConnectorImplementation(dbProperties));
             DIALOG.close();
         } catch (ServiceException serviceException) {
-            errorMessage.setText("Unable to connect to database");
-            errorMessage.setTextFill(Color.RED);
+            errorMessage.displayError("Unable to connect to the database");
         } finally {
             usernameField.clear();
             passwordField.clear();
