@@ -27,7 +27,7 @@ public class ErrorMessage extends Label {
     }
 
     public void displayError(String errorMessage, double seconds) {
-        this.displayTemporarily(() -> displayInfo(errorMessage), seconds);
+        this.displayTemporarily(() -> displayError(errorMessage), seconds);
     }
 
     public void displayInfo(String infoMessage) {
