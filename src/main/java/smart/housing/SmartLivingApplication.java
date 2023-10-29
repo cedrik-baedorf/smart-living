@@ -98,4 +98,8 @@ public class SmartLivingApplication extends Application {
 
     public User getUser() { return user; }
 
+    public Stage getPrimaryStage() {
+        return stage;
+    }
+
 }

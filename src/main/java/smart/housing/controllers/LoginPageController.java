@@ -11,7 +11,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import org.hibernate.PropertyNotFoundException;
 import org.hibernate.service.spi.ServiceException;
 import smart.housing.SmartLivingApplication;
@@ -21,6 +20,9 @@ import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.exceptions.LoginServiceException;
 import smart.housing.services.LoginService;
 import smart.housing.services.LoginServiceImplementation;
+import smart.housing.ui.BackgroundStackPane;
+import smart.housing.ui.ErrorMessage;
+
 import java.util.Optional;
 
 /**
@@ -35,14 +37,19 @@ public class LoginPageController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "login_page.fxml";
 
+    /**
+     * Name of the background image file
+     */
+    private static final String BACKGROUND_IMAGE = "smart/housing/views/images/login_page_background.jpg";
+
     private final SmartLivingApplication APPLICATION;
 
-    @FXML StackPane mainPane;
+    @FXML BackgroundStackPane backgroundPane;
     @FXML GridPane gridPane;
     @FXML Label welcomeLabel;
     @FXML PasswordField passwordField;
     @FXML TextField usernameField;
-    @FXML Label errorMessage;
+    @FXML ErrorMessage errorMessage;
     @FXML Image backgroundImage;
 
     /**
@@ -66,25 +73,11 @@ public class LoginPageController extends SmartHousingController {
         }
         setBackgroundImage();
         bindGridPaneProperties();
-        clearErrorMessage();
+        errorMessage.clear();
     }
 
     private void setBackgroundImage() {
-        Background background;
-        try {
-            background = new Background(new BackgroundImage(
-                new Image("smart/housing/views/images/login_background.jpg"),
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                new BackgroundSize(100, 100, true, true, true, true)
-            ));
-        } catch (RuntimeException exception) {
-            background = new Background(
-                new BackgroundFill(Color.WHITE, null, null)
-            );
-        }
-        mainPane.setBackground(background);
+        backgroundPane.setBackgroundImage(BACKGROUND_IMAGE);
     }
 
     private void bindGridPaneProperties() {
@@ -95,18 +88,12 @@ public class LoginPageController extends SmartHousingController {
             return;
         }
         DoubleBinding fontSizeBinding = Bindings.createDoubleBinding(() -> {
-            double calculatedWidth = (columnConstraints.getPercentWidth() / 100) * mainPane.getWidth();
+            double calculatedWidth = (columnConstraints.getPercentWidth() / 100) * backgroundPane.getWidth();
             double actualWidth = Math.min(Math.max(calculatedWidth, columnConstraints.getMinWidth()), columnConstraints.getMaxWidth());
             return actualWidth * (0.1);
-        }, mainPane.widthProperty());
+        }, backgroundPane.widthProperty());
 
         welcomeLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeBinding.asString(), "px;"));
-    }
-
-    private void clearErrorMessage() {
-        errorMessage.setTextFill(Color.BLACK);
-        errorMessage.setText("");
-        errorMessage.setVisible(false);
     }
 
     public String getViewName() {
@@ -129,7 +116,7 @@ public class LoginPageController extends SmartHousingController {
     }
 
     private void attemptLogin(String username, String password) {
-        clearErrorMessage();
+        errorMessage.clear();
 
         DatabaseConnector connector = APPLICATION.getDatabaseConnector();
         LoginService loginService = new LoginServiceImplementation(connector);
@@ -138,13 +125,9 @@ public class LoginPageController extends SmartHousingController {
             APPLICATION.setDatabaseConnector(connector);
             APPLICATION.setRoot(HomePageController.VIEW_NAME, new HomePageController(APPLICATION));
         } catch (IncorrectCredentialsException exception) {
-            errorMessage.setTextFill(Color.RED);
-            errorMessage.setText("Invalid Credentials");
-            errorMessage.setVisible(true);
+            errorMessage.displayError("Invalid Credentials", 5);
         } catch (LoginServiceException exception) {
-            errorMessage.setTextFill(Color.RED);
-            errorMessage.setText("Missing Credentials");
-            errorMessage.setVisible(true);
+            errorMessage.displayError("Missing Credentials", 5);
         } finally {
             passwordField.clear();
             usernameField.clear();
@@ -160,6 +143,7 @@ public class LoginPageController extends SmartHousingController {
 
     private DatabaseConnector createDatabaseConnector() {
         Dialog<DatabaseConnector> dialog = new Dialog<>();
+        dialog.initOwner(APPLICATION.getPrimaryStage());
         dialog.setDialogPane(APPLICATION.loadFXML(DatabaseDialogController.VIEW_NAME, new DatabaseDialogController(dialog)));
 
         Optional<DatabaseConnector> result = dialog.showAndWait();

@@ -3,13 +3,13 @@ package smart.housing.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.User;
 import smart.housing.exceptions.EmptyFieldException;
 import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.services.LoginService;
 import smart.housing.services.LoginServiceImplementation;
+import smart.housing.ui.ErrorMessage;
 
 import javax.persistence.EntityManager;
 
@@ -38,7 +38,7 @@ public class ModifyDialogController extends DialogController {
     @FXML
     PasswordField newPasswordField, confirmPasswordField, currentPasswordField;
     @FXML
-    Label errorMessage;
+    ErrorMessage errorMessage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -53,13 +53,8 @@ public class ModifyDialogController extends DialogController {
 
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
-        clearErrorMessage();
+        errorMessage.clear();
         loadUserData();
-    }
-
-    private void clearErrorMessage() {
-        errorMessage.setTextFill(Color.BLACK);
-        errorMessage.setText("");
     }
 
     public String getViewName() {
@@ -68,15 +63,13 @@ public class ModifyDialogController extends DialogController {
 
     public void _modifyUser(ActionEvent event) {
         event.consume();
-        clearErrorMessage();
+        errorMessage.clear();
         try {
             modifyUser();
         } catch (EmptyFieldException exception) {
-            errorMessage.setTextFill(Color.RED);
-            errorMessage.setText(exception.getMessage());
+            errorMessage.displayError(exception.getMessage(), 5);
         } catch (IncorrectCredentialsException exception) {
-            errorMessage.setTextFill(Color.RED);
-            errorMessage.setText(exception.getMessage());
+            errorMessage.displayError(exception.getMessage(), 5);
         } finally {
             loadUserData();
         }

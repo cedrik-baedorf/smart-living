@@ -3,12 +3,12 @@ package smart.housing.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
 import smart.housing.SmartLivingApplication;
 import smart.housing.exceptions.EmptyFieldException;
 import smart.housing.services.LoginService;
 import smart.housing.services.LoginServiceImplementation;
 import smart.housing.entities.User;
+import smart.housing.ui.ErrorMessage;
 
 /**
  * Controller to view 'create_dialog.fxml'
@@ -33,7 +33,7 @@ public class CreateDialogController extends DialogController {
     @FXML
     PasswordField passwordField;
     @FXML
-    Label errorMessage;
+    ErrorMessage errorMessage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -47,12 +47,7 @@ public class CreateDialogController extends DialogController {
 
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
-        clearErrorMessage();
-    }
-
-    private void clearErrorMessage() {
-        errorMessage.setTextFill(Color.BLACK);
-        errorMessage.setText("");
+        errorMessage.clear();
     }
 
     public String getViewName() {
@@ -61,12 +56,11 @@ public class CreateDialogController extends DialogController {
 
     public void _createUser(ActionEvent event) {
         event.consume();
-        clearErrorMessage();
+        errorMessage.clear();
         try {
             createUser();
         } catch (EmptyFieldException exception) {
-            errorMessage.setTextFill(Color.RED);
-            errorMessage.setText(exception.getMessage());
+            errorMessage.displayError(exception.getMessage(), 5);
         } finally {
             usernameField.clear();
             passwordField.clear();
