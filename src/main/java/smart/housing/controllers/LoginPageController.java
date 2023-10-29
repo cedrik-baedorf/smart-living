@@ -11,7 +11,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import org.hibernate.PropertyNotFoundException;
 import org.hibernate.service.spi.ServiceException;
 import smart.housing.SmartLivingApplication;
@@ -126,9 +125,9 @@ public class LoginPageController extends SmartHousingController {
             APPLICATION.setDatabaseConnector(connector);
             APPLICATION.setRoot(HomePageController.VIEW_NAME, new HomePageController(APPLICATION));
         } catch (IncorrectCredentialsException exception) {
-            errorMessage.displayError("Invalid Credentials");
+            errorMessage.displayError("Invalid Credentials", 5);
         } catch (LoginServiceException exception) {
-            errorMessage.displayError("Missing Credentials");
+            errorMessage.displayError("Missing Credentials", 5);
         } finally {
             passwordField.clear();
             usernameField.clear();
