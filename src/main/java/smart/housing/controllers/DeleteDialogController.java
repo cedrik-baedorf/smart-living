@@ -10,6 +10,7 @@ import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.services.LoginService;
 import smart.housing.services.LoginServiceImplementation;
 import smart.housing.entities.User;
+import smart.housing.ui.ErrorMessage;
 
 /**
  * Controller to view 'delete_dialog.fxml'
@@ -38,7 +39,7 @@ public class DeleteDialogController extends DialogController {
     @FXML
     DialogPane dialogPane;
     @FXML
-    Label usernameLabel, errorMessage;
+    ErrorMessage usernameLabel, errorMessage;
     @FXML
     PasswordField passwordField;
 
@@ -56,13 +57,8 @@ public class DeleteDialogController extends DialogController {
 
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
-        usernameLabel.setText(String.format(DELETE_USER, USER.getUsername()));
-        clearErrorMessage();
-    }
-
-    private void clearErrorMessage() {
-        errorMessage.setTextFill(Color.BLACK);
-        errorMessage.setText("");
+        usernameLabel.displayInfo(String.format(DELETE_USER, USER.getUsername()));
+        errorMessage.clear();
     }
 
     public String getViewName() {
@@ -71,15 +67,13 @@ public class DeleteDialogController extends DialogController {
 
     public void _deleteUser(ActionEvent event) {
         event.consume();
-        clearErrorMessage();
+        errorMessage.clear();
         try {
             deleteUser();
         } catch (EmptyFieldException exception) {
-            errorMessage.setTextFill(Color.RED);
-            errorMessage.setText(exception.getMessage());
+            errorMessage.displayError(exception.getMessage(), 5);
         } catch (IncorrectCredentialsException exception) {
-            errorMessage.setTextFill(Color.RED);
-
+            errorMessage.displayError(exception.getMessage(), 5);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

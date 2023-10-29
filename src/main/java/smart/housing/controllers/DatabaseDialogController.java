@@ -66,7 +66,7 @@ public class DatabaseDialogController extends DialogController {
             DIALOG.setResult(new DatabaseConnectorImplementation(dbProperties));
             DIALOG.close();
         } catch (ServiceException serviceException) {
-            errorMessage.displayError("Unable to connect to the database");
+            errorMessage.displayError("Unable to connect to the database", 5);
         } finally {
             usernameField.clear();
             passwordField.clear();
