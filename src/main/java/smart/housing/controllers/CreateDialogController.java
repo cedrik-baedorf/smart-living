@@ -3,7 +3,6 @@ package smart.housing.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
 import smart.housing.SmartLivingApplication;
 import smart.housing.exceptions.EmptyFieldException;
 import smart.housing.services.LoginService;
