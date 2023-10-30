@@ -23,7 +23,7 @@ public class HomePageController extends SmartHousingController {
 
     private SmartHousingController
         userManagementController, taskManagementController,
-        budgetManagementController, shoppingManagementController;
+        budgetManagementController, ShoppingListController;
 
     @FXML
     public TabPane tabPane;
@@ -76,6 +76,8 @@ public class HomePageController extends SmartHousingController {
 
     public void loadShoppingManagement() {
         shoppingManagement.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
+        ShoppingListController  = new ShoppingListController(APPLICATION);
+        loadSubPane(shoppingManagement, APPLICATION.loadFXML(ShoppingListController.getViewName(), ShoppingListController));
 
     }
 
@@ -95,8 +97,8 @@ public class HomePageController extends SmartHousingController {
                 taskManagementController.update();
             if(sourceTab.getContent().equals(budgetManagement) && budgetManagementController != null)
                 budgetManagementController.update();
-            if(sourceTab.getContent().equals(shoppingManagement) && shoppingManagementController != null)
-                shoppingManagementController.update();
+            if(sourceTab.getContent().equals(shoppingManagement) && ShoppingListController != null)
+                ShoppingListController.update();
         }
         event.consume();
     }

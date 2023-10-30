@@ -7,7 +7,6 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name= "Shopping_List_Items")
-@NamedQuery(name="getallitems", query="select * from Shopping_List_Items ")
 public class ShoppingListItem {
 
     /**

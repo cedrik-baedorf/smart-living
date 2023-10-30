@@ -1,5 +1,6 @@
 package smart.housing.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import smart.housing.entities.*;
 
@@ -12,7 +13,7 @@ public class ShoppingListController extends SmartHousingController {
 
     public static final String VIEW_NAME = "shopping_list.fxml";
 
-    private SmartLivingApplication application;
+    private final SmartLivingApplication APPLICATION;
 
     @FXML
     private TextField artikelTextField;
@@ -24,9 +25,6 @@ public class ShoppingListController extends SmartHousingController {
     private Button loeschenButton;
 
     @FXML
-    private ComboBox<String> anzahlComboBox;
-
-    @FXML
     private ComboBox<String> einheitComboBox;
 
     @FXML
@@ -35,8 +33,11 @@ public class ShoppingListController extends SmartHousingController {
     @FXML
     private TableView<ShoppingListItem> tableView;
 
+    @FXML
+    private TextField anzahlField;
+
     public ShoppingListController(SmartLivingApplication application) {
-        this.application = application;
+        this.APPLICATION = application;
     }
 
     @Override
@@ -44,7 +45,22 @@ public class ShoppingListController extends SmartHousingController {
         return VIEW_NAME;
     }
 
-    public void initialize () {
+    public void initialize() {
+        System.out.println("Initialisieren");
+        ObservableList<String> itemsList = FXCollections.observableArrayList(
+                "Gram (g)",
+                "Kilogram (kg)",
+                "Liter (l)",
+                "Milliliter (ml)",
+                "Stück (pieces)",
+                "Packung (package)",
+                "Dose (can)",
+                "Flasche (bottle)",
+                "Tüte (bag)",
+                "Glas (jar)"
+        );
+        einheitComboBox.setItems(itemsList);
+
         clearFields();
         loadShoppingList();
     }
@@ -65,13 +81,12 @@ public class ShoppingListController extends SmartHousingController {
 
     private void clearFields () {
         artikelTextField.clear();
-        anzahlComboBox.getSelectionModel().clearSelection();
         einheitComboBox.getSelectionModel().clearSelection();
     }
 
     private void hinzufuegenButtonClicked() {
         String artikel = artikelTextField.getText();
-        double anzahl = Double.parseDouble(anzahlComboBox.getValue());
+        double anzahl = Double.parseDouble(anzahlField.getText());
         String einheit = einheitComboBox.getValue();
 
         // Überprüfen, ob alle benötigten Felder ausgefüllt sind
