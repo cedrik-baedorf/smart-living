@@ -25,14 +25,14 @@
         <center>
             <GridPane alignment="CENTER" fx:id="gridPane">
                 <children>
-                    <Label fx:id="welcomeLabel" alignment="CENTER" text="WELCOME" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" styleClass="welcome-label"/>
+                    <Label fx:id="welcomeLabel" alignment="CENTER" text="WELCOME" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" styleClass="standard-style, welcome-label"/>
                     <Separator GridPane.rowIndex="1" />
-                    <TextField fx:id="usernameField" onAction="#_onUsernameFieldAction" opacity="0.7" promptText="username" GridPane.rowIndex="2" styleClass="standard-layout, text-field">
+                    <TextField fx:id="usernameField" onAction="#_onUsernameFieldAction" promptText="username" GridPane.rowIndex="2" styleClass="standard-layout, text-field">
                         <GridPane.margin>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </GridPane.margin>
                     </TextField>
-                    <PasswordField fx:id="passwordField" onAction="#_onPasswordFieldAction" opacity="0.7" promptText="password" GridPane.rowIndex="3" styleClass="standard-layout, text-field">
+                    <PasswordField fx:id="passwordField" onAction="#_onPasswordFieldAction" promptText="password" GridPane.rowIndex="3" styleClass="standard-layout, text-field">
                         <GridPane.margin>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </GridPane.margin>
@@ -42,7 +42,9 @@
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </GridPane.margin>
                     </ErrorMessage>
-                    <Button onAction="#_loginButton_onAction" styleClass="standard-layout, login-button" text="LOGIN" GridPane.halignment="CENTER" GridPane.rowIndex="5">
+                    <Button onAction="#_loginButton_onAction" styleClass="standard-layout, confirm-button" text="LOGIN"
+                            GridPane.halignment="CENTER" GridPane.rowIndex="5"
+                    >
                         <GridPane.margin>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </GridPane.margin>
