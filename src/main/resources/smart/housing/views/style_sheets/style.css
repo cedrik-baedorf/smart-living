@@ -1,6 +1,6 @@
 .standard-layout {
     -fx-padding: 5 12 5 12;
-    -fx-background-radius: 100;
+    -fx-background-radius: 15;
     -fx-font-family: "Verdana";
 }
 
@@ -21,12 +21,6 @@
     -fx-opacity: 0.85;
 }
 
-.error-message {
-    -fx-background-color: WHITE;
-    -fx-text-fill: RED;
-    -fx-font-size: 12px;
-}
-
 .confirm-button {
     -fx-background-color: BLACK;
     -fx-text-fill: WHITE;
@@ -37,4 +31,10 @@
 .confirm-button:hover {
     -fx-background-color: WHITE;
     -fx-text-fill: BLACK;
+}
+
+.error-message {
+    -fx-background-color: WHITE;
+    -fx-text-fill: RED;
+    -fx-font-size: 12px;
 }

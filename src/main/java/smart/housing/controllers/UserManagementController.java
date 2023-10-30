@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.User;
+import smart.housing.ui.BackgroundStackPane;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -24,11 +25,17 @@ public class UserManagementController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "user_management.fxml";
 
+    /**
+     * Name of the background image file
+     */
+    private static final String BACKGROUND_IMAGE = "smart/housing/views/images/user_management_background.jpg";
+
     private final SmartLivingApplication APPLICATION;
 
     @FXML
+    public BackgroundStackPane backgroundPane;
+    @FXML
     public TableView<User> userTable;
-
     @FXML
     public Button deleteButton, modifyButton, createButton;
 
@@ -42,12 +49,17 @@ public class UserManagementController extends SmartHousingController {
     }
 
     public void initialize() {
+        setBackgroundImage();
         loadUsers();
         initializeButtons(false);
     }
 
     public String getViewName() {
         return VIEW_NAME;
+    }
+
+    private void setBackgroundImage() {
+        backgroundPane.setBackgroundImage(BACKGROUND_IMAGE);
     }
 
     private void loadUsers() {
