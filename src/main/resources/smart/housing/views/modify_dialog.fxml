@@ -33,7 +33,8 @@
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </PasswordField>
-            <Button onAction="#_modifyUser" text="Create User" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+            <Button onAction="#_modifyUser" text="Create User" textAlignment="CENTER" GridPane.halignment="CENTER"
+                    GridPane.rowIndex="6" maxWidth="Infinity">
                 <GridPane.margin>
                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
