@@ -1,7 +1,6 @@
 package smart.housing.enums;
 
 import org.junit.jupiter.api.Test;
-import smart.housing.enums.UserRole;
 
 import static org.junit.jupiter.api.Assertions.*;
 

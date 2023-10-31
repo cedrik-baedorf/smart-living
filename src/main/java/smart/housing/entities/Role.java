@@ -24,9 +24,4 @@ public class Role {
         return UserRole.parseString(roleName);
     }
 
-    @Override
-    public String toString() {
-        return getRole().getRoleName();
-    }
-
 }

@@ -98,6 +98,10 @@ public class User {
         this.firstName = firstName;
     }
 
+    public void setRole(UserRole role) {
+        this.role.setRole(role);
+    }
+
     public String getUsername() {
         return USERNAME;
     }
@@ -114,8 +118,8 @@ public class User {
         return firstName;
     }
 
-    public Role getRole() {
-        return role;
+    public UserRole getRole() {
+        return role.getRole();
     }
 
     @Override

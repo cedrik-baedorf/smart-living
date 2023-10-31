@@ -6,7 +6,7 @@ public enum UserRole {
 
     private final String ROLE_NAME;
 
-    private UserRole(String roleName) {
+    UserRole(String roleName) {
         this.ROLE_NAME = roleName.toUpperCase();
     }
 
