@@ -10,17 +10,6 @@
 <BackgroundStackPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
                      fx:controller="smart.housing.controllers.LoginPageController" fx:id="backgroundPane" stylesheets="@style_sheets/style.css"
 >
-    <background>
-        <Background>
-            <images>
-                <BackgroundImage>
-                    <image>
-                        <Image fx:id="backgroundImage" url="@images/login_page_background.jpg" />
-                    </image>
-                </BackgroundImage>
-            </images>
-        </Background>
-    </background>
     <BorderPane>
         <center>
             <GridPane alignment="CENTER" fx:id="gridPane">
@@ -59,7 +48,7 @@
             </GridPane>
         </center>
         <bottom>
-            <Button onAction="#_confDBase_onAction" styleClass="standard-layout" text="Configure Database" BorderPane.alignment="CENTER_LEFT">
+            <Button onAction="#_confDBase_onAction" styleClass="standard-layout, configure-button" text="Configure Database" BorderPane.alignment="CENTER_LEFT">
                 <BorderPane.margin>
                     <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                 </BorderPane.margin>

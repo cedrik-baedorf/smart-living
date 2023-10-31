@@ -1,5 +1,6 @@
 package smart.housing.entities;
 
+import smart.housing.enums.UserRole;
 import smart.housing.security.HashAlgorithm;
 
 import javax.persistence.*;
@@ -63,6 +64,13 @@ public class User {
     @Column(name = "first_name")
     private String firstName;
 
+    /**
+     * Role of the user
+     */
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
     public User() {
         this("standard");
     }
@@ -104,6 +112,10 @@ public class User {
 
     public String getFirstName() {
         return firstName;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     @Override

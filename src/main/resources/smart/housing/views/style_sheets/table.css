@@ -20,7 +20,7 @@
 
 /* table-view | column-header-background */
 .table-view .column-header-background{
-    -fx-background-color: TRANSPARENT;cbaed
+    -fx-background-color: TRANSPARENT;
     -fx-background-radius: 10px 10px 0px 0px;
     -fx-background-insets: 0 10px 0 0;
     -fx-padding: 0 0 5px 0;
@@ -30,17 +30,46 @@
     -fx-background-color: TRANSPARENT;
 }
 
+/* table contents */
 .table-view .table-cell {
-    -fx-border-color: TRANSPARENT;
-    -fx-background-color: TRANSPARENT;
-    -fx-text-fill:BLACK;
+    -fx-text-fill: BLACK
+    -fx-border-color: WHITE;
 }
 
-.table-row-cell:hover {
-    -fx-background-color: BLACK;
+.table-view .table-cell .filler {
+    -fx-border-color: WHITE;
+    -fx-background-color: TRANSPARENT;
+}
+
+/* rows */
+.table-row-cell:odd .filler {
+    -fx-background-color: WHITE;
+    -fx-opacity: 0.05;
+}
+
+.table-row-cell:even .filler {
+    -fx-background-color: WHITE;
     -fx-opacity: 0.1;
 }
 
+.table-row-cell:hover {
+    -fx-background-color: WHITE;
+    -fx-opacity: 0.2;
+}
+
+.table-row-cell:hover .table-cell {
+    -fx-text-fill: BLACK;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: BLACK;
+}
+
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: WHITE;
+}
+
+/* corners */
 .table-view .corner {
     -fx-background-color: TRANSPARENT;
 }

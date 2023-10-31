@@ -11,19 +11,24 @@
         <center>
             <TableView fx:id="userTable" minHeight="150.0" minWidth="300.0" onMouseClicked="#_userTable_onMouseClicked" stylesheets="@style_sheets/table.css">
                 <columns>
-                    <TableColumn text="Username">
+                    <TableColumn text="Username" minWidth="100">
                         <cellValueFactory>
                             <PropertyValueFactory property="username" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn text="Last Name">
+                    <TableColumn text="Last Name" minWidth="100">
                         <cellValueFactory>
                             <PropertyValueFactory property="lastName" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn text="First Name">
+                    <TableColumn text="First Name" minWidth="100">
                         <cellValueFactory>
                             <PropertyValueFactory property="firstName" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Role" minWidth="100">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="role" />
                         </cellValueFactory>
                     </TableColumn>
                 </columns>
@@ -34,17 +39,23 @@
         </center>
         <bottom>
             <GridPane alignment="TOP_CENTER" stylesheets="@style_sheets/style.css">
-                <Button fx:id="deleteButton" onAction="#_deleteButton_onAction" styleClass="standard-layout" text="Delete" GridPane.columnIndex="0">
+                <Button fx:id="deleteButton" onAction="#_deleteButton_onAction" styleClass="standard-layout, configure-button"
+                        text="Delete" GridPane.columnIndex="0"
+                >
                     <GridPane.margin>
                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                     </GridPane.margin>
                 </Button>
-                <Button fx:id="modifyButton" onAction="#_modifyButton_onAction" styleClass="standard-layout" text="Modify" GridPane.columnIndex="1">
+                <Button fx:id="modifyButton" onAction="#_modifyButton_onAction" styleClass="standard-layout, configure-button"
+                        text="Modify" GridPane.columnIndex="1"
+                >
                     <GridPane.margin>
                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                     </GridPane.margin>
                 </Button>
-                <Button fx:id="createButton" onAction="#_createButton_onAction" styleClass="standard-layout" text="Create" GridPane.columnIndex="2">
+                <Button fx:id="createButton" onAction="#_createButton_onAction" styleClass="standard-layout, configure-button"
+                        text="Create" GridPane.columnIndex="2"
+                >
                     <GridPane.margin>
                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                     </GridPane.margin>
