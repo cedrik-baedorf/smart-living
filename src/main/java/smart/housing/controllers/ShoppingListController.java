@@ -1,13 +1,21 @@
 package smart.housing.controllers;
 
+import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.util.Duration;
 import smart.housing.entities.*;
+import smart.housing.services.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import smart.housing.SmartLivingApplication;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 public class ShoppingListController extends SmartHousingController {
 
@@ -36,6 +44,8 @@ public class ShoppingListController extends SmartHousingController {
     @FXML
     private TextField anzahlField;
 
+    private ShoppingListServiceImplementation service;
+
     public ShoppingListController(SmartLivingApplication application) {
         this.APPLICATION = application;
     }
@@ -48,16 +58,10 @@ public class ShoppingListController extends SmartHousingController {
     public void initialize() {
         System.out.println("Initialisieren");
         ObservableList<String> itemsList = FXCollections.observableArrayList(
-                "Gram (g)",
-                "Kilogram (kg)",
-                "Liter (l)",
-                "Milliliter (ml)",
-                "Stück (pieces)",
-                "Packung (package)",
-                "Dose (can)",
-                "Flasche (bottle)",
-                "Tüte (bag)",
-                "Glas (jar)"
+                "g",
+                "kg",
+                "l",
+                "ml"
         );
         einheitComboBox.setItems(itemsList);
 
@@ -66,21 +70,29 @@ public class ShoppingListController extends SmartHousingController {
     }
 
     private void loadShoppingList () {
+        try {
+            EntityManager entityManager = APPLICATION.getDatabaseConnector().createEntityManager();
+            TypedQuery<ShoppingListItem> itemQuery = entityManager.createNamedQuery(ShoppingListItem.FIND_ALL, ShoppingListItem.class);
+            List<ShoppingListItem> itemList = itemQuery.getResultList();
 
-        //tableView.setItems(ShoppingListItem.getList());
+            tableView.setItems(FXCollections.observableList(itemList));
+        } catch (Exception e) {System.out.println("Catched Exception");}
+
 
         TableColumn<ShoppingListItem,String> itemCol = new TableColumn<ShoppingListItem,String>("Artikel");
-        itemCol.setCellValueFactory(new PropertyValueFactory("artikel"));
+        itemCol.setCellValueFactory(new PropertyValueFactory("item"));
         TableColumn<ShoppingListItem,Double> quantityCol = new TableColumn<ShoppingListItem,Double>("Anzahl");
         quantityCol.setCellValueFactory(new PropertyValueFactory("anzahl"));
         TableColumn<ShoppingListItem,String> unitCol = new TableColumn<ShoppingListItem,String>("Einheit");
         unitCol.setCellValueFactory(new PropertyValueFactory("einheit"));
 
-        //tableView.getColumns().setAll(itemCol, quantityCol, unitCol);
+        tableView.getColumns().setAll(itemCol, quantityCol, unitCol);
+
     }
 
     private void clearFields () {
         artikelTextField.clear();
+        anzahlField.clear();
         einheitComboBox.getSelectionModel().clearSelection();
     }
 
@@ -92,13 +104,13 @@ public class ShoppingListController extends SmartHousingController {
         // Überprüfen, ob alle benötigten Felder ausgefüllt sind
         if (artikel != null && !artikel.isEmpty() && anzahl != 0.0 && !einheit.isEmpty()
                 && einheit != null && !einheit.isEmpty()) {
-            hinzufuegenButton.setDisable(true);
 
-            // Fügen Sie den neuen Eintrag in die TableView hinzu
-            ShoppingListItem item = new ShoppingListItem(artikel,anzahl,einheit);
+            service = new ShoppingListServiceImplementation(APPLICATION.getDatabaseConnector());
+            service.create(new ShoppingListItem(artikel,anzahl,einheit));
 
             // Optional: Löschen Sie die Eingaben nach dem Hinzufügen
             clearFields();
+            loadShoppingList();
 
         } else {
             // Zeigen Sie eine Fehlermeldung an oder ergreifen Sie andere Maßnahmen, wenn Felder leer sind
@@ -106,5 +118,30 @@ public class ShoppingListController extends SmartHousingController {
         }
     }
 
+    private void removeItemFromList(ShoppingListItem shoppingListItem) {
+        service = new ShoppingListServiceImplementation(APPLICATION.getDatabaseConnector());
+        service.delete(shoppingListItem);
+        loadShoppingList();
+    }
+
+    public void _hinzufügenButton_onAction(ActionEvent event) {
+        event.consume();
+        hinzufuegenButtonClicked();
+    }
+
+    public void _deleteButton_onAction(ActionEvent event) {
+        event.consume();
+        ShoppingListItem selectedItem = tableView.getSelectionModel().getSelectedItem();
+
+        if (selectedItem != null) {
+            removeItemFromList(selectedItem);
+            loeschenButton.setStyle("-fx-border-color: green;");
+        } else {
+            loeschenButton.setStyle("-fx-border-color: red;");
+        }
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(e -> loeschenButton.setStyle("-fx-border-color: grey;"));
+        pause.play();
+    }
 
 }

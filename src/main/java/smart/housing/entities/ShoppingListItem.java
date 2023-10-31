@@ -7,7 +7,18 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name= "Shopping_List_Items")
+@NamedQueries({
+        @NamedQuery(
+                name = ShoppingListItem.FIND_ALL,
+                query = "SELECT shoppingListItem FROM ShoppingListItem shoppingListItem"
+        )
+})
 public class ShoppingListItem {
+
+    /**
+     * Name of named query to return all Shopping List Items
+     */
+    public static final String FIND_ALL = "ShoppingListItem.findAll";
 
     /**
      * Unique item
@@ -30,6 +41,8 @@ public class ShoppingListItem {
 
     public ShoppingListItem(String item, double anzahl, String einheit) {
         this.item = item;
+        this.anzahl = anzahl;
+        this.einheit = einheit;
     }
 
     public ShoppingListItem(String item) {
@@ -64,5 +77,13 @@ public class ShoppingListItem {
 
     public void setEinheit(String einheit) {
         this.einheit = einheit;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj != null && obj.getClass().equals(getClass())) {
+            return obj.toString().equals(this.toString());
+        }
+        return false;
     }
 }

@@ -19,13 +19,13 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0">
                     <children>
                         <TextField fx:id="artikelTextField" layoutX="66.0" layoutY="78.0" prefHeight="26.0" prefWidth="230.0" promptText="Artikel" />
-                        <Button fx:id="hinzufuegenButton" layoutX="66.0" layoutY="174.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" text="Hinzufügen" />
+                        <Button fx:id="hinzufuegenButton" onAction="#_hinzufügenButton_onAction" layoutX="66.0" layoutY="174.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" text="Hinzufügen" />
                         <Label fx:id="einkaufslisteLabel" layoutX="66.0" layoutY="40.0" prefHeight="17.0" prefWidth="145.0" text="Einkaufsliste">
                             <font>
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
-                        <Button fx:id="loeschenButton" layoutX="351.0" layoutY="408.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="Löschen" />
+                        <Button fx:id="loeschenButton" onAction="#_deleteButton_onAction" layoutX="351.0" layoutY="408.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="Löschen" />
                         <ComboBox fx:id="einheitComboBox" layoutX="162.0" layoutY="122.0" prefHeight="26.0" prefWidth="135.0" promptText="Einheit" />
                         <Button fx:id="aenderungButton" layoutX="433.0" layoutY="408.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Anzahl ändern" />
                         <TableView fx:id="tableView" layoutX="351.0" layoutY="78.0" prefHeight="312.0" prefWidth="388.0">

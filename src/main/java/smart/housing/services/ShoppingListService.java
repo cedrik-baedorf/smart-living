@@ -17,8 +17,8 @@ public interface ShoppingListService {
     void create(ShoppingListItem shoppingListItem);
 
     /**
-     * This method returns a List with all Items from the database table
-     * @return <code>ObservableList<ShoppingListItem></code> the List containing all Items from the database table
+     * This method takes an object of class <code>ShoppingListItem</code> and removes it from the database, if
+     * @param shoppingListItem to be removed from the database
      */
-    ObservableList<ShoppingListItem> readList ();
+    void delete(ShoppingListItem shoppingListItem);
 }
