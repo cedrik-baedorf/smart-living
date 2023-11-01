@@ -22,22 +22,14 @@ USE `smart-living`;
 DROP TABLE IF EXISTS `assignments`;
 DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `tasks`;
-DROP TABLE IF EXISTS `roles`;
-
-CREATE TABLE IF NOT EXISTS `roles` (
-    `role_id` INT NOT NULL,
-    `name` VARCHAR(8) NOT NULL,
-    PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `users` (
     `username` VARCHAR(8) NOT NULL,
     `password` CHAR(64) NOT NULL,
     `last_name` VARCHAR(24) DEFAULT NULL,
     `first_name` VARCHAR(24) DEFAULT NULL,
-    `role_id` INT DEFAULT NULL,
-    PRIMARY KEY (`username`),
-    CONSTRAINT `fk_role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    `role` VARCHAR(8) DEFAULT NULL,
+    PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `tasks` (

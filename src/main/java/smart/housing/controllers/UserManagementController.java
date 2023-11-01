@@ -68,6 +68,7 @@ public class UserManagementController extends SmartHousingController {
     private void loadUsers() {
         List<User> userList = userManagementService.getUsers();
         userTable.setItems(FXCollections.observableList(userList));
+        userTable.refresh();
     }
 
     private void initializeButtons(boolean itemSelected) {
@@ -84,9 +85,7 @@ public class UserManagementController extends SmartHousingController {
     public void _userTable_onMouseClicked(MouseEvent mouseEvent) {
         mouseEvent.consume();
         User selectedUser = userTable.getSelectionModel().getSelectedItem();
-        if(selectedUser != null) {
-            initializeButtons(true);
-        }
+        initializeButtons(selectedUser != null && APPLICATION.getUser().getRole().outranks(selectedUser.getRole()));
     }
 
     public void _deleteButton_onAction(ActionEvent event) {

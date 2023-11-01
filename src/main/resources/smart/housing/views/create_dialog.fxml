@@ -33,14 +33,19 @@
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </TextField>
+            <ChoiceBox fx:id="roleChoiceBox" GridPane.rowIndex="4">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </ChoiceBox>
             <Button onAction="#_createUser" text="Create User" textAlignment="CENTER" GridPane.halignment="CENTER"
-                    GridPane.rowIndex="4" styleClass="standard-layout, confirm-button" maxWidth="Infinity"
+                    GridPane.rowIndex="5" styleClass="standard-layout, confirm-button" maxWidth="Infinity"
             >
                 <GridPane.margin>
                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </Button>
-            <ErrorMessage fx:id="errorMessage" GridPane.rowIndex="5" wrapText="true"
+            <ErrorMessage fx:id="errorMessage" GridPane.rowIndex="6" wrapText="true"
                           styleClass="standard-layout, error-message"
             >
                 <GridPane.margin>

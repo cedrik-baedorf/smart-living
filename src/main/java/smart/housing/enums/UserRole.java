@@ -2,7 +2,9 @@ package smart.housing.enums;
 
 public enum UserRole {
 
-    ADMIN("ADMIN", 1), USER("USER", 10);
+    ADMIN("ADMIN", 1), SUPREME("SUPREME", 2), USER("USER", 3);
+
+    public static final UserRole DEFAULT_ROLE = UserRole.USER;
 
     private final String ROLE_NAME;
     private final int RANK;
@@ -38,6 +40,11 @@ public enum UserRole {
      */
     public boolean outranks(UserRole role) {
         return RANK <= role.getRank();
+    }
+
+    @Override
+    public String toString() {
+        return this.getRoleName();
     }
 
 }

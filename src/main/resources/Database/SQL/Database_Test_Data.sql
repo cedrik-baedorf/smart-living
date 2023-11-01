@@ -16,19 +16,14 @@
 
 USE `smart-living`;
 
-DELETE FROM `roles`;
-INSERT INTO `roles` (`role_id`, `name`) VALUES
-    (1, 'ADMIN'),
-    (2, 'USER');
-
 -- export data of table smart-living.users: 5 rows
 DELETE FROM `users`;
-INSERT INTO `users` (`username`, `password`, `last_name`, `first_name`, `role_id`) VALUES
-	('cbaedorf', '0000000000000000000000000000000000000000000000000000001216985755', 'Baedorf', 'Cedrik', '1'),
-	('nrg', '0000000000000000000000000000000000000000000000000000001216985755', 'Gossner', 'Anna Maria', '2'),
-	('ivano', '0000000000000000000000000000000000000000000000000000001216985755', 'Sachau', 'Ivan', '2'),
-	('lienchen', '0000000000000000000000000000000000000000000000000000001216985755', 'Pradel', 'Alina', '2'),
-	('heyden', '0000000000000000000000000000000000000000000000000000001216985755', 'Heyden', 'Tom', '2');
+INSERT INTO `users` (`username`, `password`, `last_name`, `first_name`, `role`) VALUES
+	('cbaedorf', '0000000000000000000000000000000000000000000000000000001216985755', 'Baedorf', 'Cedrik', 'ADMIN'),
+	('nrg', '0000000000000000000000000000000000000000000000000000001216985755', 'Gossner', 'Anna Maria', 'USER'),
+	('ivano', '0000000000000000000000000000000000000000000000000000001216985755', 'Sachau', 'Ivan', 'USER'),
+	('lienchen', '0000000000000000000000000000000000000000000000000000001216985755', 'Pradel', 'Alina', 'USER'),
+	('heyden', '0000000000000000000000000000000000000000000000000000001216985755', 'Heyden', 'Tom', 'USER');
 
 DELETE FROM `tasks`;
 INSERT INTO `tasks` (task_id, task_name, description, start_date, end_date, reoccurrence, completed)

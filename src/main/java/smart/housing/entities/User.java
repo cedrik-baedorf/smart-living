@@ -67,9 +67,8 @@ public class User {
     /**
      * Role of the user
      */
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @Column(name = "role")
+    private String role;
 
     public User() {
         this("standard");
@@ -99,8 +98,7 @@ public class User {
     }
 
     public void setRole(UserRole role) {
-        this.role = new Role();
-        this.role.setRole(role);
+        this.role = role.getRoleName();
     }
 
     public String getUsername() {
@@ -120,7 +118,11 @@ public class User {
     }
 
     public UserRole getRole() {
-        return role.getRole();
+        UserRole role = UserRole.parseString(this.role);
+        if(role != null)
+            return role;
+        this.role = UserRole.DEFAULT_ROLE.getRoleName();
+        return getRole();
     }
 
     @Override

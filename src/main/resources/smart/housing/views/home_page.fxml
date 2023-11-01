@@ -5,6 +5,7 @@
 
 <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea"
          xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.HomePageController" fx:id="tabPane"
+         stylesheets="@style_sheets/tab.css"
 >
     <Tab closable="false" text="User Management" onSelectionChanged="#_updateTabs">
         <Pane fx:id="userManagement"/>

@@ -9,6 +9,7 @@ import smart.housing.entities.User;
 import smart.housing.enums.UserRole;
 import smart.housing.exceptions.EmptyFieldException;
 import smart.housing.exceptions.IncorrectCredentialsException;
+import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.services.UserManagementService;
 import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.ui.ErrorMessage;
@@ -66,11 +67,8 @@ public class ModifyDialogController extends DialogController {
         errorMessage.clear();
         try {
             modifyUser();
-        } catch (EmptyFieldException exception) {
+        } catch (EmptyFieldException | UserManagementServiceException exception) {
             errorMessage.displayError(exception.getMessage(), 5);
-        } catch (IncorrectCredentialsException exception) {
-            errorMessage.displayError(exception.getMessage(), 5);
-        } finally {
             loadUserData();
         }
     }
@@ -109,6 +107,7 @@ public class ModifyDialogController extends DialogController {
         if(newPasswordField.getText().length() != 0)
             user.setPassword(newPasswordField.getText(), userManagementService.getHashAlgorithm());
         entityManager.getTransaction().commit();
+        entityManager.close();
         DIALOG.setResult(true);
     }
 
