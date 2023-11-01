@@ -50,7 +50,6 @@ public class LoginPageController extends SmartHousingController {
     @FXML PasswordField passwordField;
     @FXML TextField usernameField;
     @FXML ErrorMessage errorMessage;
-    @FXML Image backgroundImage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this

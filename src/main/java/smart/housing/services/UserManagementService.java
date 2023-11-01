@@ -1,6 +1,5 @@
 package smart.housing.services;
 
-import smart.housing.entities.Role;
 import smart.housing.entities.User;
 import smart.housing.enums.UserRole;
 import smart.housing.exceptions.UserManagementServiceException;
