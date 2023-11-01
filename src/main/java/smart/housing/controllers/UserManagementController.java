@@ -32,14 +32,11 @@ public class UserManagementController extends SmartHousingController {
 
     private final SmartLivingApplication APPLICATION;
 
-    private UserManagementService userManagementService;
+    private final UserManagementService USER_MANAGEMENT_SERVICE;
 
-    @FXML
-    public BackgroundStackPane backgroundPane;
-    @FXML
-    public TableView<User> userTable;
-    @FXML
-    public Button deleteButton, modifyButton, createButton;
+    @FXML public BackgroundStackPane backgroundPane;
+    @FXML public TableView<User> userTable;
+    @FXML public Button deleteButton, modifyButton, createButton;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -48,7 +45,7 @@ public class UserManagementController extends SmartHousingController {
      */
     public UserManagementController(SmartLivingApplication application) {
         this.APPLICATION = application;
-        userManagementService = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
+        USER_MANAGEMENT_SERVICE = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
     }
 
     public void initialize() {
@@ -66,7 +63,7 @@ public class UserManagementController extends SmartHousingController {
     }
 
     private void loadUsers() {
-        List<User> userList = userManagementService.getUsers();
+        List<User> userList = USER_MANAGEMENT_SERVICE.getUsers();
         userTable.setItems(FXCollections.observableList(userList));
         userTable.refresh();
     }
