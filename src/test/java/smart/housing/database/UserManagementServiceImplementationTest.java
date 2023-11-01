@@ -5,22 +5,22 @@ import org.mockito.InOrder;
 import org.mockito.Mockito;
 import smart.housing.entities.User;
 import smart.housing.exceptions.IncorrectCredentialsException;
-import smart.housing.exceptions.LoginServiceException;
+import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.security.HashAlgorithm;
-import smart.housing.services.LoginService;
-import smart.housing.services.LoginServiceImplementation;
+import smart.housing.services.UserManagementService;
+import smart.housing.services.UserManagementServiceImplementation;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class LoginServiceImplementationTest {
+public class UserManagementServiceImplementationTest {
 
     private DatabaseConnector login_mockDatabaseConnector() {
         EntityManager entityManager = Mockito.mock(EntityManager.class);
 
-        HashAlgorithm hashAlgorithm = LoginServiceImplementation.HASH_ALGORITHM;
+        HashAlgorithm hashAlgorithm = UserManagementServiceImplementation.HASH_ALGORITHM;
 
         User user = new User("username", "password", hashAlgorithm);
 
@@ -44,9 +44,9 @@ public class LoginServiceImplementationTest {
         String username = "unknown";
         String password = "password";
 
-        LoginService loginService = new LoginServiceImplementation(login_mockDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(login_mockDatabaseConnector());
 
-        assertThrowsExactly(IncorrectCredentialsException.class, () -> loginService.login(username, password));
+        assertThrowsExactly(IncorrectCredentialsException.class, () -> userManagementService.login(username, password));
     }
 
     /**
@@ -59,9 +59,9 @@ public class LoginServiceImplementationTest {
         String username = "username";
         String password = "12345678";
 
-        LoginService loginService = new LoginServiceImplementation(login_mockDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(login_mockDatabaseConnector());
 
-        assertThrowsExactly(IncorrectCredentialsException.class, () -> loginService.login(username, password));
+        assertThrowsExactly(IncorrectCredentialsException.class, () -> userManagementService.login(username, password));
     }
 
     /**
@@ -74,11 +74,11 @@ public class LoginServiceImplementationTest {
         String username = "username";
         String password = "password";
 
-        LoginService loginService = new LoginServiceImplementation(login_mockDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(login_mockDatabaseConnector());
 
-        User expectedUser = new User(username, password, LoginServiceImplementation.HASH_ALGORITHM);
+        User expectedUser = new User(username, password, UserManagementServiceImplementation.HASH_ALGORITHM);
 
-        assertEquals(expectedUser, loginService.login(username, password));
+        assertEquals(expectedUser, userManagementService.login(username, password));
     }
 
     private DatabaseConnector create_mockDatabaseConnector() {
@@ -102,9 +102,9 @@ public class LoginServiceImplementationTest {
      */
     @Test
     public void testCreate_userIsNull() {
-        LoginService loginService = new LoginServiceImplementation(create_mockDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(create_mockDatabaseConnector());
 
-        assertThrowsExactly(LoginServiceException.class, () -> loginService.create(null));
+        assertThrowsExactly(UserManagementServiceException.class, () -> userManagementService.create(null));
     }
 
     /**
@@ -112,9 +112,9 @@ public class LoginServiceImplementationTest {
      */
     @Test
     public void testCreate_usernameAlreadyExists() {
-        LoginService loginService = new LoginServiceImplementation(create_mockDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(create_mockDatabaseConnector());
 
-        assertThrowsExactly(LoginServiceException.class, () -> loginService.create(new User("standard")));
+        assertThrowsExactly(UserManagementServiceException.class, () -> userManagementService.create(new User("standard")));
     }
 
     /**
@@ -122,9 +122,9 @@ public class LoginServiceImplementationTest {
      */
     @Test
     public void testCreate_passwordEqualNull() {
-        LoginService loginService = new LoginServiceImplementation(create_mockDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(create_mockDatabaseConnector());
 
-        assertThrowsExactly(LoginServiceException.class, () -> loginService.create(new User("standard")));
+        assertThrowsExactly(UserManagementServiceException.class, () -> userManagementService.create(new User("standard")));
     }
 
     /**
@@ -133,13 +133,13 @@ public class LoginServiceImplementationTest {
     @Test
     public void testCreate_persistCorrectUser() {
         DatabaseConnector databaseConnector = create_mockDatabaseConnector();
-        LoginService loginService = new LoginServiceImplementation(databaseConnector);
+        UserManagementService userManagementService = new UserManagementServiceImplementation(databaseConnector);
 
-        HashAlgorithm hashAlgorithm = LoginServiceImplementation.HASH_ALGORITHM;
+        HashAlgorithm hashAlgorithm = UserManagementServiceImplementation.HASH_ALGORITHM;
 
         User persistedUser = new User("username", "password", hashAlgorithm);
 
-        assertDoesNotThrow(() -> loginService.create(persistedUser));
+        assertDoesNotThrow(() -> userManagementService.create(persistedUser));
 
         EntityManager entityManager = databaseConnector.createEntityManager();
         EntityTransaction entityTransaction = entityManager.getTransaction();

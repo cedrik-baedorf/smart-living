@@ -21,13 +21,13 @@
                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </PasswordField>
-            <TextField fx:id="lastNameField" promptText="surname" GridPane.rowIndex="2"
+            <TextField fx:id="firstNameField" promptText="first name" GridPane.rowIndex="2"
                        onAction="#_createUser" styleClass="standard-layout, text-field">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </TextField>
-            <TextField fx:id="firstNameField" promptText="first name" GridPane.rowIndex="3"
+            <TextField fx:id="lastNameField" promptText="surname" GridPane.rowIndex="3"
                        onAction="#_createUser" styleClass="standard-layout, text-field">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

@@ -2,12 +2,14 @@ package smart.housing.enums;
 
 public enum UserRole {
 
-    ADMIN("ADMIN"), USER("USER");
+    ADMIN("ADMIN", 1), USER("USER", 10);
 
     private final String ROLE_NAME;
+    private final int RANK;
 
-    UserRole(String roleName) {
+    UserRole(String roleName, int rank) {
         this.ROLE_NAME = roleName.toUpperCase();
+        this.RANK = rank;
     }
 
     public String getRoleName() {
@@ -21,6 +23,21 @@ public enum UserRole {
                 return role;
         }
         return null;
+    }
+
+    public int getRank() {
+        return RANK;
+    }
+
+    /**
+     * This method can be used to compare ranks between two UserRoles.
+     * The lower the <code>int</code> value of a rank, the higher that the role's rank is.
+     * @param role <code>{@link UserRole}</code> object who's rank will be compared.
+     * @return <code>true</code> if this roles rank is greater or equal than the role in comparison
+     * (<code>this.RANK <= role.getRANK</code>)
+     */
+    public boolean outranks(UserRole role) {
+        return RANK <= role.getRank();
     }
 
 }

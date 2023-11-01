@@ -5,8 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import smart.housing.SmartLivingApplication;
 import smart.housing.exceptions.EmptyFieldException;
-import smart.housing.services.LoginService;
-import smart.housing.services.LoginServiceImplementation;
+import smart.housing.services.UserManagementService;
+import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.entities.User;
 import smart.housing.ui.ErrorMessage;
 
@@ -75,13 +75,13 @@ public class CreateDialogController extends DialogController {
         checkForEmptyInput(lastNameField.getText(), "surname");
         checkForEmptyInput(firstNameField.getText(), "first name");
 
-        LoginService loginService = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
 
-        User newUser = new User(usernameField.getText(), passwordField.getText(), loginService.getHashAlgorithm());
+        User newUser = new User(usernameField.getText(), passwordField.getText(), userManagementService.getHashAlgorithm());
         newUser.setLastName(lastNameField.getText());
         newUser.setFirstName(firstNameField.getText());
 
-        loginService.create(newUser);
+        userManagementService.create(newUser);
         DIALOG.setResult(true);
     }
 

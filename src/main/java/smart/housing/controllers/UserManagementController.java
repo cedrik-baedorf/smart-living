@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.User;
+import smart.housing.services.UserManagementService;
+import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.ui.BackgroundStackPane;
 
 import javax.persistence.EntityManager;
@@ -32,6 +34,8 @@ public class UserManagementController extends SmartHousingController {
 
     private final SmartLivingApplication APPLICATION;
 
+    private UserManagementService userManagementService;
+
     @FXML
     public BackgroundStackPane backgroundPane;
     @FXML
@@ -46,6 +50,7 @@ public class UserManagementController extends SmartHousingController {
      */
     public UserManagementController(SmartLivingApplication application) {
         this.APPLICATION = application;
+        userManagementService = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
     }
 
     public void initialize() {
@@ -63,9 +68,7 @@ public class UserManagementController extends SmartHousingController {
     }
 
     private void loadUsers() {
-        EntityManager entityManager = APPLICATION.getDatabaseConnector().createEntityManager();
-        TypedQuery<User> userQuery = entityManager.createNamedQuery(User.FIND_ALL, User.class);
-        List<User> userList = userQuery.getResultList();
+        List<User> userList = userManagementService.getUsers();
         userTable.setItems(FXCollections.observableList(userList));
     }
 

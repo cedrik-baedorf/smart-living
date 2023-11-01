@@ -1,6 +1,6 @@
 package smart.housing.exceptions;
 
-public class IncorrectCredentialsException extends LoginServiceException {
+public class IncorrectCredentialsException extends UserManagementServiceException {
 
     public IncorrectCredentialsException(String msg) {
         this(msg, null);

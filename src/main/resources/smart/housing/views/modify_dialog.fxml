@@ -18,6 +18,11 @@
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </TextField>
+            <ChoiceBox fx:id="roleChoiceBox" GridPane.rowIndex="2">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </ChoiceBox>
             <PasswordField fx:id="newPasswordField" promptText="new password" GridPane.rowIndex="3" onAction="#_modifyUser">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -45,14 +50,8 @@
                 </GridPane.margin>
             </ErrorMessage>
          <columnConstraints>
-            <ColumnConstraints />
+            <ColumnConstraints hgrow="ALWAYS" minWidth="200"/>
          </columnConstraints>
-         <rowConstraints>
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-            <RowConstraints />
-         </rowConstraints>
         </GridPane>
     </content>
 </DialogPane>
