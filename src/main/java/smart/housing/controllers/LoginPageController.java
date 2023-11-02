@@ -17,9 +17,9 @@ import smart.housing.SmartLivingApplication;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.database.DatabaseConnectorImplementation;
 import smart.housing.exceptions.IncorrectCredentialsException;
-import smart.housing.exceptions.LoginServiceException;
-import smart.housing.services.LoginService;
-import smart.housing.services.LoginServiceImplementation;
+import smart.housing.exceptions.UserManagementServiceException;
+import smart.housing.services.UserManagementService;
+import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.ui.BackgroundStackPane;
 import smart.housing.ui.ErrorMessage;
 
@@ -50,7 +50,6 @@ public class LoginPageController extends SmartHousingController {
     @FXML PasswordField passwordField;
     @FXML TextField usernameField;
     @FXML ErrorMessage errorMessage;
-    @FXML Image backgroundImage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -119,14 +118,14 @@ public class LoginPageController extends SmartHousingController {
         errorMessage.clear();
 
         DatabaseConnector connector = APPLICATION.getDatabaseConnector();
-        LoginService loginService = new LoginServiceImplementation(connector);
+        UserManagementService userManagementService = new UserManagementServiceImplementation(connector);
         try {
-            APPLICATION.setUser(loginService.login(username, password));
+            APPLICATION.setUser(userManagementService.login(username, password));
             APPLICATION.setDatabaseConnector(connector);
             APPLICATION.setRoot(HomePageController.VIEW_NAME, new HomePageController(APPLICATION));
         } catch (IncorrectCredentialsException exception) {
             errorMessage.displayError("Invalid Credentials", 5);
-        } catch (LoginServiceException exception) {
+        } catch (UserManagementServiceException exception) {
             errorMessage.displayError("Missing Credentials", 5);
         } finally {
             passwordField.clear();

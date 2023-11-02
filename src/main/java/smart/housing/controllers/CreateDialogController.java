@@ -1,14 +1,18 @@
 package smart.housing.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import smart.housing.SmartLivingApplication;
+import smart.housing.enums.UserRole;
 import smart.housing.exceptions.EmptyFieldException;
-import smart.housing.services.LoginService;
-import smart.housing.services.LoginServiceImplementation;
+import smart.housing.services.UserManagementService;
+import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.entities.User;
 import smart.housing.ui.ErrorMessage;
+
+import java.util.Arrays;
 
 /**
  * Controller to view 'create_dialog.fxml'
@@ -26,14 +30,11 @@ public class CreateDialogController extends DialogController {
 
     private final Dialog<Boolean> DIALOG;
 
-    @FXML
-    DialogPane dialogPane;
-    @FXML
-    TextField usernameField, lastNameField, firstNameField;
-    @FXML
-    PasswordField passwordField;
-    @FXML
-    ErrorMessage errorMessage;
+    @FXML DialogPane dialogPane;
+    @FXML TextField usernameField, lastNameField, firstNameField;
+    @FXML PasswordField passwordField;
+    @FXML ErrorMessage errorMessage;
+    @FXML ChoiceBox<UserRole> roleChoiceBox;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -47,11 +48,20 @@ public class CreateDialogController extends DialogController {
 
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
+        loadRoles();
         errorMessage.clear();
     }
 
     public String getViewName() {
         return VIEW_NAME;
+    }
+
+    private void loadRoles() {
+        roleChoiceBox.setItems(FXCollections.observableList(Arrays.stream(UserRole.values())
+                .filter(userRole -> APPLICATION.getUser().getRole().outranks(userRole))
+                .toList()
+        ));
+        roleChoiceBox.setValue(UserRole.DEFAULT_ROLE);
     }
 
     public void _createUser(ActionEvent event) {
@@ -75,13 +85,14 @@ public class CreateDialogController extends DialogController {
         checkForEmptyInput(lastNameField.getText(), "surname");
         checkForEmptyInput(firstNameField.getText(), "first name");
 
-        LoginService loginService = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
 
-        User newUser = new User(usernameField.getText(), passwordField.getText(), loginService.getHashAlgorithm());
+        User newUser = new User(usernameField.getText(), passwordField.getText(), userManagementService.getHashAlgorithm());
         newUser.setLastName(lastNameField.getText());
         newUser.setFirstName(firstNameField.getText());
+        newUser.setRole(roleChoiceBox.getValue());
 
-        loginService.create(newUser);
+        userManagementService.create(newUser);
         DIALOG.setResult(true);
     }
 
