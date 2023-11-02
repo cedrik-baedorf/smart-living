@@ -2,8 +2,6 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<?import javafx.scene.control.skin.TabPaneSkin.TabControlButtons?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea"
