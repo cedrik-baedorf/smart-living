@@ -18,9 +18,9 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
     @Override
     public List<Task> getAllTasks() {
         EntityManager entityManager = databaseConnector.createEntityManager();
-        TypedQuery<Task> typedQuery = entityManager.createNamedQuery(Task.FIND_ALL, Task.class);
+        List<Task> taskList = entityManager.createNamedQuery(Task.FIND_ALL, Task.class).getResultList();
         entityManager.close();
-        return typedQuery.getResultList();
+        return taskList;
     }
 
     @Override

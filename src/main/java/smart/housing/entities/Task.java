@@ -19,7 +19,9 @@ import java.util.Set;
         ),
         @NamedQuery(
                 name = Task.FIND_WITH_FILTERS,
-                query = "SELECT task FROM Task task"
+                query = """
+                        SELECT task FROM Task task
+                        """
         )
 })
 
@@ -53,7 +55,7 @@ public class Task {
     /**
      * To which roommate is the task assigned
      */
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany()
     @JoinTable(
         name = "assignments",
         joinColumns = @JoinColumn(name = "task_id"),
@@ -62,22 +64,10 @@ public class Task {
     private Set<User> assignees;
 
     /**
-     * Start date of this reoccurring task
+     * Due date of this reoccurring task
      */
-    @Column(name = "start_date")
-    private LocalDate startDate;
-
-    /**
-     * Days between two task occurrences (7 = weekly)
-     */
-    @Column(name = "reoccurrence")
-    private int reoccurrence;
-
-    /**
-     * End date of this reoccurring task (no task later than this date)
-     */
-    @Column(name = "end_date")
-    private LocalDate endDate;
+    @Column(name = "due_date")
+    private LocalDate dueDate;
 
     /**
      * Information about whether the task is completed or not
@@ -87,8 +77,7 @@ public class Task {
 
     public Task (String taskName, Set<User> assignees){
         this.taskName = taskName;
-        this.assignees = assignees;
-        this.startDate = LocalDate.now();
+        this.assignees = assignees == null ? new HashSet<>() : assignees;
         this.isCompleted = false;
     }
 
@@ -109,12 +98,10 @@ public class Task {
     }
 
     public void markAsCompleted(){
-        if (this.getAssignees().isEmpty())
-            throw new IllegalStateException("A task must be completed to at least one roommate before marking it as completed");
+        if (this.getAssignees() == null || this.getAssignees().isEmpty())
+            throw new IllegalStateException("A task must be assigned to at least one roommate before marking it as completed");
         else
             this.setCompleted();
-
-            // MISSING: database update to mark task as completed
     }
 
     public String getTaskName(){
@@ -129,36 +116,20 @@ public class Task {
         return assignees;
     }
 
-    public LocalDate getStartDate(){
-        return this.startDate;
+    public LocalDate getDueDate(){
+        return this.dueDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
     }
 
-    public int getReoccurrence(){
-        return this.reoccurrence;
-    }
-
-    public void setReoccurrence(int reoccurrence){
-        this.reoccurrence = reoccurrence;
-    }
-
-    public LocalDate getEndDate(){
-        return this.endDate;
-    }
-
-    public void setEndDate(LocalDate endDate){
-        this.endDate = endDate;
-    }
-
-    public void setCompleted(){
+    private void setCompleted(){
         isCompleted = true;
     }
 
     public boolean getCompleted() {
-        return assignees != null && !assignees.isEmpty() && isCompleted;
+        return isCompleted;
     }
 
 }
