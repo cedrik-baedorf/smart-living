@@ -26,14 +26,14 @@ INSERT INTO `users` (`username`, `password`, `last_name`, `first_name`, `role`) 
 	('heyden', '0000000000000000000000000000000000000000000000000000001216985755', 'Heyden', 'Tom', 'USER');
 
 DELETE FROM `tasks`;
-INSERT INTO `tasks` (task_id, task_name, description, start_date, end_date, reoccurrence, completed)
-VALUES (0, 'Clean floors', 'Vaccuming the floors and mopping all floors', '2023-10-01', '2023-10-10', 7, false);
+INSERT INTO `tasks` (`task_id`, `task_name`, `description`, `due_date`, `completed`)
+VALUES (0, 'Clean floors', 'Vaccuming the floors and mopping all floors', '2023-10-01',false);
 
-INSERT INTO `tasks` (`task_id`, `task_name`, `description`, `start_date`, `reoccurrence`, `completed`)
-VALUES (1, 'Bathroom', 'Clean shower, toilet and sink', '2023-09-01', 3, true);
+INSERT INTO `tasks` (`task_id`, `task_name`, `description`, `due_date`, `completed`)
+VALUES (1, 'Bathroom', 'Clean shower, toilet and sink', '2023-09-01', true);
 
-INSERT INTO `tasks` (`task_id`, `task_name`, `description`, `start_date`, `end_date`, `reoccurrence`)
-VALUES (2, 'Kitchen', 'Do the dishes and clean the working tables', '2023-01-01', '2024-12-31', 9);
+INSERT INTO `tasks` (`task_id`, `task_name`, `description`, `due_date`)
+VALUES (2, 'Kitchen', 'Do the dishes and clean the working tables', '2023-01-01');
 
 DELETE FROM `assignments`;
 INSERT INTO `assignments` (`assignment_id`, `task_id`, `username`) VALUES (0, 0, 'cbaedorf');

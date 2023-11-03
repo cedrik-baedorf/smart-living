@@ -36,9 +36,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
    `task_id` INT NOT NULL,
    `task_name` CHAR(32) NOT NULL,
    `description` CHAR(128) DEFAULT NULL,
-   `start_date` DATE NOT NULL,
-   `end_date` DATE DEFAULT NULL,
-   `reoccurrence` INT NOT NULL,
+   `due_date` DATE NOT NULL,
    `completed` BOOLEAN DEFAULT FALSE,
    PRIMARY KEY (`task_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
