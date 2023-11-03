@@ -1,0 +1,44 @@
+/* tab-pane header */
+.tab-pane .tab-header-area {
+    -fx-background-color: YELLOW;
+}
+
+.tab-pane .tab-header-area. tab-header-background {
+    -fx-background-color: GREEN;
+}
+
+/* tab background style */
+.tab-pane .tab {
+    -fx-background-color: WHITE;
+    -fx-background-radius: 5 5 0 0;
+    -fx-background-insets: 0 5 0 5;
+    -fx-padding: 2 8 2 8;
+    -fx-border-color: TRANSPARENT;
+    -fx-focus-color: TRANSPARENT;
+}
+
+/* tab background style for a selected tab */
+.tab-pane .tab:selected {
+    -fx-background-color: BLACK;
+}
+
+/* tab background style for a hovered tab */
+.tab-pane .tab:hover {
+    -fx-background-color: BLACK;
+}
+
+/* tab text style */
+.tab-pane .tab .tab-label {
+    -fx-text-fill: BLACK;
+    -fx-font-size: 16px;
+}
+
+/* tab text style for a selected tab */
+.tab-pane .tab:selected .tab-label {
+    -fx-text-fill: WHITE
+}
+
+/* tab text style for a hovered tab */
+.tab-pane .tab:hover .tab-label {
+    -fx-text-fill: WHITE
+}

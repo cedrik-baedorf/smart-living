@@ -1,17 +1,21 @@
 package smart.housing.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.User;
+import smart.housing.enums.UserRole;
 import smart.housing.exceptions.EmptyFieldException;
 import smart.housing.exceptions.IncorrectCredentialsException;
-import smart.housing.services.LoginService;
-import smart.housing.services.LoginServiceImplementation;
+import smart.housing.exceptions.UserManagementServiceException;
+import smart.housing.services.UserManagementService;
+import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.ui.ErrorMessage;
 
 import javax.persistence.EntityManager;
+import java.util.Arrays;
 
 /**
  * Controller to view 'modify_dialog.fxml'
@@ -29,16 +33,13 @@ public class ModifyDialogController extends DialogController {
 
     private final Dialog<Boolean> DIALOG;
 
-    private User userToBeModified;
+    private final User USER_TO_BE_MODIFIED;
 
-    @FXML
-    DialogPane dialogPane;
-    @FXML
-    TextField lastNameField, firstNameField;
-    @FXML
-    PasswordField newPasswordField, confirmPasswordField, currentPasswordField;
-    @FXML
-    ErrorMessage errorMessage;
+    @FXML DialogPane dialogPane;
+    @FXML TextField lastNameField, firstNameField;
+    @FXML ChoiceBox<UserRole> roleChoiceBox;
+    @FXML PasswordField newPasswordField, confirmPasswordField, currentPasswordField;
+    @FXML ErrorMessage errorMessage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -48,7 +49,7 @@ public class ModifyDialogController extends DialogController {
     public ModifyDialogController(SmartLivingApplication application, Dialog<Boolean> dialog, User userToBeModified) {
         this.APPLICATION = application;
         this.DIALOG = dialog;
-        this.userToBeModified = userToBeModified;
+        this.USER_TO_BE_MODIFIED = userToBeModified;
     }
 
     public void initialize() {
@@ -66,18 +67,20 @@ public class ModifyDialogController extends DialogController {
         errorMessage.clear();
         try {
             modifyUser();
-        } catch (EmptyFieldException exception) {
+        } catch (EmptyFieldException | UserManagementServiceException exception) {
             errorMessage.displayError(exception.getMessage(), 5);
-        } catch (IncorrectCredentialsException exception) {
-            errorMessage.displayError(exception.getMessage(), 5);
-        } finally {
             loadUserData();
         }
     }
 
     private void loadUserData() {
-        firstNameField.setText(userToBeModified.getFirstName());
-        lastNameField.setText(userToBeModified.getLastName());
+        firstNameField.setText(USER_TO_BE_MODIFIED.getFirstName());
+        lastNameField.setText(USER_TO_BE_MODIFIED.getLastName());
+        roleChoiceBox.setItems(FXCollections.observableList(Arrays.stream(UserRole.values())
+            .filter(userRole -> APPLICATION.getUser().getRole().outranks(userRole))
+            .toList()
+        ));
+        roleChoiceBox.setValue(USER_TO_BE_MODIFIED.getRole());
         confirmPasswordField.clear();
         newPasswordField.clear();
         currentPasswordField.clear();
@@ -90,9 +93,9 @@ public class ModifyDialogController extends DialogController {
         if(! newPasswordField.getText().equals(confirmPasswordField.getText()))
             throw new IncorrectCredentialsException("new passwords do not match");
 
-        LoginService loginService = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
 
-        User user = loginService.login(userToBeModified.getUsername(), currentPasswordField.getText());
+        User user = userManagementService.login(USER_TO_BE_MODIFIED.getUsername(), currentPasswordField.getText());
 
         EntityManager entityManager = APPLICATION.getDatabaseConnector().createEntityManager();
 
@@ -100,9 +103,11 @@ public class ModifyDialogController extends DialogController {
         user = entityManager.merge(user);
         user.setFirstName(firstNameField.getText());
         user.setLastName(lastNameField.getText());
+        user.setRole(roleChoiceBox.getValue());
         if(newPasswordField.getText().length() != 0)
-            user.setPassword(newPasswordField.getText(), loginService.getHashAlgorithm());
+            user.setPassword(newPasswordField.getText(), userManagementService.getHashAlgorithm());
         entityManager.getTransaction().commit();
+        entityManager.close();
         DIALOG.setResult(true);
     }
 

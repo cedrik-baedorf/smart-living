@@ -6,8 +6,8 @@ import javafx.scene.control.*;
 import smart.housing.SmartLivingApplication;
 import smart.housing.exceptions.EmptyFieldException;
 import smart.housing.exceptions.IncorrectCredentialsException;
-import smart.housing.services.LoginService;
-import smart.housing.services.LoginServiceImplementation;
+import smart.housing.services.UserManagementService;
+import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.entities.User;
 import smart.housing.ui.ErrorMessage;
 
@@ -84,8 +84,8 @@ public class DeleteDialogController extends DialogController {
     public void deleteUser() {
         checkForEmptyInput(passwordField.getText(), "password");
 
-        LoginService loginService = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
-        loginService.delete(USER.getUsername(), passwordField.getText());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
+        userManagementService.delete(USER.getUsername(), passwordField.getText());
         DIALOG.setResult(true);
     }
 

@@ -7,9 +7,10 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.User;
+import smart.housing.services.UserManagementService;
+import smart.housing.services.UserManagementServiceImplementation;
+import smart.housing.ui.BackgroundStackPane;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -24,13 +25,18 @@ public class UserManagementController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "user_management.fxml";
 
+    /**
+     * Name of the background image file
+     */
+    private static final String BACKGROUND_IMAGE = "smart/housing/views/images/user_management_background.jpg";
+
     private final SmartLivingApplication APPLICATION;
 
-    @FXML
-    public TableView<User> userTable;
+    private final UserManagementService USER_MANAGEMENT_SERVICE;
 
-    @FXML
-    public Button deleteButton, modifyButton, createButton;
+    @FXML public BackgroundStackPane backgroundPane;
+    @FXML public TableView<User> userTable;
+    @FXML public Button deleteButton, modifyButton, createButton;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -39,9 +45,11 @@ public class UserManagementController extends SmartHousingController {
      */
     public UserManagementController(SmartLivingApplication application) {
         this.APPLICATION = application;
+        USER_MANAGEMENT_SERVICE = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
     }
 
     public void initialize() {
+        setBackgroundImage();
         loadUsers();
         initializeButtons(false);
     }
@@ -50,11 +58,14 @@ public class UserManagementController extends SmartHousingController {
         return VIEW_NAME;
     }
 
+    private void setBackgroundImage() {
+        backgroundPane.setBackgroundImage(BACKGROUND_IMAGE);
+    }
+
     private void loadUsers() {
-        EntityManager entityManager = APPLICATION.getDatabaseConnector().createEntityManager();
-        TypedQuery<User> userQuery = entityManager.createNamedQuery(User.FIND_ALL, User.class);
-        List<User> userList = userQuery.getResultList();
+        List<User> userList = USER_MANAGEMENT_SERVICE.getUsers();
         userTable.setItems(FXCollections.observableList(userList));
+        userTable.refresh();
     }
 
     private void initializeButtons(boolean itemSelected) {
@@ -71,9 +82,7 @@ public class UserManagementController extends SmartHousingController {
     public void _userTable_onMouseClicked(MouseEvent mouseEvent) {
         mouseEvent.consume();
         User selectedUser = userTable.getSelectionModel().getSelectedItem();
-        if(selectedUser != null) {
-            initializeButtons(true);
-        }
+        initializeButtons(selectedUser != null && APPLICATION.getUser().getRole().outranks(selectedUser.getRole()));
     }
 
     public void _deleteButton_onAction(ActionEvent event) {

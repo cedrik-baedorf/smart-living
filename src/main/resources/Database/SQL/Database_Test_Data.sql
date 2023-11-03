@@ -18,23 +18,25 @@ USE `smart-living`;
 
 -- export data of table smart-living.users: 5 rows
 DELETE FROM `users`;
-INSERT INTO `users` (`username`, `password`, `last_name`, `first_name`) VALUES
-	('cbaedorf', '0000000000000000000000000000000000000000000000000000001216985755', 'Baedorf', 'Cedrik');
+INSERT INTO `users` (`username`, `password`, `last_name`, `first_name`, `role`) VALUES
+	('cbaedorf', '0000000000000000000000000000000000000000000000000000001216985755', 'Baedorf', 'Cedrik', 'ADMIN'),
+	('nrg', '0000000000000000000000000000000000000000000000000000001216985755', 'Gossner', 'Anna Maria', 'USER'),
+	('ivano', '0000000000000000000000000000000000000000000000000000001216985755', 'Sachau', 'Ivan', 'USER'),
+	('lienchen', '0000000000000000000000000000000000000000000000000000001216985755', 'Pradel', 'Alina', 'USER'),
+	('heyden', '0000000000000000000000000000000000000000000000000000001216985755', 'Heyden', 'Tom', 'USER');
 
--- Data exporting was unselected.
+DELETE FROM `tasks`;
+INSERT INTO `tasks` (`task_id`, `task_name`, `description`, `due_date`, `completed`)
+VALUES (0, 'Clean floors', 'Vaccuming the floors and mopping all floors', '2023-10-01',false);
 
-DELETE FROM tasks;
-INSERT INTO tasks (task_id, task_name, description, start_date, end_date, reoccurrence, completed)
-VALUES (0, 'Clean floors', 'Vaccuming the floors and mopping all floors', '2023-10-01', '2023-10-10', 7, false);
+INSERT INTO `tasks` (`task_id`, `task_name`, `description`, `due_date`, `completed`)
+VALUES (1, 'Bathroom', 'Clean shower, toilet and sink', '2023-09-01', true);
 
-INSERT INTO tasks (task_id, task_name, description, start_date, reoccurrence, completed)
-VALUES (1, 'Bathroom', 'Clean shower, toilet and sink', '2023-09-01', 3, true);
+INSERT INTO `tasks` (`task_id`, `task_name`, `description`, `due_date`)
+VALUES (2, 'Kitchen', 'Do the dishes and clean the working tables', '2023-01-01');
 
-INSERT INTO tasks (task_id, task_name, description, start_date, end_date, reoccurrence)
-VALUES (2, 'Kitchen', 'Do the dishes and clean the working tables', '2023-01-01', '2024-12-31', 9);
-
-DELETE FROM assignments;
-INSERT INTO assignments (assignment_id, task_id, username) VALUES (0, 0, 'cbaedorf');
+DELETE FROM `assignments`;
+INSERT INTO `assignments` (`assignment_id`, `task_id`, `username`) VALUES (0, 0, 'cbaedorf');
 
 DELETE FROM shopping_list_items;
 INSERT INTO shopping_list_items (item, amount, unit) VALUES ('Chocolate', 2, 'kg (kilogram)');
