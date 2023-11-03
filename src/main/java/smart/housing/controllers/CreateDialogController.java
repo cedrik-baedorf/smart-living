@@ -1,15 +1,18 @@
 package smart.housing.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
 import smart.housing.SmartLivingApplication;
+import smart.housing.enums.UserRole;
 import smart.housing.exceptions.EmptyFieldException;
-import smart.housing.exceptions.LoginServiceException;
-import smart.housing.services.LoginService;
-import smart.housing.services.LoginServiceImplementation;
+import smart.housing.services.UserManagementService;
+import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.entities.User;
+import smart.housing.ui.ErrorMessage;
+
+import java.util.Arrays;
 
 /**
  * Controller to view 'create_dialog.fxml'
@@ -27,16 +30,11 @@ public class CreateDialogController extends DialogController {
 
     private final Dialog<Boolean> DIALOG;
 
-    private static final String MSG_EMPTY_FIELD = "%s must not be empty";
-
-    @FXML
-    DialogPane dialogPane;
-    @FXML
-    TextField usernameField, lastNameField, firstNameField;
-    @FXML
-    PasswordField passwordField;
-    @FXML
-    Label errorMessage;
+    @FXML DialogPane dialogPane;
+    @FXML TextField usernameField, lastNameField, firstNameField;
+    @FXML PasswordField passwordField;
+    @FXML ErrorMessage errorMessage;
+    @FXML ChoiceBox<UserRole> roleChoiceBox;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -50,25 +48,29 @@ public class CreateDialogController extends DialogController {
 
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
-        clearErrorMessage();
-    }
-
-    private void clearErrorMessage() {
-        errorMessage.setTextFill(Color.BLACK);
-        errorMessage.setText("");
+        loadRoles();
+        errorMessage.clear();
     }
 
     public String getViewName() {
         return VIEW_NAME;
     }
 
+    private void loadRoles() {
+        roleChoiceBox.setItems(FXCollections.observableList(Arrays.stream(UserRole.values())
+                .filter(userRole -> APPLICATION.getUser().getRole().outranks(userRole))
+                .toList()
+        ));
+        roleChoiceBox.setValue(UserRole.DEFAULT_ROLE);
+    }
+
     public void _createUser(ActionEvent event) {
         event.consume();
+        errorMessage.clear();
         try {
             createUser();
-        } catch (LoginServiceException exception) {
-            errorMessage.setText(exception.getMessage());
-            errorMessage.setTextFill(Color.RED);
+        } catch (EmptyFieldException exception) {
+            errorMessage.displayError(exception.getMessage(), 5);
         } finally {
             usernameField.clear();
             passwordField.clear();
@@ -78,26 +80,20 @@ public class CreateDialogController extends DialogController {
     }
 
     public void createUser() {
-        clearErrorMessage();
-        LoginService loginService = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
-
         checkForEmptyInput(usernameField.getText(), "username");
         checkForEmptyInput(passwordField.getText(), "password");
         checkForEmptyInput(lastNameField.getText(), "surname");
         checkForEmptyInput(firstNameField.getText(), "first name");
 
-        User newUser = new User(usernameField.getText(), passwordField.getText(), loginService.getHashAlgorithm());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
+
+        User newUser = new User(usernameField.getText(), passwordField.getText(), userManagementService.getHashAlgorithm());
         newUser.setLastName(lastNameField.getText());
         newUser.setFirstName(firstNameField.getText());
-        loginService.create(newUser);
+        newUser.setRole(roleChoiceBox.getValue());
+
+        userManagementService.create(newUser);
         DIALOG.setResult(true);
     }
-
-    private void checkForEmptyInput(String input, String fieldName) throws EmptyFieldException {
-        if(input == null || input.length() == 0)
-            throw new EmptyFieldException(String.format(MSG_EMPTY_FIELD, fieldName), fieldName);
-    }
-
-
 
 }

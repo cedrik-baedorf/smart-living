@@ -24,15 +24,16 @@ DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `tasks`;
 
 CREATE TABLE IF NOT EXISTS `users` (
-  `username` VARCHAR(8) NOT NULL,
-  `password` CHAR(64) NOT NULL,
-  `last_name` VARCHAR(24) DEFAULT NULL,
-  `first_name` VARCHAR(24) DEFAULT NULL,
-PRIMARY KEY (`username`)
+    `username` VARCHAR(8) NOT NULL,
+    `password` CHAR(64) NOT NULL,
+    `last_name` VARCHAR(24) DEFAULT NULL,
+    `first_name` VARCHAR(24) DEFAULT NULL,
+    `role` VARCHAR(8) DEFAULT NULL,
+    PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `tasks` (
-   `task_id` INT NOT NULL AUTO_INCREMENT,
+   `task_id` INT NOT NULL,
    `task_name` CHAR(32) NOT NULL,
    `description` CHAR(128) DEFAULT NULL,
    `start_date` DATE NOT NULL,
@@ -43,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `assignments` (
-   `assignment_id` INT NOT NULL AUTO_INCREMENT,
+   `assignment_id` INT NOT NULL,
    `task_id` INT NOT NULL,
    `username` CHAR(8) DEFAULT NULL,
    PRIMARY KEY (`assignment_id`),

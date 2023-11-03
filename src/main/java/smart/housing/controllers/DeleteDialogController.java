@@ -3,11 +3,13 @@ package smart.housing.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
 import smart.housing.SmartLivingApplication;
-import smart.housing.services.LoginService;
-import smart.housing.services.LoginServiceImplementation;
+import smart.housing.exceptions.EmptyFieldException;
+import smart.housing.exceptions.IncorrectCredentialsException;
+import smart.housing.services.UserManagementService;
+import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.entities.User;
+import smart.housing.ui.ErrorMessage;
 
 /**
  * Controller to view 'delete_dialog.fxml'
@@ -25,8 +27,7 @@ public class DeleteDialogController extends DialogController {
      * Prepared <code>String</code> messages
      */
     private static final String
-        DELETE_USER = "Confirm deletion of user %s",
-        ENTER_PASSWORD = "Please enter a password";
+        DELETE_USER = "Confirm deletion of user %s";
 
 
     private final SmartLivingApplication APPLICATION;
@@ -37,7 +38,7 @@ public class DeleteDialogController extends DialogController {
     @FXML
     DialogPane dialogPane;
     @FXML
-    Label usernameLabel, errorMessage;
+    ErrorMessage usernameLabel, errorMessage;
     @FXML
     PasswordField passwordField;
 
@@ -55,28 +56,37 @@ public class DeleteDialogController extends DialogController {
 
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
-        usernameLabel.setText(String.format(DELETE_USER, USER.getUsername()));
-        clearErrorMessage();
-    }
-
-    private void clearErrorMessage() {
-        errorMessage.setTextFill(Color.BLACK);
-        errorMessage.setText("");
+        usernameLabel.displayInfo(String.format(DELETE_USER, USER.getUsername()));
+        errorMessage.clear();
     }
 
     public String getViewName() {
         return VIEW_NAME;
     }
 
-    public void _confirmDeletion(ActionEvent event) {
+    public void _deleteUser(ActionEvent event) {
         event.consume();
-        clearErrorMessage();
-        LoginService loginService = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
-        loginService.delete(USER.getUsername(), passwordField.getText());
-        DIALOG.setResult(true);
-        usernameLabel.setText("");
+        errorMessage.clear();
+        try {
+            deleteUser();
+        } catch (EmptyFieldException exception) {
+            errorMessage.displayError(exception.getMessage(), 5);
+        } catch (IncorrectCredentialsException exception) {
+            errorMessage.displayError(exception.getMessage(), 5);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            usernameLabel.setText("");
+            passwordField.clear();
+        }
+    }
 
-        passwordField.clear();
+    public void deleteUser() {
+        checkForEmptyInput(passwordField.getText(), "password");
+
+        UserManagementService userManagementService = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
+        userManagementService.delete(USER.getUsername(), passwordField.getText());
+        DIALOG.setResult(true);
     }
 
 }

@@ -2,20 +2,41 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea"
          xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.HomePageController" fx:id="tabPane"
+         stylesheets="@style_sheets/tab-pane.css"
 >
-    <Tab closable="false" text="User Management">
+    <Tab closable="false" text="User Management" onSelectionChanged="#_updateTabs">
         <Pane fx:id="userManagement"/>
+        <graphic>
+            <ImageView fitHeight="16" fitWidth="16">
+                <Image url="@images/user_management_icon.png"/>
+            </ImageView>
+        </graphic>
     </Tab>
-    <Tab closable="false" text="Task Management">
+    <Tab closable="false" text="Task Management" onSelectionChanged="#_updateTabs">
         <Pane fx:id="taskManagement"/>
+        <graphic>
+            <ImageView fitHeight="16" fitWidth="16">
+                <Image url="@images/task_management_icon.png"/>
+            </ImageView>
+        </graphic>
     </Tab>
-    <Tab closable="false" text="Accounting">
+    <Tab closable="false" text="Budget Management" onSelectionChanged="#_updateTabs">
         <Pane fx:id="budgetManagement"/>
+        <graphic>
+            <ImageView fitHeight="16" fitWidth="16">
+                <Image url="@images/budget_management_icon.png"/>
+            </ImageView>
+        </graphic>
     </Tab>
-    <Tab closable="false" text="Shopping">
-        <Pane fx:id="shopping"/>
+    <Tab closable="false" text="Shopping Management" onSelectionChanged="#_updateTabs">
+        <Pane fx:id="shoppingManagement"/>        <graphic>
+        <ImageView fitHeight="16" fitWidth="16">
+            <Image url="@images/shopping_management_icon.png"/>
+        </ImageView>
+    </graphic>
     </Tab>
 </TabPane>

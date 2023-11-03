@@ -4,29 +4,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import smart.housing.ui.ErrorMessage?>
 <DialogPane fx:id="dialogPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.DeleteDialogController">
     <content>
         <GridPane alignment="CENTER">
-            <Label fx:id="usernameLabel" GridPane.rowIndex="0" wrapText="true">
+            <ErrorMessage fx:id="usernameLabel" GridPane.rowIndex="0" wrapText="true">
                 <GridPane.margin>
                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
-            </Label>
-            <PasswordField fx:id="passwordField" promptText="password" GridPane.rowIndex="1" onAction="#_confirmDeletion">
+            </ErrorMessage>
+            <PasswordField fx:id="passwordField" promptText="password" GridPane.rowIndex="1" onAction="#_deleteUser">
                 <GridPane.margin>
                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </PasswordField>
-            <Button onAction="#_confirmDeletion" text="Confirm Deletion" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <Button onAction="#_deleteUser" text="Confirm Deletion" textAlignment="CENTER" GridPane.halignment="CENTER"
+                    GridPane.rowIndex="2" maxWidth="Infinity"
+            >
                 <GridPane.margin>
                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </Button>
-            <Label fx:id="errorMessage" GridPane.rowIndex="3">
+            <ErrorMessage fx:id="errorMessage" GridPane.rowIndex="3" wrapText="true">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
-            </Label>
+            </ErrorMessage>
          <columnConstraints>
             <ColumnConstraints />
          </columnConstraints>

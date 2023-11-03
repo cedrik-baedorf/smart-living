@@ -1,0 +1,51 @@
+.standard-layout {
+    -fx-padding: 5 12 5 12;
+    -fx-background-radius: 15;
+    -fx-font-family: "Verdana";
+}
+
+.welcome-label {
+    -fx-background-color: TRANSPARENT;
+    -fx-font-size: 30px;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
+.text-field {
+    -fx-opacity: 0.7;
+    -fx-font-color: BLACK;
+    -fx-font-size: 14;
+}
+
+.text-field:hover {
+    -fx-opacity: 0.85;
+}
+
+.confirm-button {
+    -fx-background-color: BLACK;
+    -fx-text-fill: WHITE;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.confirm-button:hover {
+    -fx-background-color: WHITE;
+    -fx-text-fill: BLACK;
+}
+
+.configure-button {
+    -fx-background-color: WHITE;
+    -fx-text-fill: BLACK;
+    -fx-font-size: 14px;
+}
+
+.configure-button:hover {
+    -fx-background-color: BLACK;
+    -fx-text-fill: WHITE;
+}
+
+.error-message {
+    -fx-background-color: WHITE;
+    -fx-text-fill: RED;
+    -fx-font-size: 12px;
+}
