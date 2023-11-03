@@ -21,6 +21,7 @@ import java.util.Set;
                 name = Task.FIND_WITH_FILTERS,
                 query = """
                         SELECT task FROM Task task
+                        WHERE task.isCompleted = coalesce(:isCompleted, task.isCompleted)
                         """
         )
 })
@@ -130,6 +131,10 @@ public class Task {
 
     public boolean getCompleted() {
         return isCompleted;
+    }
+
+    public String toString(){
+        return "(" + taskName + "; " + dueDate + "; " + (isCompleted ? "completed" : "not completed") + ")";
     }
 
 }

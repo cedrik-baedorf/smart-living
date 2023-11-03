@@ -1,6 +1,7 @@
 package smart.housing.services;
 
 import smart.housing.database.DatabaseConnector;
+import smart.housing.database.DatabaseConnectorImplementation;
 import smart.housing.entities.Task;
 
 import javax.persistence.EntityManager;
@@ -27,7 +28,15 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
     public List<Task> getCurrentTasks() {
         EntityManager entityManager = databaseConnector.createEntityManager();
         TypedQuery<Task> typedQuery = entityManager.createNamedQuery(Task.FIND_WITH_FILTERS, Task.class);
+        typedQuery.setParameter("isCompleted", false);
+        List<Task> currentTaskList = typedQuery.getResultList();
         entityManager.close();
-        return typedQuery.getResultList();
+        return currentTaskList;
+    }
+
+    public static void main(String [] args){
+        TaskManagementService service = new TaskManagementServiceImplementation(new DatabaseConnectorImplementation());
+        List<Task> list = service.getCurrentTasks();
+        list.forEach(System.out::println);
     }
 }
