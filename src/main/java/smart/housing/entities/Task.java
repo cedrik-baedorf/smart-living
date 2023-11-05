@@ -15,12 +15,15 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(
                 name = Task.FIND_ALL,
-                query = "SELECT task FROM Task task"
+                query = """
+                        SELECT DISTINCT task FROM Task task
+                        JOIN FETCH task.assignees
+                        """
         ),
         @NamedQuery(
                 name = Task.FIND_WITH_FILTERS,
                 query = """
-                        SELECT task FROM Task task
+                        SELECT DISTINCT task FROM Task task
                         JOIN FETCH task.assignees
                         WHERE task.isCompleted = coalesce(:isCompleted, task.isCompleted)
                         AND task.dueDate >= :startDate
@@ -30,7 +33,7 @@ import java.util.Set;
         @NamedQuery(
                 name = Task.FIND_INCOMPLETE,
                 query = """
-                        SELECT task FROM Task task
+                        SELECT DISTINCT task FROM Task task
                         JOIN FETCH task.assignees
                         WHERE task.isCompleted = coalesce(:isCompleted, task.isCompleted)
                         """

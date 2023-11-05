@@ -16,7 +16,7 @@ public interface TaskManagementService {
      */
     List<Task> getCurrentTasks();
 
-    List<Task>getIncomleteTasks();
+    List<Task> getIncompleteTasks();
 
 
 }

@@ -35,12 +35,13 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
         typedQuery.setParameter("startDate", today);
         typedQuery.setParameter("endDate", sevenDaysFromNow);
         List<Task> currentTaskList = typedQuery.getResultList();
+        System.out.println(currentTaskList);
         entityManager.close();
         return currentTaskList;
     }
 
     @Override
-    public List<Task> getIncomleteTasks() {
+    public List<Task> getIncompleteTasks() {
         EntityManager entityManager = databaseConnector.createEntityManager();
         TypedQuery<Task> typedQuery = entityManager.createNamedQuery(Task.FIND_INCOMPLETE, Task.class);
         typedQuery.setParameter("isCompleted", false);
