@@ -31,10 +31,7 @@ public class TaskManagementController extends SmartHousingController {
     public TableView<Task> currentTasks;
 
     @FXML
-    public TableView<Task> nextTasks;
-
-    @FXML
-    public TableView<Task> completedTasks;
+    public TableView<Task> overdueTasks;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -52,6 +49,8 @@ public class TaskManagementController extends SmartHousingController {
 
     public void loadTasks(){
         taskTable.setItems(FXCollections.observableList(TASK_SERVICE.getAllTasks()));
+        currentTasks.setItems(FXCollections.observableList(TASK_SERVICE.getCurrentTasks()));
+        overdueTasks.setItems(FXCollections.observableList(TASK_SERVICE.getIncomleteTasks()));
     }
 
     @Override

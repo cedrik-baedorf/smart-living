@@ -29,16 +29,19 @@
                 </TableColumn>
             </columns>
             <BorderPane.margin>
-                <Insets bottom="100.0" left="200.0" right="200.0" top="200.0" />
+                <Insets bottom="100.0" left="200.0" right="200.0" top="50.0" />
             </BorderPane.margin>
         </TableView>
     </center>
     <top>
-        <GridPane>
-        <Button layoutX="80.0" layoutY="156.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="53.0" text="+ NEW">
+        <GridPane maxHeight="200" prefWidth="1000">
+        <Button prefHeight="26.0" prefWidth="53.0" text="+ NEW TASK" styleClass="standard-layout, configure-button">
             <font>
                 <Font size="12.0" />
             </font>
+            <GridPane.margin>
+                <Insets top="300.0" left="200.0" />
+            </GridPane.margin>
         </Button>
         <ChoiceBox layoutX="539.0" layoutY="157.0" prefHeight="25.0" prefWidth="95.0">
             <items>
@@ -67,24 +70,49 @@
                 </FXCollections>
             </items>
         </ChoiceBox>
-        <TableView fx:id="completedTasks" layoutX="504.0" layoutY="23.0" prefHeight="111.0" prefWidth="300.0" AnchorPane.rightAnchor="50.0">
+        <TableView fx:id="overdueTasks" minHeight="100.0" minWidth="200.0" stylesheets="@style_sheets/table-view.css">
             <columns>
-                <TableColumn prefWidth="75.0" text="Task" />
-                <TableColumn prefWidth="137.0" text="Completed By" />
-                <TableColumn prefWidth="87.0" text="Date" />
+                <TableColumn minWidth="100.0" text="Overdue Tasks">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="taskName" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn minWidth="100.0" text="Assigned to">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="assignees" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn minWidth="100.0" text="Due Date">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="dueDate" />
+                    </cellValueFactory>
+                </TableColumn>
             </columns>
+            <GridPane.margin>
+                <Insets bottom="50.0" left="900" right="200.0" top="100.0" />
+            </GridPane.margin>
         </TableView>
-        <TableView fx:id="nextTasks" layoutX="265.0" layoutY="23.0" prefHeight="111.0" prefWidth="300.0" AnchorPane.leftAnchor="380.0">
+        <TableView fx:id="currentTasks" minHeight="100.0" minWidth="200" maxWidth="350.0" stylesheets="@style_sheets/table-view.css">
             <columns>
-                <TableColumn prefWidth="87.0" text="Next Task" />
-                <TableColumn prefWidth="212.0" text="Assigned To" />
+                <TableColumn minWidth="100.0" text="Tasks This Week">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="taskName" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn minWidth="100.0" text="Assigned To">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="assignees" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn minWidth="100.0" text="Due Date">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="dueDate" />
+                    </cellValueFactory>
+                </TableColumn>
             </columns>
-        </TableView>
-        <TableView fx:id="currentTasks" layoutX="39.0" layoutY="22.0" prefHeight="113.0" prefWidth="300.0" AnchorPane.leftAnchor="50.0">
-            <columns>
-                <TableColumn prefWidth="110.0" text="Tasks This Week" />
-                <TableColumn prefWidth="189.0" text="Assigned To" />
-            </columns>
+            <GridPane.margin>
+                <Insets bottom="50.0" left="200.0" top="100.0" />
+            </GridPane.margin>
         </TableView>
         </GridPane>
     </top>

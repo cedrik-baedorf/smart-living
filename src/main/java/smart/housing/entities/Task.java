@@ -21,6 +21,17 @@ import java.util.Set;
                 name = Task.FIND_WITH_FILTERS,
                 query = """
                         SELECT task FROM Task task
+                        JOIN FETCH task.assignees
+                        WHERE task.isCompleted = coalesce(:isCompleted, task.isCompleted)
+                        AND task.dueDate >= :startDate
+                        AND task.dueDate <= :endDate
+                        """
+        ),
+        @NamedQuery(
+                name = Task.FIND_INCOMPLETE,
+                query = """
+                        SELECT task FROM Task task
+                        JOIN FETCH task.assignees
                         WHERE task.isCompleted = coalesce(:isCompleted, task.isCompleted)
                         """
         )
@@ -37,6 +48,12 @@ public class Task {
      * Name of named query to return all tasks filtered by
      */
     public static final String FIND_WITH_FILTERS = "Task.findWithFilters";
+
+    /**
+     * Name of named query to return all tasks that have not been completed yet
+     */
+
+    public static final String FIND_INCOMPLETE = "Task.findIncomplete";
 
     /**
      * Unique id of the task
