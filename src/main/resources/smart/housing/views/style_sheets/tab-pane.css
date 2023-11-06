@@ -20,7 +20,6 @@
 /* tab background style for a selected tab */
 .tab-pane .tab:selected {
     -fx-background-color: BLACK;
-    -fx-background-image: url('@images/user_management_icon.png');
 }
 
 /* tab background style for a hovered tab */
