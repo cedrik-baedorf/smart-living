@@ -51,9 +51,9 @@ CREATE TABLE IF NOT EXISTS `assignments` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `shopping_list_items` (
-    `item` CHAR(32) NOT NULL,
+    `item` VARCHAR(32) NOT NULL,
     `amount` INT NOT NULL,
-    `unit` CHAR(2) NOT NULL,
+    `unit` VARCHAR(2) NOT NULL,
     PRIMARY KEY (`item`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

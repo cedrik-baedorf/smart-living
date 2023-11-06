@@ -30,15 +30,10 @@
     -fx-background-color: TRANSPARENT;
 }
 
-/* table contents */
+/* modify cells with content */
 .table-view .table-cell {
     -fx-text-fill: BLACK;
-    -fx-border-color: WHITE;
-}
-
-.table-view .table-cell .filler {
-    -fx-border-color: WHITE;
-    -fx-background-color: TRANSPARENT;
+    -fx-border-color: TRANSPARENT;
 }
 
 /* rows */
