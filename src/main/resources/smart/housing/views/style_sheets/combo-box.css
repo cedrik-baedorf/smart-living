@@ -1,0 +1,45 @@
+/* Style of the ComboBox */
+.combo-box {
+    -fx-background-color: WHITE;            /* Background color */
+    -fx-border-color: TRANSPARENT;          /* Border color */
+    -fx-background-radius: 15;              /* Corner radius */
+}
+
+/* Style of the ComboBox on hover */
+.combo-box:hover {
+    -fx-background-color: BLACK;            /* Background color */
+}
+
+/* Style of the selected ComboBox item */
+.combo-box .list-cell {
+    -fx-text-fill: BLACK;                   /* Text color */
+}
+
+/* Style of the selected ComboBox item on hover */
+.combo-box:hover .list-cell {
+    -fx-text-fill: WHITE;                   /* Text color */
+}
+
+/* Set styles for the expanded ComboBox popup */
+.combo-box .combo-box-popup .list-view {
+    -fx-background-color: WHITE;            /* Background color of the expanded list */
+    -fx-background-radius: 15;       /* Set round bottom corners */
+    -fx-border-color: TRANSPARENT;          /* Border color of the expanded list */
+    -fx-padding: 2;
+}
+
+/* Set styles for list cells in the expanded ComboBox */
+.combo-box .combo-box-popup .list-cell {
+    -fx-text-fill: BLACK;                   /* Text color */
+    -fx-background-radius: 15;              /* Corner radius */
+    -fx-padding: 0 5 0 5;                   /* Padding */
+}
+
+/* Styles for list cells on hover */
+.combo-box .combo-box-popup .list-cell:hover,
+.combo-box .combo-box-popup .list-cell:selected {
+    -fx-background-color: BLACK;        /* Background color */
+    -fx-text-fill: WHITE;               /* Text color */
+}
+
+
