@@ -41,8 +41,8 @@ INSERT INTO `assignments` (`assignment_id`, `task_id`, `username`) VALUES
         (4, 3, 'heyden');
 
 DELETE FROM shopping_list_items;
-INSERT INTO shopping_list_items (item, amount, unit) VALUES ('Chocolate', 2, 'kg (kilogram)');
-INSERT INTO shopping_list_items (item, amount, unit) VALUES ('Milk', 1, 'l (litres)');
+INSERT INTO shopping_list_items (item, amount, unit) VALUES ('Chocolate', 2, 'kg');
+INSERT INTO shopping_list_items (item, amount, unit) VALUES ('Milk', 1, 'l');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
