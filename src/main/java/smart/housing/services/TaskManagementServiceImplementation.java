@@ -1,10 +1,12 @@
 package smart.housing.services;
 
 import smart.housing.database.DatabaseConnector;
+import smart.housing.database.DatabaseConnectorImplementation;
 import smart.housing.entities.Task;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import java.time.LocalDate;
 import java.util.List;
 
 public class TaskManagementServiceImplementation implements TaskManagementService {
@@ -26,8 +28,31 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
     @Override
     public List<Task> getCurrentTasks() {
         EntityManager entityManager = databaseConnector.createEntityManager();
+        LocalDate today = LocalDate.now();
+        LocalDate sevenDaysFromNow = today.plusDays(7);
         TypedQuery<Task> typedQuery = entityManager.createNamedQuery(Task.FIND_WITH_FILTERS, Task.class);
+        typedQuery.setParameter("isCompleted", false);
+        typedQuery.setParameter("startDate", today);
+        typedQuery.setParameter("endDate", sevenDaysFromNow);
+        List<Task> currentTaskList = typedQuery.getResultList();
+        System.out.println(currentTaskList);
         entityManager.close();
-        return typedQuery.getResultList();
+        return currentTaskList;
+    }
+
+    @Override
+    public List<Task> getIncompleteTasks() {
+        EntityManager entityManager = databaseConnector.createEntityManager();
+        TypedQuery<Task> typedQuery = entityManager.createNamedQuery(Task.FIND_INCOMPLETE, Task.class);
+        typedQuery.setParameter("isCompleted", false);
+        List<Task> currentTaskList = typedQuery.getResultList();
+        entityManager.close();
+        return currentTaskList;
+    }
+
+    public static void main(String [] args){
+        TaskManagementService service = new TaskManagementServiceImplementation(new DatabaseConnectorImplementation());
+        List<Task> list = service.getCurrentTasks();
+        list.forEach(System.out::println);
     }
 }

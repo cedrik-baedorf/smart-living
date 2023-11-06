@@ -32,7 +32,7 @@
 
 /* table contents */
 .table-view .table-cell {
-    -fx-text-fill: BLACK
+    -fx-text-fill: BLACK;
     -fx-border-color: WHITE;
 }
 
