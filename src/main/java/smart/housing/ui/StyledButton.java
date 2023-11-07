@@ -1,6 +1,5 @@
 package smart.housing.ui;
 
-import javafx.beans.DefaultProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 
@@ -18,7 +17,7 @@ public class StyledButton extends Button implements StyledNode {
         private final String STYLE;
         private final String[] STYLE_SHEETS;
 
-        private ButtonStyle(String style, String... styleSheets) {
+        ButtonStyle(String style, String... styleSheets) {
             STYLE = style;
             STYLE_SHEETS = styleSheets;
         }
