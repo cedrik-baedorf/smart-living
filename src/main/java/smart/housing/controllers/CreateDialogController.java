@@ -11,6 +11,7 @@ import smart.housing.services.UserManagementService;
 import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.entities.User;
 import smart.housing.ui.ErrorMessage;
+import smart.housing.ui.StyledComboBox;
 
 import java.util.Arrays;
 
@@ -34,7 +35,7 @@ public class CreateDialogController extends DialogController {
     @FXML TextField usernameField, lastNameField, firstNameField;
     @FXML PasswordField passwordField;
     @FXML ErrorMessage errorMessage;
-    @FXML ComboBox<UserRole> roleComboBox;
+    @FXML StyledComboBox<UserRole> roleComboBox;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this

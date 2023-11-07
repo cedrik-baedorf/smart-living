@@ -4,9 +4,10 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
-<TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea"
-         xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.HomePageController" fx:id="tabPane"
-         stylesheets="@style_sheets/tab-pane.css"
+<?import smart.housing.ui.StyledTabPane?>
+
+<StyledTabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17.0.2-ea"
+               xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.HomePageController" fx:id="tabPane"
 >
     <Tab closable="false" text="User Management" onSelectionChanged="#_updateTabs">
         <Pane fx:id="userManagement"/>
@@ -39,4 +40,4 @@
         </ImageView>
     </graphic>
     </Tab>
-</TabPane>
+</StyledTabPane>

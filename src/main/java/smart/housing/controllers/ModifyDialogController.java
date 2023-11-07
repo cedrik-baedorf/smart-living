@@ -13,6 +13,7 @@ import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.services.UserManagementService;
 import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.ui.ErrorMessage;
+import smart.housing.ui.StyledComboBox;
 
 import javax.persistence.EntityManager;
 import java.util.Arrays;
@@ -37,7 +38,7 @@ public class ModifyDialogController extends DialogController {
 
     @FXML DialogPane dialogPane;
     @FXML TextField lastNameField, firstNameField;
-    @FXML ComboBox<UserRole> roleComboBox;
+    @FXML StyledComboBox<UserRole> roleComboBox;
     @FXML PasswordField newPasswordField, confirmPasswordField, currentPasswordField;
     @FXML ErrorMessage errorMessage;
 

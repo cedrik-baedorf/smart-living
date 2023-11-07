@@ -13,7 +13,7 @@
 <BackgroundStackPane fx:id="backgroundPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.TaskManagementController">
     <BorderPane>
         <center>
-            <TableView fx:id="taskTable" minHeight="150.0" minWidth="300.0" stylesheets="@style_sheets/table-view.css">
+            <StyledTableView fx:id="taskTable" minHeight="150.0" minWidth="300.0">
                 <columns>
                     <TableColumn text="Task Name" minWidth="100">
                         <cellValueFactory>
@@ -39,7 +39,7 @@
                 <BorderPane.margin>
                     <Insets bottom="100.0" left="200.0" right="200.0" top="50.0" />
                 </BorderPane.margin>
-            </TableView>
+            </StyledTableView>
         </center>
         <top>
             <GridPane maxHeight="200" prefWidth="1000" stylesheets="@style_sheets/style.css">
@@ -51,7 +51,7 @@
                     <Insets top="300.0" left="200.0" />
                 </GridPane.margin>
             </Button>
-            <ComboBox promptText="Select Month" stylesheets="@style_sheets/combo-box.css, @style_sheets/scroll-bar.css">
+            <StyledComboBox promptText="Select Month">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="January" />
@@ -71,8 +71,8 @@
                 <GridPane.margin>
                     <Insets top="300.0" left="800" right="400.0" />
                 </GridPane.margin>
-            </ComboBox>
-            <ComboBox promptText="Select Year" stylesheets="@style_sheets/combo-box.css, @style_sheets/scroll-bar.css">
+            </StyledComboBox>
+            <StyledComboBox promptText="Select Year">
                 <items>
                     <FXCollections fx:factory="observableArrayList">
                         <String fx:value="2022" />
@@ -83,8 +83,8 @@
                 <GridPane.margin>
                     <Insets top="300.0" left="1000" right="200.0" />
                 </GridPane.margin>
-            </ComboBox>
-            <TableView fx:id="overdueTasks" minHeight="100.0" minWidth="200.0" stylesheets="@style_sheets/table-view.css, @style_sheets/scroll-bar.css">
+            </StyledComboBox>
+            <StyledTableView fx:id="overdueTasks" minHeight="100.0" minWidth="200.0">
                 <columns>
                     <TableColumn minWidth="100.0" text="Overdue Tasks">
                         <cellValueFactory>
@@ -105,8 +105,8 @@
                 <GridPane.margin>
                     <Insets bottom="50.0" left="900" right="200.0" top="100.0" />
                 </GridPane.margin>
-            </TableView>
-            <TableView fx:id="currentTasks" minHeight="100.0" minWidth="200" maxWidth="350.0" stylesheets="@style_sheets/table-view.css">
+            </StyledTableView>
+            <StyledTableView fx:id="currentTasks" minHeight="100.0" minWidth="200" maxWidth="350.0">
                 <columns>
                     <TableColumn minWidth="100.0" text="Tasks This Week">
                         <cellValueFactory>
@@ -127,7 +127,7 @@
                 <GridPane.margin>
                     <Insets bottom="50.0" left="200.0" top="100.0" />
                 </GridPane.margin>
-            </TableView>
+            </StyledTableView>
             </GridPane>
         </top>
     </BorderPane>
