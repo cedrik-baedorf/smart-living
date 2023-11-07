@@ -29,7 +29,7 @@ public class UserManagementController extends SmartHousingController {
     /**
      * Name of the background image file
      */
-    private static final String BACKGROUND_IMAGE = "smart/housing/views/images/user_management_background.jpg";
+    private static final String BACKGROUND_IMAGE = "smart/housing/ui/images/user_management_background.jpg";
 
     private final SmartLivingApplication APPLICATION;
 

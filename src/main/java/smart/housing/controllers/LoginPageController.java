@@ -9,7 +9,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import org.hibernate.PropertyNotFoundException;
 import org.hibernate.service.spi.ServiceException;
@@ -40,7 +39,7 @@ public class LoginPageController extends SmartHousingController {
     /**
      * Name of the background image file
      */
-    private static final String BACKGROUND_IMAGE = "smart/housing/views/images/login_page_background.jpg";
+    private static final String BACKGROUND_IMAGE = "smart/housing/ui/images/login_page_background.jpg";
 
     private final SmartLivingApplication APPLICATION;
 

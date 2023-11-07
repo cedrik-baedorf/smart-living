@@ -4,8 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import smart.housing.ui.BackgroundStackPane?>
-
 <?import smart.housing.ui.ErrorMessage?>
+<?import smart.housing.ui.StyledButton?>
+
 <BackgroundStackPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
                      fx:controller="smart.housing.controllers.LoginPageController" fx:id="backgroundPane" stylesheets="@style_sheets/style.css"
 >
@@ -30,13 +31,13 @@
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </GridPane.margin>
                     </ErrorMessage>
-                    <Button onAction="#_loginButton_onAction" styleClass="standard-layout, confirm-button" text="LOGIN"
-                            GridPane.halignment="CENTER" GridPane.rowIndex="5"
+                    <StyledButton onAction="#_loginButton_onAction" text="LOGIN" GridPane.halignment="CENTER"
+                                  GridPane.rowIndex="5" buttonStyle="CONFIRM"
                     >
                         <GridPane.margin>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </GridPane.margin>
-                    </Button>
+                    </StyledButton>
                 </children>
                 <BorderPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -47,11 +48,11 @@
             </GridPane>
         </center>
         <bottom>
-            <Button onAction="#_confDBase_onAction" styleClass="standard-layout, configure-button" text="Configure Database" BorderPane.alignment="CENTER_LEFT">
+            <StyledButton onAction="#_confDBase_onAction" text="Configure Database" BorderPane.alignment="CENTER_LEFT">
                 <BorderPane.margin>
                     <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
                 </BorderPane.margin>
-            </Button>
+            </StyledButton>
         </bottom>
     </BorderPane>
 </BackgroundStackPane>

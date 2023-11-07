@@ -6,6 +6,7 @@
 <?import smart.housing.ui.ErrorMessage?>
 
 <?import smart.housing.ui.StyledComboBox?>
+<?import smart.housing.ui.StyledButton?>
 <DialogPane fx:id="dialogPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="smart.housing.controllers.CreateDialogController" stylesheets="@style_sheets/style.css">
     <content>
@@ -39,13 +40,13 @@
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </StyledComboBox>
-            <Button onAction="#_createUser" text="Create User" textAlignment="CENTER" GridPane.halignment="CENTER"
-                    GridPane.rowIndex="5" styleClass="standard-layout, confirm-button" maxWidth="Infinity"
+            <StyledButton onAction="#_createUser" text="Create User" textAlignment="CENTER" GridPane.halignment="CENTER"
+                    GridPane.rowIndex="5" maxWidth="Infinity" buttonStyle="CONFIRM"
             >
                 <GridPane.margin>
                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
-            </Button>
+            </StyledButton>
             <ErrorMessage fx:id="errorMessage" GridPane.rowIndex="6" wrapText="true"
                           styleClass="standard-layout, error-message"
             >

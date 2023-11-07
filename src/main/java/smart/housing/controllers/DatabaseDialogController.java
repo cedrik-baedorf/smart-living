@@ -46,7 +46,7 @@ public class DatabaseDialogController extends DialogController {
 
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
-        dialogPane.setBackgroundImage("smart/housing/views/images/database_dialog_background.jpg");
+        dialogPane.setBackgroundImage("smart/housing/ui/images/database_dialog_background.jpg");
         errorMessage.clear();
     }
 
