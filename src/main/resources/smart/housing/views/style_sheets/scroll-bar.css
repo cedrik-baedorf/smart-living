@@ -1,0 +1,10 @@
+.scroll-bar {
+    -fx-background-color: TRANSPARENT;
+    -fx-background-radius: 10;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: BLACK;
+    -fx-background-radius: 10;
+}
+

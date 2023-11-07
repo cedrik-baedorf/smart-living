@@ -44,6 +44,17 @@
     -fx-text-fill: WHITE;
 }
 
+.combo-box {
+    -fx-background-color: WHITE;
+    -fx-text-fill: BLACK;
+    -fx-font-size: 14px;
+}
+
+.combo-box:hover {
+    -fx-background-color: BLACK;
+    -fx-text-fill: WHITE;
+}
+
 .error-message {
     -fx-background-color: WHITE;
     -fx-text-fill: RED;

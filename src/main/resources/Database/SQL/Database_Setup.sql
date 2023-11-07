@@ -36,9 +36,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
    `task_id` INT NOT NULL,
    `task_name` CHAR(32) NOT NULL,
    `description` CHAR(128) DEFAULT NULL,
-   `start_date` DATE NOT NULL,
-   `end_date` DATE DEFAULT NULL,
-   `reoccurrence` INT NOT NULL,
+   `due_date` DATE NOT NULL,
    `completed` BOOLEAN DEFAULT FALSE,
    PRIMARY KEY (`task_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -50,6 +48,13 @@ CREATE TABLE IF NOT EXISTS `assignments` (
    PRIMARY KEY (`assignment_id`),
    CONSTRAINT `fk_task_id` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
    CONSTRAINT `fk_username` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS `shopping_list_items` (
+    `item` VARCHAR(32) NOT NULL,
+    `amount` INT NOT NULL,
+    `unit` VARCHAR(2) NOT NULL,
+    PRIMARY KEY (`item`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
