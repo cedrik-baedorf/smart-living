@@ -2,7 +2,6 @@ package smart.housing.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableView;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.Task;
 import smart.housing.services.TaskManagementService;

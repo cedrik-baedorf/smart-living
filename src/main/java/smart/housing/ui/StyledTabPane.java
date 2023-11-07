@@ -1,7 +1,6 @@
 package smart.housing.ui;
 
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableView;
 
 import java.util.Arrays;
 
