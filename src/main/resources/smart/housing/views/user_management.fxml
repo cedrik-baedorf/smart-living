@@ -33,7 +33,7 @@
                     </TableColumn>
                 </columns>
                 <BorderPane.margin>
-                    <Insets bottom="100.0" left="200.0" right="200.0" top="100.0" />
+                    <Insets bottom="80.0" left="160.0" right="160.0" top="80.0" />
                 </BorderPane.margin>
             </TableView>
         </center>
@@ -43,21 +43,21 @@
                         text="Delete" GridPane.columnIndex="0"
                 >
                     <GridPane.margin>
-                       <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                       <Insets bottom="30.0" left="30.0" right="30.0"/>
                     </GridPane.margin>
                 </Button>
                 <Button fx:id="modifyButton" onAction="#_modifyButton_onAction" styleClass="standard-layout, configure-button"
                         text="Modify" GridPane.columnIndex="1"
                 >
                     <GridPane.margin>
-                       <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                       <Insets bottom="30.0" left="30.0" right="30.0"/>
                     </GridPane.margin>
                 </Button>
                 <Button fx:id="createButton" onAction="#_createButton_onAction" styleClass="standard-layout, configure-button"
                         text="Create" GridPane.columnIndex="2"
                 >
                     <GridPane.margin>
-                       <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                       <Insets bottom="30.0" left="30.0" right="30.0"/>
                     </GridPane.margin>
                 </Button>
              <columnConstraints>
