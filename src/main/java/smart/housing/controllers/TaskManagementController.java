@@ -2,12 +2,12 @@ package smart.housing.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableView;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.Task;
 import smart.housing.services.TaskManagementService;
 import smart.housing.services.TaskManagementServiceImplementation;
 import smart.housing.ui.BackgroundStackPane;
+import smart.housing.ui.StyledTableView;
 
 /**
  * Controller to view 'task_management.fxml'
@@ -32,11 +32,11 @@ public class TaskManagementController extends SmartHousingController {
 
     @FXML public BackgroundStackPane backgroundPane;
     @FXML
-    public TableView<Task> taskTable;
+    public StyledTableView<Task> taskTable;
     @FXML
-    public TableView<Task> currentTasks;
+    public StyledTableView<Task> currentTasks;
     @FXML
-    public TableView<Task> overdueTasks;
+    public StyledTableView<Task> overdueTasks;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this

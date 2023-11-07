@@ -10,6 +10,7 @@ import smart.housing.entities.User;
 import smart.housing.services.UserManagementService;
 import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.ui.BackgroundStackPane;
+import smart.housing.ui.StyledTableView;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class UserManagementController extends SmartHousingController {
     private final UserManagementService USER_MANAGEMENT_SERVICE;
 
     @FXML public BackgroundStackPane backgroundPane;
-    @FXML public TableView<User> userTable;
+    @FXML public StyledTableView<User> userTable;
     @FXML public Button deleteButton, modifyButton, createButton;
 
     /**

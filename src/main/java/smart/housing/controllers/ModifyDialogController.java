@@ -13,6 +13,7 @@ import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.services.UserManagementService;
 import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.ui.ErrorMessage;
+import smart.housing.ui.StyledComboBox;
 
 import javax.persistence.EntityManager;
 import java.util.Arrays;
@@ -37,7 +38,7 @@ public class ModifyDialogController extends DialogController {
 
     @FXML DialogPane dialogPane;
     @FXML TextField lastNameField, firstNameField;
-    @FXML ChoiceBox<UserRole> roleChoiceBox;
+    @FXML StyledComboBox<UserRole> roleComboBox;
     @FXML PasswordField newPasswordField, confirmPasswordField, currentPasswordField;
     @FXML ErrorMessage errorMessage;
 
@@ -76,11 +77,11 @@ public class ModifyDialogController extends DialogController {
     private void loadUserData() {
         firstNameField.setText(USER_TO_BE_MODIFIED.getFirstName());
         lastNameField.setText(USER_TO_BE_MODIFIED.getLastName());
-        roleChoiceBox.setItems(FXCollections.observableList(Arrays.stream(UserRole.values())
+        roleComboBox.setItems(FXCollections.observableList(Arrays.stream(UserRole.values())
             .filter(userRole -> APPLICATION.getUser().getRole().outranks(userRole))
             .toList()
         ));
-        roleChoiceBox.setValue(USER_TO_BE_MODIFIED.getRole());
+        roleComboBox.setValue(USER_TO_BE_MODIFIED.getRole());
         confirmPasswordField.clear();
         newPasswordField.clear();
         currentPasswordField.clear();
@@ -103,7 +104,7 @@ public class ModifyDialogController extends DialogController {
         user = entityManager.merge(user);
         user.setFirstName(firstNameField.getText());
         user.setLastName(lastNameField.getText());
-        user.setRole(roleChoiceBox.getValue());
+        user.setRole(roleComboBox.getValue());
         if(newPasswordField.getText().length() != 0)
             user.setPassword(newPasswordField.getText(), userManagementService.getHashAlgorithm());
         entityManager.getTransaction().commit();
