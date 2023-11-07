@@ -3,8 +3,9 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import smart.housing.ui.ErrorMessage?>
+
+<?import smart.housing.ui.StyledComboBox?>
 <DialogPane fx:id="dialogPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="smart.housing.controllers.CreateDialogController" stylesheets="@style_sheets/style.css">
     <content>
@@ -33,11 +34,11 @@
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </TextField>
-            <ChoiceBox fx:id="roleChoiceBox" GridPane.rowIndex="4">
+            <StyledComboBox fx:id="roleComboBox" GridPane.rowIndex="4">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
-            </ChoiceBox>
+            </StyledComboBox>
             <Button onAction="#_createUser" text="Create User" textAlignment="CENTER" GridPane.halignment="CENTER"
                     GridPane.rowIndex="5" styleClass="standard-layout, confirm-button" maxWidth="Infinity"
             >

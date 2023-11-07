@@ -18,11 +18,11 @@
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </TextField>
-            <ChoiceBox fx:id="roleChoiceBox" GridPane.rowIndex="2">
+            <ComboBox fx:id="roleComboBox" GridPane.rowIndex="2" stylesheets="@style_sheets/combo-box.css, @style_sheets/scroll-bar.css">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
-            </ChoiceBox>
+            </ComboBox>
             <PasswordField fx:id="newPasswordField" promptText="new password" GridPane.rowIndex="3" onAction="#_modifyUser">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
