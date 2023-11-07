@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import smart.housing.ui.ErrorMessage?>
+<?import smart.housing.ui.StyledButton?>
 <DialogPane fx:id="dialogPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.DeleteDialogController">
     <content>
         <GridPane alignment="CENTER">
@@ -18,13 +19,13 @@
                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </PasswordField>
-            <Button onAction="#_deleteUser" text="Confirm Deletion" textAlignment="CENTER" GridPane.halignment="CENTER"
-                    GridPane.rowIndex="2" maxWidth="Infinity"
+            <StyledButton onAction="#_deleteUser" text="Confirm Deletion" textAlignment="CENTER" GridPane.halignment="CENTER"
+                    GridPane.rowIndex="2" maxWidth="Infinity" buttonStyle="CONFIRM"
             >
                 <GridPane.margin>
                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
-            </Button>
+            </StyledButton>
             <ErrorMessage fx:id="errorMessage" GridPane.rowIndex="3" wrapText="true">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

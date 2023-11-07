@@ -10,9 +10,10 @@ public class StyledComboBox<T> extends ComboBox<T> implements StyledNode {
     }
 
     public StyledComboBox(String... styleSheets) {
-        Arrays.stream(styleSheets).forEach(e -> this.getStylesheets().add(
-                StyledNode.convertStylePath(e)
-        ));
+        if(styleSheets != null && styleSheets.length > 0)
+            Arrays.stream(styleSheets).forEach(e -> this.getStylesheets().add(
+                    StyledNode.convertStylePath(e)
+            ));
     }
 
 }

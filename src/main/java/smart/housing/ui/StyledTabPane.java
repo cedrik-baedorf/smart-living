@@ -11,9 +11,10 @@ public class StyledTabPane extends TabPane implements StyledNode {
     }
 
     public StyledTabPane(String... styleSheets) {
-        Arrays.stream(styleSheets).forEach(e -> this.getStylesheets().add(
-            StyledNode.convertStylePath(e)
-        ));
+        if(styleSheets != null && styleSheets.length > 0)
+            Arrays.stream(styleSheets).forEach(e -> this.getStylesheets().add(
+                    StyledNode.convertStylePath(e)
+            ));
     }
 
 }

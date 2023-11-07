@@ -86,6 +86,21 @@
               </options>
             </configuration>
           </execution>
+          <execution>
+            <id>test</id>
+            <configuration>
+              <mainClass>smart.housing.ui.TestApp</mainClass>
+            </configuration>
+          </execution>
+          <execution>
+            <id>testdebug</id>
+            <configuration>
+              <mainClass>smart.housing.ui.TestApp</mainClass>
+              <options>
+                <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:8000</option>
+              </options>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
       <plugin>

@@ -43,14 +43,14 @@
         </center>
         <top>
             <GridPane maxHeight="200" prefWidth="1000" stylesheets="@style_sheets/style.css">
-            <Button text="+ NEW TASK" styleClass="standard-layout, configure-button">
+            <StyledButton text="+ NEW TASK">
                 <font>
                     <Font size="12.0" />
                 </font>
                 <GridPane.margin>
                     <Insets top="300.0" left="200.0" />
                 </GridPane.margin>
-            </Button>
+            </StyledButton>
             <StyledComboBox promptText="Select Month">
                 <items>
                     <FXCollections fx:factory="observableArrayList">

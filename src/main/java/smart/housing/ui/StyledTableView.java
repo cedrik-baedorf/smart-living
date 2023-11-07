@@ -10,9 +10,10 @@ public class StyledTableView<S> extends TableView<S> implements StyledNode {
     }
 
     public StyledTableView(String... styleSheets) {
-        Arrays.stream(styleSheets).forEach(e -> this.getStylesheets().add(
-            StyledNode.convertStylePath(e)
-        ));
+        if(styleSheets != null && styleSheets.length > 0)
+            Arrays.stream(styleSheets).forEach(e -> this.getStylesheets().add(
+                    StyledNode.convertStylePath(e)
+            ));
     }
 
 }

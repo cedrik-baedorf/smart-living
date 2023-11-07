@@ -39,27 +39,21 @@
         </center>
         <bottom>
             <GridPane alignment="TOP_CENTER" stylesheets="@style_sheets/style.css">
-                <Button fx:id="deleteButton" onAction="#_deleteButton_onAction" styleClass="standard-layout, configure-button"
-                        text="Delete" GridPane.columnIndex="0"
-                >
+                <StyledButton fx:id="deleteButton" onAction="#_deleteButton_onAction" text="Delete" GridPane.columnIndex="0">
                     <GridPane.margin>
                        <Insets bottom="30.0" left="30.0" right="30.0"/>
                     </GridPane.margin>
-                </Button>
-                <Button fx:id="modifyButton" onAction="#_modifyButton_onAction" styleClass="standard-layout, configure-button"
-                        text="Modify" GridPane.columnIndex="1"
-                >
+                </StyledButton>
+                <StyledButton fx:id="modifyButton" onAction="#_modifyButton_onAction" text="Modify" GridPane.columnIndex="1">
                     <GridPane.margin>
                        <Insets bottom="30.0" left="30.0" right="30.0"/>
                     </GridPane.margin>
-                </Button>
-                <Button fx:id="createButton" onAction="#_createButton_onAction" styleClass="standard-layout, configure-button"
-                        text="Create" GridPane.columnIndex="2"
-                >
+                </StyledButton>
+                <StyledButton fx:id="createButton" onAction="#_createButton_onAction" text="Create" GridPane.columnIndex="2">
                     <GridPane.margin>
                        <Insets bottom="30.0" left="30.0" right="30.0"/>
                     </GridPane.margin>
-                </Button>
+                </StyledButton>
              <columnConstraints>
                 <ColumnConstraints />
                 <ColumnConstraints />
