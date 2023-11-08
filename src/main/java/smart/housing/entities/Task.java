@@ -16,15 +16,13 @@ import java.util.Set;
         @NamedQuery(
                 name = Task.FIND_ALL,
                 query = """
-                        SELECT DISTINCT task FROM Task task
-                        JOIN FETCH task.assignees
+                        SELECT task FROM Task task
                         """
         ),
         @NamedQuery(
                 name = Task.FIND_WITH_FILTERS,
                 query = """
-                        SELECT DISTINCT task FROM Task task
-                        JOIN FETCH task.assignees
+                        SELECT task FROM Task task
                         WHERE task.isCompleted = coalesce(:isCompleted, task.isCompleted)
                         AND task.dueDate >= :startDate
                         AND task.dueDate <= :endDate
@@ -33,8 +31,7 @@ import java.util.Set;
         @NamedQuery(
                 name = Task.FIND_INCOMPLETE,
                 query = """
-                        SELECT DISTINCT task FROM Task task
-                        JOIN FETCH task.assignees
+                        SELECT task FROM Task task
                         WHERE task.isCompleted = coalesce(:isCompleted, task.isCompleted)
                         """
         )
@@ -76,7 +73,7 @@ public class Task {
     /**
      * To which roommate is the task assigned
      */
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "assignments",
         joinColumns = @JoinColumn(name = "task_id"),
