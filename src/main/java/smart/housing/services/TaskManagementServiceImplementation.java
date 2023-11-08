@@ -11,15 +11,15 @@ import java.util.List;
 
 public class TaskManagementServiceImplementation implements TaskManagementService {
 
-    private DatabaseConnector databaseConnector;
+    private final DatabaseConnector DATABASE_CONNECTOR;
 
     public TaskManagementServiceImplementation(DatabaseConnector databaseConnector) {
-        this.databaseConnector = databaseConnector;
+        this.DATABASE_CONNECTOR = databaseConnector;
     }
 
     @Override
     public List<Task> getAllTasks() {
-        EntityManager entityManager = databaseConnector.createEntityManager();
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
         List<Task> taskList = entityManager.createNamedQuery(Task.FIND_ALL, Task.class).getResultList();
         entityManager.close();
         return taskList;
@@ -27,7 +27,7 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
 
     @Override
     public List<Task> getCurrentTasks() {
-        EntityManager entityManager = databaseConnector.createEntityManager();
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
         LocalDate today = LocalDate.now();
         LocalDate sevenDaysFromNow = today.plusDays(7);
         TypedQuery<Task> typedQuery = entityManager.createNamedQuery(Task.FIND_WITH_FILTERS, Task.class);
@@ -42,7 +42,7 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
 
     @Override
     public List<Task> getIncompleteTasks() {
-        EntityManager entityManager = databaseConnector.createEntityManager();
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
         TypedQuery<Task> typedQuery = entityManager.createNamedQuery(Task.FIND_INCOMPLETE, Task.class);
         typedQuery.setParameter("isCompleted", false);
         List<Task> currentTaskList = typedQuery.getResultList();
