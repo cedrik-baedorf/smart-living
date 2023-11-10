@@ -6,7 +6,9 @@
 <?import smart.housing.ui.BackgroundStackPane?>
 <?import smart.housing.ui.ErrorMessage?>
 <?import smart.housing.ui.StyledButton?>
+<?import smart.housing.ui.StyledTextField?>
 
+<?import smart.housing.ui.StyledPasswordField?>
 <BackgroundStackPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
                      fx:controller="smart.housing.controllers.LoginPageController" fx:id="backgroundPane" stylesheets="@style_sheets/style.css"
 >
@@ -16,16 +18,18 @@
                 <children>
                     <Label fx:id="welcomeLabel" alignment="CENTER" text="WELCOME" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" styleClass="standard-style, welcome-label"/>
                     <Separator GridPane.rowIndex="1" />
-                    <TextField fx:id="usernameField" onAction="#_onUsernameFieldAction" promptText="username" GridPane.rowIndex="2" styleClass="standard-layout, text-field">
+                    <StyledTextField fx:id="usernameField" onAction="#_onUsernameFieldAction" promptText="username"
+                                     GridPane.rowIndex="2" downKeyFocus="#passwordField">
                         <GridPane.margin>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </GridPane.margin>
-                    </TextField>
-                    <PasswordField fx:id="passwordField" onAction="#_onPasswordFieldAction" promptText="password" GridPane.rowIndex="3" styleClass="standard-layout, text-field">
+                    </StyledTextField>
+                    <StyledPasswordField fx:id="passwordField" onAction="#_onPasswordFieldAction" promptText="password"
+                                         GridPane.rowIndex="3" upKeyFocus="#usernameField">
                         <GridPane.margin>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </GridPane.margin>
-                    </PasswordField>
+                    </StyledPasswordField>
                     <ErrorMessage fx:id="errorMessage" wrapText="true" alignment="CENTER" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" styleClass="standard-layout, error-message">
                         <GridPane.margin>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

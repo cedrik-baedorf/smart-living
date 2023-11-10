@@ -1,5 +1,10 @@
 package smart.housing.ui;
 
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+
 import java.net.URL;
 
 public interface StyledNode {
@@ -16,5 +21,10 @@ public interface StyledNode {
         URL url = StyledNode.class.getResource(path);
         return url != null ? url.toExternalForm() : null;
     }
+
+    /**
+     * This method loads the style sheets of a {@link StyledNode} implementation.
+     */
+    void initializeStyleSheets();
 
 }

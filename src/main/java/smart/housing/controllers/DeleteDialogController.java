@@ -10,6 +10,7 @@ import smart.housing.services.UserManagementService;
 import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.entities.User;
 import smart.housing.ui.ErrorMessage;
+import smart.housing.ui.StyledPasswordField;
 
 /**
  * Controller to view 'delete_dialog.fxml'
@@ -35,12 +36,9 @@ public class DeleteDialogController extends DialogController {
 
     private final User USER;
 
-    @FXML
-    DialogPane dialogPane;
-    @FXML
-    ErrorMessage usernameLabel, errorMessage;
-    @FXML
-    PasswordField passwordField;
+    @FXML DialogPane dialogPane;
+    @FXML ErrorMessage usernameLabel, errorMessage;
+    @FXML StyledPasswordField passwordField;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
