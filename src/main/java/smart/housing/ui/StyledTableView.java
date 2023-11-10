@@ -1,11 +1,7 @@
 package smart.housing.ui;
 
 import javafx.collections.ObservableList;
-import javafx.event.EventType;
-import javafx.scene.Node;
 import javafx.scene.control.TableView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 import java.util.Arrays;
 

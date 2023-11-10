@@ -10,13 +10,10 @@ import java.util.Map;
 public interface StyledInputNode extends StyledNode {
 
     static EventHandler<KeyEvent> createSwitchFocusEventHandler(Map<KeyCode, Node> keyMapping) {
-        return new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                for(KeyCode code : keyMapping.keySet()) {
-                    if(event.getCode().equals(code))
-                        keyMapping.get(code).requestFocus();
-                }
+        return event -> {
+            for(KeyCode code : keyMapping.keySet()) {
+                if(event.getCode().equals(code))
+                    keyMapping.get(code).requestFocus();
             }
         };
     }

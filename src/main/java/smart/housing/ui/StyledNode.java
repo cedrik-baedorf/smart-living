@@ -1,10 +1,4 @@
 package smart.housing.ui;
-
-import javafx.event.EventHandler;
-import javafx.scene.Node;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-
 import java.net.URL;
 
 public interface StyledNode {
