@@ -1,9 +1,8 @@
 package smart.housing.services;
 
-import javafx.collections.ObservableList;
 import smart.housing.entities.ShoppingListItem;
 
-public interface ShoppingListService {
+public interface ShoppingManagementService {
 
     /**
      * This method takes an object of class <code>ShoppingListItem</code> and persists it in the database, if

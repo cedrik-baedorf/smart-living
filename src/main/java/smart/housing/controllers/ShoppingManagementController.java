@@ -12,41 +12,51 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import smart.housing.SmartLivingApplication;
+import smart.housing.ui.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class ShoppingListController extends SmartHousingController {
+public class ShoppingManagementController extends SmartHousingController {
 
-    public static final String VIEW_NAME = "shopping_list.fxml";
+    /**
+     * Name of the corresponding <code>.fxml</code> file
+     */
+    public static final String VIEW_NAME = "shopping_management.fxml";
+
+    /**
+     * Name of the background image file
+     */
+    private static final String BACKGROUND_IMAGE = "smart/housing/ui/images/shopping_management_background.jpg";
 
     private final SmartLivingApplication APPLICATION;
 
+    @FXML public BackgroundStackPane backgroundPane;
     @FXML
-    private TextField artikelTextField;
-
-    @FXML
-    private Button hinzufuegenButton;
+    private StyledTextField artikelTextField;
 
     @FXML
-    private Button loeschenButton;
+    private StyledButton hinzufuegenButton;
 
     @FXML
-    private ComboBox<String> einheitComboBox;
+    private StyledButton loeschenButton;
 
     @FXML
-    private Button aenderungButton;
+    private StyledComboBox<String> einheitComboBox;
 
     @FXML
-    private TableView<ShoppingListItem> tableView;
+    private StyledButton aenderungButton;
 
     @FXML
-    private TextField anzahlField;
+    private StyledTableView<ShoppingListItem> tableView;
 
-    private ShoppingListServiceImplementation service;
+    @FXML
+    private StyledTextField anzahlField;
 
-    public ShoppingListController(SmartLivingApplication application) {
+    private ShoppingManagementServiceImplementation service;
+
+    public ShoppingManagementController(SmartLivingApplication application) {
         this.APPLICATION = application;
     }
 
@@ -56,6 +66,7 @@ public class ShoppingListController extends SmartHousingController {
     }
 
     public void initialize() {
+        setBackgroundImage();
         System.out.println("Initialisieren");
         ObservableList<String> itemsList = FXCollections.observableArrayList(
                 "g",
@@ -68,6 +79,10 @@ public class ShoppingListController extends SmartHousingController {
 
         clearFields();
         loadShoppingList();
+    }
+
+    private void setBackgroundImage() {
+        backgroundPane.setBackgroundImage(BACKGROUND_IMAGE);
     }
 
     private void loadShoppingList () {
@@ -107,7 +122,7 @@ public class ShoppingListController extends SmartHousingController {
         if (artikel != null && !artikel.isEmpty() && anzahl != 0.0 && !einheit.isEmpty()
                 && einheit != null && !einheit.isEmpty()) {
 
-            service = new ShoppingListServiceImplementation(APPLICATION.getDatabaseConnector());
+            service = new ShoppingManagementServiceImplementation(APPLICATION.getDatabaseConnector());
             service.create(new ShoppingListItem(artikel,anzahl,einheit));
 
             clearFields();
@@ -125,7 +140,7 @@ public class ShoppingListController extends SmartHousingController {
     }
 
     private void removeItemFromList(ShoppingListItem shoppingListItem) {
-        service = new ShoppingListServiceImplementation(APPLICATION.getDatabaseConnector());
+        service = new ShoppingManagementServiceImplementation(APPLICATION.getDatabaseConnector());
         service.delete(shoppingListItem);
         loadShoppingList();
     }

@@ -4,12 +4,12 @@ import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.ShoppingListItem;
 import javax.persistence.EntityManager;
 
-public class ShoppingListServiceImplementation implements ShoppingListService{
+public class ShoppingManagementServiceImplementation implements ShoppingManagementService {
 
     private final DatabaseConnector databaseConnector;
     private EntityManager em;
 
-    public ShoppingListServiceImplementation(DatabaseConnector databaseConnector) {
+    public ShoppingManagementServiceImplementation(DatabaseConnector databaseConnector) {
         this.databaseConnector = databaseConnector;
     }
 
