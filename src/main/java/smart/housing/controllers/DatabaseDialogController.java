@@ -3,11 +3,14 @@ package smart.housing.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import org.hibernate.service.spi.ServiceException;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.database.DatabaseConnectorImplementation;
 import smart.housing.ui.BackgroundDialogPane;
 import smart.housing.ui.ErrorMessage;
+import smart.housing.ui.StyledPasswordField;
+import smart.housing.ui.StyledTextField;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,9 +32,9 @@ public class DatabaseDialogController extends DialogController {
     @FXML
     BackgroundDialogPane dialogPane;
     @FXML
-    TextField usernameField, jdbcDriverField, urlField;
+    StyledTextField usernameField, jdbcDriverField, urlField;
     @FXML
-    PasswordField passwordField;
+    StyledPasswordField passwordField;
     @FXML
     ErrorMessage errorMessage;
 
@@ -48,6 +51,16 @@ public class DatabaseDialogController extends DialogController {
         super.setOnCloseRequest(DIALOG);
         dialogPane.setBackgroundImage("smart/housing/ui/images/database_dialog_background.jpg");
         errorMessage.clear();
+        initializeKeyMappings();
+    }
+
+    public void initializeKeyMappings() {
+        usernameField.switchFocusOnKeyPressed(KeyCode.DOWN, passwordField);
+        passwordField.switchFocusOnKeyPressed(KeyCode.UP, usernameField);
+        passwordField.switchFocusOnKeyPressed(KeyCode.DOWN, jdbcDriverField);
+        jdbcDriverField.switchFocusOnKeyPressed(KeyCode.UP, passwordField);
+        jdbcDriverField.switchFocusOnKeyPressed(KeyCode.DOWN, urlField);
+        urlField.switchFocusOnKeyPressed(KeyCode.UP, jdbcDriverField);
     }
 
     public String getViewName() {

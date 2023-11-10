@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import smart.housing.SmartLivingApplication;
 import smart.housing.enums.UserRole;
 import smart.housing.exceptions.EmptyFieldException;
@@ -53,6 +54,7 @@ public class CreateDialogController extends DialogController {
         super.setOnCloseRequest(DIALOG);
         loadRoles();
         errorMessage.clear();
+        initializeKeyMappings();
     }
 
     public String getViewName() {
@@ -65,6 +67,19 @@ public class CreateDialogController extends DialogController {
                 .toList()
         ));
         roleComboBox.setValue(UserRole.DEFAULT_ROLE);
+    }
+
+    public void initializeKeyMappings() {
+        usernameField.switchFocusOnKeyPressed(KeyCode.DOWN, passwordField);
+        passwordField.switchFocusOnKeyPressed(KeyCode.UP, usernameField);
+
+        passwordField.switchFocusOnKeyPressed(KeyCode.DOWN, firstNameField);
+        firstNameField.switchFocusOnKeyPressed(KeyCode.UP, passwordField);
+
+        firstNameField.switchFocusOnKeyPressed(KeyCode.DOWN, lastNameField);
+        lastNameField.switchFocusOnKeyPressed(KeyCode.UP, firstNameField);
+
+        lastNameField.switchFocusOnKeyPressed(KeyCode.DOWN, roleComboBox);
     }
 
     public void _createUser(ActionEvent event) {
