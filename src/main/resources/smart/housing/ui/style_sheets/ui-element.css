@@ -1,23 +1,44 @@
+/* Button, TextField, and PasswordField style */
 .button,
-.text-field {
+.text-field,
+.password-field {
     -fx-background-color: WHITE;
     -fx-background-radius: 15;
+    -fx-border-color: TRANSPARENT;
+    -fx-border-radius: 15;
     -fx-text-fill: BLACK;
     -fx-font-family: "Verdana", sans-serif;
     -fx-padding: 5 12 5 12;
-    -fx-font-size: 15px;
 }
 
+/* Button style */
+.button {
+    -fx-font-size: 16px;
+}
+
+/* TextField and PasswordField style */
+.text-field,
+.password-field {
+    -fx-opacity: 0.7;
+    -fx-font-size: 14px;
+    -fx-highlight-fill: BLACK;
+    -fx-highlight-text-fill: WHITE;
+}
+
+/* Button style on hover */
 .button:hover {
     -fx-background-color: BLACK;
     -fx-text-fill: WHITE;
 }
 
+/* Button style on click */
 .button:pressed {
     -fx-background-color: BLACK;
     -fx-text-fill: GREY;
 }
 
-text-field:hover {
-    -fx-opacity: 0.2;
+/* TextField and PasswordField style on hover */
+.text-field:hover,
+.password-field:hover {
+    -fx-opacity: 0.85;
 }
