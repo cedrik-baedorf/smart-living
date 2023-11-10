@@ -11,6 +11,7 @@ import smart.housing.services.UserManagementService;
 import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.entities.User;
 import smart.housing.ui.ErrorMessage;
+import smart.housing.ui.StyledComboBox;
 
 import java.util.Arrays;
 
@@ -34,7 +35,7 @@ public class CreateDialogController extends DialogController {
     @FXML TextField usernameField, lastNameField, firstNameField;
     @FXML PasswordField passwordField;
     @FXML ErrorMessage errorMessage;
-    @FXML ChoiceBox<UserRole> roleChoiceBox;
+    @FXML StyledComboBox<UserRole> roleComboBox;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -57,11 +58,11 @@ public class CreateDialogController extends DialogController {
     }
 
     private void loadRoles() {
-        roleChoiceBox.setItems(FXCollections.observableList(Arrays.stream(UserRole.values())
+        roleComboBox.setItems(FXCollections.observableList(Arrays.stream(UserRole.values())
                 .filter(userRole -> APPLICATION.getUser().getRole().outranks(userRole))
                 .toList()
         ));
-        roleChoiceBox.setValue(UserRole.DEFAULT_ROLE);
+        roleComboBox.setValue(UserRole.DEFAULT_ROLE);
     }
 
     public void _createUser(ActionEvent event) {
@@ -90,7 +91,7 @@ public class CreateDialogController extends DialogController {
         User newUser = new User(usernameField.getText(), passwordField.getText(), userManagementService.getHashAlgorithm());
         newUser.setLastName(lastNameField.getText());
         newUser.setFirstName(firstNameField.getText());
-        newUser.setRole(roleChoiceBox.getValue());
+        newUser.setRole(roleComboBox.getValue());
 
         userManagementService.create(newUser);
         DIALOG.setResult(true);

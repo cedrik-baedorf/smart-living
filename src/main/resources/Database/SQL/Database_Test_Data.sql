@@ -26,21 +26,23 @@ INSERT INTO `users` (`username`, `password`, `last_name`, `first_name`, `role`) 
 	('heyden', '0000000000000000000000000000000000000000000000000000001216985755', 'Heyden', 'Tom', 'USER');
 
 DELETE FROM `tasks`;
-INSERT INTO `tasks` (`task_id`, `task_name`, `description`, `due_date`, `completed`)
-VALUES (0, 'Clean floors', 'Vaccuming the floors and mopping all floors', '2023-10-01',false);
-
-INSERT INTO `tasks` (`task_id`, `task_name`, `description`, `due_date`, `completed`)
-VALUES (1, 'Bathroom', 'Clean shower, toilet and sink', '2023-09-01', true);
-
-INSERT INTO `tasks` (`task_id`, `task_name`, `description`, `due_date`)
-VALUES (2, 'Kitchen', 'Do the dishes and clean the working tables', '2023-01-01');
+INSERT INTO `tasks` (`task_id`, `task_name`, `description`, `due_date`, `completed`) VALUES
+    (0, 'Clean floors', 'Vaccuming the floors and mopping all floors', '2023-10-01',true),
+    (1, 'Bathroom', 'Clean shower, toilet and sink', '2023-09-01', false),
+    (2, 'Kitchen', 'Do the dishes and clean the working tables', '2023-11-07', false),
+    (3, 'Living room', null, '2023-11-12', false);
 
 DELETE FROM `assignments`;
-INSERT INTO `assignments` (`assignment_id`, `task_id`, `username`) VALUES (0, 0, 'cbaedorf');
+INSERT INTO `assignments` (`assignment_id`, `task_id`, `username`) VALUES
+        (0, 0, 'cbaedorf'),
+        (1, 1, 'nrg'),
+        (2, 2, 'ivano'),
+        (3, 2, 'lienchen'),
+        (4, 3, 'heyden');
 
 DELETE FROM shopping_list_items;
-INSERT INTO shopping_list_items (item, amount, unit) VALUES ('Chocolate', 2, 'kg (kilogram)');
-INSERT INTO shopping_list_items (item, amount, unit) VALUES ('Milk', 1, 'l (litres)');
+INSERT INTO shopping_list_items (item, amount, unit) VALUES ('Chocolate', 2, 'kg');
+INSERT INTO shopping_list_items (item, amount, unit) VALUES ('Milk', 1, 'l');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

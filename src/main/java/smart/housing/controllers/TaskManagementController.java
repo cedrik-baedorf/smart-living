@@ -2,11 +2,13 @@ package smart.housing.controllers;
 
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableView;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.Task;
 import smart.housing.services.TaskManagementService;
 import smart.housing.services.TaskManagementServiceImplementation;
+import smart.housing.ui.BackgroundStackPane;
+import smart.housing.ui.StyledTableView;
+
 
 /**
  * Controller to view 'task_management.fxml'
@@ -20,21 +22,22 @@ public class TaskManagementController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "task_management.fxml";
 
+    /**
+     * Name of the background image file
+     */
+    private static final String BACKGROUND_IMAGE = "smart/housing/ui/images/task_management_background.jpg";
+
     private final SmartLivingApplication APPLICATION;
 
     private final TaskManagementService TASK_SERVICE;
 
+    @FXML public BackgroundStackPane backgroundPane;
     @FXML
-    public TableView<Task> taskTable;
-
+    public StyledTableView<Task> taskTable;
     @FXML
-    public TableView<Task> currentTasks;
-
+    public StyledTableView<Task> currentTasks;
     @FXML
-    public TableView<Task> nextTasks;
-
-    @FXML
-    public TableView<Task> completedTasks;
+    public StyledTableView<Task> overdueTasks;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -47,11 +50,18 @@ public class TaskManagementController extends SmartHousingController {
     }
 
     public void initialize() {
+        setBackgroundImage();
         loadTasks();
+    }
+
+    private void setBackgroundImage() {
+        backgroundPane.setBackgroundImage(BACKGROUND_IMAGE);
     }
 
     public void loadTasks(){
         taskTable.setItems(FXCollections.observableList(TASK_SERVICE.getAllTasks()));
+        currentTasks.setItems(FXCollections.observableList(TASK_SERVICE.getCurrentTasks()));
+        overdueTasks.setItems(FXCollections.observableList(TASK_SERVICE.getIncompleteTasks()));
     }
 
     @Override

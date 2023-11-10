@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import smart.housing.ui.ErrorMessage?>
+
+<?import smart.housing.ui.StyledComboBox?>
+<?import smart.housing.ui.StyledButton?>
+<DialogPane fx:id="dialogPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="smart.housing.controllers.CreateDialogController" stylesheets="@style_sheets/style.css">
+    <content>
+        <GridPane alignment="CENTER">
+            <TextField fx:id="usernameField" promptText="username" GridPane.rowIndex="0"
+                       onAction="#_createUser" styleClass="standard-layout, text-field">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </TextField>
+            <PasswordField fx:id="passwordField" promptText="password" GridPane.rowIndex="1"
+                           onAction="#_createUser" styleClass="standard-layout, text-field">
+                <GridPane.margin>
+                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </PasswordField>
+            <TextField fx:id="firstNameField" promptText="first name" GridPane.rowIndex="2"
+                       onAction="#_createUser" styleClass="standard-layout, text-field">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </TextField>
+            <TextField fx:id="lastNameField" promptText="surname" GridPane.rowIndex="3"
+                       onAction="#_createUser" styleClass="standard-layout, text-field">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </TextField>
+            <StyledComboBox fx:id="roleComboBox" GridPane.rowIndex="4">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </StyledComboBox>
+            <StyledButton onAction="#_createUser" text="Create User" textAlignment="CENTER" GridPane.halignment="CENTER"
+                    GridPane.rowIndex="5" maxWidth="Infinity" buttonStyle="CONFIRM"
+            >
+                <GridPane.margin>
+                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </StyledButton>
+            <ErrorMessage fx:id="errorMessage" GridPane.rowIndex="6" wrapText="true"
+                          styleClass="standard-layout, error-message"
+            >
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </ErrorMessage>
+         <columnConstraints>
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
+        </GridPane>
+    </content>
+</DialogPane>

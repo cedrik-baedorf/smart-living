@@ -1,0 +1,23 @@
+.button,
+.text-field {
+    -fx-background-color: WHITE;
+    -fx-background-radius: 15;
+    -fx-text-fill: BLACK;
+    -fx-font-family: "Verdana", sans-serif;
+    -fx-padding: 5 12 5 12;
+    -fx-font-size: 15px;
+}
+
+.button:hover {
+    -fx-background-color: BLACK;
+    -fx-text-fill: WHITE;
+}
+
+.button:pressed {
+    -fx-background-color: BLACK;
+    -fx-text-fill: GREY;
+}
+
+text-field:hover {
+    -fx-opacity: 0.2;
+}

@@ -15,12 +15,24 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(
                 name = Task.FIND_ALL,
-                query = "SELECT task FROM Task task"
+                query = """
+                        SELECT task FROM Task task
+                        """
         ),
         @NamedQuery(
                 name = Task.FIND_WITH_FILTERS,
                 query = """
                         SELECT task FROM Task task
+                        WHERE task.isCompleted = coalesce(:isCompleted, task.isCompleted)
+                        AND task.dueDate >= :startDate
+                        AND task.dueDate <= :endDate
+                        """
+        ),
+        @NamedQuery(
+                name = Task.FIND_INCOMPLETE,
+                query = """
+                        SELECT task FROM Task task
+                        WHERE task.isCompleted = coalesce(:isCompleted, task.isCompleted)
                         """
         )
 })
@@ -36,6 +48,12 @@ public class Task {
      * Name of named query to return all tasks filtered by
      */
     public static final String FIND_WITH_FILTERS = "Task.findWithFilters";
+
+    /**
+     * Name of named query to return all tasks that have not been completed yet
+     */
+
+    public static final String FIND_INCOMPLETE = "Task.findIncomplete";
 
     /**
      * Unique id of the task
@@ -55,7 +73,7 @@ public class Task {
     /**
      * To which roommate is the task assigned
      */
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "assignments",
         joinColumns = @JoinColumn(name = "task_id"),
@@ -130,6 +148,10 @@ public class Task {
 
     public boolean getCompleted() {
         return isCompleted;
+    }
+
+    public String toString(){
+        return "(" + taskName + "; " + dueDate + "; " + (isCompleted ? "completed" : "not completed") + ")";
     }
 
 }

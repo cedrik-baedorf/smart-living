@@ -1,0 +1,60 @@
+.scroll-bar {
+    -fx-background-color: TRANSPARENT;
+    -fx-background-radius: 10;
+    -fx-border-color: TRANSPARENT;
+}
+
+/* Properties of scroll bar thumb (scroller) */
+.scroll-bar .thumb {
+    -fx-background-color: BLACK;
+    -fx-background-radius: 10;
+    -fx-border-color: TRANSPARENT;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+}
+
+/* Properties of scroll bar thumb on hover */
+.scroll-bar .thumb:hover {
+    -fx-background-color: WHITE;
+    -fx-border-color: BLACK;
+}
+
+/* Properties of scroll bar thumb on click */
+.scroll-bar .thumb:pressed {
+    -fx-background-color: BLACK;
+    -fx-border-color: TRANSPARENT;
+}
+
+/* Properties of increment buttons */
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: TRANSPARENT;
+    -fx-background-radius: 10;
+    -fx-border-color: TRANSPARENT;
+}
+
+/* Properties of increment button arrows */
+.scroll-bar .increment-button .increment-arrow,
+.scroll-bar .decrement-button .decrement-arrow {
+    -fx-background-color: BLACK;
+}
+
+/* Properties of increment button arrows */
+.scroll-bar .increment-button:hover,
+.scroll-bar .decrement-button:hover,
+.scroll-bar .increment-button:pressed,
+.scroll-bar .decrement-button:pressed {
+    -fx-background-color: BLACK;
+}
+
+/* Properties of increment button arrows on hover */
+.scroll-bar .increment-button:hover .increment-arrow,
+.scroll-bar .decrement-button:hover .decrement-arrow {
+    -fx-background-color: WHITE;
+}
+
+/* Properties of increment button arrows on click */
+.scroll-bar .increment-button .increment-arrow:pressed,
+.scroll-bar .decrement-button .decrement-arrow:pressed {
+    -fx-opacity: 0.5;
+}

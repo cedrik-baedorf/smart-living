@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import smart.housing.ui.*?>
+
+<BackgroundStackPane fx:id="backgroundPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.TaskManagementController">
+    <BorderPane>
+        <center>
+            <StyledTableView fx:id="taskTable" minHeight="150.0" minWidth="300.0">
+                <columns>
+                    <TableColumn text="Task Name" minWidth="100">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="taskName" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Due Date" minWidth="100">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="dueDate" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Status" minWidth="100">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="completed" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn text="Assigned To" minWidth="200">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="assignees" />
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+                <BorderPane.margin>
+                    <Insets bottom="100.0" left="200.0" right="200.0" top="50.0" />
+                </BorderPane.margin>
+            </StyledTableView>
+        </center>
+        <top>
+            <GridPane maxHeight="200" prefWidth="1000" stylesheets="@style_sheets/style.css">
+            <StyledButton text="+ NEW TASK">
+                <font>
+                    <Font size="12.0" />
+                </font>
+                <GridPane.margin>
+                    <Insets top="300.0" left="200.0" />
+                </GridPane.margin>
+            </StyledButton>
+            <StyledComboBox promptText="Select Month">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="January" />
+                        <String fx:value="February" />
+                        <String fx:value="March" />
+                        <String fx:value="April" />
+                        <String fx:value="May" />
+                        <String fx:value="June" />
+                        <String fx:value="July" />
+                        <String fx:value="August" />
+                        <String fx:value="September" />
+                        <String fx:value="October" />
+                        <String fx:value="November" />
+                        <String fx:value="December" />
+                    </FXCollections>
+                </items>
+                <GridPane.margin>
+                    <Insets top="300.0" left="800" right="400.0" />
+                </GridPane.margin>
+            </StyledComboBox>
+            <StyledComboBox promptText="Select Year">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="2022" />
+                        <String fx:value="2023" />
+                        <String fx:value="2024" />
+                    </FXCollections>
+                </items>
+                <GridPane.margin>
+                    <Insets top="300.0" left="1000" right="200.0" />
+                </GridPane.margin>
+            </StyledComboBox>
+            <StyledTableView fx:id="overdueTasks" minHeight="100.0" minWidth="200.0">
+                <columns>
+                    <TableColumn minWidth="100.0" text="Overdue Tasks">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="taskName" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn minWidth="100.0" text="Assigned to">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="assignees" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn minWidth="100.0" text="Due Date">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="dueDate" />
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+                <GridPane.margin>
+                    <Insets bottom="50.0" left="900" right="200.0" top="100.0" />
+                </GridPane.margin>
+            </StyledTableView>
+            <StyledTableView fx:id="currentTasks" minHeight="100.0" minWidth="200" maxWidth="350.0">
+                <columns>
+                    <TableColumn minWidth="100.0" text="Tasks This Week">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="taskName" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn minWidth="100.0" text="Assigned To">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="assignees" />
+                        </cellValueFactory>
+                    </TableColumn>
+                    <TableColumn minWidth="100.0" text="Due Date">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="dueDate" />
+                        </cellValueFactory>
+                    </TableColumn>
+                </columns>
+                <GridPane.margin>
+                    <Insets bottom="50.0" left="200.0" top="100.0" />
+                </GridPane.margin>
+            </StyledTableView>
+            </GridPane>
+        </top>
+    </BorderPane>
+</BackgroundStackPane>

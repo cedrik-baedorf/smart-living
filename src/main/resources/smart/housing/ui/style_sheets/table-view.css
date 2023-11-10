@@ -1,0 +1,70 @@
+/* table-view */
+.table-view {
+    -fx-background-color: WHITE;
+    -fx-opacity: 0.7;
+    -fx-background-radius: 10;
+}
+
+.table-view .filler {
+    -fx-background-color: TRANSPARENT;
+}
+
+/* table-view | column-header */
+.table-view .column-header {
+    -fx-background-color: TRANSPARENT;
+}
+
+.table-view -column-header .filler {
+    -fx-background-color: TRANSPARENT;
+}
+
+/* table-view | column-header-background */
+.table-view .column-header-background{
+    -fx-background-color: TRANSPARENT;
+    -fx-background-radius: 10px 10px 0px 0px;
+    -fx-background-insets: 0 10px 0 0;
+    -fx-padding: 0 0 5px 0;
+}
+
+.table-view .column-header-background .filler {
+    -fx-background-color: TRANSPARENT;
+}
+
+/* modify cells with content */
+.table-view .table-cell {
+    -fx-text-fill: BLACK;
+    -fx-border-color: TRANSPARENT;
+}
+
+/* rows */
+.table-row-cell:odd .filler {
+    -fx-background-color: WHITE;
+    -fx-opacity: 0.05;
+}
+
+.table-row-cell:even .filler {
+    -fx-background-color: WHITE;
+    -fx-opacity: 0.1;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: WHITE;
+    -fx-opacity: 0.2;
+}
+
+.table-row-cell:hover .table-cell {
+    -fx-text-fill: BLACK;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: BLACK;
+}
+
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: WHITE;
+}
+
+/* corners */
+.table-view .corner {
+    -fx-background-color: TRANSPARENT;
+}
