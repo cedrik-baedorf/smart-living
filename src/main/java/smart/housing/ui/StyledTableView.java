@@ -15,7 +15,7 @@ public class StyledTableView<S> extends TableView<S> implements StyledNode {
      * Instance field that contains all style sheets of this object.
      * Contains default value if assigned.
      */
-    private String[] styleSheets = { TABLE_VIEW_STYLE_SHEET, SCROLL_BAR_STYLE_SHEET };
+    private final String[] STYLE_SHEETS = { TABLE_VIEW_STYLE_SHEET, SCROLL_BAR_STYLE_SHEET };
 
     /**
      * Default constructor calls parent constructor <code>super()</code>
@@ -39,7 +39,7 @@ public class StyledTableView<S> extends TableView<S> implements StyledNode {
     @Override
     public void initializeStyleSheets() {
         this.getStylesheets().clear();
-        this.getStylesheets().addAll(Arrays.stream(styleSheets)
+        this.getStylesheets().addAll(Arrays.stream(STYLE_SHEETS)
                 .map(StyledNode::convertStylePath)
                 .toList()
         );

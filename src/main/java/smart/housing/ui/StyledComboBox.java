@@ -14,7 +14,7 @@ public class StyledComboBox<T> extends ComboBox<T> implements StyledNode {
      * Instance field that contains all style sheets of this object.
      * Contains default value if assigned.
      */
-    private String[] styleSheets = { COMBO_BOX_STYLE_SHEET, SCROLL_BAR_STYLE_SHEET };
+    private final String[] STYLE_SHEETS = { COMBO_BOX_STYLE_SHEET, SCROLL_BAR_STYLE_SHEET };
 
     /**
      * Default constructor calls parent constructor <code>super()</code>
@@ -38,7 +38,7 @@ public class StyledComboBox<T> extends ComboBox<T> implements StyledNode {
     @Override
     public void initializeStyleSheets() {
         this.getStylesheets().clear();
-        this.getStylesheets().addAll(Arrays.stream(styleSheets)
+        this.getStylesheets().addAll(Arrays.stream(STYLE_SHEETS)
                 .map(StyledNode::convertStylePath)
                 .toList()
         );

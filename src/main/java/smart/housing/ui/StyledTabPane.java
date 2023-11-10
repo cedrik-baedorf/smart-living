@@ -14,7 +14,7 @@ public class StyledTabPane extends TabPane implements StyledNode {
      * Instance field that contains all style sheets of this object.
      * Contains default value if assigned.
      */
-    private String[] styleSheets = { TAB_PANE_STYLE_SHEET };
+    private final String[] STYLE_SHEETS = { TAB_PANE_STYLE_SHEET };
 
     /**
      * Default constructor calls parent constructor <code>super()</code>
@@ -38,7 +38,7 @@ public class StyledTabPane extends TabPane implements StyledNode {
     @Override
     public void initializeStyleSheets() {
         this.getStylesheets().clear();
-        this.getStylesheets().addAll(Arrays.stream(styleSheets)
+        this.getStylesheets().addAll(Arrays.stream(STYLE_SHEETS)
                 .map(StyledNode::convertStylePath)
                 .toList()
         );

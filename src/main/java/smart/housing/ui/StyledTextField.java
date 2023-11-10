@@ -18,9 +18,9 @@ public class StyledTextField extends TextField implements StyledInputNode {
      * Instance field that contains all style sheets of this object.
      * Contains default value if assigned.
      */
-    private String[] styleSheets = { UI_ELEMENT_STYLE_SHEET };
+    private final String[] STYLE_SHEETS = { UI_ELEMENT_STYLE_SHEET };
 
-    private Map<KeyCode, Node> KEY_MAPPING = new HashMap<>();
+    private final Map<KeyCode, Node> KEY_MAPPING = new HashMap<>();
 
     /**
      * Default constructor calls parent constructor <code>super()</code>
@@ -44,7 +44,7 @@ public class StyledTextField extends TextField implements StyledInputNode {
     @Override
     public void initializeStyleSheets() {
         this.getStylesheets().clear();
-        this.getStylesheets().addAll(Arrays.stream(styleSheets)
+        this.getStylesheets().addAll(Arrays.stream(STYLE_SHEETS)
                 .map(StyledNode::convertStylePath)
                 .toList()
         );
