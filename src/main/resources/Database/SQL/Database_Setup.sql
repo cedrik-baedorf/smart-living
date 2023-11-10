@@ -21,6 +21,7 @@ USE `smart-living`;
 
 DROP TABLE IF EXISTS `assignments`;
 DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `shopping_list_items`;
 DROP TABLE IF EXISTS `tasks`;
 
 CREATE TABLE IF NOT EXISTS `users` (

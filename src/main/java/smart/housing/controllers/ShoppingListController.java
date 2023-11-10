@@ -61,7 +61,8 @@ public class ShoppingListController extends SmartHousingController {
                 "g",
                 "kg",
                 "l",
-                "ml"
+                "ml",
+                " "
         );
         einheitComboBox.setItems(itemsList);
 
@@ -81,6 +82,7 @@ public class ShoppingListController extends SmartHousingController {
 
         TableColumn<ShoppingListItem,String> itemCol = new TableColumn<ShoppingListItem,String>("Artikel");
         itemCol.setCellValueFactory(new PropertyValueFactory("item"));
+        itemCol.setMinWidth(50);
         TableColumn<ShoppingListItem,Double> quantityCol = new TableColumn<ShoppingListItem,Double>("Anzahl");
         quantityCol.setCellValueFactory(new PropertyValueFactory("anzahl"));
         TableColumn<ShoppingListItem,String> unitCol = new TableColumn<ShoppingListItem,String>("Einheit");
@@ -97,25 +99,29 @@ public class ShoppingListController extends SmartHousingController {
     }
 
     private void hinzufuegenButtonClicked() {
-        String artikel = artikelTextField.getText();
-        double anzahl = Double.parseDouble(anzahlField.getText());
-        String einheit = einheitComboBox.getValue();
+        try {
+            String artikel = artikelTextField.getText();
+            double anzahl = Double.parseDouble(anzahlField.getText());
+            String einheit = einheitComboBox.getValue();
 
-        // Überprüfen, ob alle benötigten Felder ausgefüllt sind
         if (artikel != null && !artikel.isEmpty() && anzahl != 0.0 && !einheit.isEmpty()
                 && einheit != null && !einheit.isEmpty()) {
 
             service = new ShoppingListServiceImplementation(APPLICATION.getDatabaseConnector());
             service.create(new ShoppingListItem(artikel,anzahl,einheit));
 
-            // Optional: Löschen Sie die Eingaben nach dem Hinzufügen
             clearFields();
             loadShoppingList();
 
         } else {
-            // Zeigen Sie eine Fehlermeldung an oder ergreifen Sie andere Maßnahmen, wenn Felder leer sind
             System.out.println("Bitte füllen Sie alle Felder aus.");
         }
+        } catch (Exception e) {
+            hinzufuegenButton.setStyle("-fx-border-color: red;");
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(g -> hinzufuegenButton.setStyle("-fx-border-color: grey;"));
+            pause.play();
+        };
     }
 
     private void removeItemFromList(ShoppingListItem shoppingListItem) {
@@ -143,5 +149,4 @@ public class ShoppingListController extends SmartHousingController {
         pause.setOnFinished(e -> loeschenButton.setStyle("-fx-border-color: grey;"));
         pause.play();
     }
-
 }
