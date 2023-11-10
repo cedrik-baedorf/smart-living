@@ -22,7 +22,7 @@ public class SmartLivingApplication extends Application {
 
     private final String
         START_VIEW = START_CONTROLLER.getViewName(),
-        VIEW_DIR = "views/";
+        VIEW_DIR = "ui/";
 
     private Stage stage;
 
@@ -33,7 +33,7 @@ public class SmartLivingApplication extends Application {
     @Override
     public void start(Stage stage) {
         this.stage = stage;
-        addStageIcon("smart/housing/views/images/icon_plain.png");
+        addStageIcon("smart/housing/ui/images/icon_plain.png");
         stage.setMaximized(true);
         stage.setTitle("Smart Living Application");
         setRoot(START_VIEW, START_CONTROLLER);
@@ -97,5 +97,9 @@ public class SmartLivingApplication extends Application {
     }
 
     public User getUser() { return user; }
+
+    public Stage getPrimaryStage() {
+        return stage;
+    }
 
 }

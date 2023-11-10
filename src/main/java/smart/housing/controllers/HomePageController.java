@@ -3,9 +3,9 @@ package smart.housing.controllers;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
 import javafx.scene.layout.Pane;
 import smart.housing.SmartLivingApplication;
+import smart.housing.ui.StyledTabPane;
 
 /**
  * Controller to view 'home_page.fxml'
@@ -26,7 +26,7 @@ public class HomePageController extends SmartHousingController {
         budgetManagementController, ShoppingListController;
 
     @FXML
-    public TabPane tabPane;
+    public StyledTabPane tabPane;
     @FXML
     public Pane userManagement;
     @FXML

@@ -3,10 +3,14 @@ package smart.housing.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
+import javafx.scene.input.KeyCode;
 import org.hibernate.service.spi.ServiceException;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.database.DatabaseConnectorImplementation;
+import smart.housing.ui.BackgroundDialogPane;
+import smart.housing.ui.ErrorMessage;
+import smart.housing.ui.StyledPasswordField;
+import smart.housing.ui.StyledTextField;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,13 +30,13 @@ public class DatabaseDialogController extends DialogController {
     private final Dialog<DatabaseConnector> DIALOG;
 
     @FXML
-    DialogPane dialogPane;
+    BackgroundDialogPane dialogPane;
     @FXML
-    TextField usernameField, jdbcDriverField, urlField;
+    StyledTextField usernameField, jdbcDriverField, urlField;
     @FXML
-    PasswordField passwordField;
+    StyledPasswordField passwordField;
     @FXML
-    Label errorMessage;
+    ErrorMessage errorMessage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -45,12 +49,18 @@ public class DatabaseDialogController extends DialogController {
 
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
-        clearErrorMessage();
+        dialogPane.setBackgroundImage("smart/housing/ui/images/database_dialog_background.jpg");
+        errorMessage.clear();
+        initializeKeyMappings();
     }
 
-    private void clearErrorMessage() {
-        errorMessage.setTextFill(Color.BLACK);
-        errorMessage.setText("");
+    public void initializeKeyMappings() {
+        usernameField.switchFocusOnKeyPressed(KeyCode.DOWN, passwordField);
+        passwordField.switchFocusOnKeyPressed(KeyCode.UP, usernameField);
+        passwordField.switchFocusOnKeyPressed(KeyCode.DOWN, jdbcDriverField);
+        jdbcDriverField.switchFocusOnKeyPressed(KeyCode.UP, passwordField);
+        jdbcDriverField.switchFocusOnKeyPressed(KeyCode.DOWN, urlField);
+        urlField.switchFocusOnKeyPressed(KeyCode.UP, jdbcDriverField);
     }
 
     public String getViewName() {
@@ -59,6 +69,7 @@ public class DatabaseDialogController extends DialogController {
 
     public void _confirmDatabaseConfiguration(ActionEvent event) {
         event.consume();
+        errorMessage.clear();
         Map<String, String> dbProperties = new HashMap<>();
         dbProperties.put(DatabaseConnector.USER_PROPERTY, usernameField.getText());
         dbProperties.put(DatabaseConnector.PASSWORD_PROPERTY, passwordField.getText());
@@ -68,8 +79,7 @@ public class DatabaseDialogController extends DialogController {
             DIALOG.setResult(new DatabaseConnectorImplementation(dbProperties));
             DIALOG.close();
         } catch (ServiceException serviceException) {
-            errorMessage.setText("Unable to connect to database");
-            errorMessage.setTextFill(Color.RED);
+            errorMessage.displayError("Unable to connect to the database", 5);
         } finally {
             usernameField.clear();
             passwordField.clear();

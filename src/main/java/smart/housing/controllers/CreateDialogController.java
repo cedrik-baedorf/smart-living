@@ -1,14 +1,22 @@
 package smart.housing.controllers;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
+import javafx.scene.input.KeyCode;
 import smart.housing.SmartLivingApplication;
+import smart.housing.enums.UserRole;
 import smart.housing.exceptions.EmptyFieldException;
-import smart.housing.services.LoginService;
-import smart.housing.services.LoginServiceImplementation;
+import smart.housing.services.UserManagementService;
+import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.entities.User;
+import smart.housing.ui.ErrorMessage;
+import smart.housing.ui.StyledComboBox;
+import smart.housing.ui.StyledPasswordField;
+import smart.housing.ui.StyledTextField;
+
+import java.util.Arrays;
 
 /**
  * Controller to view 'create_dialog.fxml'
@@ -26,14 +34,11 @@ public class CreateDialogController extends DialogController {
 
     private final Dialog<Boolean> DIALOG;
 
-    @FXML
-    DialogPane dialogPane;
-    @FXML
-    TextField usernameField, lastNameField, firstNameField;
-    @FXML
-    PasswordField passwordField;
-    @FXML
-    Label errorMessage;
+    @FXML DialogPane dialogPane;
+    @FXML StyledTextField usernameField, lastNameField, firstNameField;
+    @FXML StyledPasswordField passwordField;
+    @FXML ErrorMessage errorMessage;
+    @FXML StyledComboBox<UserRole> roleComboBox;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -47,26 +52,43 @@ public class CreateDialogController extends DialogController {
 
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
-        clearErrorMessage();
-    }
-
-    private void clearErrorMessage() {
-        errorMessage.setTextFill(Color.BLACK);
-        errorMessage.setText("");
+        loadRoles();
+        errorMessage.clear();
+        initializeKeyMappings();
     }
 
     public String getViewName() {
         return VIEW_NAME;
     }
 
+    private void loadRoles() {
+        roleComboBox.setItems(FXCollections.observableList(Arrays.stream(UserRole.values())
+                .filter(userRole -> APPLICATION.getUser().getRole().outranks(userRole))
+                .toList()
+        ));
+        roleComboBox.setValue(UserRole.DEFAULT_ROLE);
+    }
+
+    public void initializeKeyMappings() {
+        usernameField.switchFocusOnKeyPressed(KeyCode.DOWN, passwordField);
+        passwordField.switchFocusOnKeyPressed(KeyCode.UP, usernameField);
+
+        passwordField.switchFocusOnKeyPressed(KeyCode.DOWN, firstNameField);
+        firstNameField.switchFocusOnKeyPressed(KeyCode.UP, passwordField);
+
+        firstNameField.switchFocusOnKeyPressed(KeyCode.DOWN, lastNameField);
+        lastNameField.switchFocusOnKeyPressed(KeyCode.UP, firstNameField);
+
+        lastNameField.switchFocusOnKeyPressed(KeyCode.DOWN, roleComboBox);
+    }
+
     public void _createUser(ActionEvent event) {
         event.consume();
-        clearErrorMessage();
+        errorMessage.clear();
         try {
             createUser();
         } catch (EmptyFieldException exception) {
-            errorMessage.setTextFill(Color.RED);
-            errorMessage.setText(exception.getMessage());
+            errorMessage.displayError(exception.getMessage(), 5);
         } finally {
             usernameField.clear();
             passwordField.clear();
@@ -81,13 +103,14 @@ public class CreateDialogController extends DialogController {
         checkForEmptyInput(lastNameField.getText(), "surname");
         checkForEmptyInput(firstNameField.getText(), "first name");
 
-        LoginService loginService = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
 
-        User newUser = new User(usernameField.getText(), passwordField.getText(), loginService.getHashAlgorithm());
+        User newUser = new User(usernameField.getText(), passwordField.getText(), userManagementService.getHashAlgorithm());
         newUser.setLastName(lastNameField.getText());
         newUser.setFirstName(firstNameField.getText());
+        newUser.setRole(roleComboBox.getValue());
 
-        loginService.create(newUser);
+        userManagementService.create(newUser);
         DIALOG.setResult(true);
     }
 

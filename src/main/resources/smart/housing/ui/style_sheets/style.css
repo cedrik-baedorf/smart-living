@@ -1,0 +1,18 @@
+.standard-layout {
+    -fx-padding: 5 12 5 12;
+    -fx-background-radius: 15;
+    -fx-font-family: "Verdana";
+}
+
+.welcome-label {
+    -fx-background-color: TRANSPARENT;
+    -fx-font-size: 30px;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+}
+
+.error-message {
+    -fx-background-color: WHITE;
+    -fx-text-fill: RED;
+    -fx-font-size: 12px;
+}

@@ -12,7 +12,48 @@ import java.util.Set;
  */
 @Entity
 @Table(name= "tasks")
+@NamedQueries({
+        @NamedQuery(
+                name = Task.FIND_ALL,
+                query = """
+                        SELECT task FROM Task task
+                        """
+        ),
+        @NamedQuery(
+                name = Task.FIND_WITH_FILTERS,
+                query = """
+                        SELECT task FROM Task task
+                        WHERE task.isCompleted = coalesce(:isCompleted, task.isCompleted)
+                        AND task.dueDate >= :startDate
+                        AND task.dueDate <= :endDate
+                        """
+        ),
+        @NamedQuery(
+                name = Task.FIND_INCOMPLETE,
+                query = """
+                        SELECT task FROM Task task
+                        WHERE task.isCompleted = coalesce(:isCompleted, task.isCompleted)
+                        """
+        )
+})
+
 public class Task {
+
+    /**
+     * Name of named query to return all tasks
+     */
+    public static final String FIND_ALL = "Task.findAll";
+
+    /**
+     * Name of named query to return all tasks filtered by
+     */
+    public static final String FIND_WITH_FILTERS = "Task.findWithFilters";
+
+    /**
+     * Name of named query to return all tasks that have not been completed yet
+     */
+
+    public static final String FIND_INCOMPLETE = "Task.findIncomplete";
 
     /**
      * Unique id of the task
@@ -32,7 +73,7 @@ public class Task {
     /**
      * To which roommate is the task assigned
      */
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "assignments",
         joinColumns = @JoinColumn(name = "task_id"),
@@ -41,22 +82,10 @@ public class Task {
     private Set<User> assignees;
 
     /**
-     * Start date of this reoccurring task
+     * Due date of this reoccurring task
      */
-    @Column(name = "start_date")
-    private LocalDate startDate;
-
-    /**
-     * Days between two task occurrences (7 = weekly)
-     */
-    @Column(name = "reoccurrence")
-    private int reoccurrence;
-
-    /**
-     * End date of this reoccurring task (no task later than this date)
-     */
-    @Column(name = "end_date")
-    private LocalDate endDate;
+    @Column(name = "due_date")
+    private LocalDate dueDate;
 
     /**
      * Information about whether the task is completed or not
@@ -66,8 +95,7 @@ public class Task {
 
     public Task (String taskName, Set<User> assignees){
         this.taskName = taskName;
-        this.assignees = assignees;
-        this.startDate = LocalDate.now();
+        this.assignees = assignees == null ? new HashSet<>() : assignees;
         this.isCompleted = false;
     }
 
@@ -88,24 +116,42 @@ public class Task {
     }
 
     public void markAsCompleted(){
-        if (this.getAssignees().isEmpty())
-            throw new IllegalStateException("A task must be completed to at least one roommate before marking it as completed");
+        if (this.getAssignees() == null || this.getAssignees().isEmpty())
+            throw new IllegalStateException("A task must be assigned to at least one roommate before marking it as completed");
         else
             this.setCompleted();
-
-            // MISSING: database update to mark task as completed
     }
 
-    private Set<User> getAssignees() {
+    public String getTaskName(){
+        return this.taskName;
+    }
+
+    public void setTaskName(String taskName){
+        this.taskName = taskName;
+    }
+
+    public Set<User> getAssignees() {
         return assignees;
+    }
+
+    public LocalDate getDueDate(){
+        return this.dueDate;
+    }
+
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
     }
 
     private void setCompleted(){
         isCompleted = true;
     }
 
-    public boolean getCompleted(){
-        return assignees!= null && !assignees.isEmpty() && isCompleted;
+    public boolean getCompleted() {
+        return isCompleted;
+    }
+
+    public String toString(){
+        return "(" + taskName + "; " + dueDate + "; " + (isCompleted ? "completed" : "not completed") + ")";
     }
 
 }
