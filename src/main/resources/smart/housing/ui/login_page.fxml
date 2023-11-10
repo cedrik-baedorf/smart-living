@@ -19,13 +19,13 @@
                     <Label fx:id="welcomeLabel" alignment="CENTER" text="WELCOME" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" styleClass="standard-style, welcome-label"/>
                     <Separator GridPane.rowIndex="1" />
                     <StyledTextField fx:id="usernameField" onAction="#_onUsernameFieldAction" promptText="username"
-                                     GridPane.rowIndex="2" downKeyFocus="#passwordField">
+                                     GridPane.rowIndex="2">
                         <GridPane.margin>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </GridPane.margin>
                     </StyledTextField>
                     <StyledPasswordField fx:id="passwordField" onAction="#_onPasswordFieldAction" promptText="password"
-                                         GridPane.rowIndex="3" upKeyFocus="#usernameField">
+                                         GridPane.rowIndex="3">
                         <GridPane.margin>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </GridPane.margin>

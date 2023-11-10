@@ -20,7 +20,7 @@ public class StyledPasswordField extends PasswordField implements StyledInputNod
      */
     private String[] styleSheets = { UI_ELEMENT_STYLE_SHEET };
 
-    private Map<KeyCode, String> keyMapping = new HashMap<>();
+    private Map<KeyCode, Node> KEY_MAPPING = new HashMap<>();
 
     /**
      * Default constructor calls parent constructor <code>super()</code>
@@ -41,32 +41,13 @@ public class StyledPasswordField extends PasswordField implements StyledInputNod
     }
 
     @Override
-    public void initializeKeyMappings() {
-        Map<KeyCode, Node> keyToNodeMap = new HashMap<>();
-        for(KeyCode code : keyMapping.keySet())
-            keyToNodeMap.put(code, this.getScene().lookup(keyMapping.get(code)));
-        setOnKeyPressed(StyledInputNode.createSwitchFocusEventHandler(keyToNodeMap));
+    public void switchFocusOnKeyPressed(KeyCode key, Node node) {
+        KEY_MAPPING.put(key, node);
+        initializeKeyMappings();
     }
 
-    @Override
-    public void switchFocusOnKeyPressed(KeyCode key, Node nextNode) {
-
-    }
-
-    public void setDownKeyFocus(String node) {
-        keyMapping.put(KeyCode.DOWN, node);
-    }
-
-    public String getDownKeyFocus() {
-        return keyMapping.get(KeyCode.DOWN);
-    }
-
-    public void setUpKeyFocus(String node) {
-        keyMapping.put(KeyCode.DOWN, node);
-    }
-
-    public String getUpKeyFocus() {
-        return keyMapping.get(KeyCode.UP);
+    private void initializeKeyMappings() {
+        setOnKeyPressed(StyledInputNode.createSwitchFocusEventHandler(KEY_MAPPING));
     }
 
 }

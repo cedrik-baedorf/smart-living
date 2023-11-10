@@ -18,8 +18,6 @@ public interface StyledInputNode extends StyledNode {
         };
     }
 
-    void initializeKeyMappings();
-
     /**
      * This method must be implemented to set the {@link Node} focused when the according key is pressed.
      */

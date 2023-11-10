@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import org.hibernate.PropertyNotFoundException;
 import org.hibernate.service.spi.ServiceException;
@@ -96,8 +97,8 @@ public class LoginPageController extends SmartHousingController {
     }
 
     public void initializeKeyMappings() {
-        usernameField.initializeKeyMappings();
-        passwordField.initializeKeyMappings();
+        usernameField.switchFocusOnKeyPressed(KeyCode.DOWN, passwordField);
+        passwordField.switchFocusOnKeyPressed(KeyCode.UP, usernameField);
     }
 
     public String getViewName() {
