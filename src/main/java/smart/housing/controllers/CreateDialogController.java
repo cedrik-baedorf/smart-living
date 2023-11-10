@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import smart.housing.SmartLivingApplication;
 import smart.housing.enums.UserRole;
 import smart.housing.exceptions.EmptyFieldException;
@@ -12,6 +13,8 @@ import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.entities.User;
 import smart.housing.ui.ErrorMessage;
 import smart.housing.ui.StyledComboBox;
+import smart.housing.ui.StyledPasswordField;
+import smart.housing.ui.StyledTextField;
 
 import java.util.Arrays;
 
@@ -32,8 +35,8 @@ public class CreateDialogController extends DialogController {
     private final Dialog<Boolean> DIALOG;
 
     @FXML DialogPane dialogPane;
-    @FXML TextField usernameField, lastNameField, firstNameField;
-    @FXML PasswordField passwordField;
+    @FXML StyledTextField usernameField, lastNameField, firstNameField;
+    @FXML StyledPasswordField passwordField;
     @FXML ErrorMessage errorMessage;
     @FXML StyledComboBox<UserRole> roleComboBox;
 
@@ -51,6 +54,7 @@ public class CreateDialogController extends DialogController {
         super.setOnCloseRequest(DIALOG);
         loadRoles();
         errorMessage.clear();
+        initializeKeyMappings();
     }
 
     public String getViewName() {
@@ -63,6 +67,19 @@ public class CreateDialogController extends DialogController {
                 .toList()
         ));
         roleComboBox.setValue(UserRole.DEFAULT_ROLE);
+    }
+
+    public void initializeKeyMappings() {
+        usernameField.switchFocusOnKeyPressed(KeyCode.DOWN, passwordField);
+        passwordField.switchFocusOnKeyPressed(KeyCode.UP, usernameField);
+
+        passwordField.switchFocusOnKeyPressed(KeyCode.DOWN, firstNameField);
+        firstNameField.switchFocusOnKeyPressed(KeyCode.UP, passwordField);
+
+        firstNameField.switchFocusOnKeyPressed(KeyCode.DOWN, lastNameField);
+        lastNameField.switchFocusOnKeyPressed(KeyCode.UP, firstNameField);
+
+        lastNameField.switchFocusOnKeyPressed(KeyCode.DOWN, roleComboBox);
     }
 
     public void _createUser(ActionEvent event) {

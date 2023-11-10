@@ -7,8 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import org.hibernate.PropertyNotFoundException;
 import org.hibernate.service.spi.ServiceException;
@@ -21,6 +20,8 @@ import smart.housing.services.UserManagementService;
 import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.ui.BackgroundStackPane;
 import smart.housing.ui.ErrorMessage;
+import smart.housing.ui.StyledPasswordField;
+import smart.housing.ui.StyledTextField;
 
 import java.util.Optional;
 
@@ -46,8 +47,8 @@ public class LoginPageController extends SmartHousingController {
     @FXML BackgroundStackPane backgroundPane;
     @FXML GridPane gridPane;
     @FXML Label welcomeLabel;
-    @FXML PasswordField passwordField;
-    @FXML TextField usernameField;
+    @FXML StyledPasswordField passwordField;
+    @FXML StyledTextField usernameField;
     @FXML ErrorMessage errorMessage;
 
     /**
@@ -72,6 +73,7 @@ public class LoginPageController extends SmartHousingController {
         setBackgroundImage();
         bindGridPaneProperties();
         errorMessage.clear();
+        initializeKeyMappings();
     }
 
     private void setBackgroundImage() {
@@ -92,6 +94,11 @@ public class LoginPageController extends SmartHousingController {
         }, backgroundPane.widthProperty());
 
         welcomeLabel.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeBinding.asString(), "px;"));
+    }
+
+    public void initializeKeyMappings() {
+        usernameField.switchFocusOnKeyPressed(KeyCode.DOWN, passwordField);
+        passwordField.switchFocusOnKeyPressed(KeyCode.UP, usernameField);
     }
 
     public String getViewName() {
