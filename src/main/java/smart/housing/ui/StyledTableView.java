@@ -2,7 +2,6 @@ package smart.housing.ui;
 
 import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
 
