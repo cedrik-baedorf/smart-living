@@ -1,9 +1,7 @@
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Server version:               10.11.2-MariaDB - mariadb.org binary distribution
--- Server OS:                    Win64
--- HeidiSQL Version:             12.4.0.6659
--- --------------------------------------------------------
+/*
+    This sql file may be used to create all necessary table in database 'smart-living'.
+    If such tables already exist, this script will delete these tables.
+*/
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
@@ -14,9 +12,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-
--- Dumping database structure for smart-living
-CREATE DATABASE IF NOT EXISTS `smart-living` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci */;
 USE `smart-living`;
 
 DROP TABLE IF EXISTS `assignments`;
