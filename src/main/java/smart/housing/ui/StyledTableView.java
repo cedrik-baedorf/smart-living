@@ -1,6 +1,9 @@
 package smart.housing.ui;
 
+import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumnBase;
 import javafx.scene.control.TableView;
 
 import java.util.Arrays;
@@ -43,6 +46,25 @@ public class StyledTableView<S> extends TableView<S> implements StyledNode {
                 .map(StyledNode::convertStylePath)
                 .toList()
         );
+    }
+
+    public void bindColumnWidth() {
+        double totalWidth = this.getColumns()
+                .stream()
+                .map(TableColumnBase::getPrefWidth)
+                .mapToDouble(Double::doubleValue)
+                .sum();
+
+        for(var column : this.getColumns())
+            column.prefWidthProperty().bind(
+                Bindings.max(
+                    column.getMinWidth(),
+                    Bindings.min(
+                        column.getMaxWidth(),
+                        widthProperty().multiply(column.getPrefWidth() / totalWidth)
+                    )
+                )
+            );
     }
 
 }
