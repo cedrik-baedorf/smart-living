@@ -24,9 +24,9 @@ public class UserManagementServiceImplementation implements UserManagementServic
     @Override
     public User login(String username, String password) {
         EntityManager entityManager = databaseConnector.createEntityManager();
-        if(username == null || username.length() == 0)
+        if(username == null || username.isEmpty())
             throw new UserManagementServiceException(String.format(MSG_LOGIN_EMPTY, "username"));
-        if(password == null || password.length() == 0)
+        if(password == null || password.isEmpty())
             throw new UserManagementServiceException(String.format(MSG_LOGIN_EMPTY, "password"));
         if(username.length() > User.USERNAME_LENGTH)
             throw new IncorrectCredentialsException(String.format(MSG_LOGIN_LENGTH, "username", User.USERNAME_LENGTH));

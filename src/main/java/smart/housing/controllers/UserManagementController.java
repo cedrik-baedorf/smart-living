@@ -53,6 +53,7 @@ public class UserManagementController extends SmartHousingController {
         setBackgroundImage();
         loadUsers();
         initializeButtons(false);
+        bindSizes();
     }
 
     public String getViewName() {
@@ -73,6 +74,9 @@ public class UserManagementController extends SmartHousingController {
         deleteButton.setDisable(! itemSelected);
         modifyButton.setDisable(! itemSelected);
         createButton.setDisable(false);
+    }
+    private void bindSizes() {
+        userTable.bindColumnWidth();
     }
 
     @Override
