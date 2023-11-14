@@ -16,6 +16,7 @@ USE `smart-living`;
 
 DROP TABLE IF EXISTS `assignments`;
 DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `shopping_list_items`;
 DROP TABLE IF EXISTS `tasks`;
 
 CREATE TABLE IF NOT EXISTS `users` (
@@ -47,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `assignments` (
 
 CREATE TABLE IF NOT EXISTS `shopping_list_items` (
     `item` VARCHAR(32) NOT NULL,
-    `amount` INT NOT NULL,
+    `amount` DECIMAL(6,2) NOT NULL,
     `unit` VARCHAR(2) NOT NULL,
     PRIMARY KEY (`item`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;

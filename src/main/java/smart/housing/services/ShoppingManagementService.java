@@ -1,9 +1,10 @@
 package smart.housing.services;
 
-import javafx.collections.ObservableList;
 import smart.housing.entities.ShoppingListItem;
 
-public interface ShoppingListService {
+import java.util.List;
+
+public interface ShoppingManagementService {
 
     /**
      * This method takes an object of class <code>ShoppingListItem</code> and persists it in the database, if
@@ -21,4 +22,12 @@ public interface ShoppingListService {
      * @param shoppingListItem to be removed from the database
      */
     void delete(ShoppingListItem shoppingListItem);
+
+    /**
+     * This method takes an object of class <code>ShoppingListItem</code> and removes it from the database, if
+     * @return List<ShoppingListItem>
+     */
+    List<ShoppingListItem> getItemList();
+
+
 }

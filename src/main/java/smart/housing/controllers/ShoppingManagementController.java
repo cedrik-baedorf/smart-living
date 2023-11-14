@@ -12,42 +12,54 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import smart.housing.SmartLivingApplication;
+import smart.housing.ui.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-public class ShoppingListController extends SmartHousingController {
+public class ShoppingManagementController extends SmartHousingController {
 
-    public static final String VIEW_NAME = "shopping_list.fxml";
+    /**
+     * Name of the corresponding <code>.fxml</code> file
+     */
+    public static final String VIEW_NAME = "shopping_management.fxml";
+
+    /**
+     * Name of the background image file
+     */
+    private static final String BACKGROUND_IMAGE = "smart/housing/ui/images/shopping_management_background.jpg";
 
     private final SmartLivingApplication APPLICATION;
 
+    @FXML public BackgroundStackPane backgroundPane;
     @FXML
-    private TextField artikelTextField;
-
-    @FXML
-    private Button hinzufuegenButton;
+    private StyledTextField artikelTextField;
 
     @FXML
-    private Button loeschenButton;
+    private StyledButton hinzufuegenButton;
 
     @FXML
-    private ComboBox<String> einheitComboBox;
+    private StyledButton loeschenButton;
 
     @FXML
-    private Button aenderungButton;
+    private StyledComboBox<String> einheitComboBox;
 
     @FXML
-    private TableView<ShoppingListItem> tableView;
+    private StyledButton aenderungButton;
 
     @FXML
-    private TextField anzahlField;
+    private StyledTableView<ShoppingListItem> tableView;
 
-    private ShoppingListServiceImplementation service;
+    @FXML
+    private StyledTextField anzahlField;
 
-    public ShoppingListController(SmartLivingApplication application) {
+    private final ShoppingManagementService service;
+
+    public ShoppingManagementController(SmartLivingApplication application) {
+
         this.APPLICATION = application;
+        this.service = new ShoppingManagementServiceImplementation(APPLICATION.getDatabaseConnector());
     }
 
     @Override
@@ -56,12 +68,12 @@ public class ShoppingListController extends SmartHousingController {
     }
 
     public void initialize() {
+        setBackgroundImage();
         System.out.println("Initialisieren");
         ObservableList<String> itemsList = FXCollections.observableArrayList(
-                "g",
                 "kg",
                 "l",
-                "ml"
+                " "
         );
         einheitComboBox.setItems(itemsList);
 
@@ -69,25 +81,26 @@ public class ShoppingListController extends SmartHousingController {
         loadShoppingList();
     }
 
+    private void setBackgroundImage() {
+        backgroundPane.setBackgroundImage(BACKGROUND_IMAGE);
+    }
+
     private void loadShoppingList () {
         try {
-            EntityManager entityManager = APPLICATION.getDatabaseConnector().createEntityManager();
-            TypedQuery<ShoppingListItem> itemQuery = entityManager.createNamedQuery(ShoppingListItem.FIND_ALL, ShoppingListItem.class);
-            List<ShoppingListItem> itemList = itemQuery.getResultList();
-
-            tableView.setItems(FXCollections.observableList(itemList));
+            tableView.setItems(FXCollections.observableList(service.getItemList()));
         } catch (Exception e) {System.out.println("Catched Exception");}
 
-
+        /*
         TableColumn<ShoppingListItem,String> itemCol = new TableColumn<ShoppingListItem,String>("Artikel");
         itemCol.setCellValueFactory(new PropertyValueFactory("item"));
+        itemCol.setMinWidth(50);
         TableColumn<ShoppingListItem,Double> quantityCol = new TableColumn<ShoppingListItem,Double>("Anzahl");
         quantityCol.setCellValueFactory(new PropertyValueFactory("anzahl"));
         TableColumn<ShoppingListItem,String> unitCol = new TableColumn<ShoppingListItem,String>("Einheit");
         unitCol.setCellValueFactory(new PropertyValueFactory("einheit"));
 
         tableView.getColumns().setAll(itemCol, quantityCol, unitCol);
-
+        */
     }
 
     private void clearFields () {
@@ -97,29 +110,31 @@ public class ShoppingListController extends SmartHousingController {
     }
 
     private void hinzufuegenButtonClicked() {
-        String artikel = artikelTextField.getText();
-        double anzahl = Double.parseDouble(anzahlField.getText());
-        String einheit = einheitComboBox.getValue();
+        try {
+            String artikel = artikelTextField.getText();
+            double anzahl = Double.parseDouble(anzahlField.getText());
+            String einheit = einheitComboBox.getValue();
 
-        // Überprüfen, ob alle benötigten Felder ausgefüllt sind
         if (artikel != null && !artikel.isEmpty() && anzahl != 0.0 && !einheit.isEmpty()
                 && einheit != null && !einheit.isEmpty()) {
 
-            service = new ShoppingListServiceImplementation(APPLICATION.getDatabaseConnector());
             service.create(new ShoppingListItem(artikel,anzahl,einheit));
 
-            // Optional: Löschen Sie die Eingaben nach dem Hinzufügen
             clearFields();
             loadShoppingList();
 
         } else {
-            // Zeigen Sie eine Fehlermeldung an oder ergreifen Sie andere Maßnahmen, wenn Felder leer sind
             System.out.println("Bitte füllen Sie alle Felder aus.");
         }
+        } catch (Exception e) {
+            hinzufuegenButton.setStyle("-fx-border-color: red;");
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(g -> hinzufuegenButton.setStyle("-fx-border-color: default;"));
+            pause.play();
+        };
     }
 
     private void removeItemFromList(ShoppingListItem shoppingListItem) {
-        service = new ShoppingListServiceImplementation(APPLICATION.getDatabaseConnector());
         service.delete(shoppingListItem);
         loadShoppingList();
     }
@@ -140,8 +155,7 @@ public class ShoppingListController extends SmartHousingController {
             loeschenButton.setStyle("-fx-border-color: red;");
         }
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
-        pause.setOnFinished(e -> loeschenButton.setStyle("-fx-border-color: grey;"));
+        pause.setOnFinished(e -> loeschenButton.setStyle("-fx-border-color: default;"));
         pause.play();
     }
-
 }
