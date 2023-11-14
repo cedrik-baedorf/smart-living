@@ -43,7 +43,7 @@
         </center>
         <top>
             <GridPane maxHeight="200" prefWidth="1000" stylesheets="@style_sheets/style.css">
-            <StyledButton text="+ NEW TASK">
+            <StyledButton text="+ NEW TASK" onAction="#_newTaskButton_onAction">
                 <font>
                     <Font size="12.0" />
                 </font>

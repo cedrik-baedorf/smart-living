@@ -17,6 +17,5 @@ public interface TaskManagementService {
     List<Task> getCurrentTasks();
 
     List<Task> getIncompleteTasks();
-
-
+    void create(Task newTask);
 }
