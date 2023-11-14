@@ -35,7 +35,6 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
         typedQuery.setParameter("startDate", today);
         typedQuery.setParameter("endDate", sevenDaysFromNow);
         List<Task> currentTaskList = typedQuery.getResultList();
-        System.out.println(currentTaskList);
         entityManager.close();
         return currentTaskList;
     }
@@ -48,6 +47,15 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
         List<Task> currentTaskList = typedQuery.getResultList();
         entityManager.close();
         return currentTaskList;
+    }
+
+    @Override
+    public void create(Task newTask) {
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(newTask);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     public static void main(String [] args){

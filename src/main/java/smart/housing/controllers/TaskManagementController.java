@@ -1,7 +1,9 @@
 package smart.housing.controllers;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Dialog;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.Task;
 import smart.housing.services.TaskManagementService;
@@ -62,6 +64,20 @@ public class TaskManagementController extends SmartHousingController {
         taskTable.setItems(FXCollections.observableList(TASK_SERVICE.getAllTasks()));
         currentTasks.setItems(FXCollections.observableList(TASK_SERVICE.getCurrentTasks()));
         overdueTasks.setItems(FXCollections.observableList(TASK_SERVICE.getIncompleteTasks()));
+    }
+
+    public void _newTaskButton_onAction(ActionEvent event) {
+        event.consume();
+        createTask();
+    }
+
+    public void createTask() {
+        Dialog<Boolean> dialog = new Dialog<>();
+        dialog.setDialogPane(APPLICATION.loadFXML(
+                NewTaskDialogController.VIEW_NAME,
+                new NewTaskDialogController(APPLICATION, dialog)
+        ));
+        dialog.showAndWait().ifPresent(aBoolean -> loadTasks());
     }
 
     @Override
