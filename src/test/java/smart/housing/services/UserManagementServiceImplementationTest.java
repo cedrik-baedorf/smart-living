@@ -2,7 +2,6 @@ package smart.housing.services;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.User;
@@ -10,8 +9,6 @@ import smart.housing.enums.UserRole;
 import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.security.HashAlgorithm;
-import smart.housing.services.UserManagementService;
-import smart.housing.services.UserManagementServiceImplementation;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;

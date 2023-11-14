@@ -5,20 +5,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import smart.housing.SmartLivingApplication;
 import smart.housing.entities.User;
 import smart.housing.enums.UserRole;
 import smart.housing.exceptions.EmptyFieldException;
 import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.services.UserManagementService;
-import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.ui.ErrorMessage;
 import smart.housing.ui.StyledComboBox;
 import smart.housing.ui.StyledPasswordField;
 import smart.housing.ui.StyledTextField;
-
-import javax.persistence.EntityManager;
 import java.util.Arrays;
 
 /**
