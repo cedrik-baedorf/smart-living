@@ -4,13 +4,17 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import smart.housing.SmartLivingApplication;
+import smart.housing.entities.Expense;
 import smart.housing.entities.Task;
 import smart.housing.entities.User;
 import smart.housing.services.BudgetManagementService;
 import smart.housing.services.BudgetManagementServiceImplementation;
 import smart.housing.ui.BackgroundStackPane;
+import smart.housing.ui.StyledCheckComboBox;
 import smart.housing.ui.StyledComboBox;
 import smart.housing.ui.StyledTableView;
+import org.controlsfx.control.CheckComboBox;
+import javafx.collections.ListChangeListener;
 
 import java.util.List;
 
@@ -39,10 +43,10 @@ public class BudgetManagementController extends SmartHousingController {
     public StyledComboBox<User> creditors;
 
     @FXML
-    public StyledComboBox<User> debitors;
+    public StyledCheckComboBox<User> debitors;
 
     @FXML
-    public StyledTableView<Task> expenseTable;
+    public StyledTableView<Expense> expenseTable;
 
 
 
@@ -59,6 +63,16 @@ public class BudgetManagementController extends SmartHousingController {
     public void initialize() {
         setBackgroundImage();
         update();
+        // Set up listener for multiple selections
+        debitors.getCheckModel().getCheckedItems().addListener((ListChangeListener<? super User>) change -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    System.out.println("Selected Debitors: " + change.getAddedSubList());
+                } else if (change.wasRemoved()) {
+                    System.out.println("Deselected Debitors: " + change.getRemoved());
+                }
+            }
+        });
     }
 
     private void setBackgroundImage() {

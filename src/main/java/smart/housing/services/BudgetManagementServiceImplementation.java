@@ -1,6 +1,7 @@
 package smart.housing.services;
 
 import smart.housing.database.DatabaseConnector;
+import smart.housing.entities.Expense;
 import smart.housing.entities.User;
 import smart.housing.entities.Task;
 
@@ -24,10 +25,10 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
     }
 
     @Override
-    public List<Task> getAllExpenses(){
+    public List<Expense> getAllExpenses(){
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
-        List<Task> taskList = entityManager.createNamedQuery(Task.FIND_ALL, Task.class).getResultList();
+        List<Expense> expenseList = entityManager.createNamedQuery(Expense.FIND_ALL, Expense.class).getResultList();
         entityManager.close();
-        return taskList;
+        return expenseList;
     }
 }

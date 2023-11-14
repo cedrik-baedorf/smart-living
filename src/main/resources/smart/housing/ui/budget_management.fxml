@@ -19,7 +19,7 @@
                     <Insets bottom="100.0" left="200.0" right="200.0" top="100.0" />
                 </BorderPane.margin>
                 <content>
-                    <HBox spacing="10" style=" -fx-background-color: rgba(255,255,255,0.5); -fx-padding: 20; -fx-background-radius: 10;">
+                    <HBox spacing="10" style=" -fx-background-color: rgba(255,255,255,0.5); -fx-text-fill: black; -fx-padding: 20; -fx-background-radius: 10;">
 
                         <!-- Left Side - Input Section -->
                         <VBox spacing="10" prefWidth="200.0" maxWidth="200.0"> <!-- Adjusted prefWidth -->
@@ -37,8 +37,13 @@
                             <!-- Select Creditor -->
                             <StyledComboBox promptText="Select Creditor" fx:id="creditors" />
 
-                            <!-- Select Debitor -->
+                            <!-- Select Debitor
                             <StyledComboBox promptText="Select Debitors" fx:id="debitors" />
+                            -->
+
+                            <StyledCheckComboBox fx:id="debitors" prefWidth="200.0">
+
+                            </StyledCheckComboBox>
 
 
 
@@ -61,29 +66,29 @@
                         </VBox>
 
                         <!-- Added space between sections -->
-                        <Region style="-fx-background: transparent;" HBox.hgrow="ALWAYS" />
+                        <Region HBox.hgrow="ALWAYS" />
 
                         <!-- Right Side - Table Section -->
                         <StyledTableView fx:id="expenseTable" minHeight="150.0" minWidth="300.0">
                             <columns>
+                                <TableColumn text="Product" minWidth="150">
+                                    <cellValueFactory>
+                                        <PropertyValueFactory property="product" />
+                                    </cellValueFactory>
+                                </TableColumn>
                                 <TableColumn text="Creditor" minWidth="150">
                                     <cellValueFactory>
-                                        <PropertyValueFactory property="taskName" />
+                                        <PropertyValueFactory property="creditor" />
                                     </cellValueFactory>
                                 </TableColumn>
-                                <TableColumn text="Article" minWidth="150">
+                                <TableColumn text="Cost in €" minWidth="150">
                                     <cellValueFactory>
-                                        <PropertyValueFactory property="dueDate" />
+                                        <PropertyValueFactory property="cost" />
                                     </cellValueFactory>
                                 </TableColumn>
-                                <TableColumn text="Amount" minWidth="150">
+                                <TableColumn text="Debitors" minWidth="300">
                                     <cellValueFactory>
-                                        <PropertyValueFactory property="dueDate" />
-                                    </cellValueFactory>
-                                </TableColumn>
-                                <TableColumn text="Creditors" minWidth="300">
-                                    <cellValueFactory>
-                                        <PropertyValueFactory property="assignees" />
+                                        <PropertyValueFactory property="debitors" />
                                     </cellValueFactory>
                                 </TableColumn>
                             </columns>
