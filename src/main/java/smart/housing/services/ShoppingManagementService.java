@@ -2,6 +2,8 @@ package smart.housing.services;
 
 import smart.housing.entities.ShoppingListItem;
 
+import java.util.List;
+
 public interface ShoppingManagementService {
 
     /**
@@ -20,4 +22,12 @@ public interface ShoppingManagementService {
      * @param shoppingListItem to be removed from the database
      */
     void delete(ShoppingListItem shoppingListItem);
+
+    /**
+     * This method takes an object of class <code>ShoppingListItem</code> and removes it from the database, if
+     * @return List<ShoppingListItem>
+     */
+    List<ShoppingListItem> getItemList();
+
+
 }

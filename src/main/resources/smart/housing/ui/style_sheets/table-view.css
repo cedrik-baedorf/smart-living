@@ -12,7 +12,16 @@
 /* table-view | column-header */
 .table-view .column-header {
     -fx-background-color: TRANSPARENT;
+    -fx-border-color: transparent transparent grey transparent; /* Bottom border color */
+    -fx-border-width: 0 0 1 0;
 }
+
+.table-view .column-header .label {
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
+    -fx-alignment: center-left;
+}
+
 
 .table-view -column-header .filler {
     -fx-background-color: TRANSPARENT;
@@ -27,7 +36,9 @@
 }
 
 .table-view .column-header-background .filler {
-    -fx-background-color: TRANSPARENT;
+    -fx-background-color: Transparent;
+    -fx-border-color: transparent transparent grey transparent; /* Bottom border color */
+    -fx-border-width: 0 0 1 0;
 }
 
 /* modify cells with content */

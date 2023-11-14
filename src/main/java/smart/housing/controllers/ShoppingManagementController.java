@@ -54,10 +54,12 @@ public class ShoppingManagementController extends SmartHousingController {
     @FXML
     private StyledTextField anzahlField;
 
-    private ShoppingManagementServiceImplementation service;
+    private final ShoppingManagementService service;
 
     public ShoppingManagementController(SmartLivingApplication application) {
+
         this.APPLICATION = application;
+        this.service = new ShoppingManagementServiceImplementation(APPLICATION.getDatabaseConnector());
     }
 
     @Override
@@ -69,10 +71,8 @@ public class ShoppingManagementController extends SmartHousingController {
         setBackgroundImage();
         System.out.println("Initialisieren");
         ObservableList<String> itemsList = FXCollections.observableArrayList(
-                "g",
                 "kg",
                 "l",
-                "ml",
                 " "
         );
         einheitComboBox.setItems(itemsList);
@@ -87,14 +87,10 @@ public class ShoppingManagementController extends SmartHousingController {
 
     private void loadShoppingList () {
         try {
-            EntityManager entityManager = APPLICATION.getDatabaseConnector().createEntityManager();
-            TypedQuery<ShoppingListItem> itemQuery = entityManager.createNamedQuery(ShoppingListItem.FIND_ALL, ShoppingListItem.class);
-            List<ShoppingListItem> itemList = itemQuery.getResultList();
-
-            tableView.setItems(FXCollections.observableList(itemList));
+            tableView.setItems(FXCollections.observableList(service.getItemList()));
         } catch (Exception e) {System.out.println("Catched Exception");}
 
-
+        /*
         TableColumn<ShoppingListItem,String> itemCol = new TableColumn<ShoppingListItem,String>("Artikel");
         itemCol.setCellValueFactory(new PropertyValueFactory("item"));
         itemCol.setMinWidth(50);
@@ -104,7 +100,7 @@ public class ShoppingManagementController extends SmartHousingController {
         unitCol.setCellValueFactory(new PropertyValueFactory("einheit"));
 
         tableView.getColumns().setAll(itemCol, quantityCol, unitCol);
-
+        */
     }
 
     private void clearFields () {
@@ -122,7 +118,6 @@ public class ShoppingManagementController extends SmartHousingController {
         if (artikel != null && !artikel.isEmpty() && anzahl != 0.0 && !einheit.isEmpty()
                 && einheit != null && !einheit.isEmpty()) {
 
-            service = new ShoppingManagementServiceImplementation(APPLICATION.getDatabaseConnector());
             service.create(new ShoppingListItem(artikel,anzahl,einheit));
 
             clearFields();
@@ -134,13 +129,12 @@ public class ShoppingManagementController extends SmartHousingController {
         } catch (Exception e) {
             hinzufuegenButton.setStyle("-fx-border-color: red;");
             PauseTransition pause = new PauseTransition(Duration.seconds(2));
-            pause.setOnFinished(g -> hinzufuegenButton.setStyle("-fx-border-color: grey;"));
+            pause.setOnFinished(g -> hinzufuegenButton.setStyle("-fx-border-color: default;"));
             pause.play();
         };
     }
 
     private void removeItemFromList(ShoppingListItem shoppingListItem) {
-        service = new ShoppingManagementServiceImplementation(APPLICATION.getDatabaseConnector());
         service.delete(shoppingListItem);
         loadShoppingList();
     }
@@ -161,7 +155,7 @@ public class ShoppingManagementController extends SmartHousingController {
             loeschenButton.setStyle("-fx-border-color: red;");
         }
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
-        pause.setOnFinished(e -> loeschenButton.setStyle("-fx-border-color: grey;"));
+        pause.setOnFinished(e -> loeschenButton.setStyle("-fx-border-color: default;"));
         pause.play();
     }
 }

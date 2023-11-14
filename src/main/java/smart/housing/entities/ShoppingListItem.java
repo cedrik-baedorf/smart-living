@@ -31,18 +31,18 @@ public class ShoppingListItem {
      * Amount of the item
      */
     @Column(name = "amount")
-    private double anzahl;
+    private double amount;
 
     /**
      * unit of the amount
      */
     @Column(name = "unit")
-    private String einheit;
+    private String unit;
 
     public ShoppingListItem(String item, double anzahl, String einheit) {
         this.item = item;
-        this.anzahl = anzahl;
-        this.einheit = einheit;
+        this.amount = anzahl;
+        this.unit = einheit;
     }
 
     public ShoppingListItem(String item) {
@@ -63,20 +63,20 @@ public class ShoppingListItem {
         return item;
     }
 
-    public double getAnzahl() {
-        return anzahl;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setAnzahl(double anzahl) {
-        this.anzahl = anzahl;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
-    public String getEinheit() {
-        return einheit;
+    public String getUnit() {
+        return unit;
     }
 
-    public void setEinheit(String einheit) {
-        this.einheit = einheit;
+    public void setUnit(String einheit) {
+        this.unit = unit;
     }
 
     @Override

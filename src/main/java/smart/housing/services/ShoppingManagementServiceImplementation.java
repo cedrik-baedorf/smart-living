@@ -3,6 +3,8 @@ package smart.housing.services;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.ShoppingListItem;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 public class ShoppingManagementServiceImplementation implements ShoppingManagementService {
 
@@ -20,11 +22,11 @@ public class ShoppingManagementServiceImplementation implements ShoppingManageme
         ShoppingListItem existingItem = em.find(ShoppingListItem.class, shoppingListItem.getItem());
 
         if (existingItem != null) {
-            double newAnzahl = existingItem.getAnzahl() + shoppingListItem.getAnzahl();
-            existingItem.setAnzahl(newAnzahl);
+            double newAnzahl = existingItem.getAmount() + shoppingListItem.getAmount();
+            existingItem.setAmount(newAnzahl);
             em.merge(existingItem);
         } else {
-            System.out.println(shoppingListItem.getItem() + " " + shoppingListItem.getAnzahl());
+            System.out.println(shoppingListItem.getItem() + " " + shoppingListItem.getAmount());
             em.persist(shoppingListItem);
         }
         em.getTransaction().commit();
@@ -39,5 +41,16 @@ public class ShoppingManagementServiceImplementation implements ShoppingManageme
         em.remove(itemToBeRemoved);
         em.getTransaction().commit();
         em.close();
+    }
+
+    @Override
+    public List<ShoppingListItem> getItemList() {
+        EntityManager entityManager = databaseConnector.createEntityManager();
+        TypedQuery<ShoppingListItem> itemQuery = entityManager.createNamedQuery(ShoppingListItem.FIND_ALL, ShoppingListItem.class);
+        List<ShoppingListItem> itemList = itemQuery.getResultList();
+
+        entityManager.close();
+
+        return itemList;
     }
 }
