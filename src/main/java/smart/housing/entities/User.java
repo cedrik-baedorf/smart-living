@@ -120,6 +120,8 @@ public class User {
     }
 
     public UserRole getRole() {
+        if(this.role == null || this.role.isEmpty())
+            return null;
         UserRole role = UserRole.parseString(this.role);
         if(role != null)
             return role;

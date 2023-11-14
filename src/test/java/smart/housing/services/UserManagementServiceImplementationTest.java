@@ -104,6 +104,22 @@ public class UserManagementServiceImplementationTest {
     private User mockHighestRankedUser() {
         UserRole role = Mockito.mock(UserRole.class);
         Mockito.when(role.outranks(Mockito.any(UserRole.class))).thenReturn(true);
+        Mockito.when(role.outranks(null)).thenReturn(true);
+
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getRole()).thenReturn(role);
+
+        return user;
+    }
+
+    /**
+     * This method returns a mocked {@link User} object where
+     * <code>User.getRank().outranks(UserRole role)</code> always returns <code>false</code>
+     */
+    private User mockLowestRankedUser() {
+        UserRole role = Mockito.mock(UserRole.class);
+        Mockito.when(role.outranks(Mockito.any(UserRole.class))).thenReturn(false);
+        Mockito.when(role.outranks(null)).thenReturn(false);
 
         User user = Mockito.mock(User.class);
         Mockito.when(user.getRole()).thenReturn(role);
@@ -164,6 +180,18 @@ public class UserManagementServiceImplementationTest {
         inOrder.verify(entityManager).persist(persistedUser);
         inOrder.verify(entityTransaction).commit();
         inOrder.verify(entityManager).close();
+    }
+
+    @Test
+    public void testCreate_lowerRankThrowsException() {
+        DatabaseConnector databaseConnector = create_mockDatabaseConnector();
+        UserManagementService userManagementService = new UserManagementServiceImplementation(databaseConnector, mockLowestRankedUser());
+
+        HashAlgorithm hashAlgorithm = UserManagementServiceImplementation.HASH_ALGORITHM;
+
+        User persistedUser = new User("username", "password", hashAlgorithm);
+
+        assertThrowsExactly(UserManagementServiceException.class, () -> userManagementService.create(persistedUser));
     }
 
 }
