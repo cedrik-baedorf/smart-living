@@ -1,6 +1,5 @@
 package smart.housing.services;
 
-import net.bytebuddy.asm.Advice;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.User;
 import smart.housing.enums.UserRole;
@@ -33,9 +32,9 @@ public class UserManagementServiceImplementation implements UserManagementServic
     @Override
     public User login(String username, String password) {
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
-        if(username == null || username.length() == 0)
+        if(username == null || username.isEmpty())
             throw new UserManagementServiceException(String.format(MSG_LOGIN_EMPTY, "username"));
-        if(password == null || password.length() == 0)
+        if(password == null || password.isEmpty())
             throw new UserManagementServiceException(String.format(MSG_LOGIN_EMPTY, "password"));
         if(username.length() > User.USERNAME_LENGTH)
             throw new IncorrectCredentialsException(String.format(MSG_LOGIN_LENGTH, "username", User.USERNAME_LENGTH));
@@ -53,7 +52,7 @@ public class UserManagementServiceImplementation implements UserManagementServic
         if(user.getPassword() == null)
             throw new UserManagementServiceException(String.format(MSG_CREATE_NULL, "user.getPassword()"));
         if(USER == null)
-            throw new UserManagementServiceException("service must have a service user for this service")
+            throw new UserManagementServiceException("service must have a service user for this service");
         if(! USER.getRole().outranks(user.getRole()))
             throw new UserManagementServiceException(String.format(MSG_CREATE_LOWER_RANK, USER.getRole(), user.getRole()));
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();

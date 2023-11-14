@@ -148,7 +148,6 @@ public class LoginPageController extends SmartHousingController {
 
     private DatabaseConnector createDatabaseConnector() {
         Dialog<DatabaseConnector> dialog = new Dialog<>();
-        dialog.initOwner(APPLICATION.getPrimaryStage());
         dialog.setDialogPane(APPLICATION.loadFXML(DatabaseDialogController.VIEW_NAME, new DatabaseDialogController(dialog)));
 
         Optional<DatabaseConnector> result = dialog.showAndWait();

@@ -36,7 +36,7 @@ public class DatabaseConnectorImplementation implements DatabaseConnector {
         else
             throw new PropertyNotFoundException(missingProperty(USER_PROPERTY, "loginProperties"));
 
-        //load database uesr password
+        //load database user password
         if(dbAccessProperties.containsKey(PASSWORD_PROPERTY))
             loginProperties.put(PASSWORD_PROPERTY, dbAccessProperties.getProperty(PASSWORD_PROPERTY));
         else

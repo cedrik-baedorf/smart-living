@@ -1,9 +1,7 @@
--- --------------------------------------------------------
--- Host:                         127.0.0.1
--- Server version:               10.11.2-MariaDB - mariadb.org binary distribution
--- Server OS:                    Win64
--- HeidiSQL Version:             12.4.0.6659
--- --------------------------------------------------------
+/*
+    This sql file may be used to insert test data into the tables of database 'smart-living'.
+    Before inserting the test data, this script deletes all data from the tables.
+*/
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
@@ -20,7 +18,7 @@ USE `smart-living`;
 DELETE FROM `users`;
 INSERT INTO `users` (`username`, `password`, `last_name`, `first_name`, `role`) VALUES
 	('cbaedorf', '0000000000000000000000000000000000000000000000000000001216985755', 'Baedorf', 'Cedrik', 'ADMIN'),
-	('nrg', '0000000000000000000000000000000000000000000000000000001216985755', 'Gossner', 'Anna Maria', 'USER'),
+	('nrg', '0000000000000000000000000000000000000000000000000000001216985755', 'Gossner', 'Anna Maria', 'SUPREME'),
 	('ivano', '0000000000000000000000000000000000000000000000000000001216985755', 'Sachau', 'Ivan', 'USER'),
 	('lienchen', '0000000000000000000000000000000000000000000000000000001216985755', 'Pradel', 'Alina', 'USER'),
 	('heyden', '0000000000000000000000000000000000000000000000000000001216985755', 'Heyden', 'Tom', 'USER');
