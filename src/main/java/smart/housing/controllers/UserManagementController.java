@@ -46,7 +46,7 @@ public class UserManagementController extends SmartHousingController {
      */
     public UserManagementController(SmartLivingApplication application) {
         this.APPLICATION = application;
-        USER_MANAGEMENT_SERVICE = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
+        USER_MANAGEMENT_SERVICE = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector(), APPLICATION.getUser());
     }
 
     public void initialize() {
@@ -96,7 +96,7 @@ public class UserManagementController extends SmartHousingController {
         Dialog<Boolean> dialog = new Dialog<>();
         dialog.setDialogPane(APPLICATION.loadFXML(
                 DeleteDialogController.VIEW_NAME,
-                new DeleteDialogController(APPLICATION, dialog, userToBeDeleted)
+                new DeleteDialogController(USER_MANAGEMENT_SERVICE, dialog, userToBeDeleted)
         ));
         dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
     }
@@ -111,7 +111,7 @@ public class UserManagementController extends SmartHousingController {
         Dialog<Boolean> dialog = new Dialog<>();
         dialog.setDialogPane(APPLICATION.loadFXML(
                 ModifyDialogController.VIEW_NAME,
-                new ModifyDialogController(APPLICATION, dialog, userToBeModified)
+                new ModifyDialogController(USER_MANAGEMENT_SERVICE, dialog, userToBeModified)
         ));
         dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
     }
@@ -125,7 +125,7 @@ public class UserManagementController extends SmartHousingController {
         Dialog<Boolean> dialog = new Dialog<>();
         dialog.setDialogPane(APPLICATION.loadFXML(
                 CreateDialogController.VIEW_NAME,
-                new CreateDialogController(APPLICATION, dialog)
+                new CreateDialogController(USER_MANAGEMENT_SERVICE, dialog)
         ));
         dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
     }

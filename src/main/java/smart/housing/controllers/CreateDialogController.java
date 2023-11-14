@@ -30,7 +30,7 @@ public class CreateDialogController extends DialogController {
      */
     public static final String VIEW_NAME = "create_dialog.fxml";
 
-    private final SmartLivingApplication APPLICATION;
+    private final UserManagementService SERVICE;
 
     private final Dialog<Boolean> DIALOG;
 
@@ -45,8 +45,8 @@ public class CreateDialogController extends DialogController {
      * instance belongs to
      * @param dialog Dialog to this <code>DialogPane</code>
      */
-    public CreateDialogController(SmartLivingApplication application, Dialog<Boolean> dialog) {
-        this.APPLICATION = application;
+    public CreateDialogController(UserManagementService service, Dialog<Boolean> dialog) {
+        this.SERVICE = service;
         this.DIALOG = dialog;
     }
 
@@ -61,10 +61,14 @@ public class CreateDialogController extends DialogController {
         return VIEW_NAME;
     }
 
+    /**
+     * This method loads all roles into the <code>roleComboBox</code> the current user
+     * is allowed to assign to a new user
+     */
     private void loadRoles() {
         roleComboBox.setItems(FXCollections.observableList(Arrays.stream(UserRole.values())
-                .filter(userRole -> APPLICATION.getUser().getRole().outranks(userRole))
-                .toList()
+            .filter(userRole -> SERVICE.getServiceUser().getRole().outranks(userRole))
+            .toList()
         ));
         roleComboBox.setValue(UserRole.DEFAULT_ROLE);
     }
@@ -103,14 +107,12 @@ public class CreateDialogController extends DialogController {
         checkForEmptyInput(lastNameField.getText(), "surname");
         checkForEmptyInput(firstNameField.getText(), "first name");
 
-        UserManagementService userManagementService = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
-
-        User newUser = new User(usernameField.getText(), passwordField.getText(), userManagementService.getHashAlgorithm());
+        User newUser = new User(usernameField.getText(), passwordField.getText(), SERVICE.getHashAlgorithm());
         newUser.setLastName(lastNameField.getText());
         newUser.setFirstName(firstNameField.getText());
         newUser.setRole(roleComboBox.getValue());
 
-        userManagementService.create(newUser);
+        SERVICE.create(newUser);
         DIALOG.setResult(true);
     }
 

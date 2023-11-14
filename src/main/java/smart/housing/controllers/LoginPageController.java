@@ -124,7 +124,7 @@ public class LoginPageController extends SmartHousingController {
         errorMessage.clear();
 
         DatabaseConnector connector = APPLICATION.getDatabaseConnector();
-        UserManagementService userManagementService = new UserManagementServiceImplementation(connector);
+        UserManagementService userManagementService = new UserManagementServiceImplementation(connector, null);
         try {
             APPLICATION.setUser(userManagementService.login(username, password));
             APPLICATION.setDatabaseConnector(connector);

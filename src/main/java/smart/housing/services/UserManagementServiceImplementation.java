@@ -1,5 +1,6 @@
 package smart.housing.services;
 
+import net.bytebuddy.asm.Advice;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.User;
 import smart.housing.enums.UserRole;
@@ -15,15 +16,23 @@ public class UserManagementServiceImplementation implements UserManagementServic
 
     public static final HashAlgorithm HASH_ALGORITHM = HashAlgorithm.DEFAULT;
 
-    private final DatabaseConnector databaseConnector;
+    private final DatabaseConnector DATABASE_CONNECTOR;
 
-    public UserManagementServiceImplementation(DatabaseConnector databaseConnector) {
-        this.databaseConnector = databaseConnector;
+    private final User USER;
+
+    /**
+     * Constructor takes two arguments for this service to function properly.
+     * @param databaseConnector connector to the database to be used
+     * @param user user that is using this service
+     */
+    public UserManagementServiceImplementation(DatabaseConnector databaseConnector, User user) {
+        this.DATABASE_CONNECTOR = databaseConnector;
+        this.USER = user;
     }
 
     @Override
     public User login(String username, String password) {
-        EntityManager entityManager = databaseConnector.createEntityManager();
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
         if(username == null || username.length() == 0)
             throw new UserManagementServiceException(String.format(MSG_LOGIN_EMPTY, "username"));
         if(password == null || password.length() == 0)
@@ -43,7 +52,11 @@ public class UserManagementServiceImplementation implements UserManagementServic
             throw new UserManagementServiceException(String.format(MSG_CREATE_NULL, "User.class"));
         if(user.getPassword() == null)
             throw new UserManagementServiceException(String.format(MSG_CREATE_NULL, "user.getPassword()"));
-        EntityManager entityManager = databaseConnector.createEntityManager();
+        if(USER == null)
+            throw new UserManagementServiceException("service must have a service user for this service")
+        if(! USER.getRole().outranks(user.getRole()))
+            throw new UserManagementServiceException(String.format(MSG_CREATE_LOWER_RANK, USER.getRole(), user.getRole()));
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
         if(entityManager.find(User.class, user.getUsername()) != null)
             throw new UserManagementServiceException(String.format(MSG_CREATE_USERNAME_EXISTS, user.getUsername()));
         entityManager.getTransaction().begin();
@@ -54,7 +67,7 @@ public class UserManagementServiceImplementation implements UserManagementServic
 
     @Override
     public void delete(String username, String password) {
-        EntityManager entityManager = databaseConnector.createEntityManager();
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
         User userToBeDeleted = entityManager.find(User.class, username);
         if(HASH_ALGORITHM.hash(password).equals(userToBeDeleted.getPassword())) {
             entityManager.getTransaction().begin();
@@ -67,8 +80,23 @@ public class UserManagementServiceImplementation implements UserManagementServic
     }
 
     @Override
+    public void modify(String username, String password, User updatedUser) {
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
+        User userToBeModified = this.login(username, password);
+
+        entityManager.getTransaction().begin();
+        userToBeModified.setFirstName(updatedUser.getFirstName());
+        userToBeModified.setLastName(updatedUser.getLastName());
+        if(updatedUser.getPassword() != null && ! updatedUser.getPassword().isEmpty())
+            userToBeModified.setPasswordHash(updatedUser.getPassword());
+        userToBeModified.setRole(updatedUser.getRole());
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+    @Override
     public List<User> getUsers() {
-        EntityManager entityManager = databaseConnector.createEntityManager();
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
         List<User> userList = entityManager.createNamedQuery(User.FIND_ALL, User.class).getResultList();
         entityManager.close();
         return userList;
@@ -86,4 +114,10 @@ public class UserManagementServiceImplementation implements UserManagementServic
     public HashAlgorithm getHashAlgorithm() {
         return HASH_ALGORITHM;
     }
+
+    @Override
+    public User getServiceUser() {
+        return this.USER;
+    }
+
 }

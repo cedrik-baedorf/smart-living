@@ -1,9 +1,12 @@
-package smart.housing.database;
+package smart.housing.services;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InOrder;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.User;
+import smart.housing.enums.UserRole;
 import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.security.HashAlgorithm;
@@ -44,7 +47,7 @@ public class UserManagementServiceImplementationTest {
         String username = "unknown";
         String password = "password";
 
-        UserManagementService userManagementService = new UserManagementServiceImplementation(login_mockDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(login_mockDatabaseConnector(), null);
 
         assertThrowsExactly(IncorrectCredentialsException.class, () -> userManagementService.login(username, password));
     }
@@ -59,7 +62,7 @@ public class UserManagementServiceImplementationTest {
         String username = "username";
         String password = "12345678";
 
-        UserManagementService userManagementService = new UserManagementServiceImplementation(login_mockDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(login_mockDatabaseConnector(), null);
 
         assertThrowsExactly(IncorrectCredentialsException.class, () -> userManagementService.login(username, password));
     }
@@ -74,7 +77,7 @@ public class UserManagementServiceImplementationTest {
         String username = "username";
         String password = "password";
 
-        UserManagementService userManagementService = new UserManagementServiceImplementation(login_mockDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(login_mockDatabaseConnector(), null);
 
         User expectedUser = new User(username, password, UserManagementServiceImplementation.HASH_ALGORITHM);
 
@@ -98,11 +101,25 @@ public class UserManagementServiceImplementationTest {
     }
 
     /**
+     * This method returns a mocked {@link User} object where
+     * <code>User.getRank().outranks(UserRole role)</code> always returns <code>true</code>
+     */
+    private User mockHighestRankedUser() {
+        UserRole role = Mockito.mock(UserRole.class);
+        Mockito.when(role.outranks(Mockito.any(UserRole.class))).thenReturn(true);
+
+        User user = Mockito.mock(User.class);
+        Mockito.when(user.getRole()).thenReturn(role);
+
+        return user;
+    }
+
+    /**
      * Test <code>create(User user): void</code> method with parameter <code>user = null</code>
      */
     @Test
     public void testCreate_userIsNull() {
-        UserManagementService userManagementService = new UserManagementServiceImplementation(create_mockDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(create_mockDatabaseConnector(), mockHighestRankedUser());
 
         assertThrowsExactly(UserManagementServiceException.class, () -> userManagementService.create(null));
     }
@@ -112,7 +129,7 @@ public class UserManagementServiceImplementationTest {
      */
     @Test
     public void testCreate_usernameAlreadyExists() {
-        UserManagementService userManagementService = new UserManagementServiceImplementation(create_mockDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(create_mockDatabaseConnector(), mockHighestRankedUser());
 
         assertThrowsExactly(UserManagementServiceException.class, () -> userManagementService.create(new User("standard")));
     }
@@ -122,7 +139,7 @@ public class UserManagementServiceImplementationTest {
      */
     @Test
     public void testCreate_passwordEqualNull() {
-        UserManagementService userManagementService = new UserManagementServiceImplementation(create_mockDatabaseConnector());
+        UserManagementService userManagementService = new UserManagementServiceImplementation(create_mockDatabaseConnector(), mockHighestRankedUser());
 
         assertThrowsExactly(UserManagementServiceException.class, () -> userManagementService.create(new User("standard")));
     }
@@ -133,7 +150,7 @@ public class UserManagementServiceImplementationTest {
     @Test
     public void testCreate_persistCorrectUser() {
         DatabaseConnector databaseConnector = create_mockDatabaseConnector();
-        UserManagementService userManagementService = new UserManagementServiceImplementation(databaseConnector);
+        UserManagementService userManagementService = new UserManagementServiceImplementation(databaseConnector, mockHighestRankedUser());
 
         HashAlgorithm hashAlgorithm = UserManagementServiceImplementation.HASH_ALGORITHM;
 

@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface UserManagementService {
 
+    String MSG_CREATE_LOWER_RANK = "Role %s of current user is not able to create user with role %s";
     String MSG_LOGIN_EMPTY = "Login failed using empty %s property";
     String MSG_LOGIN_LENGTH = "Length of %s cannot be longer that %s characters";
     String MSG_LOGIN_FAILED = "Login failed for username '%s'";
@@ -32,7 +33,8 @@ public interface UserManagementService {
      *  its <i>user</i> is not equal to <code>null</code>,
      *  its <i>username</i> does not exist in the database
      *  its <i>password</i> is not equal to <code>null</code>
-     * Otherwise, this method will throw a <code>LoginServiceException</code>
+     *  its <i>role</i> is not ranked higher than role of <code>this.USER</code>
+     * Otherwise, this method will throw a {@link UserManagementServiceException}
      * @param user user to be persisted in the database
      */
     void create(User user) throws UserManagementServiceException;
@@ -42,11 +44,13 @@ public interface UserManagementService {
      * The <code>{@link User}</code> to be deleted is determined by the <code>username</code>
      * parameter provided in the method signature. The user shall only be deleted if the
      * <code>password</code> provided matches the password in the database.
-     * Otherwise, this method will throw a <code>LoginServiceException</code>
+     * Otherwise, this method will throw a {@link UserManagementServiceException}
      * @param username username of the user that shall be deleted
      * @param password un-hashed password belonging to the username
      */
     void delete(String username, String password) throws UserManagementServiceException;
+
+    void modify(String username, String password, User updateUser) throws UserManagementServiceException;
 
     /**
      * This method shall return all <code>{@link User}</code> objects from the database
@@ -67,5 +71,11 @@ public interface UserManagementService {
     List<User> getUsers(UserRole... roles);
 
     HashAlgorithm getHashAlgorithm();
+
+    /**
+     * Getter method for this.USER
+     * @return {@link User} object related to this service
+     */
+    User getServiceUser();
 
 }

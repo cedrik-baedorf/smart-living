@@ -89,6 +89,8 @@ public class User {
         this.password = algorithm.hash(password);
     }
 
+    public void setPasswordHash(String passwordHash) { this.password = passwordHash; }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
