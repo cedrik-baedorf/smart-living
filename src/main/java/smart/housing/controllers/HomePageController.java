@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.Pane;
 import smart.housing.SmartLivingApplication;
+import smart.housing.services.UserManagementService;
 import smart.housing.ui.StyledTabPane;
 
 /**
@@ -20,6 +21,8 @@ public class HomePageController extends SmartHousingController {
     public static final String VIEW_NAME = "home_page.fxml";
 
     private final SmartLivingApplication APPLICATION;
+
+    private final UserManagementService USER_MANAGEMENT_SERVICE;
 
     private SmartHousingController
         userManagementController, taskManagementController,
@@ -40,9 +43,14 @@ public class HomePageController extends SmartHousingController {
      * Constructor for this controller passing the <code>Application</code> object this
      * instance belongs to
      * @param application Application calling the constructor
+     * @param userManagementService Service to manage the users
      */
-    public HomePageController(SmartLivingApplication application) {
+    public HomePageController(
+        SmartLivingApplication application,
+        UserManagementService userManagementService
+    ) {
         this.APPLICATION = application;
+        this.USER_MANAGEMENT_SERVICE = userManagementService;
     }
 
     public void initialize() {
@@ -58,7 +66,7 @@ public class HomePageController extends SmartHousingController {
 
     public void loadUserManagement() {
         userManagement.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
-        userManagementController = new UserManagementController(APPLICATION);
+        userManagementController = new UserManagementController(APPLICATION, USER_MANAGEMENT_SERVICE);
         loadSubPane(userManagement, APPLICATION.loadFXML(UserManagementController.VIEW_NAME, userManagementController));
     }
 

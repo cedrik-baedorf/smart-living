@@ -16,13 +16,12 @@ import smart.housing.database.DatabaseConnector;
 import smart.housing.database.DatabaseConnectorImplementation;
 import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.exceptions.UserManagementServiceException;
-import smart.housing.services.UserManagementService;
-import smart.housing.services.UserManagementServiceImplementation;
+import smart.housing.services.LoginService;
+import smart.housing.services.LoginServiceImplementation;
 import smart.housing.ui.BackgroundStackPane;
 import smart.housing.ui.ErrorMessage;
 import smart.housing.ui.StyledPasswordField;
 import smart.housing.ui.StyledTextField;
-
 import java.util.Optional;
 
 /**
@@ -43,6 +42,8 @@ public class LoginPageController extends SmartHousingController {
     private static final String BACKGROUND_IMAGE = "smart/housing/ui/images/login_page_background.jpg";
 
     private final SmartLivingApplication APPLICATION;
+
+    private LoginService service;
 
     @FXML BackgroundStackPane backgroundPane;
     @FXML GridPane gridPane;
@@ -70,6 +71,7 @@ public class LoginPageController extends SmartHousingController {
             else
                 Platform.exit();
         }
+        service = new LoginServiceImplementation(APPLICATION.getDatabaseConnector());
         setBackgroundImage();
         bindGridPaneProperties();
         errorMessage.clear();
@@ -123,12 +125,8 @@ public class LoginPageController extends SmartHousingController {
     private void attemptLogin(String username, String password) {
         errorMessage.clear();
 
-        DatabaseConnector connector = APPLICATION.getDatabaseConnector();
-        UserManagementService userManagementService = new UserManagementServiceImplementation(connector, null);
         try {
-            APPLICATION.setUser(userManagementService.login(username, password));
-            APPLICATION.setDatabaseConnector(connector);
-            APPLICATION.setRoot(HomePageController.VIEW_NAME, new HomePageController(APPLICATION));
+            APPLICATION.setRoot(HomePageController.VIEW_NAME, new HomePageController(APPLICATION, service.serviceLogin(username, password)));
         } catch (IncorrectCredentialsException exception) {
             errorMessage.displayError("Invalid Credentials", 5);
         } catch (UserManagementServiceException exception) {

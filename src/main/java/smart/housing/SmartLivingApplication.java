@@ -88,15 +88,9 @@ public class SmartLivingApplication extends Application {
         this.connector = connector;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public DatabaseConnector getDatabaseConnector() {
         return connector;
     }
-
-    public User getUser() { return user; }
 
     public Stage getPrimaryStage() {
         return stage;

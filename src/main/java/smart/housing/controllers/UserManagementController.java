@@ -8,7 +8,6 @@ import javafx.scene.input.MouseEvent;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.User;
 import smart.housing.services.UserManagementService;
-import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.ui.BackgroundStackPane;
 import smart.housing.ui.StyledTableView;
 
@@ -33,7 +32,7 @@ public class UserManagementController extends SmartHousingController {
 
     private final SmartLivingApplication APPLICATION;
 
-    private final UserManagementService USER_MANAGEMENT_SERVICE;
+    private final UserManagementService SERVICE;
 
     @FXML public BackgroundStackPane backgroundPane;
     @FXML public StyledTableView<User> userTable;
@@ -44,9 +43,9 @@ public class UserManagementController extends SmartHousingController {
      * instance belongs to
      * @param application Application calling the constructor
      */
-    public UserManagementController(SmartLivingApplication application) {
+    public UserManagementController(SmartLivingApplication application, UserManagementService service) {
         this.APPLICATION = application;
-        USER_MANAGEMENT_SERVICE = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector(), APPLICATION.getUser());
+        this.SERVICE = service;
     }
 
     public void initialize() {
@@ -65,7 +64,7 @@ public class UserManagementController extends SmartHousingController {
     }
 
     private void loadUsers() {
-        List<User> userList = USER_MANAGEMENT_SERVICE.getUsers();
+        List<User> userList = SERVICE.getUsers();
         userTable.setItems(FXCollections.observableList(userList));
         userTable.refresh();
     }
@@ -87,7 +86,7 @@ public class UserManagementController extends SmartHousingController {
     public void _userTable_onMouseClicked(MouseEvent mouseEvent) {
         mouseEvent.consume();
         User selectedUser = userTable.getSelectionModel().getSelectedItem();
-        initializeButtons(selectedUser != null && APPLICATION.getUser().getRole().outranks(selectedUser.getRole()));
+        initializeButtons(selectedUser != null && SERVICE.getServiceUser().getRole().outranks(selectedUser.getRole()));
     }
 
     public void _deleteButton_onAction(ActionEvent event) {
@@ -100,7 +99,7 @@ public class UserManagementController extends SmartHousingController {
         Dialog<Boolean> dialog = new Dialog<>();
         dialog.setDialogPane(APPLICATION.loadFXML(
                 DeleteDialogController.VIEW_NAME,
-                new DeleteDialogController(USER_MANAGEMENT_SERVICE, dialog, userToBeDeleted)
+                new DeleteDialogController(SERVICE, dialog, userToBeDeleted)
         ));
         dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
     }
@@ -115,7 +114,7 @@ public class UserManagementController extends SmartHousingController {
         Dialog<Boolean> dialog = new Dialog<>();
         dialog.setDialogPane(APPLICATION.loadFXML(
                 ModifyDialogController.VIEW_NAME,
-                new ModifyDialogController(USER_MANAGEMENT_SERVICE, dialog, userToBeModified)
+                new ModifyDialogController(SERVICE, dialog, userToBeModified)
         ));
         dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
     }
@@ -129,7 +128,7 @@ public class UserManagementController extends SmartHousingController {
         Dialog<Boolean> dialog = new Dialog<>();
         dialog.setDialogPane(APPLICATION.loadFXML(
                 CreateDialogController.VIEW_NAME,
-                new CreateDialogController(USER_MANAGEMENT_SERVICE, dialog)
+                new CreateDialogController(SERVICE, dialog)
         ));
         dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
     }

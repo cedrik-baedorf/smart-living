@@ -15,6 +15,8 @@ public class UserManagementServiceImplementation implements UserManagementServic
 
     public static final HashAlgorithm HASH_ALGORITHM = HashAlgorithm.DEFAULT;
 
+    private final LoginService LOGIN_SERVICE;
+
     private final DatabaseConnector DATABASE_CONNECTOR;
 
     private final User USER;
@@ -26,23 +28,8 @@ public class UserManagementServiceImplementation implements UserManagementServic
      */
     public UserManagementServiceImplementation(DatabaseConnector databaseConnector, User user) {
         this.DATABASE_CONNECTOR = databaseConnector;
+        this.LOGIN_SERVICE = new LoginServiceImplementation(DATABASE_CONNECTOR);
         this.USER = user;
-    }
-
-    @Override
-    public User login(String username, String password) {
-        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
-        if(username == null || username.isEmpty())
-            throw new UserManagementServiceException(String.format(MSG_LOGIN_EMPTY, "username"));
-        if(password == null || password.isEmpty())
-            throw new UserManagementServiceException(String.format(MSG_LOGIN_EMPTY, "password"));
-        if(username.length() > User.USERNAME_LENGTH)
-            throw new IncorrectCredentialsException(String.format(MSG_LOGIN_LENGTH, "username", User.USERNAME_LENGTH));
-        User user = entityManager.find(User.class, username);
-        if(user == null || ! user.getPassword().equals(HASH_ALGORITHM.hash(password)))
-            throw new IncorrectCredentialsException(String.format(MSG_LOGIN_FAILED, username));
-        entityManager.close();
-        return user;
     }
 
     @Override
@@ -66,22 +53,28 @@ public class UserManagementServiceImplementation implements UserManagementServic
 
     @Override
     public void delete(String username, String password) {
-        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
-        User userToBeDeleted = entityManager.find(User.class, username);
-        if(HASH_ALGORITHM.hash(password).equals(userToBeDeleted.getPassword())) {
-            entityManager.getTransaction().begin();
-            entityManager.remove(userToBeDeleted);
-            entityManager.getTransaction().commit();
-            entityManager.close();
-        } else {
-            throw new IncorrectCredentialsException(String.format(MSG_DELETE_UNSUCCESSFUL, username));
+        User userToBeDeleted;
+        try {
+            userToBeDeleted = LOGIN_SERVICE.userLogin(username, password);
+        } catch (IncorrectCredentialsException exception) {
+            throw new IncorrectCredentialsException(String.format(MSG_UNSUCCESSFUL, "delete", username));
         }
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.remove(userToBeDeleted);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 
     @Override
     public void modify(String username, String password, User updatedUser) {
+        User userToBeModified;
+        try {
+            userToBeModified = LOGIN_SERVICE.userLogin(username, password);
+        } catch (IncorrectCredentialsException exception) {
+            throw new IncorrectCredentialsException(String.format(MSG_UNSUCCESSFUL, "delete", username));
+        }
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
-        User userToBeModified = this.login(username, password);
 
         entityManager.getTransaction().begin();
         userToBeModified.setFirstName(updatedUser.getFirstName());
