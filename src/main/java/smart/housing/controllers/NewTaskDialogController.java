@@ -15,10 +15,9 @@ import smart.housing.services.TaskManagementServiceImplementation;
 import smart.housing.services.UserManagementService;
 import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.ui.ErrorMessage;
-import smart.housing.ui.StyledComboBox;
+import smart.housing.ui.StyledCheckComboBox;
 import smart.housing.ui.StyledTextField;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -39,8 +38,8 @@ public class NewTaskDialogController extends DialogController {
 
     @FXML DialogPane dialogPane;
     @FXML StyledTextField taskNameField;
-    @FXML DatePicker duedatePicker;
-    @FXML StyledComboBox<User> assigneeComboBox;
+    @FXML DatePicker dueDatePicker;
+    @FXML StyledCheckComboBox<User> assigneeComboBox;
     @FXML ErrorMessage errorMessage;
 
     /**
@@ -75,8 +74,8 @@ public class NewTaskDialogController extends DialogController {
         try {
             createTask();
             taskNameField.clear();
-            duedatePicker.setValue(null);
-            assigneeComboBox.getSelectionModel().clearSelection();
+            dueDatePicker.setValue(null);
+            assigneeComboBox.getCheckModel().clearChecks();
         } catch (EmptyFieldException exception) {
             errorMessage.displayError(exception.getMessage(), 5);
         } catch (Exception e) {
@@ -90,8 +89,8 @@ public class NewTaskDialogController extends DialogController {
         checkForEmptyInput(taskNameField.getText(), "taskName");
 
         Task newTask = new Task(taskNameField.getText());
-        LocalDate dueDate = duedatePicker.getValue();
-        newTask.setDueDate(dueDate);
+        newTask.setDueDate(dueDatePicker.getValue());
+        assigneeComboBox.getCheckModel().getCheckedItems().forEach(newTask::addAssignee);
 
         TaskManagementService taskManagementService = new TaskManagementServiceImplementation(APPLICATION.getDatabaseConnector());
 
