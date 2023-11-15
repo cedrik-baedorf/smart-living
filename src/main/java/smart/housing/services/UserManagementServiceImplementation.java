@@ -61,6 +61,7 @@ public class UserManagementServiceImplementation implements UserManagementServic
         }
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
         entityManager.getTransaction().begin();
+        userToBeDeleted = entityManager.merge(userToBeDeleted);
         entityManager.remove(userToBeDeleted);
         entityManager.getTransaction().commit();
         entityManager.close();
@@ -77,6 +78,7 @@ public class UserManagementServiceImplementation implements UserManagementServic
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
 
         entityManager.getTransaction().begin();
+        userToBeModified = entityManager.merge(userToBeModified);
         userToBeModified.setFirstName(updatedUser.getFirstName());
         userToBeModified.setLastName(updatedUser.getLastName());
         if(updatedUser.getPassword() != null && ! updatedUser.getPassword().isEmpty())
