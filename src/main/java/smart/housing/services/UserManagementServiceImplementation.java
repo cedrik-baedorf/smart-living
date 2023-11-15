@@ -68,6 +68,22 @@ public class UserManagementServiceImplementation implements UserManagementServic
     }
 
     @Override
+    public void delete(User user) {
+        if(user == null)
+            throw new UserManagementServiceException("cannot delete user when user = null");
+        if(USER == null)
+            throw new UserManagementServiceException("cannot delete user " + user.getUsername() + "when this.USER = null");
+        if(! USER.getRole().outranks(user.getRole()))
+            throw new UserManagementServiceException("cannot delete user of rank " + user.getRole().getRoleName() + " since this.USER.getRank() = " + USER.getRole().getRoleName());
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
+        entityManager.getTransaction().begin();
+        user = entityManager.merge(user);
+        entityManager.remove(user);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
+
+    @Override
     public void modify(String username, String password, User updatedUser) {
         User userToBeModified;
         try {

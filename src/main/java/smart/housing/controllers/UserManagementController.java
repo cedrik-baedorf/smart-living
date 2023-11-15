@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.User;
+import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.services.UserManagementService;
 import smart.housing.ui.BackgroundStackPane;
 import smart.housing.ui.StyledTableView;
@@ -96,12 +97,16 @@ public class UserManagementController extends SmartHousingController {
 
     private void deleteSelectedUser() {
         User userToBeDeleted = userTable.getSelectionModel().getSelectedItem();
-        Dialog<Boolean> dialog = new Dialog<>();
-        dialog.setDialogPane(APPLICATION.loadFXML(
-                DeleteDialogController.VIEW_NAME,
-                new DeleteDialogController(SERVICE, dialog, userToBeDeleted)
-        ));
-        dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
+        try {
+            SERVICE.delete(userToBeDeleted);
+        } catch (UserManagementServiceException exception) {
+            Dialog<Boolean> dialog = new Dialog<>();
+            dialog.setDialogPane(APPLICATION.loadFXML(
+                    DeleteDialogController.VIEW_NAME,
+                    new DeleteDialogController(SERVICE, dialog, userToBeDeleted)
+            ));
+            dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
+        }
     }
 
     public void _modifyButton_onAction(ActionEvent event) {

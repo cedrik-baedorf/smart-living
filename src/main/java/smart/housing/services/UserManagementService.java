@@ -36,6 +36,8 @@ public interface UserManagementService {
      */
     void delete(String username, String password) throws UserManagementServiceException;
 
+    void delete(User user) throws UserManagementServiceException;
+
     void modify(String username, String password, User updateUser) throws UserManagementServiceException;
 
     /**

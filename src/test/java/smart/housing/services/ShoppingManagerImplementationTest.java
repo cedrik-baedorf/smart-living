@@ -2,9 +2,9 @@ package smart.housing.services;
 
 import org.junit.jupiter.api.Test;
 
-public class ShoppingListManagerImplementationTest {
+public class ShoppingManagerImplementationTest {
 
-    public ShoppingListServiceImplementation service;
+    public ShoppingManagementServiceImplementation service;
 
     @Test
     public void test_readList() {

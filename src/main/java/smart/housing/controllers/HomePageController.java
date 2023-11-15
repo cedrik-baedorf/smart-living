@@ -72,7 +72,7 @@ public class HomePageController extends SmartHousingController {
 
     public void loadTaskManagement() {
         taskManagement.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
-        taskManagementController = new TaskManagementController(APPLICATION);
+        taskManagementController = new TaskManagementController(APPLICATION, USER_MANAGEMENT_SERVICE);
         loadSubPane(taskManagement, APPLICATION.loadFXML(TaskManagementController.VIEW_NAME, taskManagementController));
     }
 
