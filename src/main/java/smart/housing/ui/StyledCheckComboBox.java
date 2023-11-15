@@ -9,4 +9,12 @@ public class StyledCheckComboBox<T> extends CheckComboBox<T> {
         this.getItems().setAll(items);
     }
 
+    public void setPromptText(String promptText) {
+
+    }
+
+    public String getPromptText() {
+        return null;
+    }
+
 }

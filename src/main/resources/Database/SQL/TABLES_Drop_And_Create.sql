@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `tasks` (
-   `task_id` INT NOT NULL,
+   `task_id` INT(11) AUTO_INCREMENT NOT NULL,
    `task_name` CHAR(32) NOT NULL,
    `description` CHAR(128) DEFAULT NULL,
    `due_date` DATE NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `assignments` (
-   `assignment_id` INT NOT NULL,
+   `assignment_id` INT(11) AUTO_INCREMENT NOT NULL,
    `task_id` INT NOT NULL,
    `username` CHAR(8) DEFAULT NULL,
    PRIMARY KEY (`assignment_id`),
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `shopping_list_items` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `expenses` (
-    `expense_id` INT NOT NULL,
+    `expense_id` INT(11) AUTO_INCREMENT NOT NULL,
     `creditor` VARCHAR(32) NOT NULL,
     `product` VARCHAR(32) NOT NULL,
     `cost` DECIMAL(6,2) NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `expenses` (
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `debitors_table` (
-    `debitors_table_id` INT NOT NULL,
+    `debitors_table_id` INT(11) AUTO_INCREMENT NOT NULL,
     `expense_id` INT NOT NULL,
     `debitor_username` CHAR(8) DEFAULT NULL,
     PRIMARY KEY (`debitors_table_id`),
