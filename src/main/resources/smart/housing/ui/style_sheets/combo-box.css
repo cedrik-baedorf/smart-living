@@ -32,7 +32,8 @@
 .combo-box .combo-box-popup .list-cell {
     -fx-text-fill: BLACK;                   /* Text color */
     -fx-background-radius: 15;              /* Corner radius */
-    -fx-padding: 0 5 0 5;                   /* Padding */
+    -fx-padding: 2 5 2 5;                   /* Padding */
+    -fx-background-insets: 2 0 2 0;         /* Inset to other cells */
 }
 
 /* Styles for list cells on hover */
