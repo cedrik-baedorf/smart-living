@@ -4,9 +4,19 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import smart.housing.SmartLivingApplication;
+import smart.housing.entities.Expense;
+import smart.housing.entities.Task;
 import smart.housing.entities.User;
 import smart.housing.services.BudgetManagementService;
 import smart.housing.services.BudgetManagementServiceImplementation;
+import smart.housing.ui.BackgroundStackPane;
+import smart.housing.ui.StyledCheckComboBox;
+import smart.housing.ui.StyledComboBox;
+import smart.housing.ui.StyledTableView;
+import org.controlsfx.control.CheckComboBox;
+import javafx.collections.ListChangeListener;
+
+import java.util.List;
 
 /**
  * Controller to view 'budget_management.fxml'
@@ -20,10 +30,25 @@ public class BudgetManagementController extends SmartHousingController {
      */
     public static final String VIEW_NAME = "budget_management.fxml";
 
+    private static final String BACKGROUND_IMAGE = "smart/housing/ui/images/budget_book_background.jpg";
+
     private final SmartLivingApplication APPLICATION;
 
+    private final BudgetManagementService BUDGET_SERVICE;
+
     @FXML
-    ChoiceBox<User> creditors;
+    public BackgroundStackPane budgetBackgroundPane;
+
+    @FXML
+    public StyledComboBox<User> creditors;
+
+    @FXML
+    public StyledCheckComboBox<User> debitors;
+
+    @FXML
+    public StyledTableView<Expense> expenseTable;
+
+
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -32,16 +57,36 @@ public class BudgetManagementController extends SmartHousingController {
      */
     public BudgetManagementController(SmartLivingApplication application) {
         this.APPLICATION = application;
+        this.BUDGET_SERVICE = new BudgetManagementServiceImplementation(APPLICATION.getDatabaseConnector());
     }
 
     public void initialize() {
+        setBackgroundImage();
         update();
+        // Set up listener for multiple selections
+        debitors.getCheckModel().getCheckedItems().addListener((ListChangeListener<? super User>) change -> {
+            while (change.next()) {
+                if (change.wasAdded()) {
+                    System.out.println("Selected Debitors: " + change.getAddedSubList());
+                } else if (change.wasRemoved()) {
+                    System.out.println("Deselected Debitors: " + change.getRemoved());
+                }
+            }
+        });
+    }
+
+    private void setBackgroundImage() {
+        budgetBackgroundPane.setBackgroundImage(BACKGROUND_IMAGE);
     }
 
     @Override
     public void update() {
         BudgetManagementService service = new BudgetManagementServiceImplementation(APPLICATION.getDatabaseConnector());
         creditors.setItems(FXCollections.observableList(service.getCurrentUsers()));
+
+        debitors.setItems(FXCollections.observableList(service.getCurrentUsers()));
+
+        expenseTable.setItems(FXCollections.observableList(BUDGET_SERVICE.getAllExpenses()));
     }
 
     public String getViewName() {

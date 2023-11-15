@@ -1,0 +1,28 @@
+.combo-box .combo-box-popup .list-view .box {
+    -fx-background-color: TRANSPARENT;
+    -fx-background-radius: 15;
+    -fx-padding: 1;
+    -fx-background-insets: 1;
+}
+
+.combo-box .combo-box-popup .list-view .list-cell:selected {
+    -fx-background-color: TRANSPARENT;
+    -fx-text-fill: BLACK
+}
+
+.combo-box .combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: BLACK;
+    -fx-text-fill: WHITE;
+}
+
+.combo-box .combo-box-popup .list-view .check-box .box .mark {
+    -fx-background-color: TRANSPARENT;
+}
+
+.combo-box .combo-box-popup .list-view .list-cell:hover .check-box:selected .box .mark {
+    -fx-background-color: WHITE;
+}
+
+.combo-box .combo-box-popup .list-view .list-cell .check-box:selected .box .mark {
+    -fx-background-color: BLACK;
+}

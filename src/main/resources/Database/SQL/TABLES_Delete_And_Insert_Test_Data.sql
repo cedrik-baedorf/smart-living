@@ -42,6 +42,21 @@ DELETE FROM shopping_list_items;
 INSERT INTO shopping_list_items (item, amount, unit) VALUES ('Chocolate', 2, 'kg');
 INSERT INTO shopping_list_items (item, amount, unit) VALUES ('Milk', 1, 'l');
 
+DELETE FROM `expenses`;
+INSERT INTO `expenses` (`expense_id`, `creditor`, `product`, `cost`) VALUES
+        (0, 'cbaedorf','Chocolate', '1.70'),
+        (1, 'nrg','Butter', '4.50'),
+        (2, 'ivano', 'Milk', '1.20');
+
+DELETE FROM `debitors_table`;
+INSERT INTO `debitors_table` (`debitors_table_id`, `expense_id`, `debitor_username`) VALUES
+        (0, 0, 'cbaedorf'),
+        (1, 1, 'nrg'),
+        (2, 2, 'ivano'),
+        (3, 2, 'lienchen'),
+        ( 4, 3, 'heyden');
+
+
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;

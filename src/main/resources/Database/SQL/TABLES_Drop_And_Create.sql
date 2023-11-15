@@ -16,7 +16,11 @@ USE `smart-living`;
 
 DROP TABLE IF EXISTS `assignments`;
 DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `shopping_list_items`;
 DROP TABLE IF EXISTS `tasks`;
+DROP TABLE IF EXISTS `expenses`;
+DROP table if exists `debitors_table`;
+
 
 CREATE TABLE IF NOT EXISTS `users` (
     `username` VARCHAR(8) NOT NULL,
@@ -28,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `tasks` (
-   `task_id` INT NOT NULL,
+   `task_id` INT(11) AUTO_INCREMENT NOT NULL,
    `task_name` CHAR(32) NOT NULL,
    `description` CHAR(128) DEFAULT NULL,
    `due_date` DATE NOT NULL,
@@ -37,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `tasks` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 CREATE TABLE IF NOT EXISTS `assignments` (
-   `assignment_id` INT NOT NULL,
+   `assignment_id` INT(11) AUTO_INCREMENT NOT NULL,
    `task_id` INT NOT NULL,
    `username` CHAR(8) DEFAULT NULL,
    PRIMARY KEY (`assignment_id`),
@@ -47,9 +51,27 @@ CREATE TABLE IF NOT EXISTS `assignments` (
 
 CREATE TABLE IF NOT EXISTS `shopping_list_items` (
     `item` VARCHAR(32) NOT NULL,
-    `amount` INT NOT NULL,
+    `amount` DECIMAL(6,2) NOT NULL,
     `unit` VARCHAR(2) NOT NULL,
     PRIMARY KEY (`item`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS `expenses` (
+    `expense_id` INT(11) AUTO_INCREMENT NOT NULL,
+    `creditor` VARCHAR(32) NOT NULL,
+    `product` VARCHAR(32) NOT NULL,
+    `cost` DECIMAL(6,2) NOT NULL,
+    PRIMARY KEY (`expense_id`),
+    CONSTRAINT `fk_creditor` FOREIGN KEY (`creditor`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE IF NOT EXISTS `debitors_table` (
+    `debitors_table_id` INT(11) AUTO_INCREMENT NOT NULL,
+    `expense_id` INT NOT NULL,
+    `debitor_username` CHAR(8) DEFAULT NULL,
+    PRIMARY KEY (`debitors_table_id`),
+    CONSTRAINT `fk_expense_id` FOREIGN KEY (`expense_id`) REFERENCES `expenses` (`expense_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    CONSTRAINT `fk_debitor_username` FOREIGN KEY (`debitor_username`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
