@@ -45,12 +45,26 @@ public class ShoppingManagementServiceImplementation implements ShoppingManageme
 
     @Override
     public List<ShoppingListItem> getItemList() {
-        EntityManager entityManager = databaseConnector.createEntityManager();
-        TypedQuery<ShoppingListItem> itemQuery = entityManager.createNamedQuery(ShoppingListItem.FIND_ALL, ShoppingListItem.class);
+        em = databaseConnector.createEntityManager();
+        TypedQuery<ShoppingListItem> itemQuery = em.createNamedQuery(ShoppingListItem.FIND_ALL, ShoppingListItem.class);
         List<ShoppingListItem> itemList = itemQuery.getResultList();
 
-        entityManager.close();
+        em.close();
 
         return itemList;
+    }
+
+    @Override
+    public void modifyItem(ShoppingListItem shoppingListItem, Double newAmount) {
+        em = databaseConnector.createEntityManager();
+        em.getTransaction().begin();
+
+        ShoppingListItem modifiedItem = em.find(ShoppingListItem.class,shoppingListItem.getItem());
+
+        if(modifiedItem != null)
+            modifiedItem.setAmount(newAmount);
+
+        em.getTransaction().commit();
+        em.close();
     }
 }
