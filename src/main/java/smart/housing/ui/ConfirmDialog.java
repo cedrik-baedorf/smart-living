@@ -33,7 +33,7 @@ public class ConfirmDialog extends Dialog<Boolean> {
 
         initializeActionListeners();
 
-        DialogPane dialogPane = new DialogPane();
+        BackgroundDialogPane dialogPane = new BackgroundDialogPane("smart/housing/ui/images/confirm_dialog_background.jpg");
         dialogPane.setContent(createBackgroundPane());
         this.setDialogPane(dialogPane);
     }
