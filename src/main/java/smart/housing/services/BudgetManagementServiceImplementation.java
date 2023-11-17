@@ -3,7 +3,6 @@ package smart.housing.services;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.Expense;
 import smart.housing.entities.User;
-import smart.housing.entities.Task;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -30,5 +29,14 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
         List<Expense> expenseList = entityManager.createNamedQuery(Expense.FIND_ALL, Expense.class).getResultList();
         entityManager.close();
         return expenseList;
+    }
+
+    @Override
+    public void create (Expense expense){
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(expense);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }

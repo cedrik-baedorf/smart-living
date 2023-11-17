@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `shopping_list_items`;
 DROP TABLE IF EXISTS `tasks`;
 DROP TABLE IF EXISTS `expenses`;
-DROP table if exists `debitors_table`;
+DROP TABLE IF EXISTS `debitor_mapping`;
 
 
 CREATE TABLE IF NOT EXISTS `users` (
@@ -58,20 +58,20 @@ CREATE TABLE IF NOT EXISTS `shopping_list_items` (
 
 CREATE TABLE IF NOT EXISTS `expenses` (
     `expense_id` INT(11) AUTO_INCREMENT NOT NULL,
-    `creditor` VARCHAR(32) NOT NULL,
+    `creditor_name` VARCHAR(8) NOT NULL,
     `product` VARCHAR(32) NOT NULL,
     `cost` DECIMAL(6,2) NOT NULL,
     PRIMARY KEY (`expense_id`),
-    CONSTRAINT `fk_creditor` FOREIGN KEY (`creditor`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT `fk_creditor` FOREIGN KEY (`creditor_name`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE IF NOT EXISTS `debitors_table` (
-    `debitors_table_id` INT(11) AUTO_INCREMENT NOT NULL,
-    `expense_id` INT NOT NULL,
-    `debitor_username` CHAR(8) DEFAULT NULL,
-    PRIMARY KEY (`debitors_table_id`),
+CREATE TABLE IF NOT EXISTS `debitor_mapping` (
+    `id` INT(11) AUTO_INCREMENT NOT NULL,
+    `expense_id` INT(11) NOT NULL,
+    `debitor_name` CHAR(8) NOT NULL,
+    PRIMARY KEY (`id`),
     CONSTRAINT `fk_expense_id` FOREIGN KEY (`expense_id`) REFERENCES `expenses` (`expense_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-    CONSTRAINT `fk_debitor_username` FOREIGN KEY (`debitor_username`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT `fk_debitor_name` FOREIGN KEY (`debitor_name`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
