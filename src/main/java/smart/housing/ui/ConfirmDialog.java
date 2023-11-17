@@ -61,9 +61,9 @@ public class ConfirmDialog extends Dialog<Boolean> {
         infoPane = createGridPane();
         infoPane.add(messageLabel, 0, 0);
 
-        errorPane = createGridPane()
+        errorPane = createGridPane();
 
-        GridPane backgroundPane = createGridPane()
+        GridPane backgroundPane = createGridPane();
         backgroundPane.add(infoPane, 0, 0);
         backgroundPane.add(buttonsPane, 0, 1);
         backgroundPane.add(errorPane, 0, 2);
@@ -76,6 +76,7 @@ public class ConfirmDialog extends Dialog<Boolean> {
         gridPane.setHgap(GAP);
         gridPane.setVgap(GAP);
         gridPane.setAlignment(Pos.CENTER);
+        return gridPane;
     }
 
     protected GridPane getInfoPane() {
