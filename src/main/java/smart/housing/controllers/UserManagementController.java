@@ -10,6 +10,8 @@ import smart.housing.entities.User;
 import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.services.UserManagementService;
 import smart.housing.ui.BackgroundStackPane;
+import smart.housing.ui.ConfirmDialog;
+import smart.housing.ui.ConfirmPasswordDialog;
 import smart.housing.ui.StyledTableView;
 
 import java.util.List;
@@ -98,7 +100,14 @@ public class UserManagementController extends SmartHousingController {
     private void deleteSelectedUser() {
         User userToBeDeleted = userTable.getSelectionModel().getSelectedItem();
         try {
-            SERVICE.delete(userToBeDeleted);
+            ConfirmPasswordDialog dialog = new ConfirmPasswordDialog(
+                "Confirm password to delete?", "Yes, Delete", "No, keep", SERVICE.getServiceUser(), SERVICE.getDatabaseConnector());
+            dialog.showAndWait().ifPresent(aBoolean -> {
+                if(aBoolean) {
+                    SERVICE.delete(userToBeDeleted);
+                    loadUsers();
+                }
+            });
         } catch (UserManagementServiceException exception) {
             Dialog<Boolean> dialog = new Dialog<>();
             dialog.setDialogPane(APPLICATION.loadFXML(

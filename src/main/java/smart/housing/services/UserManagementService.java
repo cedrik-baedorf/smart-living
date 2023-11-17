@@ -7,7 +7,7 @@ import smart.housing.security.HashAlgorithm;
 
 import java.util.List;
 
-public interface UserManagementService {
+public interface UserManagementService extends SmartLivingService {
 
     String MSG_CREATE_LOWER_RANK = "Role %s of current user is not able to create user with role %s";
     String MSG_CREATE_NULL = "Attempted to persist User but %s was null";

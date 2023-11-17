@@ -1,7 +1,8 @@
 /* Button, TextField, and PasswordField style */
 .button,
 .text-field,
-.password-field {
+.password-field,
+.label {
     -fx-background-color: WHITE;
     -fx-background-radius: 15;
     -fx-border-color: TRANSPARENT;

@@ -33,6 +33,11 @@ public class UserManagementServiceImplementation implements UserManagementServic
     }
 
     @Override
+    public DatabaseConnector getDatabaseConnector() {
+        return DATABASE_CONNECTOR;
+    }
+
+    @Override
     public void create(User user) {
         if(user == null)
             throw new UserManagementServiceException(String.format(MSG_CREATE_NULL, "User.class"));
