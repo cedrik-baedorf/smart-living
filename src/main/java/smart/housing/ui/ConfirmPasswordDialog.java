@@ -38,6 +38,7 @@ public class ConfirmPasswordDialog extends ConfirmDialog {
     private void initializePasswordField() {
         passwordField = new StyledPasswordField();
         passwordField.setPromptText("Password");
+        passwordField.setOnAction(event -> this.setConfirmClicked(true));
         passwordField.setStyle(StyledNode.UI_ELEMENT_STYLE_SHEET);
 
         errorMessage = new ErrorMessage();

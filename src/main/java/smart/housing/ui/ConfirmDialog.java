@@ -29,6 +29,11 @@ public class ConfirmDialog extends Dialog<Boolean> {
             new Image("smart/housing/ui/images/icon_confirm.png")
         );
 
+        this.getDialogPane().getScene().getWindow().setOnCloseRequest(event -> {
+            this.setResult(false);
+            this.hide();
+        });
+
         initializeObjects(messageText, confirmText, abortText);
 
         initializeActionListeners();
