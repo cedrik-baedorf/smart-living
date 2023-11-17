@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import smart.housing.ui.ErrorMessage?>
+
+<?import smart.housing.ui.StyledComboBox?>
+<?import smart.housing.ui.StyledButton?>
+<?import smart.housing.ui.StyledTextField?>
+<?import smart.housing.ui.StyledPasswordField?>
+<DialogPane fx:id="dialogPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="smart.housing.controllers.ModifyShoppingManagementDialogController" stylesheets="@style_sheets/style.css">
+    <content>
+        <GridPane alignment="CENTER">
+            <Label fx:id="itemField" text="Item" GridPane.rowIndex="0">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                </GridPane.margin>
+            </Label>
+            <HBox GridPane.rowIndex="1" spacing="5" alignment="BOTTOM_LEFT">
+                <StyledTextField fx:id="amountTextField" promptText="Amount" maxWidth="100"/>
+                <Label fx:id="unitField" text="Unit"/>
+            </HBox>
+            <StyledButton fx:id="modifyButton" onAction="#modifyItem" text="Modify" textAlignment="CENTER" GridPane.halignment="CENTER"
+                          GridPane.rowIndex="5" maxWidth="Infinity" buttonStyle="CONFIRM">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+                </GridPane.margin>
+            </StyledButton>
+        </GridPane>
+    </content>
+</DialogPane>
+

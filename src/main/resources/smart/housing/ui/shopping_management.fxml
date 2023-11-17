@@ -55,81 +55,55 @@
 
                         </VBox>
 
-                        <!-- Added space between sections -->
+                        <!-- Added space between sections-->
                         <Region HBox.hgrow="ALWAYS" />
-
+                        <VBox spacing="10">
+                            <StyledTableView fx:id="tableView" minHeight="200" minWidth="300.0">
+                                <columns>
+                                    <TableColumn text="Article" minWidth="500">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="item" />
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn text="amount" minWidth="50">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="amount" />
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn text="unit" minWidth="50">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="unit" />
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                </columns>
+                                <BorderPane.margin>
+                                    <Insets bottom="100.0" left="200.0" right="200.0" top="50.0" />
+                                </BorderPane.margin>
+                            </StyledTableView>
+                            <HBox spacing="20">
+                                <StyledButton fx:id="loeschenButton" text="Delete" onAction="#_deleteButton_onAction">
+                                    <font>
+                                        <Font size="10.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </StyledButton>
+                                <StyledButton fx:id="modifyButton" text="Modify" onAction="#_modifyButton_onAction">
+                                    <font>
+                                        <Font size="10.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets top="10.0" />
+                                    </VBox.margin>
+                                </StyledButton>
+                            </HBox>
+                        </VBox>
                         <!-- Right Side - Table Section -->
-                        <StyledTableView fx:id="tableView" minHeight="150.0" minWidth="300.0">
-                            <columns>
-                                <TableColumn text="Article" minWidth="500">
-                                    <cellValueFactory>
-                                        <PropertyValueFactory property="item" />
-                                    </cellValueFactory>
-                                </TableColumn>
-                                <TableColumn text="amount" minWidth="50">
-                                    <cellValueFactory>
-                                        <PropertyValueFactory property="amount" />
-                                    </cellValueFactory>
-                                </TableColumn>
-                                <TableColumn text="unit" minWidth="50">
-                                    <cellValueFactory>
-                                        <PropertyValueFactory property="unit" />
-                                    </cellValueFactory>
-                                </TableColumn>
-                            </columns>
-                            <BorderPane.margin>
-                                <Insets bottom="100.0" left="200.0" right="200.0" top="50.0" />
-                            </BorderPane.margin>
-                        </StyledTableView>
+
                     </HBox>
                 </content>
             </ScrollPane>
         </center>
     </BorderPane>
 </BackgroundStackPane>
-
-<!--
-<BackgroundStackPane prefHeight="889.0" prefWidth="1404.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.ShoppingManagementController" fx:id="backgroundPane">
-    <AnchorPane minHeight="0.0" minWidth="0.0" style=" -fx-background-color: TRANSPARENT;">
-        <children>
-            <StyledButton fx:id="hinzufuegenButton" layoutX="65.0" layoutY="210.0" mnemonicParsing="false" onAction="#_hinzufügenButton_onAction" text="Add to List" />
-            <Label fx:id="einkaufslisteLabel" layoutX="66.0" layoutY="40.0" prefHeight="17.0" prefWidth="145.0" text="Einkaufsliste">
-                <font>
-                    <Font name="System Bold" size="18.0" />
-                </font>
-            </Label>
-            <GridPane layoutX="65.0" layoutY="100.0">
-                <StyledTextField fx:id="artikelTextField" promptText="Item" GridPane.rowIndex="0"/>
-                <GridPane GridPane.rowIndex="1">
-                    <StyledTextField fx:id="anzahlField" promptText="Amount" GridPane.columnIndex="0"/>
-                    <StyledComboBox fx:id="einheitComboBox" layoutX="161.0" layoutY="158.0" promptText="Unit" GridPane.columnIndex="1"/>
-                </GridPane>
-            </GridPane>
-            <StyledButton fx:id="loeschenButton" layoutX="351.0" layoutY="546.0" mnemonicParsing="false" onAction="#_deleteButton_onAction" text="Delete" />
-            <StyledTableView fx:id="tableView" layoutX="351.0" layoutY="78.0">
-                <columns>
-                    <TableColumn text="Article" minWidth="500">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="item" />
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn text="amount" minWidth="50">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="amount" />
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn text="unit" minWidth="50">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="unit" />
-                        </cellValueFactory>
-                    </TableColumn>
-                </columns>
-            </StyledTableView>
-            <StyledButton fx:id="loeschenButton1" layoutX="866.0" layoutY="547.0" mnemonicParsing="false" onAction="#_deleteButton_onAction" text="zu csv exportieren" />
-        </children>
-    </AnchorPane>
-    <BackgroundStackPane.margin>
-        <Insets bottom="50.0" left="100.0" right="100.0" top="50.0" />
-    </BackgroundStackPane.margin>
-</BackgroundStackPane>
--->
