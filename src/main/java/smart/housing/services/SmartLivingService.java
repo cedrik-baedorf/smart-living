@@ -4,6 +4,6 @@ import smart.housing.database.DatabaseConnector;
 
 public interface SmartLivingService {
 
-    public DatabaseConnector getDatabaseConnector();
+    DatabaseConnector getDatabaseConnector();
 
 }

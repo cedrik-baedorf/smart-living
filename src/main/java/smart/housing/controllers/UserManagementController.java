@@ -10,7 +10,6 @@ import smart.housing.entities.User;
 import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.services.UserManagementService;
 import smart.housing.ui.BackgroundStackPane;
-import smart.housing.ui.ConfirmDialog;
 import smart.housing.ui.ConfirmPasswordDialog;
 import smart.housing.ui.StyledTableView;
 
