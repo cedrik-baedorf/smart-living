@@ -31,20 +31,15 @@ public class Expense implements Serializable {
      */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "debitors_table",
+            name = "debitor_mapping",
             joinColumns = @JoinColumn(name = "expense_id"),
-            inverseJoinColumns = @JoinColumn(name = "debitor_username")
+            inverseJoinColumns = @JoinColumn(name = "debitor_name")
     )
     private Set<User> debitors;
 
-    @Column(name = "creditor", length = 32, nullable = false)
-    private String creditor;
-
-    /*
     @ManyToOne
-    @JoinColumn(name = "creditor", referencedColumnName = "username")
-    private User creditorUser;
-    */
+    @JoinColumn(name = "creditor_id")
+    private User creditor;
 
     @Column(name = "product", length = 32, nullable = false)
     private String product;
@@ -59,7 +54,7 @@ public class Expense implements Serializable {
         // Default constructor
     }
 
-    public Expense(Set<User> debitors, String creditor, String product, double cost) {
+    public Expense(Set<User> debitors, User creditor, String product, double cost) {
         this.debitors = debitors;
         this.creditor = creditor;
         // this.creditorUser = creditorUser;
@@ -93,11 +88,11 @@ public class Expense implements Serializable {
         debitors.remove(roommate);
     }
 
-    public String getCreditor() {
+    public User getCreditor() {
         return creditor;
     }
 
-    public void setCreditor(String creditor) {
+    public void setCreditor(User creditor) {
         this.creditor = creditor;
     }
 
