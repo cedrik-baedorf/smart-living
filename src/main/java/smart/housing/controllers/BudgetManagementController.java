@@ -1,19 +1,14 @@
 package smart.housing.controllers;
 
 import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.Expense;
-import smart.housing.entities.Task;
 import smart.housing.entities.User;
 import smart.housing.services.BudgetManagementService;
 import smart.housing.services.BudgetManagementServiceImplementation;
-import smart.housing.ui.BackgroundStackPane;
-import smart.housing.ui.StyledCheckComboBox;
-import smart.housing.ui.StyledComboBox;
-import smart.housing.ui.StyledTableView;
-import org.controlsfx.control.CheckComboBox;
+import smart.housing.ui.*;
 import javafx.collections.ListChangeListener;
 
 import java.util.List;
@@ -40,10 +35,19 @@ public class BudgetManagementController extends SmartHousingController {
     public BackgroundStackPane budgetBackgroundPane;
 
     @FXML
+    public StyledTextField productNameField;
+
+    @FXML
+    public StyledTextField costField;
+
+    @FXML
     public StyledComboBox<User> creditors;
 
     @FXML
     public StyledCheckComboBox<User> debitors;
+
+    @FXML
+    public StyledButton addExpenseButton;
 
     @FXML
     public StyledTableView<Expense> expenseTable;
@@ -89,8 +93,57 @@ public class BudgetManagementController extends SmartHousingController {
         expenseTable.setItems(FXCollections.observableList(BUDGET_SERVICE.getAllExpenses()));
     }
 
+    public void _addExpenseButton_onAction(ActionEvent event) {
+        event.consume();
+        addExpenseButtonClicked();
+    }
+
+    private void addExpenseButtonClicked() {
+    /*
+        try {
+            String product = productNameField.getText();
+            double cost = Double.parseDouble(costField.getText());
+            String creditor = creditors.getValue();
+            Set<User> debitorsSet = debitors.getItems();
+
+            if (product != null && !debitorsSet.isEmpty() && cost != 0.0) {
+
+                BUDGET_SERVICE.create(new Expense(debitorsSet, creditor, product, cost));
+
+                clearExpenses();
+                loadExpenseList();
+
+            } else {
+                System.out.println("Bitte füllen Sie alle Felder aus.");
+            }
+        } catch (Exception e) {
+            addExpenseButton.setStyle("-fx-border-color: red;");
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(g -> addExpenseButton.setStyle("-fx-border-color: default;"));
+            pause.play();
+        };
+    */
+    }
+
+    public void loadExpenseList() {
+        try {
+            List<Expense> expenses = BUDGET_SERVICE.getAllExpenses();
+            expenseTable.setItems(FXCollections.observableList(expenses));
+        } catch (Exception e) {
+            System.err.println("Error loading expense list: " + e.getMessage());
+        }
+    }
+
+
+    private void clearExpenses () {
+        productNameField.clear();
+        costField.clear();
+        creditors.getSelectionModel().clearSelection();
+        debitors.getCheckModel().clearChecks();
+    }
+
+
     public String getViewName() {
         return VIEW_NAME;
     }
 }
-

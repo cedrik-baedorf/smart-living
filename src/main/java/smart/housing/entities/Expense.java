@@ -40,6 +40,12 @@ public class Expense implements Serializable {
     @Column(name = "creditor", length = 32, nullable = false)
     private String creditor;
 
+    /*
+    @ManyToOne
+    @JoinColumn(name = "creditor", referencedColumnName = "username")
+    private User creditorUser;
+    */
+
     @Column(name = "product", length = 32, nullable = false)
     private String product;
 
@@ -56,6 +62,7 @@ public class Expense implements Serializable {
     public Expense(Set<User> debitors, String creditor, String product, double cost) {
         this.debitors = debitors;
         this.creditor = creditor;
+        // this.creditorUser = creditorUser;
         this.product = product;
         this.cost = cost;
     }
@@ -93,6 +100,16 @@ public class Expense implements Serializable {
     public void setCreditor(String creditor) {
         this.creditor = creditor;
     }
+
+    /*
+    public User getCreditorUser() {
+        return creditorUser;
+    }
+
+    public void setCreditorUser(User creditorUser) {
+        this.creditorUser = creditorUser;
+    }
+    */
 
     public String getProduct() {
         return product;

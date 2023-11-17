@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `shopping_list_items`;
 DROP TABLE IF EXISTS `tasks`;
 DROP TABLE IF EXISTS `expenses`;
-DROP table if exists `debitors_table`;
+DROP TABLE IF EXISTS `debitors_table`;
 
 
 CREATE TABLE IF NOT EXISTS `users` (
