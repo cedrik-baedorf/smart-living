@@ -38,7 +38,7 @@ public class Expense implements Serializable {
     private Set<User> debitors;
 
     @ManyToOne
-    @JoinColumn(name = "creditor_id")
+    @JoinColumn(name = "creditor_name")
     private User creditor;
 
     @Column(name = "product", length = 32, nullable = false)

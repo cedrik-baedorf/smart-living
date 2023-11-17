@@ -6,12 +6,15 @@ import javafx.fxml.FXML;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.Expense;
 import smart.housing.entities.User;
+import smart.housing.exceptions.BudgetManagementServiceException;
 import smart.housing.services.BudgetManagementService;
 import smart.housing.services.BudgetManagementServiceImplementation;
 import smart.housing.ui.*;
 import javafx.collections.ListChangeListener;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Controller to view 'budget_management.fxml'
@@ -99,30 +102,26 @@ public class BudgetManagementController extends SmartHousingController {
     }
 
     private void addExpenseButtonClicked() {
-    /*
         try {
             String product = productNameField.getText();
             double cost = Double.parseDouble(costField.getText());
-            String creditor = creditors.getValue();
-            Set<User> debitorsSet = debitors.getItems();
+            User selectedCreditor = creditors.getValue();
+            Set<User> selectedDebitors = debitors.getCheckModel().getCheckedItems().stream().collect(Collectors.toSet());
+            if(product == null)
+                throw new BudgetManagementServiceException("Please enter a product");
+            if(selectedDebitors == null || selectedDebitors.isEmpty())
+                throw new BudgetManagementServiceException("Please select at least one debitor");
+            if(cost <= 0)
+                throw new BudgetManagementServiceException("Please provide a positive amount");
 
-            if (product != null && !debitorsSet.isEmpty() && cost != 0.0) {
+            BUDGET_SERVICE.create(new Expense(selectedDebitors, selectedCreditor, product, cost));
 
-                BUDGET_SERVICE.create(new Expense(debitorsSet, creditor, product, cost));
-
-                clearExpenses();
-                loadExpenseList();
-
-            } else {
-                System.out.println("Bitte füllen Sie alle Felder aus.");
-            }
         } catch (Exception e) {
-            addExpenseButton.setStyle("-fx-border-color: red;");
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
-            pause.setOnFinished(g -> addExpenseButton.setStyle("-fx-border-color: default;"));
-            pause.play();
-        };
-    */
+            e.printStackTrace();
+        } finally {
+            clearExpenses();
+            loadExpenseList();
+        }
     }
 
     public void loadExpenseList() {
