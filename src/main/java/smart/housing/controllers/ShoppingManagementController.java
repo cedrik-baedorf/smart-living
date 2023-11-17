@@ -28,7 +28,7 @@ public class ShoppingManagementController extends SmartHousingController {
     /**
      * Name of the background image file
      */
-    private static final String BACKGROUND_IMAGE = "smart/housing/ui/images/shopping_management_background.jpg";
+    private static final String BACKGROUND_IMAGE = "smart/housing/ui/images/shopping_management–background2.jpg";
 
     private final SmartLivingApplication APPLICATION;
 
@@ -53,6 +53,10 @@ public class ShoppingManagementController extends SmartHousingController {
 
     @FXML
     private StyledTextField anzahlField;
+
+    @FXML
+    private StyledButton modifyButton;
+
 
     private final ShoppingManagementService service;
 
@@ -89,18 +93,6 @@ public class ShoppingManagementController extends SmartHousingController {
         try {
             tableView.setItems(FXCollections.observableList(service.getItemList()));
         } catch (Exception e) {System.out.println("Catched Exception");}
-
-        /*
-        TableColumn<ShoppingListItem,String> itemCol = new TableColumn<ShoppingListItem,String>("Artikel");
-        itemCol.setCellValueFactory(new PropertyValueFactory("item"));
-        itemCol.setMinWidth(50);
-        TableColumn<ShoppingListItem,Double> quantityCol = new TableColumn<ShoppingListItem,Double>("Anzahl");
-        quantityCol.setCellValueFactory(new PropertyValueFactory("anzahl"));
-        TableColumn<ShoppingListItem,String> unitCol = new TableColumn<ShoppingListItem,String>("Einheit");
-        unitCol.setCellValueFactory(new PropertyValueFactory("einheit"));
-
-        tableView.getColumns().setAll(itemCol, quantityCol, unitCol);
-        */
     }
 
     private void clearFields () {
@@ -122,15 +114,13 @@ public class ShoppingManagementController extends SmartHousingController {
 
             clearFields();
             loadShoppingList();
+            buttonDisplay(true,hinzufuegenButton);
 
         } else {
             System.out.println("Bitte füllen Sie alle Felder aus.");
         }
         } catch (Exception e) {
-            hinzufuegenButton.setStyle("-fx-border-color: red;");
-            PauseTransition pause = new PauseTransition(Duration.seconds(2));
-            pause.setOnFinished(g -> hinzufuegenButton.setStyle("-fx-border-color: default;"));
-            pause.play();
+            buttonDisplay(false,hinzufuegenButton);
         };
     }
 
@@ -150,12 +140,33 @@ public class ShoppingManagementController extends SmartHousingController {
 
         if (selectedItem != null) {
             removeItemFromList(selectedItem);
-            loeschenButton.setStyle("-fx-border-color: green;");
+            buttonDisplay(true,loeschenButton);
         } else {
-            loeschenButton.setStyle("-fx-border-color: red;");
+            buttonDisplay(false,loeschenButton);
         }
+    }
+
+    public void _modifyButton_onAction() {
+        if(tableView.getSelectionModel().getSelectedItem() == null) {
+            buttonDisplay(false,modifyButton);
+        } else {
+            ShoppingListItem selectedItem = tableView.getSelectionModel().getSelectedItem();
+            Dialog<Boolean> dialog = new Dialog<>();
+            dialog.setDialogPane(APPLICATION.loadFXML(
+                    ModifyShoppingManagementDialogController.VIEW_NAME,
+                    new ModifyShoppingManagementDialogController(APPLICATION, dialog, selectedItem)
+            ));
+            dialog.showAndWait().ifPresent(aBoolean -> loadShoppingList());
+            buttonDisplay(true,modifyButton);
+        }
+    }
+
+    public static void buttonDisplay(Boolean successful, StyledButton button) {
+        String borderColor = successful ? "green" : "red";
+        button.setStyle("-fx-border-color: " + borderColor + ";");
+
         PauseTransition pause = new PauseTransition(Duration.seconds(2));
-        pause.setOnFinished(e -> loeschenButton.setStyle("-fx-border-color: default;"));
+        pause.setOnFinished(g -> button.setStyle(""));
         pause.play();
     }
 }
