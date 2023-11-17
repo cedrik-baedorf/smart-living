@@ -60,7 +60,12 @@ public class ConfirmPasswordDialog extends ConfirmDialog {
             else
                 throw new IncorrectCredentialsException("this.USER is incompatible with the database");
         } catch (IncorrectCredentialsException exception) {
-            errorMessage.displayError("Password incorrect", 5);
+            if(passwordField.getText().isEmpty())
+                errorMessage.displayError("Please enter password");
+            else
+                errorMessage.displayError("Password incorrect", 5);
+        } finally {
+            passwordField.clear();
         }
     }
 

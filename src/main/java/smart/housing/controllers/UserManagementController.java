@@ -100,7 +100,7 @@ public class UserManagementController extends SmartHousingController {
         User userToBeDeleted = userTable.getSelectionModel().getSelectedItem();
         try {
             ConfirmPasswordDialog dialog = new ConfirmPasswordDialog(
-                "Confirm password to delete?", "Yes, Delete", "No, keep", SERVICE.getServiceUser(), SERVICE.getDatabaseConnector());
+                "Confirm password to delete", "Yes, Delete", "No, keep", SERVICE.getServiceUser(), SERVICE.getDatabaseConnector());
             dialog.showAndWait().ifPresent(aBoolean -> {
                 if(aBoolean) {
                     SERVICE.delete(userToBeDeleted);
