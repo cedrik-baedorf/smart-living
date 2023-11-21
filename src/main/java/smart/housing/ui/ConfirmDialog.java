@@ -2,7 +2,6 @@ package smart.housing.ui;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
@@ -43,10 +42,9 @@ public class ConfirmDialog extends Dialog<Boolean> {
 
         GridPane contentPane = createBackgroundPane();
 
-        BackgroundDialogPane dialogPane = new BackgroundDialogPane();//"smart/housing/ui/images/confirm_dialog_background.jpg");
+        BackgroundDialogPane dialogPane = new BackgroundDialogPane("smart/housing/ui/images/confirm_dialog_background.jpg");
         dialogPane.setContent(contentPane);
         dialogPane.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-        dialogPane.setBackgroundImage("smart/housing/ui/images/confirm_dialog_background.jpg");
 
         this.setDialogPane(dialogPane);
     }
