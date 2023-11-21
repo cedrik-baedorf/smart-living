@@ -6,6 +6,7 @@ import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
@@ -25,6 +26,8 @@ public class ConfirmDialog extends Dialog<Boolean> {
     private StyledButton confirmButton, abortButton;
 
     public ConfirmDialog(String messageText, String confirmText, String abortText) {
+        this.setTitle("Confirm Action");
+
         ((Stage)this.getDialogPane().getScene().getWindow()).getIcons().add(
             new Image("smart/housing/ui/images/icon_confirm.png")
         );
@@ -38,14 +41,19 @@ public class ConfirmDialog extends Dialog<Boolean> {
 
         initializeActionListeners();
 
-        BackgroundDialogPane dialogPane = new BackgroundDialogPane("smart/housing/ui/images/confirm_dialog_background.jpg");
-        dialogPane.setContent(createBackgroundPane());
+        GridPane contentPane = createBackgroundPane();
+
+        BackgroundDialogPane dialogPane = new BackgroundDialogPane();//"smart/housing/ui/images/confirm_dialog_background.jpg");
+        dialogPane.setContent(contentPane);
+        dialogPane.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+        dialogPane.setBackgroundImage("smart/housing/ui/images/confirm_dialog_background.jpg");
+
         this.setDialogPane(dialogPane);
     }
 
     private void initializeObjects(String messageText, String confirmText, String abortText) {
         messageLabel = new Label(messageText);
-        messageLabel.setStyle(StyledNode.UI_ELEMENT_STYLE_SHEET);
+        messageLabel.getStylesheets().add(StyledNode.UI_ELEMENT_STYLE_SHEET);
         messageLabel.setTextAlignment(TextAlignment.CENTER);
         confirmButton = new StyledButton(confirmText);
         confirmButton.setButtonStyle(StyledButton.ButtonStyle.CONFIRM);
