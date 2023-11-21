@@ -1,19 +1,28 @@
 package smart.housing.controllers;
 
+import javafx.animation.PauseTransition;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.util.Duration;
 import smart.housing.SmartLivingApplication;
-import smart.housing.entities.Expense;
-import smart.housing.entities.User;
+import smart.housing.entities.*;
 import smart.housing.exceptions.BudgetManagementServiceException;
 import smart.housing.services.BudgetManagementService;
 import smart.housing.services.BudgetManagementServiceImplementation;
 import smart.housing.ui.*;
 import javafx.collections.ListChangeListener;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -55,6 +64,15 @@ public class BudgetManagementController extends SmartHousingController {
     @FXML
     public StyledTableView<Expense> expenseTable;
 
+    @FXML
+    public StyledTableView<DebtOverview> debtsOverview;
+
+    @FXML
+    public StyledButton deleteButton;
+
+    @FXML
+    public StyledButton emailButton;
+
 
 
     /**
@@ -80,7 +98,26 @@ public class BudgetManagementController extends SmartHousingController {
                 }
             }
         });
+
+        // Set up listener for selection in debtsOverview
+        debtsOverview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                emailButton.setVisible(debtsOverview.getItems().size() > 1);
+            } else {
+                emailButton.setVisible(false);
+            }
+        });
+
+        // Bind the selection model of the debtsOverview table to a property
+        SimpleObjectProperty<DebtOverview> selectedDebtProperty = new SimpleObjectProperty<>();
+        selectedDebtProperty.bind(debtsOverview.getSelectionModel().selectedItemProperty());
+
+        // Bind the visibility of the emailButton to the condition you want
+        emailButton.visibleProperty().bind(Bindings.createBooleanBinding(
+                () -> selectedDebtProperty.get() != null && debtsOverview.getItems().size() > 1,
+                selectedDebtProperty, debtsOverview.getItems()));
     }
+
 
     private void setBackgroundImage() {
         budgetBackgroundPane.setBackgroundImage(BACKGROUND_IMAGE);
@@ -90,10 +127,9 @@ public class BudgetManagementController extends SmartHousingController {
     public void update() {
         BudgetManagementService service = new BudgetManagementServiceImplementation(APPLICATION.getDatabaseConnector());
         creditors.setItems(FXCollections.observableList(service.getCurrentUsers()));
-
         debitors.setItems(FXCollections.observableList(service.getCurrentUsers()));
-
         expenseTable.setItems(FXCollections.observableList(BUDGET_SERVICE.getAllExpenses()));
+        loadExpenseList();
     }
 
     public void _addExpenseButton_onAction(ActionEvent event) {
@@ -127,10 +163,56 @@ public class BudgetManagementController extends SmartHousingController {
     public void loadExpenseList() {
         try {
             List<Expense> expenses = BUDGET_SERVICE.getAllExpenses();
+            updateDebtsOverview(expenses);
             expenseTable.setItems(FXCollections.observableList(expenses));
         } catch (Exception e) {
             System.err.println("Error loading expense list: " + e.getMessage());
         }
+    }
+
+
+
+    private void updateDebtsOverview(List<Expense> expenses) {
+        List<DebtOverview> debtOverviews = calculateDebtsOverview(expenses);
+        debtsOverview.setItems(FXCollections.observableList(debtOverviews));
+    }
+
+    private List<DebtOverview> calculateDebtsOverview(List<Expense> expenses) {
+        Map<UserPair, Double> debtsMap = new HashMap<>();
+
+        // Iterate through expenses and update debtsMap
+        for (Expense expense : expenses) {
+            User creditor = expense.getCreditor();
+            double cost = expense.getCost();
+            double share = cost / (expense.getDebitors().size());
+
+            // Update debtor balances
+            for (User debtor : expense.getDebitors()) {
+                // Skip if the debtor is the same as the creditor
+                if (!debtor.equals(creditor)) {
+                    UserPair userPair = new UserPair(creditor, debtor);
+                    UserPair reversedPair = new UserPair(debtor, creditor);
+
+                    // Update the debt for the pair
+                    debtsMap.put(userPair, debtsMap.getOrDefault(userPair, 0.0) + share);
+                    debtsMap.put(reversedPair, debtsMap.getOrDefault(reversedPair, 0.0) - share);
+                }
+            }
+
+            // Update creditor balance (they owe money)
+            UserPair selfPair = new UserPair(creditor, creditor);
+            debtsMap.put(selfPair, debtsMap.getOrDefault(selfPair, 0.0) - cost);
+        }
+
+        // Convert the debtsMap to DebtOverview objects
+        List<DebtOverview> debtOverviews = debtsMap.entrySet().stream()
+                .filter(entry -> entry.getValue() != 0.0 && !entry.getKey().getFirstUser().equals(entry.getKey().getSecondUser())) // Skip zero amounts and same user as creditor and debtor
+                .map(entry -> new DebtOverview(entry.getKey().getFirstUser(), entry.getKey().getSecondUser(), entry.getValue()))
+                .collect(Collectors.toList());
+
+        System.out.println("Debts Overview: " + debtOverviews); // Print for debugging
+
+        return debtOverviews;
     }
 
 
@@ -141,8 +223,87 @@ public class BudgetManagementController extends SmartHousingController {
         debitors.getCheckModel().clearChecks();
     }
 
+    public void _deleteButton_onAction(ActionEvent event) {
+        event.consume();
+        Expense selectedItem = expenseTable.getSelectionModel().getSelectedItem();
+
+        if (selectedItem != null) {
+            removeItemFromList(selectedItem);
+            buttonDisplay(true,deleteButton);
+        } else {
+            buttonDisplay(false,deleteButton);
+        }
+    }
+
+    private void removeItemFromList(Expense expense) {
+        BUDGET_SERVICE.delete(expense);
+        loadExpenseList();
+    }
+
+    public static void buttonDisplay(Boolean successful, StyledButton button) {
+        String borderColor = successful ? "green" : "red";
+        button.setStyle("-fx-border-color: " + borderColor + ";");
+
+        PauseTransition pause = new PauseTransition(Duration.seconds(2));
+        pause.setOnFinished(g -> button.setStyle(""));
+        pause.play();
+    }
+
+
+    public void _emailButton_onAction(ActionEvent event) {
+        event.consume();
+        sendEmail();
+    }
+
+    private void sendEmail() {
+        // Get the selected row from the debtsOverview table
+        DebtOverview selectedDebt = debtsOverview.getSelectionModel().getSelectedItem();
+
+        if (selectedDebt != null) {
+            try {
+                String debtorFirstName = selectedDebt.getDebtor().getFirstName();
+                String debtorLastName = selectedDebt.getDebtor().getLastName();
+                String creditorFirstName = selectedDebt.getCreditor().getFirstName();
+                String debtorEmail = debtorFirstName + "." + debtorLastName + "@studmail.hwg-lu.de";
+                String subject = "You owe money!";
+
+                // Encode the body parameter
+                String body = "Dear " + debtorFirstName + " " + debtorLastName +
+                        ",\n\nYou owe money to " + creditorFirstName +
+                        ". Please settle the amount at your earliest convenience.\n\nSincerely,\nYour Budget Management System";
+
+                // Encode the subject and body parameters
+                String encodedSubject = URLEncoder.encode(subject, StandardCharsets.UTF_8).replace("+", "%20");
+                String encodedBody = URLEncoder.encode(body, StandardCharsets.UTF_8).replace("+", "%20");
+
+                // Create a mailto URI with properly encoded subject and body
+                URI mailtoUri = new URI("mailto:" + debtorEmail + "?subject=" + encodedSubject + "&body=" + encodedBody);
+
+                // Open the default email client
+                Desktop desktop = Desktop.getDesktop();
+                desktop.mail(mailtoUri);
+
+                // Display success message
+                buttonDisplay(true, emailButton);
+            } catch (IOException | URISyntaxException e) {
+                // Display error message
+                buttonDisplay(false, emailButton);
+                e.printStackTrace();
+            }
+        } else {
+            // No row selected, display error message
+            buttonDisplay(false, emailButton);
+        }
+    }
+
+
+
+
+
+
 
     public String getViewName() {
         return VIEW_NAME;
     }
 }
+

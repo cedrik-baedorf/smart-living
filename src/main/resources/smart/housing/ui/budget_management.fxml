@@ -3,12 +3,10 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.control.cell.*?>
-
 <?import smart.housing.ui.*?>
 
 <BackgroundStackPane fx:id="budgetBackgroundPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.BudgetManagementController">
@@ -22,7 +20,7 @@
                     <HBox spacing="10" style=" -fx-background-color: rgba(255,255,255,0.5); -fx-text-fill: black; -fx-padding: 20; -fx-background-radius: 10;">
 
                         <!-- Left Side - Input Section -->
-                        <VBox spacing="10" prefWidth="200.0" maxWidth="200.0"> <!-- Adjusted prefWidth -->
+                        <VBox spacing="10" prefWidth="200.0" maxWidth="200.0" VBox.vgrow="ALWAYS"> <!-- Adjusted prefWidth -->
 
                             <!-- Label with Padding -->
                             <Label fx:id="budgetLabel" prefHeight="17.0" prefWidth="145.0" text="Budget Book"  style="-fx-text-fill: black;">
@@ -35,23 +33,26 @@
                             </Label>
 
                             <!-- Select Creditor -->
-                            <StyledComboBox promptText="Select Creditor" fx:id="creditors" />
+                            <StyledComboBox promptText="Select Creditor" fx:id="creditors" prefWidth="200.0"/>
 
-                            <!-- Select Debitor
-                            <StyledComboBox promptText="Select Debitors" fx:id="debitors" />
-                            -->
-
+                            <!-- Select Debitors -->
                             <StyledCheckComboBox fx:id="debitors" prefWidth="200.0">
-
+                                <promptText>
+                                    <Label text="Select Debitors"/>
+                                </promptText>
                             </StyledCheckComboBox>
 
 
-
                             <!-- Decimal Number Input -->
-                            <StyledTextField fx:id="costField" prefHeight="26.0" prefWidth="80.0" promptText="Enter Cost" />
+                            <HBox>
+                                <StyledTextField fx:id="costField" prefHeight="26.0" prefWidth="200.0" promptText="Enter Cost" />
+                                <Label text="€" style="-fx-background-color: WHITE; -fx-opacity: 0.7; -fx-background-radius: 15;-fx-border-color: TRANSPARENT;-fx-border-radius: 15;-fx-text-fill: BLACK;-fx-font-family:sans-serif;-fx-padding: 5 8 5 8;"/>
+                            </HBox>
 
                             <!-- Product Name Input -->
-                            <StyledTextField fx:id="productNameField" prefHeight="26.0" prefWidth="80.0" promptText="Enter Product Name" />
+                            <HBox>
+                            <StyledTextField fx:id="productNameField" prefHeight="26.0" prefWidth="200.0" promptText="Enter Product Name" />
+                            </HBox>
 
                             <!-- Save Button -->
                             <StyledButton fx:id="addExpenseButton" text="Add Expense" onAction="#_addExpenseButton_onAction">
@@ -63,13 +64,42 @@
                                 </VBox.margin>
                             </StyledButton>
 
+                            <Region VBox.vgrow="ALWAYS" />
+
+
+                            <!-- Debts Overview TableView -->
+                            <Label text="Debts Overview" style="-fx-font-weight: bold; -fx-font-size: 12px; -fx-text-fill: black;" />
+                            <StyledTableView fx:id="debtsOverview" minHeight="150.0" minWidth="400.0" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn text="Creditor" minWidth="150">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="creditor" />
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn text="Amount" minWidth="100">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="formattedAmount" />
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                    <TableColumn text="Debtor" minWidth="150">
+                                        <cellValueFactory>
+                                            <PropertyValueFactory property="debtor" />
+                                        </cellValueFactory>
+                                    </TableColumn>
+                                </columns>
+                            </StyledTableView>
+
+
+
                         </VBox>
 
                         <!-- Added space between sections -->
                         <Region HBox.hgrow="ALWAYS" />
 
                         <!-- Right Side - Table Section -->
-                        <StyledTableView fx:id="expenseTable" minHeight="150.0" minWidth="300.0">
+                        <VBox spacing="10" VBox.vgrow="ALWAYS">
+                        <Label text="Expenses Overview" style="-fx-font-weight: bold; -fx-font-size: 12px; -fx-text-fill: black;" />
+                        <StyledTableView fx:id="expenseTable" minHeight="150.0" minWidth="300.0" VBox.vgrow="ALWAYS">
                             <columns>
                                 <TableColumn text="Product" minWidth="150">
                                     <cellValueFactory>
@@ -81,21 +111,42 @@
                                         <PropertyValueFactory property="creditor" />
                                     </cellValueFactory>
                                 </TableColumn>
-                                <TableColumn text="Cost in €" minWidth="150">
+                                <TableColumn text="Cost in €" minWidth="100">
                                     <cellValueFactory>
                                         <PropertyValueFactory property="cost" />
                                     </cellValueFactory>
                                 </TableColumn>
-                                <TableColumn text="Debitors" minWidth="300">
+                                <TableColumn text="Debitor" minWidth="300">
                                     <cellValueFactory>
                                         <PropertyValueFactory property="debitors" />
                                     </cellValueFactory>
                                 </TableColumn>
                             </columns>
                             <BorderPane.margin>
-                                <Insets bottom="100.0" left="200.0" right="200.0" top="50.0" />
+                                <Insets bottom="10.0" left="200.0" right="200.0" top="50.0" />
                             </BorderPane.margin>
                         </StyledTableView>
+
+                        <HBox spacing="5">
+                            <!-- Delete Button -->
+                            <StyledButton fx:id="deleteButton" text="Delete" onAction="#_deleteButton_onAction">
+                             <font>
+                                 <Font size="10.0" />
+                             </font>
+                            </StyledButton>
+
+                            <!-- Email Button -->
+                            <StyledButton fx:id="emailButton" text="Notify" onAction="#_emailButton_onAction" visible="false">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </StyledButton>
+
+                        </HBox>
+
+                </VBox>
+
+
 
                     </HBox>
                 </content>
@@ -103,197 +154,3 @@
         </center>
     </BorderPane>
 </BackgroundStackPane>
-
-
-
-
-
-<!--
-<BorderPane prefHeight="600" prefWidth="1000" style="-fx-background-color: GREY;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.BudgetManagementController">
-    <center>
-        <ScrollPane fitToHeight="true" fitToWidth="true" minHeight="150.0" minWidth="300.0" prefHeight="400.0" prefWidth="697.0" BorderPane.alignment="CENTER">
-            <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0">
-                    <children>
-                        <StyledComboBox promptText="Select Creditor" fx:id="creditors">
-                            <GridPane.margin>
-                                <Insets top="300.0" left="800" right="400.0" />
-                            </GridPane.margin>
-                        </StyledComboBox>
-                        <TextField fx:id="artikelTextField" layoutX="66.0" layoutY="78.0" prefHeight="26.0" prefWidth="230.0" promptText="Artikel" />
-                        <Button fx:id="hinzufuegenButton"  layoutX="66.0" layoutY="174.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="85.0" text="Hinzufügen" />
-                        <Label fx:id="einkaufslisteLabel" layoutX="66.0" layoutY="40.0" prefHeight="17.0" prefWidth="145.0" text="Budget">
-                            <font>
-                                <Font name="System Bold" size="18.0" />
-                            </font>
-                        </Label>
-                        <Button fx:id="loeschenButton"  layoutX="351.0" layoutY="408.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="Löschen" />
-                        <ComboBox fx:id="einheitComboBox" layoutX="162.0" layoutY="122.0" prefHeight="26.0" prefWidth="135.0" promptText="Einheit" />
-                        <Button fx:id="aenderungButton" layoutX="433.0" layoutY="408.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="106.0" text="Anzahl ändern" />
-                        <TableView fx:id="tableView" layoutX="351.0" layoutY="78.0" prefHeight="312.0" prefWidth="388.0">
-                            <columns>
-                                <TableColumn prefWidth="284.0" text="Artikel" />
-                                <TableColumn minWidth="0.0" prefWidth="55.0" text="Anzahl" />
-                                <TableColumn prefWidth="48.0" text="Einheit" />
-                            </columns>
-                        </TableView>
-                        <TextField fx:id="anzahlField" layoutX="66.0" layoutY="122.0" prefHeight="26.0" prefWidth="90.0" promptText="Anzahl" />
-                    </children>
-                </AnchorPane>
-            </content>
-            <BorderPane.margin>
-                <Insets bottom="50.0" left="100.0" right="100.0" top="50.0" />
-            </BorderPane.margin>
-        </ScrollPane>
-    </center>
-</BorderPane>
--->
-
-<!--
-<BorderPane style="-fx-background-color: GREY;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.BudgetManagementController">
-<center>
-    <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" minHeight="150.0" minWidth="300.0" BorderPane.alignment="CENTER">
-        <BorderPane.margin>
-            <Insets bottom="100.0" left="200.0" right="200.0" top="100.0" />
-        </BorderPane.margin>
-        <content>
-            <StyledComboBox promptText="Select Creditor" fx:id="creditors">
-                <GridPane.margin>
-                    <Insets top="300.0" left="800" right="400.0" />
-                </GridPane.margin>
-            </StyledComboBox>
-            <StyledComboBox promptText="Select Debitor" fx:id="debitors">
-                <GridPane.margin>
-                    <Insets top="300.0" left="800" right="400.0" />
-                </GridPane.margin>
-            </StyledComboBox>
-        </content>
-    </ScrollPane>
-</center>
-</BorderPane>
--->
-
-<!--
-<BackgroundStackPane fx:id="backgroundPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.BudgetManagementController">
-<BorderPane>
-    <center>
-        <StyledTableView fx:id="taskTable" minHeight="150.0" minWidth="300.0">
-            <columns>
-                <TableColumn text="Task Name" minWidth="100">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="taskName" />
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn text="Due Date" minWidth="100">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="dueDate" />
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn text="Status" minWidth="100">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="completed" />
-                    </cellValueFactory>
-                </TableColumn>
-                <TableColumn text="Assigned To" minWidth="200">
-                    <cellValueFactory>
-                        <PropertyValueFactory property="assignees" />
-                    </cellValueFactory>
-                </TableColumn>
-            </columns>
-            <BorderPane.margin>
-                <Insets bottom="100.0" left="200.0" right="200.0" top="50.0" />
-            </BorderPane.margin>
-        </StyledTableView>
-    </center>
-    <top>
-        <GridPane maxHeight="200" prefWidth="1000" stylesheets="@style_sheets/style.css">
-            <StyledButton text="+ NEW TASK">
-                <font>
-                    <Font size="12.0" />
-                </font>
-                <GridPane.margin>
-                    <Insets top="300.0" left="200.0" />
-                </GridPane.margin>
-            </StyledButton>
-            <StyledComboBox promptText="Select Month">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="January" />
-                        <String fx:value="February" />
-                        <String fx:value="March" />
-                        <String fx:value="April" />
-                        <String fx:value="May" />
-                        <String fx:value="June" />
-                        <String fx:value="July" />
-                        <String fx:value="August" />
-                        <String fx:value="September" />
-                        <String fx:value="October" />
-                        <String fx:value="November" />
-                        <String fx:value="December" />
-                    </FXCollections>
-                </items>
-                <GridPane.margin>
-                    <Insets top="300.0" left="800" right="400.0" />
-                </GridPane.margin>
-            </StyledComboBox>
-            <StyledComboBox promptText="Select Year">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="2022" />
-                        <String fx:value="2023" />
-                        <String fx:value="2024" />
-                    </FXCollections>
-                </items>
-                <GridPane.margin>
-                    <Insets top="300.0" left="1000" right="200.0" />
-                </GridPane.margin>
-            </StyledComboBox>
-            <StyledTableView fx:id="overdueTasks" minHeight="100.0" minWidth="200.0">
-                <columns>
-                    <TableColumn minWidth="100.0" text="Overdue Tasks">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="taskName" />
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn minWidth="100.0" text="Assigned to">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="assignees" />
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn minWidth="100.0" text="Due Date">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="dueDate" />
-                        </cellValueFactory>
-                    </TableColumn>
-                </columns>
-                <GridPane.margin>
-                    <Insets bottom="50.0" left="900" right="200.0" top="100.0" />
-                </GridPane.margin>
-            </StyledTableView>
-            <StyledTableView fx:id="currentTasks" minHeight="100.0" minWidth="200" maxWidth="350.0">
-                <columns>
-                    <TableColumn minWidth="100.0" text="Tasks This Week">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="taskName" />
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn minWidth="100.0" text="Assigned To">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="assignees" />
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn minWidth="100.0" text="Due Date">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="dueDate" />
-                        </cellValueFactory>
-                    </TableColumn>
-                </columns>
-                <GridPane.margin>
-                    <Insets bottom="50.0" left="200.0" top="100.0" />
-                </GridPane.margin>
-            </StyledTableView>
-        </GridPane>
-    </top>
-</BorderPane>
-</BackgroundStackPane>
--->

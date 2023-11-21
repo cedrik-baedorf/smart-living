@@ -117,6 +117,7 @@ public class User {
         return firstName;
     }
 
+
     public UserRole getRole() {
         UserRole role = UserRole.parseString(this.role);
         if(role != null)
