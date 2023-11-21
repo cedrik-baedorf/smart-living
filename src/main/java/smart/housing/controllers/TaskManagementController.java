@@ -8,6 +8,7 @@ import smart.housing.SmartLivingApplication;
 import smart.housing.entities.Task;
 import smart.housing.services.TaskManagementService;
 import smart.housing.services.TaskManagementServiceImplementation;
+import smart.housing.services.UserManagementService;
 import smart.housing.ui.BackgroundStackPane;
 import smart.housing.ui.StyledTableView;
 
@@ -31,7 +32,9 @@ public class TaskManagementController extends SmartHousingController {
 
     private final SmartLivingApplication APPLICATION;
 
-    private final TaskManagementService TASK_SERVICE;
+    private final UserManagementService USER_MANAGEMENT_SERVICE;
+
+    private final TaskManagementService TASK_MANAGEMENT_SERVICE;
 
     @FXML public BackgroundStackPane backgroundPane;
     @FXML
@@ -46,9 +49,10 @@ public class TaskManagementController extends SmartHousingController {
      * instance belongs to
      * @param application Application calling the constructor
      */
-    public TaskManagementController(SmartLivingApplication application) {
+    public TaskManagementController(SmartLivingApplication application, UserManagementService userManagementService) {
         this.APPLICATION = application;
-        this.TASK_SERVICE = new TaskManagementServiceImplementation(APPLICATION.getDatabaseConnector());
+        this.USER_MANAGEMENT_SERVICE = userManagementService;
+        this.TASK_MANAGEMENT_SERVICE = new TaskManagementServiceImplementation(APPLICATION.getDatabaseConnector());
     }
 
     public void initialize() {
@@ -61,9 +65,9 @@ public class TaskManagementController extends SmartHousingController {
     }
 
     public void loadTasks(){
-        taskTable.setItems(FXCollections.observableList(TASK_SERVICE.getAllTasks()));
-        currentTasks.setItems(FXCollections.observableList(TASK_SERVICE.getCurrentTasks()));
-        overdueTasks.setItems(FXCollections.observableList(TASK_SERVICE.getIncompleteTasks()));
+        taskTable.setItems(FXCollections.observableList(TASK_MANAGEMENT_SERVICE.getAllTasks()));
+        currentTasks.setItems(FXCollections.observableList(TASK_MANAGEMENT_SERVICE.getCurrentTasks()));
+        overdueTasks.setItems(FXCollections.observableList(TASK_MANAGEMENT_SERVICE.getIncompleteTasks()));
     }
 
     public void _newTaskButton_onAction(ActionEvent event) {
@@ -75,7 +79,7 @@ public class TaskManagementController extends SmartHousingController {
         Dialog<Boolean> dialog = new Dialog<>();
         dialog.setDialogPane(APPLICATION.loadFXML(
                 NewTaskDialogController.VIEW_NAME,
-                new NewTaskDialogController(APPLICATION, dialog)
+                new NewTaskDialogController(USER_MANAGEMENT_SERVICE, TASK_MANAGEMENT_SERVICE, dialog)
         ));
         dialog.showAndWait().ifPresent(aBoolean -> loadTasks());
     }

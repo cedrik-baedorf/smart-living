@@ -3,11 +3,9 @@ package smart.housing.controllers;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import smart.housing.SmartLivingApplication;
 import smart.housing.exceptions.EmptyFieldException;
 import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.services.UserManagementService;
-import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.entities.User;
 import smart.housing.ui.ErrorMessage;
 import smart.housing.ui.StyledPasswordField;
@@ -31,7 +29,7 @@ public class DeleteDialogController extends DialogController {
         DELETE_USER = "Confirm deletion of user %s";
 
 
-    private final SmartLivingApplication APPLICATION;
+    private final UserManagementService SERVICE;
     private final Dialog<Boolean> DIALOG;
 
     private final User USER;
@@ -45,8 +43,8 @@ public class DeleteDialogController extends DialogController {
      * instance belongs to
      * @param dialog Dialog to this <code>DialogPane</code>
      */
-    public DeleteDialogController(SmartLivingApplication application, Dialog<Boolean> dialog, User user) {
-        this.APPLICATION = application;
+    public DeleteDialogController(UserManagementService service, Dialog<Boolean> dialog, User user) {
+        this.SERVICE = service;
         this.DIALOG = dialog;
         this.USER = user;
 
@@ -87,8 +85,7 @@ public class DeleteDialogController extends DialogController {
     public void deleteUser() {
         checkForEmptyInput(passwordField.getText(), "password");
 
-        UserManagementService userManagementService = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
-        userManagementService.delete(USER.getUsername(), passwordField.getText());
+        SERVICE.delete(USER.getUsername(), passwordField.getText());
         DIALOG.setResult(true);
     }
 

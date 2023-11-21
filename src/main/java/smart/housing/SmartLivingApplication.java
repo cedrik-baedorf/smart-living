@@ -18,8 +18,6 @@ public class SmartLivingApplication extends Application {
 
     private DatabaseConnector connector;
 
-    private User user;
-
     private final String
         START_VIEW = START_CONTROLLER.getViewName(),
         VIEW_DIR = "ui/";
@@ -88,18 +86,8 @@ public class SmartLivingApplication extends Application {
         this.connector = connector;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public DatabaseConnector getDatabaseConnector() {
         return connector;
-    }
-
-    public User getUser() { return user; }
-
-    public Stage getPrimaryStage() {
-        return stage;
     }
 
 }

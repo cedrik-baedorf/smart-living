@@ -5,20 +5,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import smart.housing.SmartLivingApplication;
 import smart.housing.entities.User;
 import smart.housing.enums.UserRole;
 import smart.housing.exceptions.EmptyFieldException;
 import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.services.UserManagementService;
-import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.ui.ErrorMessage;
 import smart.housing.ui.StyledComboBox;
 import smart.housing.ui.StyledPasswordField;
 import smart.housing.ui.StyledTextField;
-
-import javax.persistence.EntityManager;
 import java.util.Arrays;
 
 /**
@@ -33,7 +29,7 @@ public class ModifyDialogController extends DialogController {
      */
     public static final String VIEW_NAME = "modify_dialog.fxml";
 
-    private final SmartLivingApplication APPLICATION;
+    private final UserManagementService SERVICE;
 
     private final Dialog<Boolean> DIALOG;
 
@@ -50,8 +46,8 @@ public class ModifyDialogController extends DialogController {
      * instance belongs to
      * @param dialog Dialog to this <code>DialogPane</code>
      */
-    public ModifyDialogController(SmartLivingApplication application, Dialog<Boolean> dialog, User userToBeModified) {
-        this.APPLICATION = application;
+    public ModifyDialogController(UserManagementService service, Dialog<Boolean> dialog, User userToBeModified) {
+        this.SERVICE = service;
         this.DIALOG = dialog;
         this.USER_TO_BE_MODIFIED = userToBeModified;
     }
@@ -82,7 +78,7 @@ public class ModifyDialogController extends DialogController {
         firstNameField.setText(USER_TO_BE_MODIFIED.getFirstName());
         lastNameField.setText(USER_TO_BE_MODIFIED.getLastName());
         roleComboBox.setItems(FXCollections.observableList(Arrays.stream(UserRole.values())
-            .filter(userRole -> APPLICATION.getUser().getRole().outranks(userRole))
+            .filter(userRole -> SERVICE.getServiceUser().getRole().outranks(userRole))
             .toList()
         ));
         roleComboBox.setValue(USER_TO_BE_MODIFIED.getRole());
@@ -113,21 +109,15 @@ public class ModifyDialogController extends DialogController {
         if(! newPasswordField.getText().equals(confirmPasswordField.getText()))
             throw new IncorrectCredentialsException("new passwords do not match");
 
-        UserManagementService userManagementService = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
-
-        User user = userManagementService.login(USER_TO_BE_MODIFIED.getUsername(), currentPasswordField.getText());
-
-        EntityManager entityManager = APPLICATION.getDatabaseConnector().createEntityManager();
-
-        entityManager.getTransaction().begin();
-        user = entityManager.merge(user);
-        user.setFirstName(firstNameField.getText());
-        user.setLastName(lastNameField.getText());
-        user.setRole(roleComboBox.getValue());
+        User updatedUser = new User(USER_TO_BE_MODIFIED.getUsername());
+        updatedUser.setFirstName(firstNameField.getText());
+        updatedUser.setLastName(lastNameField.getText());
+        updatedUser.setRole(roleComboBox.getValue());
         if(newPasswordField.getText().length() != 0)
-            user.setPassword(newPasswordField.getText(), userManagementService.getHashAlgorithm());
-        entityManager.getTransaction().commit();
-        entityManager.close();
+            updatedUser.setPassword(newPasswordField.getText(), SERVICE.getHashAlgorithm());
+
+        SERVICE.modify(USER_TO_BE_MODIFIED.getUsername(), currentPasswordField.getText(), updatedUser);
+
         DIALOG.setResult(true);
     }
 

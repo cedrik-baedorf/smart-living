@@ -6,14 +6,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
-import smart.housing.SmartLivingApplication;
 import smart.housing.entities.Task;
 import smart.housing.entities.User;
 import smart.housing.exceptions.EmptyFieldException;
 import smart.housing.services.TaskManagementService;
-import smart.housing.services.TaskManagementServiceImplementation;
 import smart.housing.services.UserManagementService;
-import smart.housing.services.UserManagementServiceImplementation;
 import smart.housing.ui.ErrorMessage;
 import smart.housing.ui.StyledCheckComboBox;
 import smart.housing.ui.StyledTextField;
@@ -32,7 +29,9 @@ public class NewTaskDialogController extends DialogController {
      */
     public static final String VIEW_NAME = "new_task_dialog.fxml";
 
-    private final SmartLivingApplication APPLICATION;
+    private final UserManagementService USER_MANAGEMENT_SERVICE;
+
+    private final TaskManagementService TASK_MANAGEMENT_SERVICE;
 
     private final Dialog<Boolean> DIALOG;
 
@@ -47,8 +46,13 @@ public class NewTaskDialogController extends DialogController {
      * instance belongs to
      * @param dialog Dialog to this <code>DialogPane</code>
      */
-    public NewTaskDialogController(SmartLivingApplication application, Dialog<Boolean> dialog) {
-        this.APPLICATION = application;
+    public NewTaskDialogController(
+        UserManagementService userManagementService,
+        TaskManagementService taskManagementService,
+        Dialog<Boolean> dialog
+    ) {
+        this.USER_MANAGEMENT_SERVICE = userManagementService;
+        this.TASK_MANAGEMENT_SERVICE = taskManagementService;
         this.DIALOG = dialog;
     }
 
@@ -63,8 +67,7 @@ public class NewTaskDialogController extends DialogController {
     }
 
     private void loadAssignees() {
-        UserManagementService userManagementService = new UserManagementServiceImplementation(APPLICATION.getDatabaseConnector());
-        List<User> userList = userManagementService.getUsers();
+        List<User> userList = USER_MANAGEMENT_SERVICE.getUsers();
         assigneeComboBox.setItems(FXCollections.observableList(userList));
     }
 
@@ -92,9 +95,7 @@ public class NewTaskDialogController extends DialogController {
         newTask.setDueDate(dueDatePicker.getValue());
         assigneeComboBox.getCheckModel().getCheckedItems().forEach(newTask::addAssignee);
 
-        TaskManagementService taskManagementService = new TaskManagementServiceImplementation(APPLICATION.getDatabaseConnector());
-
-        taskManagementService.create(newTask);
+        TASK_MANAGEMENT_SERVICE.create(newTask);
         DIALOG.setResult(true);
     }
 
