@@ -39,4 +39,14 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
         entityManager.getTransaction().commit();
         entityManager.close();
     }
+
+    @Override
+    public void delete (Expense expense) {
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
+        Expense expenseToBeRemoved = entityManager.find(Expense.class, expense.getExpenseId());
+        entityManager.getTransaction().begin();
+        entityManager.remove(expenseToBeRemoved);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
 }

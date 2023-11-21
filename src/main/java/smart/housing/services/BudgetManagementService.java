@@ -13,5 +13,6 @@ public interface BudgetManagementService {
 
     void create(Expense expense);
 
+    void delete(Expense expense);
 
 }
