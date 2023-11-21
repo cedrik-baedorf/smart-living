@@ -48,13 +48,13 @@
 
 
                             <!-- Decimal Number Input -->
-                            <StyledTextField fx:id="decimalNumberField" prefHeight="26.0" prefWidth="80.0" promptText="Enter Cost" />
+                            <StyledTextField fx:id="costField" prefHeight="26.0" prefWidth="80.0" promptText="Enter Cost" />
 
                             <!-- Product Name Input -->
                             <StyledTextField fx:id="productNameField" prefHeight="26.0" prefWidth="80.0" promptText="Enter Product Name" />
 
                             <!-- Save Button -->
-                            <StyledButton fx:id="addExpense" text="Add Expense">
+                            <StyledButton fx:id="addExpenseButton" text="Add Expense" onAction="#_addExpenseButton_onAction">
                                 <font>
                                     <Font size="12.0" />
                                 </font>
