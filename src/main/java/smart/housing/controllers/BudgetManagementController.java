@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableRow;
 import javafx.util.Duration;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.*;
@@ -129,6 +130,25 @@ public class BudgetManagementController extends SmartHousingController {
         settleDebtButton.visibleProperty().bind(Bindings.createBooleanBinding(
                 () -> selectedDebtProperty.get() != null && debtsOverview.getItems().size() > 1,
                 selectedDebtProperty, debtsOverview.getItems()));
+
+
+        // Set up row factory for debtsOverview
+        debtsOverview.setRowFactory(tv -> new TableRow<DebtOverview>() {
+            @Override
+            protected void updateItem(DebtOverview item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    // Clear styles for empty cells
+                    setStyle("");
+                } else {
+                    // Set style based on debt value
+                    double debtAmount = item.getAmount();
+                    String rowStyle = (debtAmount < 0) ? "-fx-text-fill: red;" : "-fx-text-fill: green;";
+                    setStyle(rowStyle);
+                }
+            }
+        });
 
         update();
     }
