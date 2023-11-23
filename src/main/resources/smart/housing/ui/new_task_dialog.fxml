@@ -16,11 +16,11 @@
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </StyledTextField>
-            <DatePicker fx:id="dueDatePicker" promptText="Due Date" GridPane.rowIndex="1">
+            <StyledDatePicker fx:id="dueDatePicker" promptText="Due Date" GridPane.rowIndex="1">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
-            </DatePicker>
+            </StyledDatePicker>
             <StyledCheckComboBox fx:id="assigneeComboBox" promptText="Pick Assignee" GridPane.rowIndex="4">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

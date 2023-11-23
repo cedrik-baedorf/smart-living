@@ -13,6 +13,7 @@ import smart.housing.services.TaskManagementService;
 import smart.housing.services.UserManagementService;
 import smart.housing.ui.ErrorMessage;
 import smart.housing.ui.StyledCheckComboBox;
+import smart.housing.ui.StyledDatePicker;
 import smart.housing.ui.StyledTextField;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class NewTaskDialogController extends DialogController {
 
     @FXML DialogPane dialogPane;
     @FXML StyledTextField taskNameField;
-    @FXML DatePicker dueDatePicker;
+    @FXML StyledDatePicker dueDatePicker;
     @FXML StyledCheckComboBox<User> assigneeComboBox;
     @FXML ErrorMessage errorMessage;
 

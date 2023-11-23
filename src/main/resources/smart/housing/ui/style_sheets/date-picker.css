@@ -1,0 +1,106 @@
+/* ----- Collapsed DatePicker ----- */
+
+/* Style of the DatePicker */
+.date-picker {
+    -fx-background-color: WHITE;
+    -fx-border-color: TRANSPARENT;
+    -fx-background-radius: 15;
+    -fx-padding: 0 0 0 5;
+}
+
+/* Style of the TextField and CalendarButton */
+.date-picker .text-field,
+.date-picker .arrow-button {
+    -fx-background-color: TRANSPARENT;
+    -fx-border-color: TRANSPARENT;
+    -fx-border-width: 0;
+    -fx-text-fill: BLACK;
+}
+
+/* Style of the CalendarButton */
+.date-picker .arrow-button {
+    -fx-background-radius: 15;
+}
+
+/* Style of the CalendarButtonIcon */
+.date-picker .arrow-button .arrow {
+    -fx-background-color: BLACK;
+}
+
+/* ----- Collapsed DatePicker on DatePicker-Hover ----- */
+
+/* Style of the DatePicker on DatePicker-Hover */
+.date-picker:hover {
+    -fx-background-color: BLACK;
+}
+
+/* Style of the TextField and CalendarButton on DatePicker-Hover */
+.date-picker:hover .text-field,
+.date-picker:hover .arrow-button {
+    -fx-text-fill: WHITE;
+}
+
+/* Style of the CalendarButtonIcon on DatePicker-Hover */
+.date-picker:hover .arrow-button .arrow {
+    -fx-background-color: WHITE;
+}
+
+/* ----- Collapsed DatePicker on CalendarButton-Hover ----- */
+
+/* Style of the CalendarButton on CalendarButton-Hover */
+.date-picker .arrow-button:hover {
+    -fx-background-color: WHITE;
+}
+
+/* Style of the CalendarButtonIcon on CalendarButton-Hover */
+.date-picker .arrow-button:hover .arrow {
+    -fx-background-color: BLACK;
+}
+
+/* ----- Collapsed DatePicker on CalendarButton-Pressed ----- */
+
+/* Style of the CalendarButtonIcon on CalendarButton-Pressed */
+.date-picker .arrow-button:pressed .arrow {
+    -fx-background-color: GREY;
+}
+
+/* ----- DatePickerPopup ----- */
+
+.date-picker-popup {
+    -fx-background-color: WHITE;
+    -fx-background-radius: 15;
+    -fx-border-color: BLACK;
+    -fx-border-radius: 15;
+    -fx-border-width: 1;
+}
+
+.date-picker .month-year-pane {
+    -fx-background-color: TRANSPARENT;
+    -fx-text-fill: BLACK;
+}
+
+.date-picker .calendar-grid {
+    -fx-background-color: TRANSPARENT;
+}
+
+.date-picker .day-cell {
+    -fx-background-color: TRANSPARENT;
+    -fx-background-radius: 15;
+    -fx-border-color: TRANSPARENT;
+    -fx-text-fill: BLACK;
+}
+
+.date-picker .day-cell:today {
+    -fx-background-color: GREY;
+}
+
+
+.date-picker .day-cell:hover {
+    -fx-background-color: BLACK;
+    -fx-text-fill: WHITE;
+}
+
+.date-picker .day-cell:hover {
+    -fx-background-color: BLACK;
+    -fx-text-fill: WHITE;
+}

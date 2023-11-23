@@ -11,6 +11,7 @@ public interface StyledNode {
     String TABLE_VIEW_STYLE_SHEET =     STYLES_DIRECTORY + "table-view.css";
     String SCROLL_BAR_STYLE_SHEET =     STYLES_DIRECTORY + "scroll-bar.css";
     String CHECK_BOX_STYLE_SHEET =      STYLES_DIRECTORY + "check-combo-box.css";
+    String DATE_PICKER_STYLE_SHEET =    STYLES_DIRECTORY + "date-picker.css";
 
     static String convertStylePath(String path) {
         URL url = StyledNode.class.getResource(path);
