@@ -37,10 +37,10 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
             expense -> expense.getCreditor().equals(user) || expense.getDebitors().contains(user)
         ).toList();
 
-        List<DebtOverview> debtOverviews = convertExpensesToDebtOverview(expenses).stream()
+        List<DebtOverview> debtOverviews = convertExpensesToDebtOverviews(expenses).stream()
             .filter(debtOverview -> debtOverview.creditor().equals(user) || debtOverview.debtor().equals(user)).toList();
 
-        List<DebtOverview> balancedDebts = balanceDebts(debtOverviews);
+        List<DebtOverview> balancedDebts = balanceDebtOverviews(debtOverviews);
 
         for(int i = 0; i < balancedDebts.size(); i++) {
             DebtOverview debtOverview = balancedDebts.get(i);
@@ -52,7 +52,7 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
     }
 
 
-    private List<DebtOverview> convertExpensesToDebtOverview(List<Expense> expenses) {
+    private List<DebtOverview> convertExpensesToDebtOverviews(List<Expense> expenses) {
         List<DebtOverview> debtOverviews = new LinkedList<>();
 
         for(Expense expense : expenses) {
@@ -67,7 +67,7 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
         return debtOverviews;
     }
 
-    private List<DebtOverview> balanceDebts (List<DebtOverview> unbalancedDebtOverview){
+    private List<DebtOverview> balanceDebtOverviews(List<DebtOverview> unbalancedDebtOverview){
         Map<UserPair, Double> debtsMap = new HashMap<>();
         for(DebtOverview debt : unbalancedDebtOverview){
             UserPair userPair = new UserPair(debt.creditor(), debt.debtor());
@@ -78,9 +78,12 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
 
         }
         return debtsMap.entrySet().stream()
-                .filter(entry -> entry.getValue() != 0.0 && !entry.getKey().creditor().equals(entry.getKey().debtor())) // Skip zero amounts and same user as creditor and debtor
-                .map(entry -> new DebtOverview(entry.getKey().creditor(), entry.getKey().debtor(), entry.getValue()))
-                .collect(Collectors.toList());
+            .filter(entry -> entry.getValue() != 0.0)
+            .map(entry -> {
+                DebtOverview debtOverview = new DebtOverview(entry.getKey().creditor(), entry.getKey().debtor(), entry.getValue());
+                return entry.getValue() > 0 ? debtOverview : debtOverview.inverseDebtOverview();
+            })
+            .collect(Collectors.toList());
     }
 
     @Override
