@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class BudgetManagementServiceImplementation implements BudgetManagementService{
 
-    private static record UserPair(User creditor, User debtor) {
+    private record UserPair(User creditor, User debtor) {
 
         private UserPair inversePair() { return new UserPair(debtor, creditor); }
 

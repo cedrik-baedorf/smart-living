@@ -2,12 +2,6 @@ package smart.housing.entities;
 
 public record DebtOverview(User creditor, User debtor, double amount) {
 
-    public DebtOverview(User creditor, User debtor, double amount) {
-        this.creditor = creditor;
-        this.debtor = debtor;
-        this.amount = amount;
-    }
-
     public DebtOverview inverseDebtOverview() {
         return new DebtOverview(debtor, creditor, - amount);
     }
