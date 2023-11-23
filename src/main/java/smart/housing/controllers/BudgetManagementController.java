@@ -234,9 +234,9 @@ public class BudgetManagementController extends SmartHousingController {
 
         if (selectedDebt != null) {
             try {
-                String debtorFirstName = selectedDebt.getDebtor().getFirstName();
-                String debtorLastName = selectedDebt.getDebtor().getLastName();
-                String creditorFirstName = selectedDebt.getCreditor().getFirstName();
+                String debtorFirstName = selectedDebt.debtor().getFirstName();
+                String debtorLastName = selectedDebt.debtor().getLastName();
+                String creditorFirstName = selectedDebt.creditor().getFirstName();
                 String debtorEmail = debtorFirstName + "." + debtorLastName + "@studmail.hwg-lu.de";
                 String subject = "You owe money!";
 

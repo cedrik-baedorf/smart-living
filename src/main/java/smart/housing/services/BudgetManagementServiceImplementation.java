@@ -4,13 +4,18 @@ import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.DebtOverview;
 import smart.housing.entities.Expense;
 import smart.housing.entities.User;
-import smart.housing.entities.UserPair;
 
 import javax.persistence.EntityManager;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class BudgetManagementServiceImplementation implements BudgetManagementService{
+
+    private static record UserPair(User creditor, User debtor) {
+
+        private UserPair inversePair() { return new UserPair(debtor, creditor); }
+
+    }
 
     private final DatabaseConnector DATABASE_CONNECTOR;
 
@@ -33,18 +38,17 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
         ).toList();
 
         List<DebtOverview> debtOverviews = convertExpensesToDebtOverview(expenses).stream()
-            .filter(debtOverview -> debtOverview.getCreditor().equals(user) || debtOverview.getDebtor().equals(user)).toList();
+            .filter(debtOverview -> debtOverview.creditor().equals(user) || debtOverview.debtor().equals(user)).toList();
 
         List<DebtOverview> balancedDebts = balanceDebts(debtOverviews);
 
-        List<DebtOverview> result = new LinkedList<>();
-
-        for(DebtOverview debtOverview : balancedDebts.stream().filter(debt -> debt.getCreditor().equals(user)).toList()){
-            result.add (new DebtOverview(debtOverview.getCreditor(),debtOverview.getDebtor(),
-                    debtOverview.getAmount()-balancedDebts.stream().filter(debt -> debt.getCreditor().equals(debtOverview.getDebtor())).toList().get(0).getAmount()));
+        for(int i = 0; i < balancedDebts.size(); i++) {
+            DebtOverview debtOverview = balancedDebts.get(i);
+            if(debtOverview.debtor().equals(user))
+                balancedDebts.set(i, debtOverview.inverseDebtOverview());
         }
 
-        return result;
+        return balancedDebts;
     }
 
 
@@ -60,58 +64,23 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
             }
         }
 
-
         return debtOverviews;
-
-        /*
-        Map<UserPair, Double> debtsMap = new HashMap<>();
-
-        // Iterate through expenses and update debtsMap
-        for (Expense expense : expenses) {
-            User creditor = expense.getCreditor();
-            double cost = expense.getCost();
-            double share = cost / (expense.getDebitors().size());
-
-            // Update debtor balances
-            for (User debtor : expense.getDebitors()) {
-                // Skip if the debtor is the same as the creditor
-                if (!debtor.equals(creditor)) {
-                    UserPair userPair = new UserPair(creditor, debtor);
-                    UserPair reversedPair = new UserPair(debtor, creditor);
-
-                    // Update the debt for the pair
-                    debtsMap.put(userPair, debtsMap.getOrDefault(userPair, 0.0) + share);
-                    debtsMap.put(reversedPair, debtsMap.getOrDefault(reversedPair, 0.0) - share);
-                }
-            }
-
-            // Update creditor balance (they owe money)
-            UserPair selfPair = new UserPair(creditor, creditor);
-            debtsMap.put(selfPair, debtsMap.getOrDefault(selfPair, 0.0) - cost);
-        }
-
-        // Convert the debtsMap to DebtOverview objects
-        List<DebtOverview> debtOverviews = debtsMap.entrySet().stream()
-                .filter(entry -> entry.getValue() != 0.0 && !entry.getKey().getFirstUser().equals(entry.getKey().getSecondUser())) // Skip zero amounts and same user as creditor and debtor
-                .map(entry -> new DebtOverview(entry.getKey().getFirstUser(), entry.getKey().getSecondUser(), entry.getValue()))
-                .collect(Collectors.toList());
-
-        return debtOverviews;*/
     }
 
     private List<DebtOverview> balanceDebts (List<DebtOverview> unbalancedDebtOverview){
         Map<UserPair, Double> debtsMap = new HashMap<>();
         for(DebtOverview debt : unbalancedDebtOverview){
-            UserPair userPair = new UserPair(debt.getCreditor(), debt.getDebtor());
-            debtsMap.put(userPair, debtsMap.getOrDefault(userPair, 0.0) + debt.getAmount());
+            UserPair userPair = new UserPair(debt.creditor(), debt.debtor());
+            if(! debtsMap.containsKey(userPair.inversePair()))
+                debtsMap.put(userPair, debtsMap.getOrDefault(userPair, 0.0) + debt.amount());
+            else
+                debtsMap.put(userPair.inversePair(), debtsMap.getOrDefault(userPair.inversePair(), 0.0) - debt.amount());
 
         }
-        List<DebtOverview> balancedDebts = debtsMap.entrySet().stream()
-                .filter(entry -> entry.getValue() != 0.0 && !entry.getKey().getFirstUser().equals(entry.getKey().getSecondUser())) // Skip zero amounts and same user as creditor and debtor
-                .map(entry -> new DebtOverview(entry.getKey().getFirstUser(), entry.getKey().getSecondUser(), entry.getValue()))
+        return debtsMap.entrySet().stream()
+                .filter(entry -> entry.getValue() != 0.0 && !entry.getKey().creditor().equals(entry.getKey().debtor())) // Skip zero amounts and same user as creditor and debtor
+                .map(entry -> new DebtOverview(entry.getKey().creditor(), entry.getKey().debtor(), entry.getValue()))
                 .collect(Collectors.toList());
-
-        return balancedDebts;
     }
 
     @Override
