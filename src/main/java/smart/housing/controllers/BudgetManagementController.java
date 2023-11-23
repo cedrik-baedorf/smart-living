@@ -75,6 +75,9 @@ public class BudgetManagementController extends SmartHousingController {
     @FXML
     public StyledButton emailButton;
 
+    @FXML
+    public StyledButton settleDebtButton;
+
 
 
     /**
@@ -106,8 +109,10 @@ public class BudgetManagementController extends SmartHousingController {
         debtsOverview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
                 emailButton.setVisible(debtsOverview.getItems().size() > 1);
+                settleDebtButton.setVisible(true);  // Settle Debt button is always visible when a row is selected
             } else {
                 emailButton.setVisible(false);
+                settleDebtButton.setVisible(false);  // Settle Debt button is not visible when no row is selected
             }
         });
 
@@ -117,6 +122,11 @@ public class BudgetManagementController extends SmartHousingController {
 
         // Bind the visibility of the emailButton to the condition you want
         emailButton.visibleProperty().bind(Bindings.createBooleanBinding(
+                () -> selectedDebtProperty.get() != null && debtsOverview.getItems().size() > 1,
+                selectedDebtProperty, debtsOverview.getItems()));
+
+        // Bind the visibility of the settleButton to the condition you want
+        settleDebtButton.visibleProperty().bind(Bindings.createBooleanBinding(
                 () -> selectedDebtProperty.get() != null && debtsOverview.getItems().size() > 1,
                 selectedDebtProperty, debtsOverview.getItems()));
 
@@ -227,6 +237,42 @@ public class BudgetManagementController extends SmartHousingController {
         sendEmail();
     }
 
+    public void _settleDebtButton_onAction(ActionEvent event){
+        event.consume();
+        settleDebtButtonClicked();
+    }
+
+    private void settleDebtButtonClicked() {
+        DebtOverview selectedDebt = debtsOverview.getSelectionModel().getSelectedItem();
+
+        if (selectedDebt != null) {
+            try {
+                User activeUser = USER_SERVICE.getServiceUser();
+                User creditor = selectedDebt.creditor();
+                User debtor = selectedDebt.debtor();
+                double openDebt = selectedDebt.getAmount();
+
+                // Add an expense with the Name "Settled Debt"
+                BUDGET_SERVICE.create(new Expense(Set.of(debtor), creditor, "Settled Debt", (openDebt*-1)));
+
+                // Display success message
+                buttonDisplay(true, settleDebtButton);
+
+            } catch (Exception e) {
+                // Display error message
+                buttonDisplay(false, settleDebtButton);
+                e.printStackTrace();
+            } finally {
+                clearExpenses();
+                loadExpenseList();
+                loadDebtsOverviewList();
+            }
+        } else {
+            // No row selected, display error message
+            buttonDisplay(false, settleDebtButton);
+        }
+    }
+
     private void sendEmail() {
         // Get the selected row from the debtsOverview table
         DebtOverview selectedDebt = debtsOverview.getSelectionModel().getSelectedItem();
@@ -267,11 +313,6 @@ public class BudgetManagementController extends SmartHousingController {
             buttonDisplay(false, emailButton);
         }
     }
-
-
-
-
-
 
 
     public String getViewName() {
