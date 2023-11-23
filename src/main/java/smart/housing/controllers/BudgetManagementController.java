@@ -12,6 +12,7 @@ import smart.housing.entities.*;
 import smart.housing.exceptions.BudgetManagementServiceException;
 import smart.housing.services.BudgetManagementService;
 import smart.housing.services.BudgetManagementServiceImplementation;
+import smart.housing.services.UserManagementService;
 import smart.housing.ui.*;
 import javafx.collections.ListChangeListener;
 
@@ -42,6 +43,8 @@ public class BudgetManagementController extends SmartHousingController {
     private final SmartLivingApplication APPLICATION;
 
     private final BudgetManagementService BUDGET_SERVICE;
+
+    private final UserManagementService USER_SERVICE;
 
     @FXML
     public BackgroundStackPane budgetBackgroundPane;
@@ -80,14 +83,15 @@ public class BudgetManagementController extends SmartHousingController {
      * instance belongs to
      * @param application Application calling the constructor
      */
-    public BudgetManagementController(SmartLivingApplication application) {
+    public BudgetManagementController(SmartLivingApplication application, UserManagementService userManagementService) {
         this.APPLICATION = application;
+        this.USER_SERVICE = userManagementService;
         this.BUDGET_SERVICE = new BudgetManagementServiceImplementation(APPLICATION.getDatabaseConnector());
     }
 
     public void initialize() {
         setBackgroundImage();
-        update();
+
         // Set up listener for multiple selections
         debitors.getCheckModel().getCheckedItems().addListener((ListChangeListener<? super User>) change -> {
             while (change.next()) {
@@ -116,6 +120,8 @@ public class BudgetManagementController extends SmartHousingController {
         emailButton.visibleProperty().bind(Bindings.createBooleanBinding(
                 () -> selectedDebtProperty.get() != null && debtsOverview.getItems().size() > 1,
                 selectedDebtProperty, debtsOverview.getItems()));
+
+        update();
     }
 
 
@@ -125,12 +131,14 @@ public class BudgetManagementController extends SmartHousingController {
 
     @Override
     public void update() {
-        BudgetManagementService service = new BudgetManagementServiceImplementation(APPLICATION.getDatabaseConnector());
-        creditors.setItems(FXCollections.observableList(service.getCurrentUsers()));
-        debitors.setItems(FXCollections.observableList(service.getCurrentUsers()));
+        creditors.setItems(FXCollections.observableList(USER_SERVICE.getUsers()));
+        debitors.setItems(FXCollections.observableList(USER_SERVICE.getUsers()));
         expenseTable.setItems(FXCollections.observableList(BUDGET_SERVICE.getAllExpenses()));
         loadExpenseList();
+        loadDebtsOverviewList();
     }
+
+
 
     public void _addExpenseButton_onAction(ActionEvent event) {
         event.consume();
@@ -157,13 +165,14 @@ public class BudgetManagementController extends SmartHousingController {
         } finally {
             clearExpenses();
             loadExpenseList();
+            loadDebtsOverviewList();
         }
     }
+
 
     public void loadExpenseList() {
         try {
             List<Expense> expenses = BUDGET_SERVICE.getAllExpenses();
-            updateDebtsOverview(expenses);
             expenseTable.setItems(FXCollections.observableList(expenses));
         } catch (Exception e) {
             System.err.println("Error loading expense list: " + e.getMessage());
@@ -171,49 +180,12 @@ public class BudgetManagementController extends SmartHousingController {
     }
 
 
-
-    private void updateDebtsOverview(List<Expense> expenses) {
-        List<DebtOverview> debtOverviews = calculateDebtsOverview(expenses);
+    private void loadDebtsOverviewList() {
+        User activeUser = USER_SERVICE.getServiceUser();
+        List<DebtOverview> debtOverviews = BUDGET_SERVICE.getUserDebt(activeUser);
         debtsOverview.setItems(FXCollections.observableList(debtOverviews));
     }
 
-    private List<DebtOverview> calculateDebtsOverview(List<Expense> expenses) {
-        Map<UserPair, Double> debtsMap = new HashMap<>();
-
-        // Iterate through expenses and update debtsMap
-        for (Expense expense : expenses) {
-            User creditor = expense.getCreditor();
-            double cost = expense.getCost();
-            double share = cost / (expense.getDebitors().size());
-
-            // Update debtor balances
-            for (User debtor : expense.getDebitors()) {
-                // Skip if the debtor is the same as the creditor
-                if (!debtor.equals(creditor)) {
-                    UserPair userPair = new UserPair(creditor, debtor);
-                    UserPair reversedPair = new UserPair(debtor, creditor);
-
-                    // Update the debt for the pair
-                    debtsMap.put(userPair, debtsMap.getOrDefault(userPair, 0.0) + share);
-                    debtsMap.put(reversedPair, debtsMap.getOrDefault(reversedPair, 0.0) - share);
-                }
-            }
-
-            // Update creditor balance (they owe money)
-            UserPair selfPair = new UserPair(creditor, creditor);
-            debtsMap.put(selfPair, debtsMap.getOrDefault(selfPair, 0.0) - cost);
-        }
-
-        // Convert the debtsMap to DebtOverview objects
-        List<DebtOverview> debtOverviews = debtsMap.entrySet().stream()
-                .filter(entry -> entry.getValue() != 0.0 && !entry.getKey().getFirstUser().equals(entry.getKey().getSecondUser())) // Skip zero amounts and same user as creditor and debtor
-                .map(entry -> new DebtOverview(entry.getKey().getFirstUser(), entry.getKey().getSecondUser(), entry.getValue()))
-                .collect(Collectors.toList());
-
-        System.out.println("Debts Overview: " + debtOverviews); // Print for debugging
-
-        return debtOverviews;
-    }
 
 
     private void clearExpenses () {
@@ -238,6 +210,7 @@ public class BudgetManagementController extends SmartHousingController {
     private void removeItemFromList(Expense expense) {
         BUDGET_SERVICE.delete(expense);
         loadExpenseList();
+        loadDebtsOverviewList();
     }
 
     public static void buttonDisplay(Boolean successful, StyledButton button) {
