@@ -3,7 +3,6 @@ package smart.housing.controllers;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.DialogPane;
 import smart.housing.entities.Task;
@@ -13,6 +12,7 @@ import smart.housing.services.TaskManagementService;
 import smart.housing.services.UserManagementService;
 import smart.housing.ui.ErrorMessage;
 import smart.housing.ui.StyledCheckComboBox;
+import smart.housing.ui.StyledDatePicker;
 import smart.housing.ui.StyledTextField;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class NewTaskDialogController extends DialogController {
 
     @FXML DialogPane dialogPane;
     @FXML StyledTextField taskNameField;
-    @FXML DatePicker dueDatePicker;
+    @FXML StyledDatePicker dueDatePicker;
     @FXML StyledCheckComboBox<User> assigneeComboBox;
     @FXML ErrorMessage errorMessage;
 
