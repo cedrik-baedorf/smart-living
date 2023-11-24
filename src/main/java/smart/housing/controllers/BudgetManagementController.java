@@ -6,7 +6,9 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableRow;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Duration;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.*;
@@ -123,15 +125,20 @@ public class BudgetManagementController extends SmartHousingController {
 
         // Bind the visibility of the emailButton to the condition you want
         emailButton.visibleProperty().bind(Bindings.createBooleanBinding(
-                () -> selectedDebtProperty.get() != null && debtsOverview.getItems().size() > 1,
+                () -> selectedDebtProperty.get() != null && debtsOverview.getItems().size() > 0,
                 selectedDebtProperty, debtsOverview.getItems()));
+
+        // Bind the visibility and clickability of the emailButton based on the debt amount
+        emailButton.disableProperty().bind(Bindings.createBooleanBinding(
+                () -> selectedDebtProperty.get() != null && selectedDebtProperty.get().getAmount() < 0,
+                selectedDebtProperty));
 
         // Bind the visibility of the settleButton to the condition you want
         settleDebtButton.visibleProperty().bind(Bindings.createBooleanBinding(
-                () -> selectedDebtProperty.get() != null && debtsOverview.getItems().size() > 1,
+                () -> selectedDebtProperty.get() != null && debtsOverview.getItems().size() > 0,
                 selectedDebtProperty, debtsOverview.getItems()));
 
-
+        /*
         // Set up row factory for debtsOverview
         debtsOverview.setRowFactory(tv -> new TableRow<DebtOverview>() {
             @Override
@@ -144,11 +151,55 @@ public class BudgetManagementController extends SmartHousingController {
                 } else {
                     // Set style based on debt value
                     double debtAmount = item.getAmount();
-                    String rowStyle = (debtAmount < 0) ? "-fx-text-fill: red;" : "-fx-text-fill: green;";
-                    setStyle(rowStyle);
+                    String textStyle = (debtAmount < 0) ? "-fx-text-fill: red;" : "-fx-text-fill: green;";
+                    setStyle(textStyle);
                 }
             }
         });
+
+
+        TableColumn<DebtOverview, Double> amountColumn = (TableColumn<DebtOverview, Double>) debtsOverview.getColumns().get(0);
+
+        // Add a cell factory to format the double value as a string with the desired color
+        amountColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");  // Clear style for empty cells
+                } else {
+                    setText(String.format("%.2f", item));
+                    setStyle(item < 0 ? "-fx-text-fill: red;" : "-fx-text-fill: green;");
+                }
+            }
+        });
+
+        // Also, update the cell value factory for the "Amount" column
+        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
+
+         */
+
+        // Assuming you have a TableColumn for "Amount" like this:
+        TableColumn<DebtOverview, Double> amountColumn = (TableColumn<DebtOverview, Double>) debtsOverview.getColumns().get(0);
+
+        // Add a cell factory to format the double value as a string with the desired color
+        amountColumn.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");  // Clear style for empty cells
+                } else {
+                    setText(String.format("%.2f €", item)); // Include the currency symbol
+                    setStyle(item < 0 ? "-fx-text-fill: red;" : "-fx-text-fill: green;");
+                }
+            }
+        });
+
+        // Also, update the cell value factory for the "Amount" column
+        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
         update();
     }
@@ -202,6 +253,8 @@ public class BudgetManagementController extends SmartHousingController {
     public void loadExpenseList() {
         try {
             List<Expense> expenses = BUDGET_SERVICE.getAllExpenses();
+            // Sort the list in descending order based on creation date
+            expenses.sort(Comparator.comparing(Expense::getExpenseId).reversed());
             expenseTable.setItems(FXCollections.observableList(expenses));
         } catch (Exception e) {
             System.err.println("Error loading expense list: " + e.getMessage());
@@ -267,7 +320,6 @@ public class BudgetManagementController extends SmartHousingController {
 
         if (selectedDebt != null) {
             try {
-                User activeUser = USER_SERVICE.getServiceUser();
                 User creditor = selectedDebt.creditor();
                 User debtor = selectedDebt.debtor();
                 double openDebt = selectedDebt.getAmount();
@@ -305,10 +357,13 @@ public class BudgetManagementController extends SmartHousingController {
                 String debtorEmail = debtorFirstName + "." + debtorLastName + "@studmail.hwg-lu.de";
                 String subject = "You owe money!";
 
-                // Encode the body parameter
+                // Include debt amount in the email body
+                double debtAmount = selectedDebt.getAmount();
                 String body = "Dear " + debtorFirstName + " " + debtorLastName +
-                        ",\n\nYou owe money to " + creditorFirstName +
-                        ". Please settle the amount at your earliest convenience.\n\nSincerely,\nYour Budget Management System";
+                        ",\n\nYou owe €" + String.format("%.2f", Math.abs(debtAmount)) +
+                        " to " + creditorFirstName +
+                        ". Please settle the amount at your earliest convenience.\n\nSincerely,\nYour Budget Management System\n"
+                        + "on behalf of: " + USER_SERVICE.getServiceUser().getFirstName() + " " + USER_SERVICE.getServiceUser().getLastName();
 
                 // Encode the subject and body parameters
                 String encodedSubject = URLEncoder.encode(subject, StandardCharsets.UTF_8).replace("+", "%20");
