@@ -17,6 +17,13 @@ public class ShoppingManagementServiceImplementation implements ShoppingManageme
 
     @Override
     public void create(ShoppingListItem shoppingListItem) {
+
+        if (shoppingListItem.getAmount() < 0 || shoppingListItem.getAmount()>100000.0) {
+            throw new IllegalArgumentException("Amount cannot be negative nor over 100000");
+        } else if (shoppingListItem.getItem() == null || shoppingListItem.getItem().trim().isEmpty()) {
+            throw new IllegalArgumentException("Item name cannot be empty");
+        }
+
         em = databaseConnector.createEntityManager();
         em.getTransaction().begin();
         ShoppingListItem existingItem = em.find(ShoppingListItem.class, shoppingListItem.getItem());
@@ -26,7 +33,6 @@ public class ShoppingManagementServiceImplementation implements ShoppingManageme
             existingItem.setAmount(newAnzahl);
             em.merge(existingItem);
         } else {
-            System.out.println(shoppingListItem.getItem() + " " + shoppingListItem.getAmount());
             em.persist(shoppingListItem);
         }
         em.getTransaction().commit();
@@ -37,6 +43,11 @@ public class ShoppingManagementServiceImplementation implements ShoppingManageme
     public void delete (ShoppingListItem shoppingListItem) {
         em = databaseConnector.createEntityManager();
         ShoppingListItem itemToBeRemoved = em.find(ShoppingListItem.class, shoppingListItem.getItem());
+
+        if (itemToBeRemoved == null) {
+            throw new IllegalArgumentException("Item not found");
+        }
+
         em.getTransaction().begin();
         em.remove(itemToBeRemoved);
         em.getTransaction().commit();
@@ -56,14 +67,20 @@ public class ShoppingManagementServiceImplementation implements ShoppingManageme
 
     @Override
     public void modifyItem(ShoppingListItem shoppingListItem, Double newAmount) {
-        em = databaseConnector.createEntityManager();
+        if (shoppingListItem == null || newAmount == null || newAmount < 0 || newAmount>100000.0) {
+            throw new IllegalArgumentException("ShoppingListItem or new amount cannot be null");
+        }
+
+        EntityManager em = databaseConnector.createEntityManager();
+        ShoppingListItem modifiedItem = em.find(ShoppingListItem.class, shoppingListItem.getItem());
+
+        if (modifiedItem == null) {
+            throw new IllegalArgumentException("Item not found in the database");
+        }
+
         em.getTransaction().begin();
-
-        ShoppingListItem modifiedItem = em.find(ShoppingListItem.class,shoppingListItem.getItem());
-
-        if(modifiedItem != null)
-            modifiedItem.setAmount(newAmount);
-
+        modifiedItem.setAmount(newAmount);  // Assuming setAmount method exists and updates the amount
+        em.merge(modifiedItem);
         em.getTransaction().commit();
         em.close();
     }
