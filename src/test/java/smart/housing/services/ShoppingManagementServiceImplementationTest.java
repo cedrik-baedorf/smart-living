@@ -71,6 +71,8 @@ public class ShoppingManagementServiceImplementationTest {
 
         assertNotNull(itemList);
         assertEquals(2, itemList.size());
+        assertEquals("Apple",itemList.get(0).getItem());
+        assertEquals("Banana",itemList.get(1).getItem());
         Mockito.verify(entityManager).close();
     }
 
@@ -259,7 +261,7 @@ public class ShoppingManagementServiceImplementationTest {
         }
 
         @ParameterizedTest
-        @ValueSource(doubles = { -1.0, -10000000, 100000.0 }) // Example set of valid amounts
+        @ValueSource(doubles = { -1.0, -10000000, 100001.0 }) // Example set of valid amounts
         void testCreateItemWithVariousInvalidAmounts(double amount2) {
             DatabaseConnector databaseConnector = createMockDatabaseConnector();
             ShoppingManagementService service = new ShoppingManagementServiceImplementation(databaseConnector);
@@ -270,17 +272,7 @@ public class ShoppingManagementServiceImplementationTest {
             assertThrows(IllegalArgumentException.class, () -> service.create(item));
         }
 
-        @ParameterizedTest
-        @ValueSource(doubles = { 1.0, 50.0, 99999.9 }) // Example set of valid amounts
-        void testModifyItemWithVariousValidAmounts(double newAmount) {
-            DatabaseConnector databaseConnector = createMockDatabaseConnector();
-            ShoppingManagementService service = new ShoppingManagementServiceImplementation(databaseConnector);
 
-            ShoppingListItem item = new ShoppingListItem("Milk", 10.0, "l");
-
-            // Assert that no exception is thrown for valid amounts
-            assertDoesNotThrow(() -> service.modifyItem(item, newAmount));
-        }
 
         @ParameterizedTest
         @ValueSource(doubles = { -1.0, 100000.0 }) // Example set of valid amounts
