@@ -10,6 +10,7 @@ import smart.housing.services.TaskManagementService;
 import smart.housing.services.TaskManagementServiceImplementation;
 import smart.housing.services.UserManagementService;
 import smart.housing.ui.BackgroundStackPane;
+import smart.housing.ui.StyledButton;
 import smart.housing.ui.StyledTableView;
 
 
@@ -36,7 +37,12 @@ public class TaskManagementController extends SmartHousingController {
 
     private final TaskManagementService TASK_MANAGEMENT_SERVICE;
 
-    @FXML public BackgroundStackPane backgroundPane;
+    @FXML
+    public BackgroundStackPane backgroundPane;
+    @FXML
+    public StyledButton newTaskButton;
+    @FXML
+    public StyledButton modifyTaskButton;
     @FXML
     public StyledTableView<Task> taskTable;
     @FXML
@@ -80,6 +86,21 @@ public class TaskManagementController extends SmartHousingController {
         dialog.setDialogPane(APPLICATION.loadFXML(
                 NewTaskDialogController.VIEW_NAME,
                 new NewTaskDialogController(USER_MANAGEMENT_SERVICE, TASK_MANAGEMENT_SERVICE, dialog)
+        ));
+        dialog.showAndWait().ifPresent(aBoolean -> loadTasks());
+    }
+
+    public void _modifyTaskButton_onAction(ActionEvent event){
+        event.consume();
+        modifyTask();
+    }
+
+    public void modifyTask(){
+        Task taskToBeModified = taskTable.getSelectionModel().getSelectedItem();
+        Dialog<Boolean> dialog = new Dialog<>();
+        dialog.setDialogPane(APPLICATION.loadFXML(
+                ModifyTaskController.VIEW_NAME,
+                new ModifyTaskController(USER_MANAGEMENT_SERVICE, TASK_MANAGEMENT_SERVICE, dialog, taskToBeModified)
         ));
         dialog.showAndWait().ifPresent(aBoolean -> loadTasks());
     }

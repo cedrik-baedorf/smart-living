@@ -58,6 +58,24 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
         entityManager.close();
     }
 
+    @Override
+    public void modify(Task oldTask, Task updateTask) {
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
+
+        try {
+            entityManager.getTransaction().begin();
+            oldTask = entityManager.merge(oldTask);
+            oldTask.setTaskName(updateTask.getTaskName());
+            oldTask.setDueDate(updateTask.getDueDate());
+            oldTask.setAssignees(updateTask.getAssignees());
+
+            entityManager.getTransaction().commit();
+        } catch (Exception e){
+            e.getStackTrace();
+        }
+        entityManager.close();
+    }
+
     public static void main(String [] args){
         TaskManagementService service = new TaskManagementServiceImplementation(new DatabaseConnectorImplementation());
         List<Task> list = service.getCurrentTasks();
