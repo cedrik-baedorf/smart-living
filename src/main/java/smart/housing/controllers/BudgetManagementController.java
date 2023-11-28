@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -76,6 +77,9 @@ public class BudgetManagementController extends SmartHousingController {
     public StyledButton deleteButton;
 
     @FXML
+    public StyledButton modifyButton;
+
+    @FXML
     public StyledButton emailButton;
 
     @FXML
@@ -111,11 +115,11 @@ public class BudgetManagementController extends SmartHousingController {
         // Set up listener for selection in debtsOverview
         debtsOverview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             if (newSelection != null) {
-                emailButton.setVisible(debtsOverview.getItems().size() > 1);
+                emailButton.setVisible(true);
                 settleDebtButton.setVisible(true);  // Settle Debt button is always visible when a row is selected
             } else {
-                emailButton.setVisible(false);
-                settleDebtButton.setVisible(false);  // Settle Debt button is not visible when no row is selected
+                emailButton.setVisible(true);
+                settleDebtButton.setVisible(true);  // Settle Debt button is not visible when no row is selected
             }
         });
 
@@ -123,62 +127,10 @@ public class BudgetManagementController extends SmartHousingController {
         SimpleObjectProperty<DebtOverview> selectedDebtProperty = new SimpleObjectProperty<>();
         selectedDebtProperty.bind(debtsOverview.getSelectionModel().selectedItemProperty());
 
-        // Bind the visibility of the emailButton to the condition you want
-        emailButton.visibleProperty().bind(Bindings.createBooleanBinding(
-                () -> selectedDebtProperty.get() != null && debtsOverview.getItems().size() > 0,
-                selectedDebtProperty, debtsOverview.getItems()));
-
         // Bind the visibility and clickability of the emailButton based on the debt amount
         emailButton.disableProperty().bind(Bindings.createBooleanBinding(
                 () -> selectedDebtProperty.get() != null && selectedDebtProperty.get().getAmount() < 0,
                 selectedDebtProperty));
-
-        // Bind the visibility of the settleButton to the condition you want
-        settleDebtButton.visibleProperty().bind(Bindings.createBooleanBinding(
-                () -> selectedDebtProperty.get() != null && debtsOverview.getItems().size() > 0,
-                selectedDebtProperty, debtsOverview.getItems()));
-
-        /*
-        // Set up row factory for debtsOverview
-        debtsOverview.setRowFactory(tv -> new TableRow<DebtOverview>() {
-            @Override
-            protected void updateItem(DebtOverview item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null || empty) {
-                    // Clear styles for empty cells
-                    setStyle("");
-                } else {
-                    // Set style based on debt value
-                    double debtAmount = item.getAmount();
-                    String textStyle = (debtAmount < 0) ? "-fx-text-fill: red;" : "-fx-text-fill: green;";
-                    setStyle(textStyle);
-                }
-            }
-        });
-
-
-        TableColumn<DebtOverview, Double> amountColumn = (TableColumn<DebtOverview, Double>) debtsOverview.getColumns().get(0);
-
-        // Add a cell factory to format the double value as a string with the desired color
-        amountColumn.setCellFactory(column -> new TableCell<>() {
-            @Override
-            protected void updateItem(Double item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                    setStyle("");  // Clear style for empty cells
-                } else {
-                    setText(String.format("%.2f", item));
-                    setStyle(item < 0 ? "-fx-text-fill: red;" : "-fx-text-fill: green;");
-                }
-            }
-        });
-
-        // Also, update the cell value factory for the "Amount" column
-        amountColumn.setCellValueFactory(new PropertyValueFactory<>("amount"));
-
-         */
 
         // Assuming you have a TableColumn for "Amount" like this:
         TableColumn<DebtOverview, Double> amountColumn = (TableColumn<DebtOverview, Double>) debtsOverview.getColumns().get(0);
@@ -293,6 +245,21 @@ public class BudgetManagementController extends SmartHousingController {
         BUDGET_SERVICE.delete(expense);
         loadExpenseList();
         loadDebtsOverviewList();
+    }
+
+    public void _modifyButton_onAction(ActionEvent event) {
+        event.consume();
+        Expense selectedItem = expenseTable.getSelectionModel().getSelectedItem();
+
+        if (selectedItem != null) {
+            // Modify button logic goes here
+
+            // Display success message with a green outline
+            buttonDisplay(true, modifyButton);
+        } else {
+            // No item selected, display error message with a red outline
+            buttonDisplay(false, modifyButton);
+        }
     }
 
     public static void buttonDisplay(Boolean successful, StyledButton button) {

@@ -87,14 +87,14 @@
                             <HBox spacing="5">
 
                             <!-- Email Button -->
-                            <StyledButton fx:id="emailButton" text="Notify User" onAction="#_emailButton_onAction" visible="false">
+                            <StyledButton fx:id="emailButton" text="Notify User" onAction="#_emailButton_onAction">
                                 <font>
                                     <Font size="10.0" />
                                 </font>
                             </StyledButton>
 
                             <!-- Settle Debt Button -->
-                            <StyledButton fx:id="settleDebtButton" text="Settle Debt" onAction="#_settleDebtButton_onAction" visible="false">
+                            <StyledButton fx:id="settleDebtButton" text="Settle Debt" onAction="#_settleDebtButton_onAction">
                                 <font>
                                     <Font size="10.0" />
                                 </font>
@@ -145,6 +145,13 @@
                              <font>
                                  <Font size="10.0" />
                              </font>
+                            </StyledButton>
+
+                            <!-- Delete Button -->
+                            <StyledButton fx:id="modifyButton" text="Modify" onAction="#_modifyButton_onAction">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
                             </StyledButton>
                         </HBox>
 
