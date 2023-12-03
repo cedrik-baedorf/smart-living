@@ -1,10 +1,13 @@
 package smart.housing.ui;
 
 import javafx.application.Platform;
-import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
-public class ErrorMessage extends Label {
+import java.util.Arrays;
+
+public class ErrorMessage extends Text {
 
     private static final Color
         DEFAULT_TEXT_FILL = Color.BLACK,
@@ -12,16 +15,18 @@ public class ErrorMessage extends Label {
 
     public ErrorMessage() {
         super();
+        this.setWrappingWidth(200);
+        this.setTextAlignment(TextAlignment.CENTER);
     }
 
     public void clear() {
-        this.setTextFill(DEFAULT_TEXT_FILL);
         this.setText("");
+        this.setFill(DEFAULT_TEXT_FILL);
         this.setVisible(false);
     }
 
     public void displayError(String errorMessage) {
-        this.setTextFill(ERROR_TEXT_FILL);
+        this.setFill(ERROR_TEXT_FILL);
         this.setText(errorMessage);
         this.setVisible(true);
     }
@@ -31,7 +36,7 @@ public class ErrorMessage extends Label {
     }
 
     public void displayInfo(String infoMessage) {
-        this.setTextFill(DEFAULT_TEXT_FILL);
+        this.setFill(DEFAULT_TEXT_FILL);
         this.setText(infoMessage);
         this.setVisible(true);
     }

@@ -3,12 +3,8 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import smart.housing.ui.ErrorMessage?>
-
-<?import smart.housing.ui.StyledComboBox?>
 <?import smart.housing.ui.StyledButton?>
 <?import smart.housing.ui.StyledTextField?>
-<?import smart.housing.ui.StyledPasswordField?>
 <DialogPane fx:id="dialogPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="smart.housing.controllers.ModifyShoppingManagementDialogController" stylesheets="@style_sheets/style.css">
     <content>

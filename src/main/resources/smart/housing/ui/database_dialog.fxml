@@ -36,7 +36,7 @@
                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </StyledButton>
-            <ErrorMessage fx:id="errorMessage" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="5" wrapText="true" styleClass="standard-layout, error-message">
+            <ErrorMessage fx:id="errorMessage" GridPane.rowIndex="5">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>

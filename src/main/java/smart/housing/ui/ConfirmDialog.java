@@ -40,13 +40,7 @@ public class ConfirmDialog extends Dialog<Boolean> {
 
         initializeActionListeners();
 
-        GridPane contentPane = createBackgroundPane();
-
-        BackgroundDialogPane dialogPane = new BackgroundDialogPane("smart/housing/ui/images/confirm_dialog_background.jpg");
-        dialogPane.setContent(contentPane);
-        dialogPane.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-
-        this.setDialogPane(dialogPane);
+        this.getDialogPane().setContent(createBackgroundPane());
     }
 
     private void initializeObjects(String messageText, String confirmText, String abortText) {
