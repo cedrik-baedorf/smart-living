@@ -1,5 +1,6 @@
 package smart.housing.services;
 
+import org.hibernate.exception.ConstraintViolationException;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.User;
 import smart.housing.enums.UserRole;
@@ -8,6 +9,8 @@ import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.security.HashAlgorithm;
 
 import javax.persistence.EntityManager;
+import javax.persistence.RollbackException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -74,18 +77,24 @@ public class UserManagementServiceImplementation implements UserManagementServic
 
     @Override
     public void delete(User user) {
-        if(user == null)
-            throw new UserManagementServiceException("cannot delete user when user = null");
-        if(USER == null)
-            throw new UserManagementServiceException("cannot delete user " + user.getUsername() + "when this.USER = null");
-        if(! USER.getRole().outranks(user.getRole()))
-            throw new UserManagementServiceException("cannot delete user of rank " + user.getRole().getRoleName() + " since this.USER.getRank() = " + USER.getRole().getRoleName());
-        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
-        entityManager.getTransaction().begin();
-        user = entityManager.merge(user);
-        entityManager.remove(user);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+            if(user == null)
+                throw new UserManagementServiceException("cannot delete user when user = null");
+            if(USER == null)
+                throw new UserManagementServiceException("cannot delete user " + user.getUsername() + "when this.USER = null");
+            if(! USER.getRole().outranks(user.getRole()))
+                throw new UserManagementServiceException("cannot delete user of rank " + user.getRole().getRoleName() + " since this.USER.getRank() = " + USER.getRole().getRoleName());
+            EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
+            entityManager.getTransaction().begin();
+            user = entityManager.merge(user);
+            entityManager.remove(user);
+        try {
+            entityManager.getTransaction().commit();
+        } catch (RollbackException exception) {
+            if(exception.getCause().getCause().getClass().equals(ConstraintViolationException.class))
+                throw new UserManagementServiceException("User cannot be deleted if it is still assigned to tasks or expenses", exception);
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override

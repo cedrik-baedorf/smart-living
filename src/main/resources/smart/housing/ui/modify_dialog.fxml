@@ -27,29 +27,34 @@
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </StyledComboBox>
-            <StyledPasswordField fx:id="newPasswordField" promptText="new password" GridPane.rowIndex="3" onAction="#_modifyUser">
+            <StyledTextField fx:id="emailField" promptText="email" GridPane.rowIndex="3" onAction="#_modifyUser">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </StyledTextField>
+            <StyledPasswordField fx:id="newPasswordField" promptText="new password" GridPane.rowIndex="4" onAction="#_modifyUser">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </StyledPasswordField>
-            <StyledPasswordField fx:id="confirmPasswordField" promptText="confirm new password" GridPane.rowIndex="4" onAction="#_modifyUser">
+            <StyledPasswordField fx:id="confirmPasswordField" promptText="confirm new password" GridPane.rowIndex="5" onAction="#_modifyUser">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </StyledPasswordField>
-            <StyledPasswordField fx:id="currentPasswordField" promptText="current password" GridPane.rowIndex="5" onAction="#_modifyUser">
+            <StyledPasswordField fx:id="currentPasswordField" promptText="current password" GridPane.rowIndex="6" onAction="#_modifyUser">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </StyledPasswordField>
             <StyledButton onAction="#_modifyUser" text="Modify User" textAlignment="CENTER" GridPane.halignment="CENTER"
-                    GridPane.rowIndex="6" maxWidth="Infinity" buttonStyle="CONFIRM"
+                    GridPane.rowIndex="7" maxWidth="Infinity" buttonStyle="CONFIRM"
             >
                 <GridPane.margin>
                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>
             </StyledButton>
-            <ErrorMessage fx:id="errorMessage" GridPane.rowIndex="7" wrapText="true">
+            <ErrorMessage fx:id="errorMessage" GridPane.rowIndex="8" wrapText="true">
                 <GridPane.margin>
                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                 </GridPane.margin>

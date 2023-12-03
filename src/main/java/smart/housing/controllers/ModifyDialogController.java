@@ -36,7 +36,7 @@ public class ModifyDialogController extends DialogController {
     private final User USER_TO_BE_MODIFIED;
 
     @FXML DialogPane dialogPane;
-    @FXML StyledTextField lastNameField, firstNameField;
+    @FXML StyledTextField lastNameField, firstNameField, emailField;
     @FXML StyledComboBox<UserRole> roleComboBox;
     @FXML StyledPasswordField newPasswordField, confirmPasswordField, currentPasswordField;
     @FXML ErrorMessage errorMessage;
@@ -82,6 +82,7 @@ public class ModifyDialogController extends DialogController {
             .toList()
         ));
         roleComboBox.setValue(USER_TO_BE_MODIFIED.getRole());
+        emailField.setText(USER_TO_BE_MODIFIED.getEmail());
         confirmPasswordField.clear();
         newPasswordField.clear();
         currentPasswordField.clear();
@@ -93,7 +94,10 @@ public class ModifyDialogController extends DialogController {
 
         lastNameField.switchFocusOnKeyPressed(KeyCode.DOWN, roleComboBox);
 
-        newPasswordField.switchFocusOnKeyPressed(KeyCode.UP, roleComboBox);
+        emailField.switchFocusOnKeyPressed(KeyCode.UP, roleComboBox);
+
+        emailField.switchFocusOnKeyPressed(KeyCode.DOWN, newPasswordField);
+        newPasswordField.switchFocusOnKeyPressed(KeyCode.UP, emailField);
 
         newPasswordField.switchFocusOnKeyPressed(KeyCode.DOWN, confirmPasswordField);
         confirmPasswordField.switchFocusOnKeyPressed(KeyCode.DOWN, newPasswordField);
@@ -105,6 +109,7 @@ public class ModifyDialogController extends DialogController {
     public void modifyUser() {
         checkForEmptyInput(firstNameField.getText(), "first name");
         checkForEmptyInput(lastNameField.getText(), "surname");
+        checkForEmptyInput(emailField.getText(), "email");
 
         if(! newPasswordField.getText().equals(confirmPasswordField.getText()))
             throw new IncorrectCredentialsException("new passwords do not match");
@@ -113,6 +118,7 @@ public class ModifyDialogController extends DialogController {
         updatedUser.setFirstName(firstNameField.getText());
         updatedUser.setLastName(lastNameField.getText());
         updatedUser.setRole(roleComboBox.getValue());
+        updatedUser.setEmail(emailField.getText());
         if(newPasswordField.getText().length() != 0)
             updatedUser.setPassword(newPasswordField.getText(), SERVICE.getHashAlgorithm());
 

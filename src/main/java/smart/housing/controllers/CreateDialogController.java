@@ -33,7 +33,7 @@ public class CreateDialogController extends DialogController {
     private final Dialog<Boolean> DIALOG;
 
     @FXML DialogPane dialogPane;
-    @FXML StyledTextField usernameField, lastNameField, firstNameField;
+    @FXML StyledTextField usernameField, lastNameField, firstNameField, emailField;
     @FXML StyledPasswordField passwordField;
     @FXML ErrorMessage errorMessage;
     @FXML StyledComboBox<UserRole> roleComboBox;
@@ -82,6 +82,8 @@ public class CreateDialogController extends DialogController {
         lastNameField.switchFocusOnKeyPressed(KeyCode.UP, firstNameField);
 
         lastNameField.switchFocusOnKeyPressed(KeyCode.DOWN, roleComboBox);
+
+        emailField.switchFocusOnKeyPressed(KeyCode.UP, roleComboBox);
     }
 
     public void _createUser(ActionEvent event) {
@@ -96,6 +98,7 @@ public class CreateDialogController extends DialogController {
             passwordField.clear();
             lastNameField.clear();
             firstNameField.clear();
+            emailField.clear();
         }
     }
 
@@ -104,11 +107,13 @@ public class CreateDialogController extends DialogController {
         checkForEmptyInput(passwordField.getText(), "password");
         checkForEmptyInput(lastNameField.getText(), "surname");
         checkForEmptyInput(firstNameField.getText(), "first name");
+        checkForEmptyInput(emailField.getText(), "email");
 
         User newUser = new User(usernameField.getText(), passwordField.getText(), SERVICE.getHashAlgorithm());
         newUser.setLastName(lastNameField.getText());
         newUser.setFirstName(firstNameField.getText());
         newUser.setRole(roleComboBox.getValue());
+        newUser.setEmail(emailField.getText());
 
         SERVICE.create(newUser);
         DIALOG.setResult(true);

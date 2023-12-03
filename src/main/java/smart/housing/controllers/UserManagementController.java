@@ -11,6 +11,7 @@ import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.services.UserManagementService;
 import smart.housing.ui.BackgroundStackPane;
 import smart.housing.ui.ConfirmPasswordDialog;
+import smart.housing.ui.ErrorDialog;
 import smart.housing.ui.StyledTableView;
 
 import java.util.List;
@@ -103,7 +104,11 @@ public class UserManagementController extends SmartHousingController {
                 "Confirm password to delete", "Yes, Delete", "No, keep", SERVICE.getServiceUser(), SERVICE.getDatabaseConnector());
             dialog.showAndWait().ifPresent(aBoolean -> {
                 if(aBoolean) {
-                    SERVICE.delete(userToBeDeleted);
+                    try {
+                        SERVICE.delete(userToBeDeleted);
+                    } catch (UserManagementServiceException exception) {
+                        new ErrorDialog(exception.getMessage()).show();
+                    }
                     loadUsers();
                 }
             });

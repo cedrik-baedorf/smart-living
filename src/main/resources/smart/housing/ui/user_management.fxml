@@ -31,6 +31,11 @@
                             <PropertyValueFactory property="role" />
                         </cellValueFactory>
                     </TableColumn>
+                    <TableColumn text="Email Address" minWidth="150" maxWidth="300">
+                        <cellValueFactory>
+                            <PropertyValueFactory property="email" />
+                        </cellValueFactory>
+                    </TableColumn>
                 </columns>
                 <BorderPane.margin>
                     <Insets bottom="80.0" left="160.0" right="160.0" top="80.0" />
