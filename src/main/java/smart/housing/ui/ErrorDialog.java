@@ -1,11 +1,9 @@
 package smart.housing.ui;
 
 import javafx.scene.control.Dialog;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class ErrorDialog extends Dialog<Void> {

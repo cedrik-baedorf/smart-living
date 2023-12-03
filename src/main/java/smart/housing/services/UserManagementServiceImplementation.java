@@ -10,7 +10,6 @@ import smart.housing.security.HashAlgorithm;
 
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.List;
 

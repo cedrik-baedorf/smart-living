@@ -5,8 +5,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
-import java.util.Arrays;
-
 public class ErrorMessage extends Text {
 
     private static final Color
