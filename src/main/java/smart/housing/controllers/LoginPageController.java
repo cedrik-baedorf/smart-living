@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import org.hibernate.PropertyNotFoundException;
+import org.hibernate.exception.SQLGrammarException;
 import org.hibernate.service.spi.ServiceException;
 import smart.housing.SmartLivingApplication;
 import smart.housing.database.DatabaseConnector;
@@ -22,6 +23,8 @@ import smart.housing.ui.BackgroundStackPane;
 import smart.housing.ui.ErrorMessage;
 import smart.housing.ui.StyledPasswordField;
 import smart.housing.ui.StyledTextField;
+
+import javax.persistence.PersistenceException;
 import java.util.Optional;
 
 /**
@@ -131,6 +134,8 @@ public class LoginPageController extends SmartHousingController {
             errorMessage.displayError("Invalid Credentials", 5);
         } catch (UserManagementServiceException exception) {
             errorMessage.displayError("Missing Credentials", 5);
+        } catch (PersistenceException exception) {
+            errorMessage.displayError("Unable to connect to the database. Please seek technical assistance!");
         } finally {
             passwordField.clear();
             usernameField.clear();
