@@ -36,6 +36,7 @@ public class ErrorMessage extends Label implements StyledNode {
         this.setPrefWidth(250);
         this.setAlignment(Pos.CENTER);
         this.setTextAlignment(TextAlignment.CENTER);
+        this.clear();
     }
 
     @Override

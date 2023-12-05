@@ -39,7 +39,7 @@ public class UserManagementController extends SmartHousingController {
 
     @FXML public BackgroundStackPane backgroundPane;
     @FXML public StyledTableView<User> userTable;
-    @FXML public Button deleteButton, modifyButton, createButton;
+    @FXML public Button deleteButton, modifyButton, createButton, logoutButton;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -87,6 +87,11 @@ public class UserManagementController extends SmartHousingController {
     @Override
     public void update() {
         loadUsers();
+    }
+
+    public void _logoutButton_onAction(ActionEvent event) {
+        event.consume();
+        APPLICATION.setRoot(LoginPageController.VIEW_NAME, new LoginPageController(APPLICATION));
     }
 
     public void _userTable_onMouseClicked(MouseEvent mouseEvent) {

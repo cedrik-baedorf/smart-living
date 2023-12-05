@@ -8,6 +8,13 @@
 
 <BackgroundStackPane fx:id="backgroundPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.UserManagementController">
     <BorderPane>
+        <top>
+            <StyledButton fx:id="logoutButton" onAction="#_logoutButton_onAction" text="Log Out" BorderPane.alignment="CENTER_LEFT" buttonStyle="CONFIRM">
+                <BorderPane.margin>
+                    <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                </BorderPane.margin>
+            </StyledButton>
+        </top>
         <center>
             <StyledTableView fx:id="userTable" minHeight="150.0" minWidth="300.0" onMouseClicked="#_userTable_onMouseClicked">
                 <columns>
@@ -43,7 +50,7 @@
             </StyledTableView>
         </center>
         <bottom>
-            <GridPane alignment="TOP_CENTER" stylesheets="@style_sheets/style.css">
+            <GridPane alignment="TOP_CENTER">
                 <StyledButton fx:id="deleteButton" onAction="#_deleteButton_onAction" text="Delete" GridPane.columnIndex="0">
                     <GridPane.margin>
                        <Insets bottom="30.0" left="30.0" right="30.0"/>

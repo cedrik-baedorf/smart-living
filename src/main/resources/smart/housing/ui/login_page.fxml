@@ -7,8 +7,8 @@
 <?import smart.housing.ui.ErrorMessage?>
 <?import smart.housing.ui.StyledButton?>
 <?import smart.housing.ui.StyledTextField?>
-
 <?import smart.housing.ui.StyledPasswordField?>
+
 <BackgroundStackPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
                      fx:controller="smart.housing.controllers.LoginPageController" fx:id="backgroundPane" stylesheets="@style_sheets/style.css"
 >
