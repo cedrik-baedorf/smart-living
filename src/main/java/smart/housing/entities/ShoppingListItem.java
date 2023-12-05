@@ -40,6 +40,10 @@ public class ShoppingListItem {
     private String unit;
 
     public ShoppingListItem(String item, double anzahl, String einheit) {
+        if (item == null || anzahl == 0.0 || einheit == null) {
+            throw new NullPointerException("Item, amount or einheit cannot be null");
+        }
+
         this.item = item;
         this.amount = anzahl;
         this.unit = einheit;

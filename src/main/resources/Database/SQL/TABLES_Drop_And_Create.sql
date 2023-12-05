@@ -70,7 +70,6 @@ CREATE TABLE IF NOT EXISTS `debitor_mapping` (
     `expense_id` INT(11) NOT NULL,
     `debitor_name` CHAR(8) NOT NULL,
     PRIMARY KEY (`id`),
-    CONSTRAINT `fk_expense_id` FOREIGN KEY (`expense_id`) REFERENCES `expenses` (`expense_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT `fk_debitor_name` FOREIGN KEY (`debitor_name`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
