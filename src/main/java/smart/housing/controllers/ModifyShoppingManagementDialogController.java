@@ -21,18 +21,12 @@ public class ModifyShoppingManagementDialogController extends DialogController{
 
     private final Dialog<Boolean> DIALOG;
 
-    @FXML
-    DialogPane dialogPane;
-    @FXML
-    Label itemField;
-    @FXML
-    Label unitField;
-    @FXML
-    StyledTextField amountTextField;
-    @FXML
-    ErrorMessage errorMessage;
-    @FXML
-    StyledButton modifyButton;
+    @FXML DialogPane dialogPane;
+    @FXML Label itemField;
+    @FXML Label unitField;
+    @FXML StyledTextField amountTextField;
+    @FXML ErrorMessage errorMessage;
+    @FXML StyledButton modifyButton;
 
     private final ShoppingManagementService service;
 
@@ -50,6 +44,9 @@ public class ModifyShoppingManagementDialogController extends DialogController{
         return VIEW_NAME;
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
 

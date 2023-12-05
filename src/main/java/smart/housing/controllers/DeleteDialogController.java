@@ -25,9 +25,7 @@ public class DeleteDialogController extends DialogController {
     /**
      * Prepared <code>String</code> messages
      */
-    private static final String
-        DELETE_USER = "Confirm deletion of user %s";
-
+    private static final String DELETE_USER = "Confirm deletion of user %s";
 
     private final UserManagementService SERVICE;
     private final Dialog<Boolean> DIALOG;
@@ -50,6 +48,9 @@ public class DeleteDialogController extends DialogController {
 
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
         usernameLabel.displayInfo(String.format(DELETE_USER, USER.getUsername()));

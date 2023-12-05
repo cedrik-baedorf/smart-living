@@ -28,16 +28,11 @@ public class HomePageController extends SmartHousingController {
         userManagementController, taskManagementController,
         budgetManagementController, ShoppingListController;
 
-    @FXML
-    public StyledTabPane tabPane;
-    @FXML
-    public Pane userManagement;
-    @FXML
-    public Pane taskManagement;
-    @FXML
-    public Pane budgetManagement;
-    @FXML
-    public Pane shoppingManagement;
+    @FXML public StyledTabPane tabPane;
+    @FXML public Pane userManagement;
+    @FXML public Pane taskManagement;
+    @FXML public Pane budgetManagement;
+    @FXML public Pane shoppingManagement;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -53,6 +48,9 @@ public class HomePageController extends SmartHousingController {
         this.USER_MANAGEMENT_SERVICE = userManagementService;
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         loadUserManagement();
         loadTaskManagement();

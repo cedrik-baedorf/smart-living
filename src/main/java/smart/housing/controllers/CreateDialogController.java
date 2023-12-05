@@ -48,6 +48,9 @@ public class CreateDialogController extends DialogController {
         this.DIALOG = dialog;
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
         loadRoles();

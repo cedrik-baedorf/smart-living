@@ -33,29 +33,14 @@ public class ShoppingManagementController extends SmartHousingController {
     private final SmartLivingApplication APPLICATION;
 
     @FXML public BackgroundStackPane backgroundPane;
-    @FXML
-    private StyledTextField artikelTextField;
-
-    @FXML
-    private StyledButton hinzufuegenButton;
-
-    @FXML
-    private StyledButton loeschenButton;
-
-    @FXML
-    private StyledComboBox<String> einheitComboBox;
-
-    @FXML
-    private StyledButton aenderungButton;
-
-    @FXML
-    private StyledTableView<ShoppingListItem> tableView;
-
-    @FXML
-    private StyledTextField anzahlField;
-
-    @FXML
-    private StyledButton modifyButton;
+    @FXML private StyledTextField artikelTextField;
+    @FXML private StyledButton hinzufuegenButton;
+    @FXML private StyledButton loeschenButton;
+    @FXML private StyledComboBox<String> einheitComboBox;
+    @FXML private StyledButton aenderungButton;
+    @FXML private StyledTableView<ShoppingListItem> tableView;
+    @FXML private StyledTextField anzahlField;
+    @FXML private StyledButton modifyButton;
 
 
     private final ShoppingManagementService service;
@@ -71,6 +56,9 @@ public class ShoppingManagementController extends SmartHousingController {
         return VIEW_NAME;
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         setBackgroundImage();
         System.out.println("Initialisieren");

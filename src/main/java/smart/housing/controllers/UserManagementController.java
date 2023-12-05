@@ -51,6 +51,9 @@ public class UserManagementController extends SmartHousingController {
         this.SERVICE = service;
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         setBackgroundImage();
         loadUsers();

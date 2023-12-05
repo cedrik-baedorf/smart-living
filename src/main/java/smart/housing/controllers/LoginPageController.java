@@ -63,6 +63,9 @@ public class LoginPageController extends SmartHousingController {
         this.APPLICATION = application;
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         try {
             APPLICATION.setDatabaseConnector(new DatabaseConnectorImplementation());

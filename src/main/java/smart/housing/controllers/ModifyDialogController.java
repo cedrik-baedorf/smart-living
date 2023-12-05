@@ -52,6 +52,9 @@ public class ModifyDialogController extends DialogController {
         this.USER_TO_BE_MODIFIED = userToBeModified;
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
         errorMessage.clear();

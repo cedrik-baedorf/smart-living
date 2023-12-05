@@ -34,26 +34,13 @@ public class BudgetManagementController extends SmartHousingController {
 
     private final BudgetManagementService BUDGET_SERVICE;
 
-    @FXML
-    public BackgroundStackPane budgetBackgroundPane;
-
-    @FXML
-    public StyledTextField productNameField;
-
-    @FXML
-    public StyledTextField costField;
-
-    @FXML
-    public StyledComboBox<User> creditors;
-
-    @FXML
-    public StyledCheckComboBox<User> debitors;
-
-    @FXML
-    public StyledButton addExpenseButton;
-
-    @FXML
-    public StyledTableView<Expense> expenseTable;
+    @FXML public BackgroundStackPane budgetBackgroundPane;
+    @FXML public StyledTextField productNameField;
+    @FXML public StyledTextField costField;
+    @FXML public StyledComboBox<User> creditors;
+    @FXML public StyledCheckComboBox<User> debitors;
+    @FXML public StyledButton addExpenseButton;
+    @FXML public StyledTableView<Expense> expenseTable;
 
 
 
@@ -67,6 +54,9 @@ public class BudgetManagementController extends SmartHousingController {
         this.BUDGET_SERVICE = new BudgetManagementServiceImplementation(APPLICATION.getDatabaseConnector());
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         setBackgroundImage();
         update();
