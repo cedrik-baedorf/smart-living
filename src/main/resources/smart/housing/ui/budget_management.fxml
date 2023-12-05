@@ -69,19 +69,14 @@
 
                             <!-- Debts Overview TableView -->
                             <Label text="Debts Overview" style="-fx-font-weight: bold; -fx-font-size: 12px; -fx-text-fill: black;" />
-                            <StyledTableView fx:id="debtsOverview" minHeight="150.0" minWidth="400.0" VBox.vgrow="ALWAYS">
+                            <StyledTableView fx:id="debtsOverview" minHeight="150.0" minWidth="300.0" VBox.vgrow="ALWAYS">
                                 <columns>
-                                    <TableColumn text="Creditor" minWidth="150">
-                                        <cellValueFactory>
-                                            <PropertyValueFactory property="creditor" />
-                                        </cellValueFactory>
-                                    </TableColumn>
                                     <TableColumn text="Amount" minWidth="100">
                                         <cellValueFactory>
                                             <PropertyValueFactory property="formattedAmount" />
                                         </cellValueFactory>
                                     </TableColumn>
-                                    <TableColumn text="Debtor" minWidth="150">
+                                    <TableColumn text="User" minWidth="200">
                                         <cellValueFactory>
                                             <PropertyValueFactory property="debtor" />
                                         </cellValueFactory>
@@ -89,6 +84,23 @@
                                 </columns>
                             </StyledTableView>
 
+                            <HBox spacing="5">
+
+                            <!-- Email Button -->
+                            <StyledButton fx:id="emailButton" text="Notify User" onAction="#_emailButton_onAction">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </StyledButton>
+
+                            <!-- Settle Debt Button -->
+                            <StyledButton fx:id="settleDebtButton" text="Settle Debt" onAction="#_settleDebtButton_onAction">
+                                <font>
+                                    <Font size="10.0" />
+                                </font>
+                            </StyledButton>
+
+                            </HBox>
 
 
                         </VBox>
@@ -135,13 +147,12 @@
                              </font>
                             </StyledButton>
 
-                            <!-- Email Button -->
-                            <StyledButton fx:id="emailButton" text="Notify" onAction="#_emailButton_onAction" visible="false">
+                            <!-- Delete Button -->
+                            <StyledButton fx:id="modifyButton" text="Modify" onAction="#_modifyButton_onAction">
                                 <font>
                                     <Font size="10.0" />
                                 </font>
                             </StyledButton>
-
                         </HBox>
 
                 </VBox>

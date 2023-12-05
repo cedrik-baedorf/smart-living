@@ -78,7 +78,7 @@ public class HomePageController extends SmartHousingController {
 
     public void loadBudgetManagement() {
         budgetManagement.setPrefSize(tabPane.getPrefWidth(), tabPane.getPrefHeight());
-        budgetManagementController = new BudgetManagementController(APPLICATION);
+        budgetManagementController = new BudgetManagementController(APPLICATION, USER_MANAGEMENT_SERVICE);
         loadSubPane(budgetManagement, APPLICATION.loadFXML(BudgetManagementController.VIEW_NAME, budgetManagementController));
     }
 

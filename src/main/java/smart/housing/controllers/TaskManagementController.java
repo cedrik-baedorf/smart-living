@@ -33,9 +33,9 @@ public class TaskManagementController extends SmartHousingController {
 
     private final SmartLivingApplication APPLICATION;
 
-    private final UserManagementService USER_MANAGEMENT_SERVICE;
+    private final UserManagementService USER_SERVICE;
 
-    private final TaskManagementService TASK_MANAGEMENT_SERVICE;
+    private final TaskManagementService TASK_SERVICE;
 
     @FXML
     public BackgroundStackPane backgroundPane;
@@ -57,8 +57,8 @@ public class TaskManagementController extends SmartHousingController {
      */
     public TaskManagementController(SmartLivingApplication application, UserManagementService userManagementService) {
         this.APPLICATION = application;
-        this.USER_MANAGEMENT_SERVICE = userManagementService;
-        this.TASK_MANAGEMENT_SERVICE = new TaskManagementServiceImplementation(APPLICATION.getDatabaseConnector());
+        this.USER_SERVICE = userManagementService;
+        this.TASK_SERVICE = new TaskManagementServiceImplementation(APPLICATION.getDatabaseConnector());
     }
 
     public void initialize() {
@@ -71,9 +71,9 @@ public class TaskManagementController extends SmartHousingController {
     }
 
     public void loadTasks(){
-        taskTable.setItems(FXCollections.observableList(TASK_MANAGEMENT_SERVICE.getAllTasks()));
-        currentTasks.setItems(FXCollections.observableList(TASK_MANAGEMENT_SERVICE.getCurrentTasks()));
-        overdueTasks.setItems(FXCollections.observableList(TASK_MANAGEMENT_SERVICE.getIncompleteTasks()));
+        taskTable.setItems(FXCollections.observableList(TASK_SERVICE.getAllTasks()));
+        currentTasks.setItems(FXCollections.observableList(TASK_SERVICE.getCurrentTasks()));
+        overdueTasks.setItems(FXCollections.observableList(TASK_SERVICE.getIncompleteTasks()));
     }
 
     public void _newTaskButton_onAction(ActionEvent event) {
@@ -85,7 +85,7 @@ public class TaskManagementController extends SmartHousingController {
         Dialog<Boolean> dialog = new Dialog<>();
         dialog.setDialogPane(APPLICATION.loadFXML(
                 NewTaskDialogController.VIEW_NAME,
-                new NewTaskDialogController(USER_MANAGEMENT_SERVICE, TASK_MANAGEMENT_SERVICE, dialog)
+                new NewTaskDialogController(USER_SERVICE, TASK_SERVICE, dialog)
         ));
         dialog.showAndWait().ifPresent(aBoolean -> loadTasks());
     }
