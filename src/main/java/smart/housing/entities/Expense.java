@@ -48,6 +48,7 @@ public class Expense implements Serializable {
     private double cost;
 
 
+
     // Constructors, getters, and setters
 
     public Expense() {
@@ -57,7 +58,6 @@ public class Expense implements Serializable {
     public Expense(Set<User> debitors, User creditor, String product, double cost) {
         this.debitors = debitors;
         this.creditor = creditor;
-        // this.creditorUser = creditorUser;
         this.product = product;
         this.cost = cost;
     }
@@ -121,4 +121,15 @@ public class Expense implements Serializable {
     public void setCost(int cost) {
         this.cost = cost;
     }
+
+
+    public double getDebtorShare(User debtor) {
+        int numberOfDebtors = debitors.size();
+        if (numberOfDebtors > 0) {
+            return cost / numberOfDebtors;
+        } else {
+            return 0.0;
+        }
+    }
+
 }

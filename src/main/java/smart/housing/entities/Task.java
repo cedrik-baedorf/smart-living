@@ -107,6 +107,11 @@ public class Task {
         this("unnamed Task");
     }
 
+    public void setAssignees(Set<User> assignees) {
+        this.assignees.clear();
+        this.assignees.addAll(assignees);
+    }
+
     public void addAssignee(User roommate){
         assignees.add(roommate);
     }

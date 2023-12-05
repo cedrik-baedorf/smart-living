@@ -129,6 +129,7 @@ public class User {
         return firstName;
     }
 
+
     public UserRole getRole() {
         if(this.role == null || this.role.isEmpty())
             return null;

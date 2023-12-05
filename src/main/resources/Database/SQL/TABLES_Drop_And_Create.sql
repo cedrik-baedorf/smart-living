@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `assignments` (
    `task_id` INT NOT NULL,
    `username` CHAR(8) DEFAULT NULL,
    PRIMARY KEY (`assignment_id`),
-   CONSTRAINT `fk_task_id` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+   CONSTRAINT `fk_task_id` FOREIGN KEY (`task_id`) REFERENCES `tasks` (`task_id`) ON DELETE CASCADE ON UPDATE CASCADE,
    CONSTRAINT `fk_username` FOREIGN KEY (`username`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -71,7 +71,6 @@ CREATE TABLE IF NOT EXISTS `debitor_mapping` (
     `expense_id` INT(11) NOT NULL,
     `debitor_name` CHAR(8) NOT NULL,
     PRIMARY KEY (`id`),
-    CONSTRAINT `fk_expense_id` FOREIGN KEY (`expense_id`) REFERENCES `expenses` (`expense_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
     CONSTRAINT `fk_debitor_name` FOREIGN KEY (`debitor_name`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

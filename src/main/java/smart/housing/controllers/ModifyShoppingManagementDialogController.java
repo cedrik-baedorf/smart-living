@@ -55,7 +55,7 @@ public class ModifyShoppingManagementDialogController extends DialogController{
         if (amountTextField.getText() == null) {
             ShoppingManagementController.buttonDisplay(false,modifyButton);
         } else {
-            service.modifyItem(selectedItem,selectedItem.getAmount());
+            service.modifyItem(selectedItem,Double.parseDouble(amountTextField.getText()));
             ShoppingManagementController.buttonDisplay(true,modifyButton);
             DIALOG.setResult(true);
         }

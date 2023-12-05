@@ -18,4 +18,5 @@ public interface TaskManagementService {
 
     List<Task> getIncompleteTasks();
     void create(Task newTask);
+    void modify(Task oldTask, Task updateTask);
 }
