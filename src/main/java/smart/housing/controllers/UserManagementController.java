@@ -112,21 +112,12 @@ public class UserManagementController extends SmartHousingController {
                 "Confirm password to delete", "Yes, Delete", "No, keep", SERVICE.getServiceUser(), SERVICE.getDatabaseConnector());
             dialog.showAndWait().ifPresent(aBoolean -> {
                 if(aBoolean) {
-                    try {
-                        SERVICE.delete(userToBeDeleted);
-                    } catch (UserManagementServiceException exception) {
-                        new ErrorDialog(exception.getMessage()).show();
-                    }
+                    SERVICE.delete(userToBeDeleted);
                     loadUsers();
                 }
             });
         } catch (UserManagementServiceException exception) {
-            Dialog<Boolean> dialog = new Dialog<>();
-            dialog.setDialogPane(APPLICATION.loadFXML(
-                    DeleteDialogController.VIEW_NAME,
-                    new DeleteDialogController(SERVICE, dialog, userToBeDeleted)
-            ));
-            dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
+            new ErrorDialog(exception.getMessage()).show();
         }
     }
 

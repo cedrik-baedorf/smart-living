@@ -22,7 +22,7 @@ public class ErrorDialog extends Dialog<Void> {
         BorderPane background = new BorderPane();
 
         ErrorMessage errorMesssage = new ErrorMessage();
-        errorMesssage.setText(errorMessage);
+        errorMesssage.displayError(errorMessage);
 
         background.setCenter(errorMesssage);
 
