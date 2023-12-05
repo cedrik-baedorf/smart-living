@@ -97,7 +97,7 @@ public class TaskManagementController extends SmartHousingController {
         Dialog<Boolean> dialog = new Dialog<>();
         dialog.setDialogPane(APPLICATION.loadFXML(
                 ModifyTaskController.VIEW_NAME,
-                new ModifyTaskController(USER_MANAGEMENT_SERVICE, TASK_MANAGEMENT_SERVICE, dialog, taskToBeModified)
+                new ModifyTaskController(USER_SERVICE, TASK_SERVICE, dialog, taskToBeModified)
         ));
         dialog.showAndWait().ifPresent(aBoolean -> loadTasks());
     }
