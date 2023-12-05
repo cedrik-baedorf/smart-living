@@ -7,16 +7,10 @@ import javafx.event.ActionEvent;
 import javafx.util.Duration;
 import smart.housing.entities.*;
 import smart.housing.services.*;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import smart.housing.SmartLivingApplication;
 import smart.housing.ui.*;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import java.util.List;
 
 public class ShoppingManagementController extends SmartHousingController {
 
@@ -109,7 +103,7 @@ public class ShoppingManagementController extends SmartHousingController {
         }
         } catch (Exception e) {
             buttonDisplay(false,hinzufuegenButton);
-        };
+        }
     }
 
     private void removeItemFromList(ShoppingListItem shoppingListItem) {
@@ -117,7 +111,7 @@ public class ShoppingManagementController extends SmartHousingController {
         loadShoppingList();
     }
 
-    public void _hinzufügenButton_onAction(ActionEvent event) {
+    public void _hinzufuegenButton_onAction(ActionEvent event) {
         event.consume();
         hinzufuegenButtonClicked();
     }

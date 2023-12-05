@@ -122,7 +122,7 @@ public class ModifyDialogController extends DialogController {
         updatedUser.setLastName(lastNameField.getText());
         updatedUser.setRole(roleComboBox.getValue());
         updatedUser.setEmail(emailField.getText());
-        if(newPasswordField.getText().length() != 0)
+        if(!newPasswordField.getText().isEmpty())
             updatedUser.setPassword(newPasswordField.getText(), SERVICE.getHashAlgorithm());
 
         SERVICE.modify(USER_TO_BE_MODIFIED.getUsername(), currentPasswordField.getText(), updatedUser);

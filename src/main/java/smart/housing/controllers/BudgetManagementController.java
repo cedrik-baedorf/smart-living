@@ -12,6 +12,7 @@ import smart.housing.services.BudgetManagementServiceImplementation;
 import smart.housing.ui.*;
 import javafx.collections.ListChangeListener;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -96,10 +97,10 @@ public class BudgetManagementController extends SmartHousingController {
             String product = productNameField.getText();
             double cost = Double.parseDouble(costField.getText());
             User selectedCreditor = creditors.getValue();
-            Set<User> selectedDebitors = debitors.getCheckModel().getCheckedItems().stream().collect(Collectors.toSet());
+            Set<User> selectedDebitors = new HashSet<>(debitors.getCheckModel().getCheckedItems());
             if(product == null)
                 throw new BudgetManagementServiceException("Please enter a product");
-            if(selectedDebitors == null || selectedDebitors.isEmpty())
+            if(selectedDebitors.isEmpty())
                 throw new BudgetManagementServiceException("Please select at least one debitor");
             if(cost <= 0)
                 throw new BudgetManagementServiceException("Please provide a positive amount");

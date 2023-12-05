@@ -71,9 +71,7 @@ public class DeleteDialogController extends DialogController {
         errorMessage.clear();
         try {
             deleteUser();
-        } catch (EmptyFieldException exception) {
-            errorMessage.displayError(exception.getMessage(), 5);
-        } catch (IncorrectCredentialsException exception) {
+        } catch (EmptyFieldException | IncorrectCredentialsException exception) {
             errorMessage.displayError(exception.getMessage(), 5);
         } catch (Exception e) {
             e.printStackTrace();
