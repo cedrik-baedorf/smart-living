@@ -3,7 +3,6 @@ package smart.housing.ui;
 import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class ErrorDialog extends Dialog<Void> {
