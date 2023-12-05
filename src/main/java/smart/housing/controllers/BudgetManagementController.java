@@ -15,7 +15,6 @@ import javafx.collections.ListChangeListener;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Controller to view 'budget_management.fxml'

@@ -2,11 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import smart.housing.ui.*?>
-
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
 <?import javafx.scene.layout.*?>
