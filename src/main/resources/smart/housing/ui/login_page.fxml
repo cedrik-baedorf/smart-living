@@ -16,7 +16,7 @@
         <center>
             <GridPane alignment="CENTER" fx:id="gridPane">
                 <children>
-                    <Label fx:id="welcomeLabel" alignment="CENTER" text="WELCOME" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" styleClass="standard-style, welcome-label"/>
+                    <Label fx:id="welcomeLabel" alignment="CENTER" text="WELCOME" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="0" GridPane.valignment="BOTTOM" styleClass="welcome-label"/>
                     <Separator GridPane.rowIndex="1" />
                     <StyledTextField fx:id="usernameField" onAction="#_onUsernameFieldAction" promptText="username"
                                      GridPane.rowIndex="2">
