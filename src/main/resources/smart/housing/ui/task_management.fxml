@@ -12,7 +12,7 @@
 <BackgroundStackPane fx:id="backgroundPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.TaskManagementController">
     <BorderPane>
         <center>
-            <StyledTableView fx:id="taskTable" minHeight="150.0" minWidth="300.0">
+            <StyledTableView fx:id="taskTable" minHeight="150.0" minWidth="300.0" onMouseClicked="#_taskTable_onMouseClicked">
                 <columns>
                     <TableColumn text="Task Name" minWidth="100">
                         <cellValueFactory>

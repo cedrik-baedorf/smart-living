@@ -58,6 +58,7 @@ public class ModifyTaskController extends DialogController {
 
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
+        loadTasks();
         loadAssignees();
         errorMessage.clear();
     }
@@ -79,6 +80,12 @@ public class ModifyTaskController extends DialogController {
         dueDatePicker.setValue(TASK_TO_BE_MODIFIED.getDueDate());
         List<User> userList = USER_MANAGEMENT_SERVICE.getUsers();
         assigneeComboBox.setItems(FXCollections.observableList(userList));
+        TASK_TO_BE_MODIFIED.getAssignees().forEach(
+            assignee -> {
+                assigneeComboBox.getCheckModel().check(assignee);
+                assigneeComboBox.item
+            }
+        );
     }
 
     private void loadAssignees() {

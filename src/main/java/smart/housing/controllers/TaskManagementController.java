@@ -4,8 +4,10 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
+import javafx.scene.input.MouseEvent;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.Task;
+import smart.housing.entities.User;
 import smart.housing.services.TaskManagementService;
 import smart.housing.services.TaskManagementServiceImplementation;
 import smart.housing.services.UserManagementService;
@@ -61,6 +63,7 @@ public class TaskManagementController extends SmartHousingController {
     public void initialize() {
         setBackgroundImage();
         loadTasks();
+        initializeButtons(false);
     }
 
     private void setBackgroundImage() {
@@ -71,6 +74,11 @@ public class TaskManagementController extends SmartHousingController {
         taskTable.setItems(FXCollections.observableList(TASK_SERVICE.getAllTasks()));
         currentTasks.setItems(FXCollections.observableList(TASK_SERVICE.getCurrentTasks()));
         overdueTasks.setItems(FXCollections.observableList(TASK_SERVICE.getIncompleteTasks()));
+    }
+
+    private void initializeButtons(boolean itemSelected) {
+        newTaskButton.setDisable(false);
+        modifyTaskButton.setDisable(! itemSelected);
     }
 
     public void _newTaskButton_onAction(ActionEvent event) {
@@ -85,6 +93,12 @@ public class TaskManagementController extends SmartHousingController {
                 new NewTaskDialogController(USER_SERVICE, TASK_SERVICE, dialog)
         ));
         dialog.showAndWait().ifPresent(aBoolean -> loadTasks());
+    }
+
+    public void _taskTable_onMouseClicked(MouseEvent mouseEvent) {
+        mouseEvent.consume();
+        Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
+        initializeButtons(selectedTask != null);
     }
 
     public void _modifyTaskButton_onAction(ActionEvent event){
