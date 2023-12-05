@@ -81,10 +81,7 @@ public class ModifyTaskController extends DialogController {
         List<User> userList = USER_MANAGEMENT_SERVICE.getUsers();
         assigneeComboBox.setItems(FXCollections.observableList(userList));
         TASK_TO_BE_MODIFIED.getAssignees().forEach(
-            assignee -> {
-                assigneeComboBox.getCheckModel().check(assignee);
-                assigneeComboBox.item
-            }
+            assignee -> assigneeComboBox.getCheckModel().check(assignee)
         );
     }
 

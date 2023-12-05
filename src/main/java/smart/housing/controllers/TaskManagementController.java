@@ -7,11 +7,11 @@ import javafx.scene.control.Dialog;
 import javafx.scene.input.MouseEvent;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.Task;
-import smart.housing.entities.User;
 import smart.housing.services.TaskManagementService;
 import smart.housing.services.TaskManagementServiceImplementation;
 import smart.housing.services.UserManagementService;
 import smart.housing.ui.BackgroundStackPane;
+import smart.housing.ui.ConfirmDialog;
 import smart.housing.ui.StyledButton;
 import smart.housing.ui.StyledTableView;
 
@@ -42,6 +42,7 @@ public class TaskManagementController extends SmartHousingController {
     @FXML public BackgroundStackPane backgroundPane;
     @FXML public StyledButton newTaskButton;
     @FXML public StyledButton modifyTaskButton;
+    @FXML public StyledButton deleteTaskButton;
     @FXML public StyledTableView<Task> taskTable;
     @FXML public StyledTableView<Task> currentTasks;
     @FXML public StyledTableView<Task> overdueTasks;
@@ -119,6 +120,23 @@ public class TaskManagementController extends SmartHousingController {
     @Override
     public String getViewName() {
         return VIEW_NAME;
+    }
+
+    public void _deleteButton_onAction(ActionEvent event) {
+        event.consume();
+        deleteSelectedTask();
+    }
+
+    private void deleteSelectedTask(){
+        Task taskToBeDeleted = taskTable.getSelectionModel().getSelectedItem();
+        ConfirmDialog dialog = new ConfirmDialog("Do you want to delete this task?", "Yes, delete", "No, keep");
+        dialog.showAndWait().ifPresent(aBoolean -> {
+            if(aBoolean) {
+                TASK_SERVICE.delete(taskToBeDeleted);
+                // loadTasks();
+                taskTable.getItems().remove(taskToBeDeleted);
+            }
+        });
     }
 }
 

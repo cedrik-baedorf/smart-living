@@ -76,6 +76,14 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
         entityManager.close();
     }
 
+    @Override
+    public void delete(Task task) {
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
+        entityManager.getTransaction().begin();
+        task = entityManager.merge(task);
+        entityManager.remove(task);
+    }
+
     public static void main(String [] args){
         TaskManagementService service = new TaskManagementServiceImplementation(new DatabaseConnectorImplementation());
         List<Task> list = service.getCurrentTasks();
