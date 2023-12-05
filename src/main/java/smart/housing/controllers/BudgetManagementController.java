@@ -20,6 +20,9 @@ import smart.housing.services.UserManagementService;
 import smart.housing.ui.*;
 import javafx.collections.ListChangeListener;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
@@ -27,7 +30,6 @@ import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.List;
 
 /**
  * Controller to view 'budget_management.fxml'
@@ -49,43 +51,18 @@ public class BudgetManagementController extends SmartHousingController {
 
     private final UserManagementService USER_SERVICE;
 
-    @FXML
-    public BackgroundStackPane budgetBackgroundPane;
-
-    @FXML
-    public StyledTextField productNameField;
-
-    @FXML
-    public StyledTextField costField;
-
-    @FXML
-    public StyledComboBox<User> creditors;
-
-    @FXML
-    public StyledCheckComboBox<User> debitors;
-
-    @FXML
-    public StyledButton addExpenseButton;
-
-    @FXML
-    public StyledTableView<Expense> expenseTable;
-
-    @FXML
-    public StyledTableView<DebtOverview> debtsOverview;
-
-    @FXML
-    public StyledButton deleteButton;
-
-    @FXML
-    public StyledButton modifyButton;
-
-    @FXML
-    public StyledButton emailButton;
-
-    @FXML
-    public StyledButton settleDebtButton;
-
-
+    @FXML public BackgroundStackPane budgetBackgroundPane;
+    @FXML public StyledTextField productNameField;
+    @FXML public StyledTextField costField;
+    @FXML public StyledComboBox<User> creditors;
+    @FXML public StyledCheckComboBox<User> debitors;
+    @FXML public StyledButton addExpenseButton;
+    @FXML public StyledTableView<Expense> expenseTable;
+    @FXML public StyledTableView<DebtOverview> debtsOverview;
+    @FXML public StyledButton deleteButton;
+    @FXML public StyledButton modifyButton;
+    @FXML public StyledButton emailButton;
+    @FXML public StyledButton settleDebtButton;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -98,6 +75,9 @@ public class BudgetManagementController extends SmartHousingController {
         this.BUDGET_SERVICE = new BudgetManagementServiceImplementation(APPLICATION.getDatabaseConnector());
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         setBackgroundImage();
 

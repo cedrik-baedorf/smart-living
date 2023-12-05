@@ -70,6 +70,12 @@ public class User {
     @Column(name = "role")
     private String role;
 
+    /**
+     * Email of the user
+     */
+    @Column(name = "email")
+    private String email;
+
     public User() {
         this("standard");
     }
@@ -103,6 +109,10 @@ public class User {
         this.role = role.getRoleName();
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getUsername() {
         return USERNAME;
     }
@@ -128,6 +138,10 @@ public class User {
             return role;
         this.role = UserRole.DEFAULT_ROLE.getRoleName();
         return getRole();
+    }
+
+    public String getEmail() {
+        return this.email;
     }
 
     @Override

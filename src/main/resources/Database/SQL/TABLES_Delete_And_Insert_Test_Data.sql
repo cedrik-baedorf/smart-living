@@ -16,12 +16,12 @@ USE `smart-living`;
 
 -- export data of table smart-living.users: 5 rows
 DELETE FROM `users`;
-INSERT INTO `users` (`username`, `password`, `last_name`, `first_name`, `role`) VALUES
-	('cbaedorf', '0000000000000000000000000000000000000000000000000000001216985755', 'Baedorf', 'Cedrik', 'ADMIN'),
-	('nrg', '0000000000000000000000000000000000000000000000000000001216985755', 'Gossner', 'Anna Maria', 'SUPREME'),
-	('ivano', '0000000000000000000000000000000000000000000000000000001216985755', 'Sachau', 'Ivan', 'USER'),
-	('lienchen', '0000000000000000000000000000000000000000000000000000001216985755', 'Pradel', 'Alina', 'USER'),
-	('heyden', '0000000000000000000000000000000000000000000000000000001216985755', 'Heyden', 'Tom', 'USER');
+INSERT INTO `users` (`username`, `password`, `last_name`, `first_name`, `role`, `email`) VALUES
+	('cbaedorf', '0000000000000000000000000000000000000000000000000000001216985755', 'Baedorf', 'Cedrik', 'ADMIN', 'cedrik.baedorf@studmail.hwg-lu.de'),
+	('nrg', '0000000000000000000000000000000000000000000000000000001216985755', 'Gossner', 'Anna Maria', 'SUPREME', 'anna.gossner@studmail.hwg-lu.de'),
+	('ivano', '0000000000000000000000000000000000000000000000000000001216985755', 'Sachau', 'Ivan', 'USER', 'ivan.sachau@studmail.hwg-lu.de'),
+	('lienchen', '0000000000000000000000000000000000000000000000000000001216985755', 'Pradel', 'Alina', 'USER', 'alina.pradel@studmail.hwg-lu.de'),
+	('heyden', '0000000000000000000000000000000000000000000000000000001216985755', 'Heyden', 'Tom', 'USER', 'tom.heyden@studmail.hwg-lu.de');
 
 DELETE FROM `tasks`;
 INSERT INTO `tasks` (`task_id`, `task_name`, `description`, `due_date`, `completed`) VALUES

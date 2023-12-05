@@ -11,6 +11,7 @@ import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.services.UserManagementService;
 import smart.housing.ui.BackgroundStackPane;
 import smart.housing.ui.ConfirmPasswordDialog;
+import smart.housing.ui.ErrorDialog;
 import smart.housing.ui.StyledTableView;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public class UserManagementController extends SmartHousingController {
 
     @FXML public BackgroundStackPane backgroundPane;
     @FXML public StyledTableView<User> userTable;
-    @FXML public Button deleteButton, modifyButton, createButton;
+    @FXML public Button deleteButton, modifyButton, createButton, logoutButton;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -50,6 +51,9 @@ public class UserManagementController extends SmartHousingController {
         this.SERVICE = service;
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         setBackgroundImage();
         loadUsers();
@@ -85,6 +89,11 @@ public class UserManagementController extends SmartHousingController {
         loadUsers();
     }
 
+    public void _logoutButton_onAction(ActionEvent event) {
+        event.consume();
+        APPLICATION.setRoot(LoginPageController.VIEW_NAME, new LoginPageController(APPLICATION));
+    }
+
     public void _userTable_onMouseClicked(MouseEvent mouseEvent) {
         mouseEvent.consume();
         User selectedUser = userTable.getSelectionModel().getSelectedItem();
@@ -108,12 +117,7 @@ public class UserManagementController extends SmartHousingController {
                 }
             });
         } catch (UserManagementServiceException exception) {
-            Dialog<Boolean> dialog = new Dialog<>();
-            dialog.setDialogPane(APPLICATION.loadFXML(
-                    DeleteDialogController.VIEW_NAME,
-                    new DeleteDialogController(SERVICE, dialog, userToBeDeleted)
-            ));
-            dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
+            new ErrorDialog(exception.getMessage()).show();
         }
     }
 

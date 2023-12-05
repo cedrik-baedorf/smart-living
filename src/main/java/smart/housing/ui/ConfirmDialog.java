@@ -5,7 +5,6 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
@@ -28,7 +27,7 @@ public class ConfirmDialog extends Dialog<Boolean> {
         this.setTitle("Confirm Action");
 
         ((Stage)this.getDialogPane().getScene().getWindow()).getIcons().add(
-            new Image("smart/housing/ui/images/icon_confirm.png")
+            new Image("smart/housing/ui/images/icon_info.png")
         );
 
         this.getDialogPane().getScene().getWindow().setOnCloseRequest(event -> {
@@ -40,13 +39,7 @@ public class ConfirmDialog extends Dialog<Boolean> {
 
         initializeActionListeners();
 
-        GridPane contentPane = createBackgroundPane();
-
-        BackgroundDialogPane dialogPane = new BackgroundDialogPane("smart/housing/ui/images/confirm_dialog_background.jpg");
-        dialogPane.setContent(contentPane);
-        dialogPane.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-
-        this.setDialogPane(dialogPane);
+        this.getDialogPane().setContent(createBackgroundPane());
     }
 
     private void initializeObjects(String messageText, String confirmText, String abortText) {

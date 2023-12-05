@@ -2,11 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import smart.housing.ui.*?>
-
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 
 <?import javafx.scene.layout.*?>
@@ -44,7 +41,7 @@
                             <StyledComboBox promptText="Select Unit" fx:id="einheitComboBox" />
 
                             <!-- Save Button -->
-                            <StyledButton fx:id="hinzufuegenButton" text="Add to list" onAction="#_hinzufügenButton_onAction">
+                            <StyledButton fx:id="hinzufuegenButton" text="Add to list" onAction="#_hinzufuegenButton_onAction">
                                 <font>
                                     <Font size="12.0" />
                                 </font>

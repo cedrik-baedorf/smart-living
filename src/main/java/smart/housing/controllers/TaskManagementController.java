@@ -37,18 +37,12 @@ public class TaskManagementController extends SmartHousingController {
 
     private final TaskManagementService TASK_SERVICE;
 
-    @FXML
-    public BackgroundStackPane backgroundPane;
-    @FXML
-    public StyledButton newTaskButton;
-    @FXML
-    public StyledButton modifyTaskButton;
-    @FXML
-    public StyledTableView<Task> taskTable;
-    @FXML
-    public StyledTableView<Task> currentTasks;
-    @FXML
-    public StyledTableView<Task> overdueTasks;
+    @FXML public BackgroundStackPane backgroundPane;
+    @FXML public StyledButton newTaskButton;
+    @FXML public StyledButton modifyTaskButton;
+    @FXML public StyledTableView<Task> taskTable;
+    @FXML public StyledTableView<Task> currentTasks;
+    @FXML public StyledTableView<Task> overdueTasks;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -61,6 +55,9 @@ public class TaskManagementController extends SmartHousingController {
         this.TASK_SERVICE = new TaskManagementServiceImplementation(APPLICATION.getDatabaseConnector());
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         setBackgroundImage();
         loadTasks();

@@ -18,10 +18,9 @@ import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.services.LoginService;
 import smart.housing.services.LoginServiceImplementation;
-import smart.housing.ui.BackgroundStackPane;
-import smart.housing.ui.ErrorMessage;
-import smart.housing.ui.StyledPasswordField;
-import smart.housing.ui.StyledTextField;
+import smart.housing.ui.*;
+
+import javax.persistence.PersistenceException;
 import java.util.Optional;
 
 /**
@@ -61,6 +60,9 @@ public class LoginPageController extends SmartHousingController {
         this.APPLICATION = application;
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         try {
             APPLICATION.setDatabaseConnector(new DatabaseConnectorImplementation());
@@ -131,6 +133,8 @@ public class LoginPageController extends SmartHousingController {
             errorMessage.displayError("Invalid Credentials", 5);
         } catch (UserManagementServiceException exception) {
             errorMessage.displayError("Missing Credentials", 5);
+        } catch (PersistenceException exception) {
+            errorMessage.displayError("Unable to connect to the database. Please seek technical assistance!");
         } finally {
             passwordField.clear();
             usernameField.clear();
@@ -146,6 +150,7 @@ public class LoginPageController extends SmartHousingController {
 
     private DatabaseConnector createDatabaseConnector() {
         Dialog<DatabaseConnector> dialog = new Dialog<>();
+        dialog.setTitle("Configure Database Connection");
         dialog.setDialogPane(APPLICATION.loadFXML(DatabaseDialogController.VIEW_NAME, new DatabaseDialogController(dialog)));
 
         Optional<DatabaseConnector> result = dialog.showAndWait();

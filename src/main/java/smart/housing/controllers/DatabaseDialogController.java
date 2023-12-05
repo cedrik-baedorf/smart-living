@@ -47,6 +47,9 @@ public class DatabaseDialogController extends DialogController {
         this.DIALOG = dialog;
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
         dialogPane.setBackgroundImage("smart/housing/ui/images/database_dialog_background.jpg");

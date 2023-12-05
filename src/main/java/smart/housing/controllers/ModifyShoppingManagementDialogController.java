@@ -3,10 +3,8 @@ package smart.housing.controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.DialogPane;
-import javafx.scene.text.*;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.ShoppingListItem;
-import smart.housing.enums.UserRole;
 import smart.housing.services.ShoppingManagementService;
 import smart.housing.services.ShoppingManagementServiceImplementation;
 import smart.housing.ui.*;
@@ -21,23 +19,16 @@ public class ModifyShoppingManagementDialogController extends DialogController{
 
     private final Dialog<Boolean> DIALOG;
 
-    @FXML
-    DialogPane dialogPane;
-    @FXML
-    Label itemField;
-    @FXML
-    Label unitField;
-    @FXML
-    StyledTextField amountTextField;
-    @FXML
-    ErrorMessage errorMessage;
-    @FXML
-    StyledButton modifyButton;
+    @FXML DialogPane dialogPane;
+    @FXML Label itemField;
+    @FXML Label unitField;
+    @FXML StyledTextField amountTextField;
+    @FXML ErrorMessage errorMessage;
+    @FXML StyledButton modifyButton;
 
     private final ShoppingManagementService service;
 
     private ShoppingListItem selectedItem;
-
 
     public ModifyShoppingManagementDialogController(SmartLivingApplication application, Dialog<Boolean> dialog, ShoppingListItem item) {
         this.APPLICATION = application;
@@ -50,6 +41,9 @@ public class ModifyShoppingManagementDialogController extends DialogController{
         return VIEW_NAME;
     }
 
+    /**
+     * this method is automatically called at loading time
+     */
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
 

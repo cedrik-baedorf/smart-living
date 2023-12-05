@@ -70,4 +70,8 @@ public class ConfirmPasswordDialog extends ConfirmDialog {
         }
     }
 
+    public void setErrorMessage(String message, double seconds) {
+        errorMessage.displayError(message, seconds);
+    }
+
 }
