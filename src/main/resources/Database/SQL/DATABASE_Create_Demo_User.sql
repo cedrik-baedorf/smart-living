@@ -15,9 +15,9 @@
 
 DROP USER IF EXISTS 'DEMO_USER';
 CREATE USER IF NOT EXISTS 'DEMO_USER' IDENTIFIED BY 'PASSWORD';
-REVOKE ALL PRIVILEGES ON *.* FROM 'DEMO_USER';
-GRANT SELECT ON `smart-living`.* TO 'DEMO_USER';
-GRANT INSERT ON `smart-living`.* TO 'DEMO_USER';
-GRANT DELETE ON `smart-living`.* TO 'DEMO_USER';
-GRANT UPDATE ON `smart-living`.* TO 'DEMO_USER';
+REVOKE ALL PRIVILEGES ON *.* FROM 'DEMO_USER'@'localhost';
+GRANT SELECT ON `smart-living`.* TO 'DEMO_USER'@'localhost';
+GRANT INSERT ON `smart-living`.* TO 'DEMO_USER'@'localhost';
+GRANT DELETE ON `smart-living`.* TO 'DEMO_USER'@'localhost';
+GRANT UPDATE ON `smart-living`.* TO 'DEMO_USER'@'localhost';
 FLUSH PRIVILEGES;
