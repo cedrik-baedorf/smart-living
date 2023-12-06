@@ -18,7 +18,7 @@ public class ShoppingManagementServiceImplementation implements ShoppingManageme
     @Override
     public void create(ShoppingListItem shoppingListItem) {
 
-        if (shoppingListItem.getAmount() < 0 || shoppingListItem.getAmount()>100000.0) {
+        if (shoppingListItem.getAmount() <= 0 || shoppingListItem.getAmount()>100000.0) {
             throw new IllegalArgumentException("Amount cannot be negative nor over 100000");
         } else if (shoppingListItem.getItem() == null || shoppingListItem.getItem().trim().isEmpty()) {
             throw new IllegalArgumentException("Item name cannot be empty");
@@ -29,9 +29,13 @@ public class ShoppingManagementServiceImplementation implements ShoppingManageme
         ShoppingListItem existingItem = em.find(ShoppingListItem.class, shoppingListItem.getItem());
 
         if (existingItem != null) {
-            double newAnzahl = existingItem.getAmount() + shoppingListItem.getAmount();
-            existingItem.setAmount(newAnzahl);
-            em.merge(existingItem);
+            if (existingItem.getUnit().compareTo(shoppingListItem.getUnit())!=0) {
+                throw new IllegalArgumentException("Unit can not be different to the Item unit in the database");
+            } else {
+                double newAnzahl = existingItem.getAmount() + shoppingListItem.getAmount();
+                existingItem.setAmount(newAnzahl);
+                em.merge(existingItem);
+            }
         } else {
             em.persist(shoppingListItem);
         }
@@ -67,7 +71,7 @@ public class ShoppingManagementServiceImplementation implements ShoppingManageme
 
     @Override
     public void modifyItem(ShoppingListItem shoppingListItem, Double newAmount) {
-        if (shoppingListItem == null || newAmount == null || newAmount < 0 || newAmount>100000.0) {
+        if (shoppingListItem == null || newAmount == null || newAmount <= 0 || newAmount>100000.0) {
             throw new IllegalArgumentException("ShoppingListItem or new amount cannot be null");
         }
 
@@ -83,5 +87,14 @@ public class ShoppingManagementServiceImplementation implements ShoppingManageme
         em.merge(modifiedItem);
         em.getTransaction().commit();
         em.close();
+    }
+
+    @Override
+    public boolean isInList(String itemName) {
+        EntityManager em = databaseConnector.createEntityManager();
+        if (em.find(ShoppingListItem.class, itemName) != null) {
+            return true;
+        }
+        return false;
     }
 }

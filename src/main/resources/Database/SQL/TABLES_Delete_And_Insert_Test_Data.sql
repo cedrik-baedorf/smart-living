@@ -39,8 +39,23 @@ INSERT INTO `assignments` (`assignment_id`, `task_id`, `username`) VALUES
         (4, 3, 'heyden');
 
 DELETE FROM shopping_list_items;
-INSERT INTO shopping_list_items (item, amount, unit) VALUES ('Chocolate', 2, 'kg');
-INSERT INTO shopping_list_items (item, amount, unit) VALUES ('Milk', 1, 'l');
+INSERT INTO shopping_list_items (item, amount, unit) VALUES
+         ('Flour', 3, 'kg'),
+         ('Rice', 2, 'kg'),
+         ('Pasta', 4, 'kg'),
+         ('Beans', 1, 'kg'),
+         ('Lentils', 2, 'kg'),
+         ('Tomato Sauce', 3, 'l'),
+         ('Vegetable Oil', 5, 'l'),
+         ('Apple Juice', 2, 'l'),
+         ('Orange Juice', 2, 'l'),
+         ('Soy Sauce', 1, 'l'),
+         ('Vinegar', 1, 'l'),
+         ('Water', 10, 'l'),
+         ('Honey', 1, 'kg'),
+         ('Salt', 1, 'kg'),
+         ('Oatmeal', 2, 'kg');
+
 
 DELETE FROM `expenses`;
 INSERT INTO `expenses` (`expense_id`, `creditor_name`, `product`, `cost`) VALUES

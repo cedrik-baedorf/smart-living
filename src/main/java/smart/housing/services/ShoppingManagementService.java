@@ -42,4 +42,13 @@ public interface ShoppingManagementService {
      */
     void modifyItem(ShoppingListItem shoppingListItem, Double newAmount);
 
+
+    /**
+     * This method takes the String of the name of a the Shopping List Item and modifies returns true
+     * if the item is in the List
+     *
+     * @param itemName to be checked if in the List
+     * @return boolean if item is in the List
+     */
+    boolean isInList(String itemName);
 }
