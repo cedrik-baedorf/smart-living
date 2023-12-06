@@ -24,10 +24,7 @@
                             <PropertyValueFactory property="dueDate" />
                         </cellValueFactory>
                     </TableColumn>
-                    <TableColumn text="Status" minWidth="100">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="completed" />
-                        </cellValueFactory>
+                    <TableColumn fx:id="statusColumn" text="Status" minWidth="100">
                     </TableColumn>
                     <TableColumn text="Assigned To" minWidth="200">
                         <cellValueFactory>
@@ -114,14 +111,9 @@
             </StyledTableView>
             <StyledTableView fx:id="currentTasks" minHeight="100.0" minWidth="200" maxWidth="350.0">
                 <columns>
-                    <TableColumn minWidth="100.0" text="Tasks This Week">
+                    <TableColumn minWidth="100.0" text="My Tasks This Week">
                         <cellValueFactory>
                             <PropertyValueFactory property="taskName" />
-                        </cellValueFactory>
-                    </TableColumn>
-                    <TableColumn minWidth="100.0" text="Assigned To">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="assignees" />
                         </cellValueFactory>
                     </TableColumn>
                     <TableColumn minWidth="100.0" text="Due Date">

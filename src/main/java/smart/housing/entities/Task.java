@@ -6,6 +6,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 
 /**
  * This entity represents one row of table <i>Tasks</i>
@@ -26,6 +28,7 @@ import java.util.Set;
                         WHERE task.isCompleted = coalesce(:isCompleted, task.isCompleted)
                         AND task.dueDate >= :startDate
                         AND task.dueDate <= :endDate
+                        AND :assignee MEMBER OF task.assignees
                         """
         ),
         @NamedQuery(
@@ -54,6 +57,12 @@ public class Task {
      */
 
     public static final String FIND_INCOMPLETE = "Task.findIncomplete";
+
+    @Transient
+    private final BooleanProperty completedProperty = new SimpleBooleanProperty(this, "completed", false);
+    public BooleanProperty completedProperty() {
+        return completedProperty;
+    }
 
     /**
      * Unique id of the task
@@ -124,7 +133,7 @@ public class Task {
         if (this.getAssignees() == null || this.getAssignees().isEmpty())
             throw new IllegalStateException("A task must be assigned to at least one roommate before marking it as completed");
         else
-            this.setCompleted();
+            this.setCompleted(true);
     }
 
     public String getTaskName(){
@@ -147,8 +156,9 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    private void setCompleted(){
+    private void setCompleted(boolean completed){
         isCompleted = true;
+        completedProperty.set(completed);
     }
 
     public boolean getCompleted() {
