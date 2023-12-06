@@ -8,9 +8,7 @@ import org.mockito.InOrder;
 import org.mockito.Mockito;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.ShoppingListItem;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.*;
@@ -286,6 +284,37 @@ public class ShoppingManagementServiceImplementationTest {
             assertThrows(IllegalArgumentException.class, () -> service.modifyItem(item, newAmount));
         }
 
+    }
+
+    @Test
+    void testAddItemWithDifferentUnit() {
+        // Mock setup
+        EntityManager entityManager = Mockito.mock(EntityManager.class);
+        EntityTransaction entityTransaction = Mockito.mock(EntityTransaction.class);
+
+        Mockito.doNothing().when(entityTransaction).begin();
+        Mockito.doNothing().when(entityTransaction).commit();
+        Mockito.when(entityManager.getTransaction()).thenReturn(entityTransaction);
+        Mockito.doNothing().when(entityManager).close();
+
+        DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
+        Mockito.when(databaseConnector.createEntityManager()).thenReturn(entityManager);
+
+        // Mocking existing item
+        ShoppingListItem existingItem = new ShoppingListItem("Milk", 10.0, "liters");
+        Mockito.when(entityManager.find(ShoppingListItem.class, "Milk")).thenReturn(existingItem);
+
+        // Service setup
+        ShoppingManagementService service = new ShoppingManagementServiceImplementation(databaseConnector);
+
+        // First, add the item
+        service.create(existingItem);
+
+        // Then, try to add the same item with a different unit
+        ShoppingListItem newItemWithDifferentUnit = new ShoppingListItem("Milk", 5.0, "gallons");
+
+        // Assert that an exception is thrown for adding an item with a different unit
+        assertThrows(IllegalArgumentException.class, () -> service.create(newItemWithDifferentUnit));
     }
 
 }

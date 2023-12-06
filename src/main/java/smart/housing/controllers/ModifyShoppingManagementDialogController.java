@@ -52,12 +52,14 @@ public class ModifyShoppingManagementDialogController extends DialogController{
     }
 
     public void modifyItem() {
-        if (amountTextField.getText() == null) {
-            ShoppingManagementController.buttonDisplay(false,modifyButton);
-        } else {
-            service.modifyItem(selectedItem,Double.parseDouble(amountTextField.getText()));
-            ShoppingManagementController.buttonDisplay(true,modifyButton);
-            DIALOG.setResult(true);
-        }
+        try {
+            if (amountTextField.getText().isEmpty()) {
+                ShoppingManagementController.buttonDisplay(false, modifyButton);
+            } else {
+                service.modifyItem(selectedItem, Double.parseDouble(amountTextField.getText()));
+                ShoppingManagementController.buttonDisplay(true, modifyButton);
+                DIALOG.setResult(true);
+            }
+        } catch (Exception e) {ShoppingManagementController.buttonDisplay(false, modifyButton);}
     }
 }

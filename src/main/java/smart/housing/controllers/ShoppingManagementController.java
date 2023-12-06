@@ -63,6 +63,10 @@ public class ShoppingManagementController extends SmartHousingController {
         );
         einheitComboBox.setItems(itemsList);
 
+        artikelTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            hinzufuegenButton.setDisable(service.isInList(newValue));
+        });
+
         clearFields();
         loadShoppingList();
     }
@@ -99,7 +103,7 @@ public class ShoppingManagementController extends SmartHousingController {
             buttonDisplay(true,hinzufuegenButton);
 
         } else {
-            System.out.println("Bitte füllen Sie alle Felder aus.");
+            buttonDisplay(false,hinzufuegenButton);
         }
         } catch (Exception e) {
             buttonDisplay(false,hinzufuegenButton);
