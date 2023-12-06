@@ -12,7 +12,7 @@
 <BackgroundStackPane fx:id="backgroundPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="smart.housing.controllers.TaskManagementController">
     <BorderPane>
         <center>
-            <StyledTableView fx:id="taskTable" minHeight="150.0" minWidth="300.0">
+            <StyledTableView fx:id="taskTable" minHeight="150.0" minWidth="300.0" onMouseClicked="#_taskTable_onMouseClicked">
                 <columns>
                     <TableColumn text="Task Name" minWidth="100">
                         <cellValueFactory>
@@ -42,14 +42,19 @@
         </center>
         <top>
             <GridPane maxHeight="200" prefWidth="1000" stylesheets="@style_sheets/style.css">
-            <StyledButton fx:id="newTaskButton" text="+ NEW TASK" onAction="#_newTaskButton_onAction">
+            <StyledButton fx:id="newTaskButton" text="+ New Task" onAction="#_newTaskButton_onAction">
                 <GridPane.margin>
                     <Insets top="300.0" left="200.0" />
                 </GridPane.margin>
             </StyledButton>
-            <StyledButton fx:id="modifyTaskButton" text="MODIFY" onAction="#_modifyTaskButton_onAction">
+            <StyledButton fx:id="modifyTaskButton" text="Modify" onAction="#_modifyTaskButton_onAction">
                 <GridPane.margin>
-                    <Insets top="300.0" left="400.0" />
+                    <Insets top="300.0" left="350.0" />
+                </GridPane.margin>
+            </StyledButton>
+            <StyledButton fx:id="deleteTaskButton" text="Delete" onAction="#_deleteButton_onAction" >
+                <GridPane.margin>
+                    <Insets top="300.0" left="460.0"/>
                 </GridPane.margin>
             </StyledButton>
             <StyledComboBox promptText="Select Month">

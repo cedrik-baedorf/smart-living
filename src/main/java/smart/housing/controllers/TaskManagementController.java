@@ -4,12 +4,14 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
+import javafx.scene.input.MouseEvent;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.Task;
 import smart.housing.services.TaskManagementService;
 import smart.housing.services.TaskManagementServiceImplementation;
 import smart.housing.services.UserManagementService;
 import smart.housing.ui.BackgroundStackPane;
+import smart.housing.ui.ConfirmDialog;
 import smart.housing.ui.StyledButton;
 import smart.housing.ui.StyledTableView;
 
@@ -40,6 +42,7 @@ public class TaskManagementController extends SmartHousingController {
     @FXML public BackgroundStackPane backgroundPane;
     @FXML public StyledButton newTaskButton;
     @FXML public StyledButton modifyTaskButton;
+    @FXML public StyledButton deleteTaskButton;
     @FXML public StyledTableView<Task> taskTable;
     @FXML public StyledTableView<Task> currentTasks;
     @FXML public StyledTableView<Task> overdueTasks;
@@ -61,6 +64,7 @@ public class TaskManagementController extends SmartHousingController {
     public void initialize() {
         setBackgroundImage();
         loadTasks();
+        initializeButtons(false);
     }
 
     private void setBackgroundImage() {
@@ -71,6 +75,11 @@ public class TaskManagementController extends SmartHousingController {
         taskTable.setItems(FXCollections.observableList(TASK_SERVICE.getAllTasks()));
         currentTasks.setItems(FXCollections.observableList(TASK_SERVICE.getCurrentTasks()));
         overdueTasks.setItems(FXCollections.observableList(TASK_SERVICE.getIncompleteTasks()));
+    }
+
+    private void initializeButtons(boolean itemSelected) {
+        newTaskButton.setDisable(false);
+        modifyTaskButton.setDisable(! itemSelected);
     }
 
     public void _newTaskButton_onAction(ActionEvent event) {
@@ -85,6 +94,12 @@ public class TaskManagementController extends SmartHousingController {
                 new NewTaskDialogController(USER_SERVICE, TASK_SERVICE, dialog)
         ));
         dialog.showAndWait().ifPresent(aBoolean -> loadTasks());
+    }
+
+    public void _taskTable_onMouseClicked(MouseEvent mouseEvent) {
+        mouseEvent.consume();
+        Task selectedTask = taskTable.getSelectionModel().getSelectedItem();
+        initializeButtons(selectedTask != null);
     }
 
     public void _modifyTaskButton_onAction(ActionEvent event){
@@ -105,6 +120,23 @@ public class TaskManagementController extends SmartHousingController {
     @Override
     public String getViewName() {
         return VIEW_NAME;
+    }
+
+    public void _deleteButton_onAction(ActionEvent event) {
+        event.consume();
+        deleteSelectedTask();
+    }
+
+    private void deleteSelectedTask(){
+        Task taskToBeDeleted = taskTable.getSelectionModel().getSelectedItem();
+        ConfirmDialog dialog = new ConfirmDialog("Do you want to delete this task?", "Yes, delete", "No, keep");
+        dialog.showAndWait().ifPresent(aBoolean -> {
+            if(aBoolean) {
+                TASK_SERVICE.delete(taskToBeDeleted);
+                // loadTasks();
+                taskTable.getItems().remove(taskToBeDeleted);
+            }
+        });
     }
 }
 
