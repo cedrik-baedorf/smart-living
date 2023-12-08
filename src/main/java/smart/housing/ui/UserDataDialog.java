@@ -1,12 +1,19 @@
 package smart.housing.ui;
 
+import com.sun.glass.ui.GlassRobot;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.geometry.Pos;
 import javafx.scene.control.Dialog;
+import javafx.scene.layout.GridPane;
+import smart.housing.controllers.DialogController;
 import smart.housing.entities.User;
 import smart.housing.enums.UserRole;
 import smart.housing.exceptions.EmptyFieldException;
 import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.security.HashAlgorithm;
+
+import java.util.Arrays;
 
 public class UserDataDialog extends Dialog<User> {
 
@@ -20,13 +27,27 @@ public class UserDataDialog extends Dialog<User> {
     /**
      * This constructor takes two arguments of class {@link User}
      * @param applicationUser user of the application
+     */
+    public UserDataDialog(String title, User applicationUser) {
+        this(title, applicationUser, null);
+    }
+
+    /**
+     * This constructor takes two arguments of class {@link User}
+     * @param applicationUser user of the application
      * @param user user object who's properties will be loaded into the input fields
      */
-    public UserDataDialog(User applicationUser, User user) {
+    public UserDataDialog(String title, User applicationUser, User user) {
         this.applicationUser = applicationUser;
         this.user = user;
+        this.setTitle(title);
 
-        this.createFields();
+        this.getDialogPane().getScene().getWindow().setOnCloseRequest(event -> {
+            this.setResult(null);
+            this.hide();
+        });
+
+        this.getDialogPane().setContent(this.createFields());
 
         clearFields();
         if(user != null)
@@ -35,28 +56,47 @@ public class UserDataDialog extends Dialog<User> {
         confirmButton.setOnAction(this::createUser);
     }
 
-    private void createFields() {
+    private GridPane createFields() {
+        GridPane gridPane = new GridPane();
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        gridPane.setAlignment(Pos.CENTER);
+
         username = new StyledTextField();
         username.setPromptText("username");
+        gridPane.add(username, 0, 0);
 
         firstName = new StyledTextField();
-        username.setPromptText("first name");
+        firstName.setPromptText("first name");
+        gridPane.add(firstName, 0, 1);
 
         lastName = new StyledTextField();
-        username.setPromptText("last name");
+        lastName.setPromptText("last name");
+        gridPane.add(lastName, 0, 2);
 
         role = new StyledComboBox<>();
+        role.setItems(FXCollections.observableList(Arrays.stream(UserRole.values())
+            .filter(userRole -> applicationUser.getRole().outranks(userRole))
+            .toList()
+        ));
+        gridPane.add(role, 0, 3);
 
         email = new StyledTextField();
-        username.setPromptText("email");
+        email.setPromptText("email");
+        gridPane.add(email, 0, 4);
 
         password = new StyledPasswordField();
-        username.setPromptText("password");
+        password.setPromptText("password");
+        gridPane.add(password, 0, 5);
 
         confirmPassword = new StyledPasswordField();
-        username.setPromptText("confirm password");
+        confirmPassword.setPromptText("confirm password");
+        gridPane.add(confirmPassword, 0, 6);
 
-        confirmButton = new StyledButton();
+        confirmButton = new StyledButton("Confirm Data");
+        gridPane.add(confirmButton, 0, 7);
+
+        return gridPane;
     }
 
     private void clearFields() {

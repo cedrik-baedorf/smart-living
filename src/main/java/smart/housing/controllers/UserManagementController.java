@@ -9,10 +9,7 @@ import smart.housing.SmartLivingApplication;
 import smart.housing.entities.User;
 import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.services.UserManagementService;
-import smart.housing.ui.BackgroundStackPane;
-import smart.housing.ui.ConfirmPasswordDialog;
-import smart.housing.ui.ErrorDialog;
-import smart.housing.ui.StyledTableView;
+import smart.housing.ui.*;
 
 import java.util.List;
 
@@ -138,7 +135,11 @@ public class UserManagementController extends SmartHousingController {
 
     public void _createButton_onAction(ActionEvent event) {
         event.consume();
-        createUser();
+        new UserDataDialog("Create User", SERVICE.getServiceUser()).showAndWait().ifPresent(user -> {
+            SERVICE.create(user);
+            loadUsers();
+        });
+        //createUser();
     }
 
     public void createUser() {
