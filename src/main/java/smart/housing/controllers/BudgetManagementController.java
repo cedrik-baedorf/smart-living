@@ -55,7 +55,7 @@ public class BudgetManagementController extends SmartHousingController {
     @FXML public StyledTextField productNameField;
     @FXML public StyledTextField costField;
     @FXML public StyledComboBox<User> creditors;
-    @FXML public StyledCheckComboBox<User> debitors;
+    @FXML public StyledCheckComboBox<User> debtors;
     @FXML public StyledButton addExpenseButton;
     @FXML public StyledTableView<Expense> expenseTable;
     @FXML public StyledTableView<DebtOverview> debtsOverview;
@@ -82,12 +82,12 @@ public class BudgetManagementController extends SmartHousingController {
         setBackgroundImage();
 
         // Set up listener for multiple selections
-        debitors.getCheckModel().getCheckedItems().addListener((ListChangeListener<? super User>) change -> {
+        debtors.getCheckModel().getCheckedItems().addListener((ListChangeListener<? super User>) change -> {
             while (change.next()) {
                 if (change.wasAdded()) {
-                    System.out.println("Selected Debitors: " + change.getAddedSubList());
+                    System.out.println("Selected Debtors: " + change.getAddedSubList());
                 } else if (change.wasRemoved()) {
-                    System.out.println("Deselected Debitors: " + change.getRemoved());
+                    System.out.println("Deselected Debtors: " + change.getRemoved());
                 }
             }
         });
@@ -144,7 +144,7 @@ public class BudgetManagementController extends SmartHousingController {
     @Override
     public void update() {
         creditors.setItems(FXCollections.observableList(USER_SERVICE.getUsers()));
-        debitors.setItems(FXCollections.observableList(USER_SERVICE.getUsers()));
+        debtors.setItems(FXCollections.observableList(USER_SERVICE.getUsers()));
         expenseTable.setItems(FXCollections.observableList(BUDGET_SERVICE.getAllExpenses()));
         loadExpenseList();
         loadDebtsOverviewList();
@@ -162,15 +162,15 @@ public class BudgetManagementController extends SmartHousingController {
             String product = productNameField.getText();
             double cost = Double.parseDouble(costField.getText());
             User selectedCreditor = creditors.getValue();
-            Set<User> selectedDebitors = new HashSet<>(debitors.getCheckModel().getCheckedItems());
+            Set<User> selectedDebtors = new HashSet<>(debtors.getCheckModel().getCheckedItems());
             if(product == null)
                 throw new BudgetManagementServiceException("Please enter a product");
-            if(selectedDebitors.isEmpty())
-                throw new BudgetManagementServiceException("Please select at least one debitor");
+            if(selectedDebtors.isEmpty())
+                throw new BudgetManagementServiceException("Please select at least one debtor");
             if(cost <= 0)
                 throw new BudgetManagementServiceException("Please provide a positive amount");
 
-            BUDGET_SERVICE.create(new Expense(selectedDebitors, selectedCreditor, product, cost));
+            BUDGET_SERVICE.create(new Expense(selectedDebtors, selectedCreditor, product, cost));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -201,12 +201,11 @@ public class BudgetManagementController extends SmartHousingController {
     }
 
 
-
     private void clearExpenses () {
         productNameField.clear();
         costField.clear();
         creditors.getSelectionModel().clearSelection();
-        debitors.getCheckModel().clearChecks();
+        debtors.getCheckModel().clearChecks();
     }
 
     public void _deleteButton_onAction(ActionEvent event) {
@@ -228,17 +227,25 @@ public class BudgetManagementController extends SmartHousingController {
     }
 
     public void _modifyButton_onAction(ActionEvent event) {
+        System.out.println("ModifyButton clicked!");
         event.consume();
         Expense selectedItem = expenseTable.getSelectionModel().getSelectedItem();
 
-        if (selectedItem != null) {
-            // Modify button logic goes here
-
-            // Display success message with a green outline
-            buttonDisplay(true, modifyButton);
+        if(selectedItem == null) {
+            buttonDisplay(false,modifyButton);
         } else {
-            // No item selected, display error message with a red outline
-            buttonDisplay(false, modifyButton);
+            Dialog<Boolean> dialog = new Dialog<>();
+            dialog.setDialogPane(APPLICATION.loadFXML(
+                    ModifyExpenseDialogController.VIEW_NAME,
+                    new ModifyExpenseDialogController(USER_SERVICE, BUDGET_SERVICE, dialog, selectedItem)
+            ));
+            dialog.showAndWait().ifPresent(aBoolean -> {
+                if (aBoolean) {
+                    // If modification was successful, update both tables
+                    loadExpenseList();
+                    loadDebtsOverviewList();
+                }});
+            buttonDisplay(true,modifyButton);
         }
     }
 
@@ -301,7 +308,7 @@ public class BudgetManagementController extends SmartHousingController {
                 String debtorFirstName = selectedDebt.debtor().getFirstName();
                 String debtorLastName = selectedDebt.debtor().getLastName();
                 String creditorFirstName = selectedDebt.creditor().getFirstName();
-                String debtorEmail = debtorFirstName + "." + debtorLastName + "@studmail.hwg-lu.de";
+                String debtorEmail = selectedDebt.debtor().getEmail();
                 String subject = "You owe money!";
 
                 // Include debt amount in the email body
@@ -341,4 +348,3 @@ public class BudgetManagementController extends SmartHousingController {
         return VIEW_NAME;
     }
 }
-

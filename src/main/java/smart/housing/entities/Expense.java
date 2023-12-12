@@ -96,16 +96,6 @@ public class Expense implements Serializable {
         this.creditor = creditor;
     }
 
-    /*
-    public User getCreditorUser() {
-        return creditorUser;
-    }
-
-    public void setCreditorUser(User creditorUser) {
-        this.creditorUser = creditorUser;
-    }
-    */
-
     public String getProduct() {
         return product;
     }
@@ -118,7 +108,7 @@ public class Expense implements Serializable {
         return cost;
     }
 
-    public void setCost(int cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 

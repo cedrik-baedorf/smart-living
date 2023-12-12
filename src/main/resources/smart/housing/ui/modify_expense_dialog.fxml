@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import smart.housing.ui.*?>
+
+<DialogPane fx:id="dialogPane" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="smart.housing.controllers.ModifyExpenseDialogController" stylesheets="@style_sheets/style.css">
+    <content>
+        <GridPane alignment="CENTER">
+            <Label fx:id="budgetLabel" prefHeight="17.0" prefWidth="200" text="Modify Expense"  style="-fx-text-fill: black;" GridPane.rowIndex="0">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="20.0" />
+                </GridPane.margin>
+            </Label>
+            <HBox GridPane.rowIndex="1" alignment="CENTER_LEFT">
+                <StyledTextField fx:id="productNameField" prefHeight="17.0" prefWidth="200.0" promptText="Product"  >
+
+                </StyledTextField>
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </HBox>
+            <StyledComboBox promptText="Select Creditor" fx:id="creditor" GridPane.rowIndex="2" prefWidth="200">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </StyledComboBox>
+
+            <HBox GridPane.rowIndex="3" alignment="CENTER_LEFT">
+                <StyledTextField fx:id="costField" promptText="Enter Cost" prefWidth="170.0">
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
+                    </HBox.margin>
+                </StyledTextField>
+                <Label text="€" style="-fx-background-color: WHITE; -fx-opacity: 0.7; -fx-background-radius: 15;-fx-border-color: TRANSPARENT;-fx-border-radius: 15;-fx-text-fill: BLACK;-fx-font-family:sans-serif;-fx-padding: 5 8 5 8;"/>
+            </HBox>
+
+            <StyledCheckComboBox fx:id="debtors" promptText="Select Debtors" GridPane.rowIndex="4" prefWidth="200">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </StyledCheckComboBox>
+            <StyledButton onAction="#_modifyExpense" text="Modify Expense" textAlignment="CENTER" GridPane.halignment="LEFT"
+                          GridPane.rowIndex="5"  buttonStyle="CONFIRM" prefWidth="200">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </StyledButton>
+            <ErrorMessage fx:id="errorMessage" GridPane.rowIndex="6" wrapText="true"
+                          styleClass="standard-layout, error-message">
+                <GridPane.margin>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </GridPane.margin>
+            </ErrorMessage>
+            <columnConstraints>
+                <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
+            </rowConstraints>
+        </GridPane>
+    </content>
+</DialogPane>

@@ -35,17 +35,20 @@
                             <!-- Select Creditor -->
                             <StyledComboBox promptText="Select Creditor" fx:id="creditors" prefWidth="200.0"/>
 
-                            <!-- Select Debitors -->
-                            <StyledCheckComboBox fx:id="debitors" prefWidth="200.0">
+                            <!-- Select Debtors -->
+                            <StyledCheckComboBox fx:id="debtors" prefWidth="200.0">
                                 <promptText>
-                                    <Label text="Select Debitors"/>
+                                    <Label text="Select Debtors"/>
                                 </promptText>
                             </StyledCheckComboBox>
 
-
                             <!-- Decimal Number Input -->
                             <HBox>
-                                <StyledTextField fx:id="costField" prefHeight="26.0" prefWidth="200.0" promptText="Enter Cost" />
+                                <StyledTextField fx:id="costField" promptText="Enter Cost" prefWidth="170.0">
+                                    <HBox.margin>
+                                        <Insets right="5.0"/>
+                                    </HBox.margin>
+                                </StyledTextField>
                                 <Label text="€" style="-fx-background-color: WHITE; -fx-opacity: 0.7; -fx-background-radius: 15;-fx-border-color: TRANSPARENT;-fx-border-radius: 15;-fx-text-fill: BLACK;-fx-font-family:sans-serif;-fx-padding: 5 8 5 8;"/>
                             </HBox>
 
@@ -128,9 +131,9 @@
                                         <PropertyValueFactory property="cost" />
                                     </cellValueFactory>
                                 </TableColumn>
-                                <TableColumn text="Debitor" minWidth="300">
+                                <TableColumn text="Debtor" minWidth="300">
                                     <cellValueFactory>
-                                        <PropertyValueFactory property="debitors" />
+                                        <PropertyValueFactory property="debtors" />
                                     </cellValueFactory>
                                 </TableColumn>
                             </columns>
@@ -147,7 +150,7 @@
                              </font>
                             </StyledButton>
 
-                            <!-- Delete Button -->
+                            <!-- Modify Button -->
                             <StyledButton fx:id="modifyButton" text="Modify" onAction="#_modifyButton_onAction">
                                 <font>
                                     <Font size="10.0" />

@@ -104,4 +104,23 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
         entityManager.getTransaction().commit();
         entityManager.close();
     }
+
+    @Override
+    public void modify(Expense oldExpense, Expense updateExpense) {
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
+
+        try {
+            entityManager.getTransaction().begin();
+            oldExpense = entityManager.merge(oldExpense);
+            oldExpense.setProduct(updateExpense.getProduct());
+            oldExpense.setCreditor(updateExpense.getCreditor());
+            oldExpense.setCost(updateExpense.getCost());
+            oldExpense.setDebitors(updateExpense.getDebitors());
+
+            entityManager.getTransaction().commit();
+        } catch (Exception e){
+            e.getStackTrace();
+        }
+        entityManager.close();
+    }
 }
