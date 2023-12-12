@@ -21,4 +21,6 @@ public interface BudgetManagementService {
 
     void delete(Expense expense);
 
+    void modify(Expense oldExpense, Expense updateExpense);
+
 }
