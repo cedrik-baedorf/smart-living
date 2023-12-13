@@ -35,7 +35,7 @@ public class Expense implements Serializable {
             joinColumns = @JoinColumn(name = "expense_id"),
             inverseJoinColumns = @JoinColumn(name = "debitor_name")
     )
-    private Set<User> debitors;
+    private Set<User> debtors;
 
     @ManyToOne
     @JoinColumn(name = "creditor_name")
@@ -56,7 +56,7 @@ public class Expense implements Serializable {
     }
 
     public Expense(Set<User> debitors, User creditor, String product, double cost) {
-        this.debitors = debitors;
+        this.debtors = debitors;
         this.creditor = creditor;
         this.product = product;
         this.cost = cost;
@@ -72,20 +72,20 @@ public class Expense implements Serializable {
         this.expenseId = expenseId;
     }
 
-    public Set<User> getDebitors() {
-        return debitors;
+    public Set<User> getDebtors() {
+        return debtors;
     }
 
-    public void setDebitors(Set<User> debitors) {
-        this.debitors = debitors;
+    public void setDebtors(Set<User> debtors) {
+        this.debtors = debtors;
     }
 
-    public void addDebitor(User roommate){
-        debitors.add(roommate);
+    public void addDebtor(User roommate){
+        debtors.add(roommate);
     }
 
-    public void removeDebitor(User roommate) {
-        debitors.remove(roommate);
+    public void removeDebtor(User roommate) {
+        debtors.remove(roommate);
     }
 
     public User getCreditor() {
@@ -114,7 +114,7 @@ public class Expense implements Serializable {
 
 
     public double getDebtorShare(User debtor) {
-        int numberOfDebtors = debitors.size();
+        int numberOfDebtors = debtors.size();
         if (numberOfDebtors > 0) {
             return cost / numberOfDebtors;
         } else {

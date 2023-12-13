@@ -78,19 +78,6 @@ public class ModifyExpenseDialogController extends DialogController {
         loadCreditors();
     }
 
-    /*
-    private void loadExpense(){
-        List<User> userList = USER_MANAGEMENT_SERVICE.getUsers();
-
-        productNameField.initializeStyleSheets(); // Ensure the field is initialized
-        productNameField.setText(EXPENSE_TO_BE_MODIFIED.getProduct());
-
-        creditor.setItems(FXCollections.observableList(userList));
-        costField.setText(Double.toString(EXPENSE_TO_BE_MODIFIED.getCost()));
-        debtors.setItems(FXCollections.observableList(userList));
-    }
-*/
-
     private void loadExpense(){
         List<User> userList = USER_MANAGEMENT_SERVICE.getUsers();
 
@@ -99,7 +86,6 @@ public class ModifyExpenseDialogController extends DialogController {
         costField.setText(Double.toString(EXPENSE_TO_BE_MODIFIED.getCost()));
         debtors.setItems(FXCollections.observableList(userList));
     }
-
 
     private void loadCreditors(){
         List<User> userList = USER_MANAGEMENT_SERVICE.getUsers();
@@ -115,11 +101,11 @@ public class ModifyExpenseDialogController extends DialogController {
         System.out.println("modifyExpense method");
         checkForEmptyInput(productNameField.getText(), "taskName");
 
-        Expense updateExpense = new Expense(EXPENSE_TO_BE_MODIFIED.getDebitors(),EXPENSE_TO_BE_MODIFIED.getCreditor(),EXPENSE_TO_BE_MODIFIED.getProduct(),EXPENSE_TO_BE_MODIFIED.getCost());
+        Expense updateExpense = new Expense(EXPENSE_TO_BE_MODIFIED.getDebtors(),EXPENSE_TO_BE_MODIFIED.getCreditor(),EXPENSE_TO_BE_MODIFIED.getProduct(),EXPENSE_TO_BE_MODIFIED.getCost());
         updateExpense.setProduct(productNameField.getText());
         updateExpense.setCreditor(creditor.getValue());
         updateExpense.setCost(Double.parseDouble(costField.getText()));
-        debtors.getCheckModel().getCheckedItems().forEach(updateExpense::addDebitor);
+        debtors.getCheckModel().getCheckedItems().forEach(updateExpense::addDebtor);
 
         BUDGET_MANAGEMENT_SERVICE.modify(EXPENSE_TO_BE_MODIFIED, updateExpense);
 
