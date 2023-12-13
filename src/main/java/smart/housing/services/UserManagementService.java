@@ -1,9 +1,7 @@
 package smart.housing.services;
 
 import smart.housing.entities.User;
-import smart.housing.enums.UserRole;
 import smart.housing.exceptions.UserManagementServiceException;
-import smart.housing.security.HashAlgorithm;
 
 import java.util.List;
 
@@ -12,7 +10,6 @@ public interface UserManagementService extends SmartLivingService {
     String MSG_CREATE_LOWER_RANK = "Role %s of current user is not able to create user with role %s";
     String MSG_CREATE_NULL = "Attempted to persist User but %s was null";
     String MSG_CREATE_USERNAME_EXISTS = "Attempted to persist User but username %s already exists";
-    String MSG_UNSUCCESSFUL = "Attempt to %s user '%s' was unsuccessful";
 
     /**
      * This method takes an object of class <code>User</code> and persists it in the database, if
@@ -27,18 +24,24 @@ public interface UserManagementService extends SmartLivingService {
 
     /**
      * This method deletes an object of class <code>{@link User}</code> from the database.
-     * The <code>{@link User}</code> to be deleted is determined by the <code>username</code>
-     * parameter provided in the method signature. The user shall only be deleted if the
-     * <code>password</code> provided matches the password in the database.
+     * The <code>{@link User}</code> to be deleted is determined by the <code>user</code>
+     * parameter provided in the method signature. The user shall only be deleted if it is not
+     * assigned to any task or expense in the other services.
      * Otherwise, this method will throw a {@link UserManagementServiceException}
-     * @param username username of the user that shall be deleted
-     * @param password un-hashed password belonging to the username
+     * @param user user that shall be deleted
      */
-    void delete(String username, String password) throws UserManagementServiceException;
-
     void delete(User user) throws UserManagementServiceException;
 
-    void modify(String username, String password, User updateUser) throws UserManagementServiceException;
+    /**
+     * This method modifies an object of class <code>{@link User}</code> in the database.
+     * The <code>{@link User}</code> to be modified is determined by the <code>user</code>
+     * parameter provided in the method signature. The update user data is taken from the
+     * <code>modifiedUser</code> parameter. Every attribute from <code>modified</code> will be
+     * transferred to <code>user</code> and persisted to the database except the <code>username</code>.
+     * Otherwise, this method will throw a {@link UserManagementServiceException}
+     * @param user user that shall be deleted
+     */
+    void modify(User user, User modifiedUser) throws UserManagementServiceException;
 
     /**
      * This method shall return all <code>{@link User}</code> objects from the database
@@ -48,17 +51,6 @@ public interface UserManagementService extends SmartLivingService {
      * @return <code>{@link List}</code> object of type <code>{@link User}</code>
      */
     List<User> getUsers();
-
-    /**
-     * This method shall return all <code>{@link User}</code> objects from the database
-     * as a <code>{@link java.util.List}</code> filtered by an array of <code>{@link UserRole}</code> objects.
-     * If no corresponding <code>{@link User}</code> is found, this method shall return an empty
-     * <code>{@link List}</code> object.
-     * @return <code>{@link List}</code> object of type <code>{@link User}</code>
-     */
-    List<User> getUsers(UserRole... roles);
-
-    HashAlgorithm getHashAlgorithm();
 
     /**
      * Getter method for this.USER
