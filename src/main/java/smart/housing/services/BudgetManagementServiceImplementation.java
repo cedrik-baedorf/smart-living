@@ -34,7 +34,7 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
     @Override
     public List<DebtOverview> getUserDebt(User user){
         List<Expense> expenses = getAllExpenses().stream().filter(
-            expense -> expense.getCreditor().equals(user) || expense.getDebitors().contains(user)
+            expense -> expense.getCreditor().equals(user) || expense.getDebtors().contains(user)
         ).toList();
 
         List<DebtOverview> debtOverviews = convertExpensesToDebtOverviews(expenses).stream()
@@ -58,8 +58,8 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
         for(Expense expense : expenses) {
             User creditor = expense.getCreditor();
             double cost = expense.getCost();
-            double share = cost / (expense.getDebitors().size());
-            for (User debtor : expense.getDebitors().stream().filter(debtor -> ! debtor.equals(creditor)).toList()) {
+            double share = cost / (expense.getDebtors().size());
+            for (User debtor : expense.getDebtors().stream().filter(debtor -> ! debtor.equals(creditor)).toList()) {
                 debtOverviews.add(new DebtOverview(creditor, debtor, share));
             }
         }
@@ -115,7 +115,7 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
             oldExpense.setProduct(updateExpense.getProduct());
             oldExpense.setCreditor(updateExpense.getCreditor());
             oldExpense.setCost(updateExpense.getCost());
-            oldExpense.setDebitors(updateExpense.getDebitors());
+            oldExpense.setDebtors(updateExpense.getDebtors());
 
             entityManager.getTransaction().commit();
         } catch (Exception e){
