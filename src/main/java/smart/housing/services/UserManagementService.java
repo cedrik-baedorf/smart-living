@@ -27,18 +27,24 @@ public interface UserManagementService extends SmartLivingService {
 
     /**
      * This method deletes an object of class <code>{@link User}</code> from the database.
-     * The <code>{@link User}</code> to be deleted is determined by the <code>username</code>
-     * parameter provided in the method signature. The user shall only be deleted if the
-     * <code>password</code> provided matches the password in the database.
+     * The <code>{@link User}</code> to be deleted is determined by the <code>user</code>
+     * parameter provided in the method signature. The user shall only be deleted if it is not
+     * assigned to any task or expense in the other services.
      * Otherwise, this method will throw a {@link UserManagementServiceException}
-     * @param username username of the user that shall be deleted
-     * @param password un-hashed password belonging to the username
+     * @param user user that shall be deleted
      */
-    void delete(String username, String password) throws UserManagementServiceException;
-
     void delete(User user) throws UserManagementServiceException;
 
-    void modify(String username, String password, User updateUser) throws UserManagementServiceException;
+    /**
+     * This method modifies an object of class <code>{@link User}</code> in the database.
+     * The <code>{@link User}</code> to be modified is determined by the <code>user</code>
+     * parameter provided in the method signature. The update user data is taken from the
+     * <code>modifiedUser</code> parameter. Every attribute from <code>modified</code> will be
+     * transferred to <code>user</code> and persisted to the database except the <code>username</code>.
+     * Otherwise, this method will throw a {@link UserManagementServiceException}
+     * @param user user that shall be deleted
+     */
+    void modify(User user, User modifiedUser) throws UserManagementServiceException;
 
     /**
      * This method shall return all <code>{@link User}</code> objects from the database

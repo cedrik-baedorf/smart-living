@@ -39,6 +39,7 @@ public class UserDataDialog extends Dialog<User> {
         this.APPLICATION_USER = applicationUser;
         this.USER = user;
         this.setTitle(title);
+        this.setWidth(300);
 
         this.getDialogPane().getScene().getWindow().setOnCloseRequest(event -> {
             this.setResult(null);

@@ -105,9 +105,9 @@ public class UserManagementController extends SmartHousingController {
     private void deleteSelectedUser() {
         User userToBeDeleted = userTable.getSelectionModel().getSelectedItem();
         try {
-            ConfirmPasswordDialog dialog = new ConfirmPasswordDialog(
-                "Confirm password to delete", "Yes, Delete", "No, keep", SERVICE.getServiceUser(), SERVICE.getDatabaseConnector());
-            dialog.showAndWait().ifPresent(aBoolean -> {
+            new ConfirmPasswordDialog("Confirm password to delete", "Yes, delete", "No, keep",
+                SERVICE.getServiceUser(), SERVICE.getDatabaseConnector()
+            ).showAndWait().ifPresent(aBoolean -> {
                 if(aBoolean) {
                     SERVICE.delete(userToBeDeleted);
                     loadUsers();
@@ -120,17 +120,21 @@ public class UserManagementController extends SmartHousingController {
 
     public void _modifyButton_onAction(ActionEvent event) {
         event.consume();
-        modifyUser();
-    }
-
-    public void modifyUser() {
         User userToBeModified = userTable.getSelectionModel().getSelectedItem();
-        Dialog<Boolean> dialog = new Dialog<>();
-        dialog.setDialogPane(APPLICATION.loadFXML(
-                ModifyDialogController.VIEW_NAME,
-                new ModifyDialogController(SERVICE, dialog, userToBeModified)
-        ));
-        dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
+        try {
+            new UserDataDialog("Modify User", SERVICE.getServiceUser(), userToBeModified).showAndWait().ifPresent(user -> {
+                new ConfirmPasswordDialog("Confirm password to modify", "Yes, commit changes", "No, undo changes",
+                    SERVICE.getServiceUser(), SERVICE.getDatabaseConnector()
+                ).showAndWait().ifPresent(aBoolean -> {
+                    if(aBoolean)
+                        SERVICE.modify(userToBeModified, user);
+                    loadUsers();
+                });
+            });
+        } catch (UserManagementServiceException exception) {
+            new ErrorDialog(exception.getMessage()).show();
+        }
+        //modifyUser();
     }
 
     public void _createButton_onAction(ActionEvent event) {
@@ -143,16 +147,6 @@ public class UserManagementController extends SmartHousingController {
         } catch (UserManagementServiceException exception) {
             new ErrorDialog(exception.getMessage()).show();
         }
-        //createUser();
-    }
-
-    public void createUser() {
-        Dialog<Boolean> dialog = new Dialog<>();
-        dialog.setDialogPane(APPLICATION.loadFXML(
-                CreateDialogController.VIEW_NAME,
-                new CreateDialogController(SERVICE, dialog)
-        ));
-        dialog.showAndWait().ifPresent(aBoolean -> loadUsers());
     }
 
 }

@@ -15,7 +15,7 @@ import smart.housing.ui.*;
 import java.util.List;
 
 /**
- * Controller to view 'modify_dialog.fxml'
+ * Controller to view 'modify_task_dialog.fxml'
  * @author I551381
  * @version 1.0
  */

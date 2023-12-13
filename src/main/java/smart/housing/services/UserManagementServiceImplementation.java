@@ -59,22 +59,6 @@ public class UserManagementServiceImplementation implements UserManagementServic
     }
 
     @Override
-    public void delete(String username, String password) {
-        User userToBeDeleted;
-        try {
-            userToBeDeleted = LOGIN_SERVICE.userLogin(username, password);
-        } catch (IncorrectCredentialsException exception) {
-            throw new IncorrectCredentialsException(String.format(MSG_UNSUCCESSFUL, "delete", username));
-        }
-        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
-        entityManager.getTransaction().begin();
-        userToBeDeleted = entityManager.merge(userToBeDeleted);
-        entityManager.remove(userToBeDeleted);
-        entityManager.getTransaction().commit();
-        entityManager.close();
-    }
-
-    @Override
     public void delete(User user) {
             if(user == null)
                 throw new UserManagementServiceException("cannot delete user when user = null");
@@ -97,22 +81,24 @@ public class UserManagementServiceImplementation implements UserManagementServic
     }
 
     @Override
-    public void modify(String username, String password, User updatedUser) {
-        User userToBeModified;
-        try {
-            userToBeModified = LOGIN_SERVICE.userLogin(username, password);
-        } catch (IncorrectCredentialsException exception) {
-            throw new IncorrectCredentialsException(String.format(MSG_UNSUCCESSFUL, "delete", username));
-        }
+    public void modify(User user, User modifiedUser) {
+        if(user == null)
+            throw new UserManagementServiceException("cannot modify user when user = null");
+        if(USER == null)
+            throw new UserManagementServiceException("cannot modify user " + user.getUsername() + "when this.USER = null");
+        if(! USER.getRole().outranks(user.getRole()))
+            throw new UserManagementServiceException("cannot modify user of rank " + user.getRole().getRoleName() + " since this.USER.getRank() = " + USER.getRole().getRoleName());
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
-
         entityManager.getTransaction().begin();
-        userToBeModified = entityManager.merge(userToBeModified);
-        userToBeModified.setFirstName(updatedUser.getFirstName());
-        userToBeModified.setLastName(updatedUser.getLastName());
-        if(updatedUser.getPassword() != null && ! updatedUser.getPassword().isEmpty())
-            userToBeModified.setPasswordHash(updatedUser.getPassword());
-        userToBeModified.setRole(updatedUser.getRole());
+
+        user = entityManager.merge(user);
+        user.setFirstName(modifiedUser.getFirstName());
+        user.setLastName(modifiedUser.getLastName());
+        if(modifiedUser.getPassword() != null && ! modifiedUser.getPassword().isEmpty())
+            user.setPasswordHash(modifiedUser.getPassword());
+        user.setRole(modifiedUser.getRole());
+        user.setEmail(modifiedUser.getEmail());
+
         entityManager.getTransaction().commit();
         entityManager.close();
     }
