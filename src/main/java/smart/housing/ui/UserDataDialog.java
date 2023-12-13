@@ -1,12 +1,10 @@
 package smart.housing.ui;
 
-import com.sun.glass.ui.GlassRobot;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Dialog;
 import javafx.scene.layout.GridPane;
-import smart.housing.controllers.DialogController;
 import smart.housing.entities.User;
 import smart.housing.enums.UserRole;
 import smart.housing.exceptions.EmptyFieldException;
@@ -17,7 +15,7 @@ import java.util.Arrays;
 
 public class UserDataDialog extends Dialog<User> {
 
-    private User applicationUser, user;
+    private final User APPLICATION_USER, USER;
 
     private StyledTextField username, firstName, lastName, email;
     private StyledPasswordField password, confirmPassword;
@@ -38,8 +36,8 @@ public class UserDataDialog extends Dialog<User> {
      * @param user user object who's properties will be loaded into the input fields
      */
     public UserDataDialog(String title, User applicationUser, User user) {
-        this.applicationUser = applicationUser;
-        this.user = user;
+        this.APPLICATION_USER = applicationUser;
+        this.USER = user;
         this.setTitle(title);
 
         this.getDialogPane().getScene().getWindow().setOnCloseRequest(event -> {
@@ -76,7 +74,7 @@ public class UserDataDialog extends Dialog<User> {
 
         role = new StyledComboBox<>();
         role.setItems(FXCollections.observableList(Arrays.stream(UserRole.values())
-            .filter(userRole -> applicationUser.getRole().outranks(userRole))
+            .filter(userRole -> APPLICATION_USER.getRole().outranks(userRole))
             .toList()
         ));
         gridPane.add(role, 0, 3);
@@ -108,11 +106,11 @@ public class UserDataDialog extends Dialog<User> {
     }
 
     private void loadUserData() {
-        this.username.setText(user.getUsername());
-        this.firstName.setText(user.getFirstName());
-        this.lastName.setText(user.getLastName());
-        this.role.setValue(user.getRole());
-        this.email.setText(user.getEmail());
+        this.username.setText(USER.getUsername());
+        this.firstName.setText(USER.getFirstName());
+        this.lastName.setText(USER.getLastName());
+        this.role.setValue(USER.getRole());
+        this.email.setText(USER.getEmail());
 
     }
 
@@ -121,7 +119,7 @@ public class UserDataDialog extends Dialog<User> {
         try {
             this.setResult(createUser());
             clearFields();
-            if(this.user != null)
+            if(this.USER != null)
                 this.loadUserData();
         } catch (EmptyFieldException | UserManagementServiceException exception) {
             new ErrorDialog(exception.getMessage()).show();
@@ -141,10 +139,10 @@ public class UserDataDialog extends Dialog<User> {
         User user = new User(username.getText());
 
         if(password.getText().isEmpty()) {
-            if(this.user == null)
+            if(this.USER == null)
                 throw new EmptyFieldException("Please enter a password", "password");
             else
-                user.setPasswordHash(this.user.getPassword());
+                user.setPasswordHash(this.USER.getPassword());
         } else
             user.setPassword(password.getText(), HashAlgorithm.DEFAULT);
 
