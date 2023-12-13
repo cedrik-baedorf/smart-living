@@ -1,9 +1,7 @@
 package smart.housing.services;
 
 import smart.housing.entities.User;
-import smart.housing.enums.UserRole;
 import smart.housing.exceptions.UserManagementServiceException;
-import smart.housing.security.HashAlgorithm;
 
 import java.util.List;
 

@@ -122,15 +122,15 @@ public class UserManagementController extends SmartHousingController {
         event.consume();
         User userToBeModified = userTable.getSelectionModel().getSelectedItem();
         try {
-            new UserDataDialog("Modify User", SERVICE.getServiceUser(), userToBeModified).showAndWait().ifPresent(user -> {
+            new UserDataDialog("Modify User", SERVICE.getServiceUser(), userToBeModified).showAndWait().ifPresent(user ->
                 new ConfirmPasswordDialog("Confirm password to modify", "Yes, commit changes", "No, undo changes",
                     SERVICE.getServiceUser(), SERVICE.getDatabaseConnector()
                 ).showAndWait().ifPresent(aBoolean -> {
-                    if(aBoolean)
+                    if (aBoolean)
                         SERVICE.modify(userToBeModified, user);
                     loadUsers();
-                });
-            });
+                })
+            );
         } catch (UserManagementServiceException exception) {
             new ErrorDialog(exception.getMessage()).show();
         }

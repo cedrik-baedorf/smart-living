@@ -108,19 +108,6 @@ public class UserManagementServiceImplementation implements UserManagementServic
     }
 
     @Override
-    public List<User> getUsers(UserRole... roles) {
-        List<User> userList = getUsers();
-        if(userList == null || userList.isEmpty())
-            return userList;
-        return userList.stream().filter(user -> Arrays.asList(roles).contains(user.getRole())).toList();
-    }
-
-    @Override
-    public HashAlgorithm getHashAlgorithm() {
-        return HASH_ALGORITHM;
-    }
-
-    @Override
     public User getServiceUser() {
         return this.USER;
     }
