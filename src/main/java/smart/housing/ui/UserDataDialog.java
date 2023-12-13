@@ -120,20 +120,23 @@ public class UserDataDialog extends Dialog<User> {
         event.consume();
         try {
             this.setResult(createUser());
-        } catch (EmptyFieldException exception) {
-            new ErrorDialog(exception.getMessage());
-        } catch (UserManagementServiceException exception) {
-            new ErrorDialog(exception.getMessage()).show();
-        } finally {
             clearFields();
             if(this.user != null)
                 this.loadUserData();
+        } catch (EmptyFieldException | UserManagementServiceException exception) {
+            new ErrorDialog(exception.getMessage()).show();
         }
     }
 
     private User createUser() {
         if(! password.getText().equals(confirmPassword.getText()))
             throw new UserManagementServiceException("Passwords do not match");
+        if(username.getText().isEmpty())
+            throw new EmptyFieldException("Please enter a username", "username");
+        if(firstName.getText().isEmpty())
+            throw new EmptyFieldException("Please enter a first name", "firstName");
+        if(lastName.getText().isEmpty())
+            throw new EmptyFieldException("Please enter a last name", "lastName");
 
         User user = new User(username.getText());
 

@@ -135,10 +135,14 @@ public class UserManagementController extends SmartHousingController {
 
     public void _createButton_onAction(ActionEvent event) {
         event.consume();
-        new UserDataDialog("Create User", SERVICE.getServiceUser()).showAndWait().ifPresent(user -> {
-            SERVICE.create(user);
-            loadUsers();
-        });
+        try {
+            new UserDataDialog("Create User", SERVICE.getServiceUser()).showAndWait().ifPresent(user -> {
+                SERVICE.create(user);
+                loadUsers();
+            });
+        } catch (UserManagementServiceException exception) {
+            new ErrorDialog(exception.getMessage()).show();
+        }
         //createUser();
     }
 
