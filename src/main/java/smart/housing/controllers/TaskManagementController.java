@@ -7,6 +7,7 @@ import javafx.scene.control.Dialog;
 import javafx.scene.input.MouseEvent;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.Task;
+import smart.housing.entities.User;
 import smart.housing.services.TaskManagementService;
 import smart.housing.services.TaskManagementServiceImplementation;
 import smart.housing.services.UserManagementService;
@@ -14,6 +15,7 @@ import smart.housing.ui.BackgroundStackPane;
 import smart.housing.ui.ConfirmDialog;
 import smart.housing.ui.StyledButton;
 import smart.housing.ui.StyledTableView;
+
 
 
 /**
@@ -34,9 +36,7 @@ public class TaskManagementController extends SmartHousingController {
     private static final String BACKGROUND_IMAGE = "smart/housing/ui/images/task_management_background.jpg";
 
     private final SmartLivingApplication APPLICATION;
-
     private final UserManagementService USER_SERVICE;
-
     private final TaskManagementService TASK_SERVICE;
 
     @FXML public BackgroundStackPane backgroundPane;
@@ -73,13 +73,15 @@ public class TaskManagementController extends SmartHousingController {
 
     public void loadTasks(){
         taskTable.setItems(FXCollections.observableList(TASK_SERVICE.getAllTasks()));
-        currentTasks.setItems(FXCollections.observableList(TASK_SERVICE.getCurrentTasks()));
+        User activeUser = USER_SERVICE.getServiceUser();
+        currentTasks.setItems(FXCollections.observableList(TASK_SERVICE.getCurrentTasks(activeUser)));
         overdueTasks.setItems(FXCollections.observableList(TASK_SERVICE.getIncompleteTasks()));
     }
 
     private void initializeButtons(boolean itemSelected) {
         newTaskButton.setDisable(false);
         modifyTaskButton.setDisable(! itemSelected);
+        deleteTaskButton.setDisable(! itemSelected);
     }
 
     public void _newTaskButton_onAction(ActionEvent event) {
@@ -138,5 +140,6 @@ public class TaskManagementController extends SmartHousingController {
             }
         });
     }
+
 }
 
