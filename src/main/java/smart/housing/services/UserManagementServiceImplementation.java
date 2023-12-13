@@ -4,7 +4,6 @@ import org.hibernate.exception.ConstraintViolationException;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.User;
 import smart.housing.enums.UserRole;
-import smart.housing.exceptions.IncorrectCredentialsException;
 import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.security.HashAlgorithm;
 
@@ -17,8 +16,6 @@ public class UserManagementServiceImplementation implements UserManagementServic
 
     public static final HashAlgorithm HASH_ALGORITHM = HashAlgorithm.DEFAULT;
 
-    private final LoginService LOGIN_SERVICE;
-
     private final DatabaseConnector DATABASE_CONNECTOR;
 
     private final User USER;
@@ -30,7 +27,6 @@ public class UserManagementServiceImplementation implements UserManagementServic
      */
     public UserManagementServiceImplementation(DatabaseConnector databaseConnector, User user) {
         this.DATABASE_CONNECTOR = databaseConnector;
-        this.LOGIN_SERVICE = new LoginServiceImplementation(DATABASE_CONNECTOR);
         this.USER = user;
     }
 
