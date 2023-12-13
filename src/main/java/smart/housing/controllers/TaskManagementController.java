@@ -4,9 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.CheckBoxTableCell;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import smart.housing.SmartLivingApplication;
 import smart.housing.entities.Task;
@@ -39,9 +36,7 @@ public class TaskManagementController extends SmartHousingController {
     private static final String BACKGROUND_IMAGE = "smart/housing/ui/images/task_management_background.jpg";
 
     private final SmartLivingApplication APPLICATION;
-
     private final UserManagementService USER_SERVICE;
-
     private final TaskManagementService TASK_SERVICE;
 
     @FXML public BackgroundStackPane backgroundPane;
@@ -51,7 +46,6 @@ public class TaskManagementController extends SmartHousingController {
     @FXML public StyledTableView<Task> taskTable;
     @FXML public StyledTableView<Task> currentTasks;
     @FXML public StyledTableView<Task> overdueTasks;
-    @FXML private TableColumn<Task, Boolean> statusColumn;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -71,9 +65,6 @@ public class TaskManagementController extends SmartHousingController {
         setBackgroundImage();
         loadTasks();
         initializeButtons(false);
-        statusColumn = (TableColumn<Task, Boolean>) taskTable.getColumns().get(2);
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("completed"));
-        statusColumn.setCellFactory(CheckBoxTableCell.forTableColumn(statusColumn));
     }
 
     private void setBackgroundImage() {
@@ -87,11 +78,10 @@ public class TaskManagementController extends SmartHousingController {
         overdueTasks.setItems(FXCollections.observableList(TASK_SERVICE.getIncompleteTasks()));
     }
 
-
-
     private void initializeButtons(boolean itemSelected) {
         newTaskButton.setDisable(false);
         modifyTaskButton.setDisable(! itemSelected);
+        deleteTaskButton.setDisable(! itemSelected);
     }
 
     public void _newTaskButton_onAction(ActionEvent event) {
@@ -150,5 +140,6 @@ public class TaskManagementController extends SmartHousingController {
             }
         });
     }
+
 }
 
