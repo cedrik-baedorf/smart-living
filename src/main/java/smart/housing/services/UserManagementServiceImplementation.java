@@ -3,13 +3,11 @@ package smart.housing.services;
 import org.hibernate.exception.ConstraintViolationException;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.User;
-import smart.housing.enums.UserRole;
 import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.security.HashAlgorithm;
 
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
-import java.util.Arrays;
 import java.util.List;
 
 public class UserManagementServiceImplementation implements UserManagementService {
