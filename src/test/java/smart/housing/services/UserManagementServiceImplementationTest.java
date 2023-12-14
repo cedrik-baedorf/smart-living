@@ -158,6 +158,9 @@ public class UserManagementServiceImplementationTest {
         inOrder.verify(entityManager).close();
     }
 
+    /**
+     * Test <code>create(user: User): void</code> method with user of higher role than the service user
+     */
     @Test
     public void testCreate_lowerRankThrowsException() {
         DatabaseConnector databaseConnector = create_mockDatabaseConnector();
@@ -191,28 +194,36 @@ public class UserManagementServiceImplementationTest {
     }
 
     /**
-     * Test <code>modify(user: User, modifiedUser: User): void</code> method with the parameter <code>modifiedUser</code>
-     * having a different <code>username</code> attribute
+     * Test <code>modify(user: User, modifiedUser: User): void</code> with all attributes but <code>username</code> modified
      */
     @Test
-    public void testModify_differentUsername() {
-        UserManagementService userManagementService = new UserManagementServiceImplementation(create_mockDatabaseConnector(), mockHighestRankedUser());
+    public void testModify_correctModification() {
+        UserManagementService userManagementService = new UserManagementServiceImplementation(modify_mockDatabaseConnector(), mockHighestRankedUser());
 
-        User user = new User("username");
-        user.setFirstName("First Name");
+        User user = createCompleteUser();
+
         User modifiedUser = new User("other");
-        modifiedUser.setFirstName("Second Name");
+        modifiedUser.setFirstName("Other First Name");
+        modifiedUser.setLastName("Other Last Name");
+        modifiedUser.setRole(UserRole.SUPREME);
+        modifiedUser.setEmail("other.email@address.com");
+        modifiedUser.setPassword("different password", UserManagementServiceImplementation.HASH_ALGORITHM);
 
         userManagementService.modify(user, modifiedUser);
 
-        User expectedUser = user;
+        User expectedUser = new User(user.getUsername());
         expectedUser.setFirstName(modifiedUser.getFirstName());
+        expectedUser.setLastName(modifiedUser.getLastName());
+        expectedUser.setRole(modifiedUser.getRole());
+        expectedUser.setEmail(modifiedUser.getEmail());
+        expectedUser.setPasswordHash(modifiedUser.getPassword());
 
-        User actualUser = userManagementService.getUser("username");
-
-        assertEquals(expectedUser, actualUser);
+        assertEquals(expectedUser, user);
     }
 
+    /**
+     * Test <code>modify(user: User, modifiedUser: User): void</code> method with user of higher role than the service user
+     */
     @Test
     public void testModify_lowerRankThrowsException() {
         DatabaseConnector databaseConnector = modify_mockDatabaseConnector();
