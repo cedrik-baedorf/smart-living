@@ -54,6 +54,11 @@
                     <Insets top="300.0" left="460.0"/>
                 </GridPane.margin>
             </StyledButton>
+            <StyledButton fx:id="completeTaskButton" text="Change Status" onAction="#_completeButton_onAction" >
+                <GridPane.margin>
+                    <Insets top="300.0" left="560.0"/>
+                </GridPane.margin>
+            </StyledButton>
             <StyledTableView fx:id="overdueTasks" minHeight="100.0" minWidth="200.0">
                 <columns>
                     <TableColumn minWidth="100.0" text="Overdue Tasks">
