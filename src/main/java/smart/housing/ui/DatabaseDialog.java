@@ -7,8 +7,6 @@ import smart.housing.SmartLivingApplication;
 import smart.housing.controllers.DatabaseDialogController;
 import smart.housing.database.DatabaseConnector;
 
-import java.util.Optional;
-
 public class DatabaseDialog extends Dialog<DatabaseConnector> {
 
     public DatabaseDialog(SmartLivingApplication application) {
