@@ -21,4 +21,5 @@ public interface TaskManagementService {
     void create(Task newTask);
     void modify(Task oldTask, Task updateTask);
     void delete(Task task);
+    void complete (Task task, Boolean status);
 }

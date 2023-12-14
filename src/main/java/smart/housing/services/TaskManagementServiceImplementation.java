@@ -87,4 +87,13 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
         task = entityManager.merge(task);
         entityManager.remove(task);
     }
+
+    @Override
+    public void complete(Task task, Boolean status) {
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.merge(task).setCompleted(status);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+    }
 }
