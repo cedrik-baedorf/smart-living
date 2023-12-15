@@ -17,7 +17,7 @@ public class UserManagementServiceImplementationTest {
 
     /**
      * This static method creates a mocked {@link DatabaseConnector} object used for the tests for
-     * the method <code>create(User user)</code> of class {@link UserManagementServiceImplementation}
+     * the method <code>create(user: {@link User})</code> of class {@link UserManagementServiceImplementation}
      * @return mocked {@link DatabaseConnector}
      */
     private static DatabaseConnector create_mockDatabaseConnector() {
@@ -39,7 +39,7 @@ public class UserManagementServiceImplementationTest {
 
     /**
      * This static method creates a mocked {@link DatabaseConnector} object used for the tests for
-     * the method <code>modify(User user, User modifiedUser)</code> of class {@link UserManagementServiceImplementation}
+     * the method <code>modify(user: {@link User}, modifiedUser: {@link User})</code> of class {@link UserManagementServiceImplementation}
      * @return mocked {@link DatabaseConnector}
      */
     private static DatabaseConnector modify_mockDatabaseConnector() {
@@ -52,6 +52,29 @@ public class UserManagementServiceImplementationTest {
         Mockito.doNothing().when(entityManager).close();
 
         Mockito.when(entityManager.merge(Mockito.any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
+        Mockito.when(databaseConnector.createEntityManager()).thenReturn(entityManager);
+
+        return databaseConnector;
+    }
+
+    /**
+     * This static method creates a mocked {@link DatabaseConnector} object used for the tests for
+     * the method <code>delete(user: {@link User})</code> of class {@link UserManagementServiceImplementation}
+     * @return mocked {@link DatabaseConnector}
+     */
+    private static DatabaseConnector delete_mockDatabaseConnector() {
+        EntityManager entityManager = Mockito.mock(EntityManager.class);
+        EntityTransaction entityTransaction = Mockito.mock(EntityTransaction.class);
+
+        Mockito.doNothing().when(entityTransaction).begin();
+        Mockito.doNothing().when(entityTransaction).commit();
+        Mockito.when(entityManager.getTransaction()).thenReturn(entityTransaction);
+        Mockito.doNothing().when(entityManager).close();
+
+        Mockito.when(entityManager.merge(Mockito.any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        Mockito.doNothing().when(entityManager).remove(Mockito.any(User.class));
 
         DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(databaseConnector.createEntityManager()).thenReturn(entityManager);
@@ -104,7 +127,7 @@ public class UserManagementServiceImplementationTest {
     }
 
     /**
-     * Test <code>create(User user): void</code> method with parameter <code>user = null</code>
+     * Test <code>create(user: {@link User}): void</code> method with parameter <code>user = null</code>
      */
     @Test
     public void testCreate_userIsNull() {
@@ -124,7 +147,7 @@ public class UserManagementServiceImplementationTest {
     }
 
     /**
-     * Test <code>create(User user): void</code> method with <code>user.getPassword() = null</code>
+     * Test <code>create(user: {@link User}): void</code> method with <code>user.getPassword() = null</code>
      */
     @Test
     public void testCreate_passwordEqualNull() {
@@ -134,16 +157,14 @@ public class UserManagementServiceImplementationTest {
     }
 
     /**
-     * Test <code>create(User user): void</code> method with a correct <code>User</code> object
+     * Test <code>create(user: {@link User}): void</code> method with a correct <code>User</code> object
      */
     @Test
     public void testCreate_persistCorrectUser() {
         DatabaseConnector databaseConnector = create_mockDatabaseConnector();
         UserManagementService userManagementService = new UserManagementServiceImplementation(databaseConnector, mockHighestRankedUser());
 
-        HashAlgorithm hashAlgorithm = UserManagementServiceImplementation.HASH_ALGORITHM;
-
-        User persistedUser = new User("username", "password", hashAlgorithm);
+        User persistedUser = createCompleteUser();
 
         assertDoesNotThrow(() -> userManagementService.create(persistedUser));
 
@@ -159,7 +180,7 @@ public class UserManagementServiceImplementationTest {
     }
 
     /**
-     * Test <code>create(user: User): void</code> method with user of higher role than the service user
+     * Test <code>create(user: {@link User}): void</code> method with user of higher role than the service user
      */
     @Test
     public void testCreate_lowerRankThrowsException() {
@@ -174,7 +195,7 @@ public class UserManagementServiceImplementationTest {
     }
 
     /**
-     * Test <code>modify(user: User, modifiedUser: User): void</code> method with parameter <code>user = null</code>.
+     * Test <code>modify(user: {@link User}, modifiedUser: {@link User}): void</code> method with parameter <code>user = null</code>.
      */
     @Test
     public void testModify_userIsNull() {
@@ -184,7 +205,7 @@ public class UserManagementServiceImplementationTest {
     }
 
     /**
-     * Test <code>modify(user: User, modifiedUser: User): void</code> method with parameter <code>modifiedUser = null</code>.
+     * Test <code>modify(user: {@link User}, modifiedUser: {@link User}): void</code> method with parameter <code>modifiedUser = null</code>.
      */
     @Test
     public void testModify_modifiedUserIsNull() {
@@ -194,7 +215,7 @@ public class UserManagementServiceImplementationTest {
     }
 
     /**
-     * Test <code>modify(user: User, modifiedUser: User): void</code> with all attributes but <code>username</code> modified
+     * Test <code>modify(user: {@link User}, modifiedUser: {@link User}): void</code> with all attributes but <code>username</code> modified
      */
     @Test
     public void testModify_correctModification() {
@@ -209,7 +230,7 @@ public class UserManagementServiceImplementationTest {
         modifiedUser.setEmail("other.email@address.com");
         modifiedUser.setPassword("different password", UserManagementServiceImplementation.HASH_ALGORITHM);
 
-        userManagementService.modify(user, modifiedUser);
+        assertDoesNotThrow(() -> userManagementService.modify(user, modifiedUser));
 
         User expectedUser = new User(user.getUsername());
         expectedUser.setFirstName(modifiedUser.getFirstName());
@@ -222,7 +243,7 @@ public class UserManagementServiceImplementationTest {
     }
 
     /**
-     * Test <code>modify(user: User, modifiedUser: User): void</code> method with user of higher role than the service user
+     * Test <code>modify(user: {@link User}, modifiedUser: {@link User}): void</code> method with user of higher role than the service user
      */
     @Test
     public void testModify_lowerRankThrowsException() {
@@ -234,6 +255,53 @@ public class UserManagementServiceImplementationTest {
         modifiedUser.setRole(UserRole.ADMIN);
 
         assertThrowsExactly(UserManagementServiceException.class, () -> userManagementService.modify(user, modifiedUser));
+    }
+
+    /**
+     * Test <code>delete(user: {@link User}): void</code> method with parameter <code>user = null</code>.
+     */
+    @Test
+    public void testDelete_userIsNull() {
+        UserManagementService userManagementService = new UserManagementServiceImplementation(delete_mockDatabaseConnector(), mockHighestRankedUser());
+
+        assertThrowsExactly(UserManagementServiceException.class, () -> userManagementService.delete(null));
+    }
+
+    /**
+     * Test <code>delete(user: {@link User}): void</code> with correct circumstances
+     */
+    @Test
+    public void testDelete_correctDeletion() {
+        DatabaseConnector databaseConnector = delete_mockDatabaseConnector();
+        UserManagementService userManagementService = new UserManagementServiceImplementation(databaseConnector, mockHighestRankedUser());
+
+        User user = createCompleteUser();
+
+        assertDoesNotThrow(() -> userManagementService.delete(user));
+
+        EntityManager entityManager = databaseConnector.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
+
+        InOrder inOrder = Mockito.inOrder(entityManager, entityTransaction);
+
+        inOrder.verify(entityTransaction).begin();
+        inOrder.verify(entityManager).merge(user);
+        inOrder.verify(entityManager).remove(user);
+        inOrder.verify(entityTransaction).commit();
+        inOrder.verify(entityManager).close();
+    }
+
+    /**
+     * Test <code>delete(user: {@link User}): void</code> method with user of higher role than the service user
+     */
+    @Test
+    public void testDelete_lowerRankThrowsException() {
+        DatabaseConnector databaseConnector = delete_mockDatabaseConnector();
+        UserManagementService userManagementService = new UserManagementServiceImplementation(databaseConnector, mockLowestRankedUser());
+
+        User user = mockHighestRankedUser();
+
+        assertThrowsExactly(UserManagementServiceException.class, () -> userManagementService.delete(user));
     }
 
 }
