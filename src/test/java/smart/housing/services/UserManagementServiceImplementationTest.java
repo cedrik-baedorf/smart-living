@@ -10,6 +10,9 @@ import smart.housing.exceptions.UserManagementServiceException;
 import smart.housing.security.HashAlgorithm;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -75,6 +78,34 @@ public class UserManagementServiceImplementationTest {
 
         Mockito.when(entityManager.merge(Mockito.any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
         Mockito.doNothing().when(entityManager).remove(Mockito.any(User.class));
+
+        DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
+        Mockito.when(databaseConnector.createEntityManager()).thenReturn(entityManager);
+
+        return databaseConnector;
+    }
+
+    /**
+     * This static method creates a mocked {@link DatabaseConnector} object used for the tests for
+     * the methods <code>getUser(username: {@link String})</code> and
+     * <code>getUsers(): {@link java.util.List}<{@link User}></code> of class {@link UserManagementServiceImplementation}
+     * @return mocked {@link DatabaseConnector}
+     */
+    private static DatabaseConnector getUser_mockDatabaseConnector() {
+        TypedQuery<User> typedQuery = Mockito.mock(TypedQuery.class);
+        Mockito.when(typedQuery.getResultList()).thenReturn(List.of(
+            createCompleteUser(),
+            new User("standard")
+        ));
+
+        EntityManager entityManager = Mockito.mock(EntityManager.class);
+
+        User user = createCompleteUser();
+
+        Mockito.when(entityManager.find(User.class, "invalid")).thenReturn(null);
+        Mockito.when(entityManager.find(User.class, user.getUsername())).thenReturn(user);
+
+        Mockito.when(entityManager.createNamedQuery(User.FIND_ALL, User.class)).thenReturn(typedQuery);
 
         DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(databaseConnector.createEntityManager()).thenReturn(entityManager);
@@ -304,6 +335,52 @@ public class UserManagementServiceImplementationTest {
         assertThrowsExactly(UserManagementServiceException.class, () -> userManagementService.delete(user));
     }
 
+    /**
+     * Test <code>getUsers(): {@link java.util.List}<{@link User}></code> method
+     */
+    @Test
+    public void testGetUsers() {
+        DatabaseConnector databaseConnector = getUser_mockDatabaseConnector();
+        UserManagementService userManagementService = new UserManagementServiceImplementation(databaseConnector, mockHighestRankedUser());
+
+        List<User> expectedResult = List.of(
+            createCompleteUser(),
+            new User("standard")
+        );
+
+        List<User> actualResult = userManagementService.getUsers();
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    /**
+     * Test <code>getUser(username: {@link String}): {@link User}</code> method with valid username
+     */
+    @Test
+    public void testGetUser_validUsername() {
+        DatabaseConnector databaseConnector = getUser_mockDatabaseConnector();
+        UserManagementService userManagementService = new UserManagementServiceImplementation(databaseConnector, mockHighestRankedUser());
+
+        User expectedUser = createCompleteUser();
+        User actualUser = userManagementService.getUser(expectedUser.getUsername());
+
+        assertEquals(expectedUser, actualUser);
+    }
+
+    /**
+     * Test <code>getUser(username: {@link String}): {@link User}</code> method with invalid username
+     */
+    @Test
+    public void testGetUser_invalidUsername() {
+        DatabaseConnector databaseConnector = getUser_mockDatabaseConnector();
+        UserManagementService userManagementService = new UserManagementServiceImplementation(databaseConnector, mockHighestRankedUser());
+
+        assertNull(userManagementService.getUser("invalid"));
+    }
+
+    /**
+     * Test <code>getServiceUser(): {@link User}</code> method
+     */
     @Test
     public void testGetServiceUser() {
         User expectedUser = createCompleteUser();
