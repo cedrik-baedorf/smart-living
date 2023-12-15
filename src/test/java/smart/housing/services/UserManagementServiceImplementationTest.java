@@ -304,4 +304,15 @@ public class UserManagementServiceImplementationTest {
         assertThrowsExactly(UserManagementServiceException.class, () -> userManagementService.delete(user));
     }
 
+    @Test
+    public void testGetServiceUser() {
+        User expectedUser = createCompleteUser();
+
+        UserManagementService userManagementService = new UserManagementServiceImplementation(null, expectedUser);
+
+        User actualUser = userManagementService.getServiceUser();
+
+        assertEquals(expectedUser, actualUser);
+    }
+
 }
