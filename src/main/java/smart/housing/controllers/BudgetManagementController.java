@@ -300,6 +300,11 @@ public class BudgetManagementController extends SmartHousingController {
     }
 
     private void sendEmail() {
+        // Absender
+        // Empfänger
+        // Schuldenhöhe
+        // BUDGET_SERVICE.sendReminderEmail(absender, empfänger, shculdenhöhe)
+
         // Get the selected row from the debtsOverview table
         DebtOverview selectedDebt = debtsOverview.getSelectionModel().getSelectedItem();
 
