@@ -48,7 +48,7 @@ public class LoginPageController extends SmartHousingController {
     @FXML Label welcomeLabel;
     @FXML StyledPasswordField passwordField;
     @FXML StyledTextField usernameField;
-    @FXML ErrorMessage errorMessage;
+    @FXML StyledMessage errorMessage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this

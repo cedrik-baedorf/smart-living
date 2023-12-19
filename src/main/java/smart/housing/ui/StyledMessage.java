@@ -13,7 +13,7 @@ import java.util.Arrays;
  * style sheets at construction of an object of this class.
  * In addition, it provides methods to temporarily display messages
  */
-public class ErrorMessage extends Label implements StyledNode {
+public class StyledMessage extends Label implements StyledNode {
 
     /**
      * Instance field that contains all style sheets of this object.
@@ -29,7 +29,7 @@ public class ErrorMessage extends Label implements StyledNode {
      * Default constructor calls parent constructor <code>super()</code>
      * and initializes style sheets and object properties.
      */
-    public ErrorMessage() {
+    public StyledMessage() {
         super();
         this.initializeStyleSheets();
         this.setWrapText(true);
