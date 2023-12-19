@@ -5,7 +5,6 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.DoubleBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
@@ -149,9 +148,7 @@ public class LoginPageController extends SmartHousingController {
     }
 
     private DatabaseConnector createDatabaseConnector() {
-        Dialog<DatabaseConnector> dialog = new Dialog<>();
-        dialog.setTitle("Configure Database Connection");
-        dialog.setDialogPane(APPLICATION.loadFXML(DatabaseDialogController.VIEW_NAME, new DatabaseDialogController(dialog)));
+        DatabaseDialog dialog = new DatabaseDialog(APPLICATION);
 
         Optional<DatabaseConnector> result = dialog.showAndWait();
         return result.orElse(null);
