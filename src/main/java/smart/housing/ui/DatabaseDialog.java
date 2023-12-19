@@ -1,6 +1,5 @@
 package smart.housing.ui;
 
-import javafx.scene.control.Dialog;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import smart.housing.SmartLivingApplication;

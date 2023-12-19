@@ -22,7 +22,7 @@ public class ConfirmPasswordDialog extends ConfirmDialog {
 
     private StyledPasswordField passwordField;
 
-    private ErrorMessage errorMessage;
+    private StyledMessage errorMessage;
 
     public ConfirmPasswordDialog(
         String messageText, String confirmText, String abortText,
@@ -42,7 +42,7 @@ public class ConfirmPasswordDialog extends ConfirmDialog {
         passwordField.setOnAction(event -> this.setConfirmClicked(true));
         passwordField.setStyle(StyledNode.UI_ELEMENT_STYLE_SHEET);
 
-        errorMessage = new ErrorMessage();
+        errorMessage = new StyledMessage();
         errorMessage.setTextAlignment(TextAlignment.CENTER);
 
         super.getInfoPane().add(passwordField, 0, 1);

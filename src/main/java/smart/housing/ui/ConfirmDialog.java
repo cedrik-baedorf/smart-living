@@ -2,10 +2,8 @@ package smart.housing.ui;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 /**
@@ -20,7 +18,7 @@ public class ConfirmDialog extends StyledDialog<Boolean> {
 
     private GridPane infoPane, buttonsPane, errorPane;
 
-    private ErrorMessage messageLabel;
+    private StyledMessage messageLabel;
     private StyledButton confirmButton, abortButton;
 
     public ConfirmDialog(String messageText, String confirmText, String abortText) {
@@ -44,7 +42,7 @@ public class ConfirmDialog extends StyledDialog<Boolean> {
     }
 
     private void initializeObjects(String messageText, String confirmText, String abortText) {
-        messageLabel = new ErrorMessage();
+        messageLabel = new StyledMessage();
         messageLabel.displayInfo(messageText);
         messageLabel.getStylesheets().add(StyledNode.UI_ELEMENT_STYLE_SHEET);
         confirmButton = new StyledButton(confirmText);

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import smart.housing.ui.BackgroundStackPane?>
-<?import smart.housing.ui.ErrorMessage?>
+<?import smart.housing.ui.StyledMessage?>
 <?import smart.housing.ui.StyledButton?>
 <?import smart.housing.ui.StyledTextField?>
 <?import smart.housing.ui.StyledPasswordField?>
@@ -30,11 +30,11 @@
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </GridPane.margin>
                     </StyledPasswordField>
-                    <ErrorMessage fx:id="errorMessage" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+                    <StyledMessage fx:id="errorMessage" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                         <GridPane.margin>
                             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                         </GridPane.margin>
-                    </ErrorMessage>
+                    </StyledMessage>
                     <StyledButton onAction="#_loginButton_onAction" text="LOGIN" GridPane.halignment="CENTER"
                                   GridPane.rowIndex="5" buttonStyle="CONFIRM"
                     >

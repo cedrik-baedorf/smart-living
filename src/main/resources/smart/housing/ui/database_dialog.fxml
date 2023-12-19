@@ -2,9 +2,7 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
-<?import smart.housing.ui.BackgroundDialogPane?>
-
-<?import smart.housing.ui.ErrorMessage?>
+<?import smart.housing.ui.StyledMessage?>
 <?import smart.housing.ui.StyledTextField?>
 <?import smart.housing.ui.StyledPasswordField?>
 <?import smart.housing.ui.StyledButton?>
@@ -32,11 +30,11 @@
            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
         </GridPane.margin>
     </StyledButton>
-    <ErrorMessage fx:id="errorMessage" GridPane.rowIndex="5">
+    <StyledMessage fx:id="errorMessage" GridPane.rowIndex="5">
         <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
         </GridPane.margin>
-    </ErrorMessage>
+    </StyledMessage>
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
