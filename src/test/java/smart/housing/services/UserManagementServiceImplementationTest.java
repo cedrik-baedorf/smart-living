@@ -257,7 +257,7 @@ public class UserManagementServiceImplementationTest {
         User modifiedUser = new User("other");
         modifiedUser.setFirstName("Other First Name");
         modifiedUser.setLastName("Other Last Name");
-        modifiedUser.setRole(UserRole.SUPREME);
+        modifiedUser.setRole(UserRole.COORDINATOR);
         modifiedUser.setEmail("other.email@address.com");
         modifiedUser.setPassword("different password", UserManagementServiceImplementation.HASH_ALGORITHM);
 

@@ -29,6 +29,7 @@ public class ConfirmPasswordDialog extends ConfirmDialog {
         User user, DatabaseConnector databaseConnector
     ) {
         super(messageText, confirmText, abortText);
+        this.getDialogPane().setPrefSize(300, 150);
         this.USER = user;
         this.LOGIN_SERVICE = new LoginServiceImplementation(databaseConnector);
 

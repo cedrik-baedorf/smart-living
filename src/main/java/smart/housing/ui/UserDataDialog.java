@@ -4,7 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Dialog;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import smart.housing.entities.User;
 import smart.housing.enums.UserRole;
 import smart.housing.exceptions.EmptyFieldException;
@@ -13,7 +15,7 @@ import smart.housing.security.HashAlgorithm;
 
 import java.util.Arrays;
 
-public class UserDataDialog extends Dialog<User> {
+public class UserDataDialog extends StyledDialog<User> {
 
     private final User APPLICATION_USER, USER;
 
@@ -39,7 +41,7 @@ public class UserDataDialog extends Dialog<User> {
         this.APPLICATION_USER = applicationUser;
         this.USER = user;
         this.setTitle(title);
-        this.setWidth(300);
+        this.getDialogPane().setPrefSize(300, 400);
 
         this.getDialogPane().getScene().getWindow().setOnCloseRequest(event -> {
             this.setResult(null);
@@ -47,6 +49,10 @@ public class UserDataDialog extends Dialog<User> {
         });
 
         this.getDialogPane().setContent(this.createFields());
+
+        ((Stage) this.getDialogPane().getScene().getWindow()).getIcons().add(
+            new Image("smart/housing/ui/images/icon_info.png")
+        );
 
         clearFields();
         if(user != null)

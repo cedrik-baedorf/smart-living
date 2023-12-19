@@ -7,12 +7,15 @@ import smart.housing.SmartLivingApplication;
 import smart.housing.controllers.DatabaseDialogController;
 import smart.housing.database.DatabaseConnector;
 
-public class DatabaseDialog extends Dialog<DatabaseConnector> {
+public class DatabaseDialog extends StyledDialog<DatabaseConnector> {
 
     public DatabaseDialog(SmartLivingApplication application) {
         this.setTitle("Configure Database Connection");
-        this.setDialogPane(application.loadFXML(DatabaseDialogController.VIEW_NAME, new DatabaseDialogController(this)));
-        ((Stage)this.getDialogPane().getScene().getWindow()).getIcons().add(new Image("smart/housing/ui/images/icon_number.png"));
+        this.getDialogPane().setContent(application.loadFXML(DatabaseDialogController.VIEW_NAME, new DatabaseDialogController(this)));
+        ((Stage)this.getDialogPane().getScene().getWindow()).getIcons().setAll(
+                new Image("smart/housing/ui/images/icon_number.png")
+        );
+        this.getDialogPane().setPrefSize(300, 300);
     }
 
 }
