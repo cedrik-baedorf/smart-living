@@ -279,7 +279,7 @@ public class BudgetManagementController extends SmartHousingController {
 
                     BUDGET_SERVICE.modify(expense, newExpense);
                 }
-            };
+            }
             update();
         }
     }
