@@ -121,10 +121,6 @@ public class Task {
         assignees.add(roommate);
     }
 
-    public void removeAssignee(User roommate) {
-        assignees.remove(roommate);
-    }
-
     public void markAsCompleted(){
         if (this.getAssignees() == null || this.getAssignees().isEmpty())
             throw new IllegalStateException("A task must be assigned to at least one roommate before marking it as completed");
@@ -161,6 +157,27 @@ public class Task {
 
     public String toString(){
         return "(" + taskName + "; " + dueDate + "; " + (completed ? "completed" : "not completed") + ")";
+    }
+
+    public Object getId() {
+        return this.taskID;
+    }
+
+    public void setId(int i) {
+        this.taskID = i;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj != null && obj.getClass().equals(getClass())) {
+            Task task = (Task) obj;
+            return
+                taskName != null && taskName.equals(task.getTaskName()) &&
+                dueDate != null && dueDate.equals(task.getDueDate()) &&
+                assignees != null && assignees.equals(task.getAssignees()) &&
+                completed == task.getCompleted();
+        }
+        return false;
     }
 
 }

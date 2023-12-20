@@ -2,6 +2,10 @@ package smart.housing.entities;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class TaskTest {
@@ -26,7 +30,7 @@ public class TaskTest {
     }
 
     @Test
-    public void testMarkCompleted_WithoutAssignee(){
+    public void testMarkAsCompleted_WithoutAssignee(){
         Task task = new Task();
         assertThrows(IllegalStateException.class, task::markAsCompleted);
     }
@@ -45,7 +49,31 @@ public class TaskTest {
         assertFalse(task.getCompleted());
     }
 
+    @Test
+    public void testSetAssignees() {
+        Task task = new Task("test");
+        Set<User> assignees = new HashSet<>();
+        User roommate1 = new User("Anna");
+        User roommate2 = new User("Tom");
+        assignees.add(roommate1);
+        assignees.add(roommate2);
+        task.setAssignees(assignees);
+        assertEquals(assignees, task.getAssignees());
+    }
 
+    @Test
+    public void testAddAssignee() {
+        Task task = new Task("test");
+        User roommate = new User("Anna");
+        task.addAssignee(roommate);
+        assertTrue(task.getAssignees().contains(roommate));
+    }
 
-
+    @Test
+    public void testToString() {
+        Task task = new Task("test");
+        task.setDueDate(LocalDate.now().plusDays(7));
+        task.setCompleted(true);
+        assertEquals("(test; " + task.getDueDate() + "; completed)", task.toString());
+    }
 }

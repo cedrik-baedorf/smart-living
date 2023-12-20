@@ -91,7 +91,7 @@
                 </StyledTableView>
                 <StyledTableView fx:id="currentTasks" minHeight="100.0" minWidth="200" maxWidth="350.0" GridPane.columnIndex="1">
                     <columns>
-                        <TableColumn minWidth="150.0" text="My Tasks This Week">
+                        <TableColumn minWidth="150.0" text="My Tasks - next 7 days">
                             <cellValueFactory>
                                 <PropertyValueFactory property="taskName" />
                             </cellValueFactory>

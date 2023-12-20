@@ -55,15 +55,42 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
 
     @Override
     public void create(Task newTask) {
+        if (newTask.getTaskName() == null || newTask.getTaskName().isEmpty())
+            throw new RuntimeException("Task Name cannot be empty");
+        LocalDate dueDate = newTask.getDueDate();
+        if (dueDate == null)
+            throw new RuntimeException("Due Date cannot be null");
+        if (dueDate.isBefore(LocalDate.now()))
+            throw new RuntimeException("Due Date cannot be in the past");
+        if (newTask.getAssignees() == null || newTask.getAssignees().isEmpty())
+            throw new RuntimeException("Task must have at least one assignee");
+
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(newTask);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+
+        try{
+            entityManager.getTransaction().begin();
+            entityManager.persist(newTask);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error creating task: " + e.getMessage());
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
     public void modify(Task oldTask, Task updateTask) {
+        if (updateTask.getTaskName() == null || updateTask.getTaskName().isEmpty())
+            throw new RuntimeException("Task Name cannot be empty");
+        LocalDate dueDate = updateTask.getDueDate();
+        if (dueDate == null)
+            throw new RuntimeException("Due Date cannot be null");
+        if (dueDate.isBefore(LocalDate.now()))
+            throw new RuntimeException("Due Date cannot be in the past");
+        if (updateTask.getAssignees() == null || updateTask.getAssignees().isEmpty())
+            throw new RuntimeException("Task must have at least one assignee");
+
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
 
         try {
@@ -83,17 +110,39 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
     @Override
     public void delete(Task task) {
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
-        entityManager.getTransaction().begin();
-        task = entityManager.merge(task);
-        entityManager.remove(task);
+
+        try {
+            entityManager.getTransaction().begin();
+            task = entityManager.merge(task);
+            if (task == null)
+                throw new IllegalArgumentException("Task not found in the database");
+            entityManager.remove(task);
+            entityManager.getTransaction().commit();
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException("Error deleting task: " + e.getMessage());
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
     public void complete(Task task, Boolean status) {
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.merge(task).setCompleted(status);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+
+        try {
+            entityManager.getTransaction().begin();
+            Task mergedTask = entityManager.merge(task);
+            if (mergedTask == null){
+                throw new IllegalArgumentException("Task not found in the database");
+            }
+            mergedTask.setCompleted(status);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            throw new RuntimeException("Error completing task: " + e.getMessage());
+        }
+        finally {
+            entityManager.close();
+        }
     }
 }
