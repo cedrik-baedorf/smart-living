@@ -115,16 +115,11 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
 
     @Override
     public void delete (Expense expense) {
-
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
 
-        if (entityManager.find(Expense.class, expense.getExpenseId()) == null) {
-            throw new IllegalArgumentException("Expense not found");
-        }
-
-        Expense expenseToBeRemoved = entityManager.find(Expense.class, expense.getExpenseId());
+        expense = entityManager.merge(expense);
         entityManager.getTransaction().begin();
-        entityManager.remove(expenseToBeRemoved);
+        entityManager.remove(expense);
         entityManager.getTransaction().commit();
         entityManager.close();
     }
