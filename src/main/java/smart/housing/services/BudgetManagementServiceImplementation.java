@@ -1,12 +1,23 @@
 package smart.housing.services;
 
+import smart.housing.controllers.BudgetManagementController;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.DebtOverview;
 import smart.housing.entities.Expense;
 import smart.housing.entities.User;
+import smart.housing.exceptions.BudgetManagementServiceException;
 
 import javax.persistence.EntityManager;
+import java.awt.*;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class BudgetManagementServiceImplementation implements BudgetManagementService{
@@ -51,14 +62,15 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
         return balancedDebts;
     }
 
-
     private List<DebtOverview> convertExpensesToDebtOverviews(List<Expense> expenses) {
         List<DebtOverview> debtOverviews = new LinkedList<>();
 
         for(Expense expense : expenses) {
             User creditor = expense.getCreditor();
             double cost = expense.getCost();
-            double share = cost / (expense.getDebtors().size());
+            double share = new BigDecimal(cost / expense.getDebtors().size())
+                    .setScale(2, RoundingMode.DOWN)
+                    .doubleValue();
             for (User debtor : expense.getDebtors().stream().filter(debtor -> ! debtor.equals(creditor)).toList()) {
                 debtOverviews.add(new DebtOverview(creditor, debtor, share));
             }
@@ -66,6 +78,8 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
 
         return debtOverviews;
     }
+
+
 
     private List<DebtOverview> balanceDebtOverviews(List<DebtOverview> unbalancedDebtOverview){
         Map<UserPair, Double> debtsMap = new HashMap<>();
@@ -136,4 +150,72 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
         }
         entityManager.close();
     }
+
+    @Override
+    public void sendReminderMail(DebtOverview selectedDebt, String senderFirstName, String senderLastName){
+
+        try {
+            String debtorFirstName = selectedDebt.debtor().getFirstName();
+            String debtorLastName = selectedDebt.debtor().getLastName();
+            String creditorFirstName = selectedDebt.creditor().getFirstName();
+            String debtorEmail = selectedDebt.debtor().getEmail();
+            String subject = "You owe money!";
+
+            // Include debt amount in the email body
+            double debtAmount = selectedDebt.getAmount();
+            String body = "Dear " + debtorFirstName + " " + debtorLastName +
+                    ",\n\nYou owe €" + String.format("%.2f", Math.abs(debtAmount)) +
+                    " to " + creditorFirstName +
+                    ". Please settle the amount at your earliest convenience.\n\nSincerely,\nYour Budget Management System\n"
+                    + "on behalf of: " + senderFirstName + " " + senderLastName;
+
+            // Encode the subject and body parameters
+            String encodedSubject = URLEncoder.encode(subject, StandardCharsets.UTF_8).replace("+", "%20");
+            String encodedBody = URLEncoder.encode(body, StandardCharsets.UTF_8).replace("+", "%20");
+
+            // Create a mailto URI with properly encoded subject and body
+            URI mailtoUri = new URI("mailto:" + debtorEmail + "?subject=" + encodedSubject + "&body=" + encodedBody);
+
+            // Open the default email client
+            Desktop desktop = Desktop.getDesktop();
+            desktop.mail(mailtoUri);
+
+        } catch (IOException | URISyntaxException e) {
+            // Display error message
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void validateAndCreateExpense(String product, String costInput, User creditor, Set<User> debtors) throws BudgetManagementServiceException {
+        if (product == null || product.trim().isEmpty()) {
+            throw new BudgetManagementServiceException("Please enter a product name.");
+        }
+
+        if (!costInput.matches("\\d+(\\.\\d{1,2})?")) {
+            throw new BudgetManagementServiceException("Invalid cost format. Please enter a valid amount.");
+        }
+
+        double cost;
+        try {
+            cost = Double.parseDouble(costInput);
+        } catch (NumberFormatException e) {
+            throw new BudgetManagementServiceException("Invalid cost. Please enter a numeric value.");
+        }
+
+        if (creditor == null) {
+            throw new BudgetManagementServiceException("Creditor is not selected.");
+        }
+
+        if (debtors.isEmpty()) {
+            throw new BudgetManagementServiceException("Please select at least one debtor.");
+        }
+
+        if (cost <= 0) {
+            throw new BudgetManagementServiceException("Please provide a positive amount.");
+        }
+
+        create(new Expense(debtors, creditor, product, cost));
+    }
+
 }

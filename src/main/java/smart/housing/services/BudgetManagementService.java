@@ -3,8 +3,10 @@ package smart.housing.services;
 import smart.housing.entities.DebtOverview;
 import smart.housing.entities.Expense;
 import smart.housing.entities.User;
+import smart.housing.exceptions.BudgetManagementServiceException;
 
 import java.util.List;
+import java.util.Set;
 
 public interface BudgetManagementService {
 
@@ -22,5 +24,11 @@ public interface BudgetManagementService {
     void delete(Expense expense);
 
     void modify(Expense oldExpense, Expense updateExpense);
+
+    void sendReminderMail(DebtOverview selectedDebt, String senderFirstName, String senderLastName);
+
+    void validateAndCreateExpense(String product, String costInput, User creditor, Set<User> debtors) throws BudgetManagementServiceException;
+
+
 
 }

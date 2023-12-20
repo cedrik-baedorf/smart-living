@@ -23,12 +23,6 @@ import javafx.collections.ListChangeListener;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.awt.*;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 /**
@@ -136,7 +130,6 @@ public class BudgetManagementController extends SmartHousingController {
         update();
     }
 
-
     private void setBackgroundImage() {
         budgetBackgroundPane.setBackgroundImage(BACKGROUND_IMAGE);
     }
@@ -150,39 +143,35 @@ public class BudgetManagementController extends SmartHousingController {
         loadDebtsOverviewList();
     }
 
-
-
     public void _addExpenseButton_onAction(ActionEvent event) {
         event.consume();
         addExpenseButtonClicked();
     }
 
+
     private void addExpenseButtonClicked() {
         try {
             String product = productNameField.getText();
             String costInput = costField.getText().replace(',', '.');
-            double cost = Double.parseDouble(costInput);
             User selectedCreditor = creditors.getValue();
-
             Set<User> selectedDebtors = new HashSet<>(debtors.getCheckModel().getCheckedItems());
-            if(product == null)
-                throw new BudgetManagementServiceException("Please enter a product");
-            if(selectedDebtors.isEmpty())
-                throw new BudgetManagementServiceException("Please select at least one debtor");
-            if(cost <= 0)
-                throw new BudgetManagementServiceException("Please provide a positive amount");
 
-            BUDGET_SERVICE.create(new Expense(selectedDebtors, selectedCreditor, product, cost));
-
+            BUDGET_SERVICE.validateAndCreateExpense(product, costInput, selectedCreditor, selectedDebtors);
+            buttonDisplay(true, addExpenseButton); // Turn button green on success
+        } catch (BudgetManagementServiceException e) {
+            // Handle validation errors
+            System.err.println(e.getMessage());
+            buttonDisplay(false, addExpenseButton); // Turn button red on failure
         } catch (Exception e) {
+            // Handle other errors
             e.printStackTrace();
+            buttonDisplay(false, addExpenseButton); // Turn button red on failure
         } finally {
             clearExpenses();
             loadExpenseList();
             loadDebtsOverviewList();
         }
     }
-
 
     public void loadExpenseList() {
         try {
@@ -195,13 +184,11 @@ public class BudgetManagementController extends SmartHousingController {
         }
     }
 
-
     private void loadDebtsOverviewList() {
         User activeUser = USER_SERVICE.getServiceUser();
         List<DebtOverview> debtOverviews = BUDGET_SERVICE.getUserDebt(activeUser);
         debtsOverview.setItems(FXCollections.observableList(debtOverviews));
     }
-
 
     private void clearExpenses () {
         productNameField.clear();
@@ -265,7 +252,6 @@ public class BudgetManagementController extends SmartHousingController {
         pause.play();
     }
 
-
     public void _emailButton_onAction(ActionEvent event) {
         event.consume();
         sendEmail();
@@ -307,54 +293,18 @@ public class BudgetManagementController extends SmartHousingController {
     }
 
     private void sendEmail() {
-        // Absender
-        // Empfänger
-        // Schuldenhöhe
-        // BUDGET_SERVICE.sendReminderEmail(absender, empfänger, shculdenhöhe)
-
         // Get the selected row from the debtsOverview table
         DebtOverview selectedDebt = debtsOverview.getSelectionModel().getSelectedItem();
+        String senderFirstName = USER_SERVICE.getServiceUser().getFirstName();
+        String senderLastName = USER_SERVICE.getServiceUser().getLastName();
 
         if (selectedDebt != null) {
-            try {
-                String debtorFirstName = selectedDebt.debtor().getFirstName();
-                String debtorLastName = selectedDebt.debtor().getLastName();
-                String creditorFirstName = selectedDebt.creditor().getFirstName();
-                String debtorEmail = selectedDebt.debtor().getEmail();
-                String subject = "You owe money!";
-
-                // Include debt amount in the email body
-                double debtAmount = selectedDebt.getAmount();
-                String body = "Dear " + debtorFirstName + " " + debtorLastName +
-                        ",\n\nYou owe €" + String.format("%.2f", Math.abs(debtAmount)) +
-                        " to " + creditorFirstName +
-                        ". Please settle the amount at your earliest convenience.\n\nSincerely,\nYour Budget Management System\n"
-                        + "on behalf of: " + USER_SERVICE.getServiceUser().getFirstName() + " " + USER_SERVICE.getServiceUser().getLastName();
-
-                // Encode the subject and body parameters
-                String encodedSubject = URLEncoder.encode(subject, StandardCharsets.UTF_8).replace("+", "%20");
-                String encodedBody = URLEncoder.encode(body, StandardCharsets.UTF_8).replace("+", "%20");
-
-                // Create a mailto URI with properly encoded subject and body
-                URI mailtoUri = new URI("mailto:" + debtorEmail + "?subject=" + encodedSubject + "&body=" + encodedBody);
-
-                // Open the default email client
-                Desktop desktop = Desktop.getDesktop();
-                desktop.mail(mailtoUri);
-
-                // Display success message
-                buttonDisplay(true, emailButton);
-            } catch (IOException | URISyntaxException e) {
-                // Display error message
-                buttonDisplay(false, emailButton);
-                e.printStackTrace();
-            }
+            BUDGET_SERVICE.sendReminderMail(selectedDebt, senderFirstName, senderLastName);
+            buttonDisplay(true, emailButton);
         } else {
-            // No row selected, display error message
             buttonDisplay(false, emailButton);
         }
     }
-
 
     public String getViewName() {
         return VIEW_NAME;
