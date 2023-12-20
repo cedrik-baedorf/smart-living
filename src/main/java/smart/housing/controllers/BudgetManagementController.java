@@ -18,15 +18,12 @@ import smart.housing.services.BudgetManagementService;
 import smart.housing.services.BudgetManagementServiceImplementation;
 import smart.housing.services.UserManagementService;
 import smart.housing.ui.*;
-import javafx.collections.ListChangeListener;
-
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Controller to view 'budget_management.fxml'
