@@ -23,16 +23,17 @@ import java.util.Set;
                 name = Task.FIND_WITH_FILTERS,
                 query = """
                         SELECT task FROM Task task
-                        WHERE task.isCompleted = coalesce(:isCompleted, task.isCompleted)
+                        WHERE task.completed = coalesce(:isCompleted, task.completed)
                         AND task.dueDate >= :startDate
                         AND task.dueDate <= :endDate
+                        AND :assignee MEMBER OF task.assignees
                         """
         ),
         @NamedQuery(
                 name = Task.FIND_INCOMPLETE,
                 query = """
                         SELECT task FROM Task task
-                        WHERE task.isCompleted = coalesce(:isCompleted, task.isCompleted)
+                        WHERE task.completed = coalesce(:isCompleted, task.completed)
                         """
         )
 })
@@ -91,12 +92,12 @@ public class Task {
      * Information about whether the task is completed or not
      */
     @Column(name = "completed")
-    private boolean isCompleted;
+    private boolean completed;
 
     public Task (String taskName, Set<User> assignees){
         this.taskName = taskName;
         this.assignees = assignees == null ? new HashSet<>() : assignees;
-        this.isCompleted = false;
+        this.completed = false;
     }
 
     public Task (String taskName){
@@ -124,7 +125,14 @@ public class Task {
         if (this.getAssignees() == null || this.getAssignees().isEmpty())
             throw new IllegalStateException("A task must be assigned to at least one roommate before marking it as completed");
         else
-            this.setCompleted();
+            this.setCompleted(true);
+    }
+    public boolean getCompleted() {
+        return this.completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     public String getTaskName(){
@@ -147,16 +155,8 @@ public class Task {
         this.dueDate = dueDate;
     }
 
-    private void setCompleted(){
-        isCompleted = true;
-    }
-
-    public boolean getCompleted() {
-        return isCompleted;
-    }
-
     public String toString(){
-        return "(" + taskName + "; " + dueDate + "; " + (isCompleted ? "completed" : "not completed") + ")";
+        return "(" + taskName + "; " + dueDate + "; " + (completed ? "completed" : "not completed") + ")";
     }
 
 }

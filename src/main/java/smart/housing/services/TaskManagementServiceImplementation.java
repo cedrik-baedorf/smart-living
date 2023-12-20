@@ -1,13 +1,15 @@
 package smart.housing.services;
 
 import smart.housing.database.DatabaseConnector;
-import smart.housing.database.DatabaseConnectorImplementation;
 import smart.housing.entities.Task;
+import smart.housing.entities.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 public class TaskManagementServiceImplementation implements TaskManagementService {
 
@@ -26,7 +28,7 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
     }
 
     @Override
-    public List<Task> getCurrentTasks() {
+    public List<Task> getCurrentTasks(User activeUser) {
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
         LocalDate today = LocalDate.now();
         LocalDate sevenDaysFromNow = today.plusDays(7);
@@ -34,6 +36,8 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
         typedQuery.setParameter("isCompleted", false);
         typedQuery.setParameter("startDate", today);
         typedQuery.setParameter("endDate", sevenDaysFromNow);
+        Set<User> userSet = Collections.singleton(activeUser);
+        typedQuery.setParameter("assignee", userSet);
         List<Task> currentTaskList = typedQuery.getResultList();
         entityManager.close();
         return currentTaskList;
@@ -84,9 +88,12 @@ public class TaskManagementServiceImplementation implements TaskManagementServic
         entityManager.remove(task);
     }
 
-    public static void main(String [] args){
-        TaskManagementService service = new TaskManagementServiceImplementation(new DatabaseConnectorImplementation());
-        List<Task> list = service.getCurrentTasks();
-        list.forEach(System.out::println);
+    @Override
+    public void complete(Task task, Boolean status) {
+        EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.merge(task).setCompleted(status);
+        entityManager.getTransaction().commit();
+        entityManager.close();
     }
 }

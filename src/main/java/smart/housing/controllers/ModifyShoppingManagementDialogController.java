@@ -23,7 +23,7 @@ public class ModifyShoppingManagementDialogController extends DialogController{
     @FXML Label itemField;
     @FXML Label unitField;
     @FXML StyledTextField amountTextField;
-    @FXML ErrorMessage errorMessage;
+    @FXML StyledMessage errorMessage;
     @FXML StyledButton modifyButton;
 
     private final ShoppingManagementService service;
