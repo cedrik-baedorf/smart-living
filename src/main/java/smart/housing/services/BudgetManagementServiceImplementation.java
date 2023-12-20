@@ -54,7 +54,9 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
 
         for(int i = 0; i < balancedDebts.size(); i++) {
             DebtOverview debtOverview = balancedDebts.get(i);
-            if(debtOverview.debtor().equals(user))
+            if((int) (debtOverview.amount() * 100) == 0)
+                balancedDebts.remove(i--);
+            else if(debtOverview.debtor().equals(user))
                 balancedDebts.set(i, debtOverview.inverseDebtOverview());
         }
 
