@@ -92,7 +92,9 @@ public class NewTaskDialogController extends DialogController {
     }
 
     public void createTask() {
-        checkForEmptyInput(taskNameField.getText(), "taskName");
+        checkForEmptyInput(taskNameField.getText(), "task name");
+        checkForEmptyInput(dueDatePicker.getValue(), "due date");
+        checkForEmptyInput(assigneeComboBox.getCheckModel().getCheckedItems(), "assignees");
 
         Task newTask = new Task(taskNameField.getText());
         newTask.setDueDate(dueDatePicker.getValue());

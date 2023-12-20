@@ -7,6 +7,16 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TaskTest {
 
     @Test
+    public void testTask_taskNameIsNull(){
+        assertThrows(RuntimeException.class, () -> new Task(null));
+    }
+
+    @Test
+    public void testTask_assigneesIsNull(){
+        assertThrows(RuntimeException.class, () -> new Task("test", null));
+    }
+
+    @Test
     public void testMarkAsCompleted_WithAssignee() {
         Task task = new Task();
         User roommate = new User("Anna");

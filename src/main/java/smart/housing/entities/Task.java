@@ -95,6 +95,10 @@ public class Task {
     private boolean completed;
 
     public Task (String taskName, Set<User> assignees){
+        if (taskName == null)
+            throw new RuntimeException("Task Name cannot be null");
+        if (assignees == null)
+            throw new RuntimeException("Assignees cannot be null");
         this.taskName = taskName;
         this.assignees = assignees == null ? new HashSet<>() : assignees;
         this.completed = false;
