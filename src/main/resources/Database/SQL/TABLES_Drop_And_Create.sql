@@ -19,7 +19,7 @@ DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `shopping_list_items`;
 DROP TABLE IF EXISTS `tasks`;
 DROP TABLE IF EXISTS `expenses`;
-DROP TABLE IF EXISTS `debitor_mapping`;
+DROP TABLE IF EXISTS `debtor_mapping`;
 
 
 CREATE TABLE IF NOT EXISTS `users` (
@@ -66,12 +66,12 @@ CREATE TABLE IF NOT EXISTS `expenses` (
     CONSTRAINT `fk_creditor` FOREIGN KEY (`creditor_name`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE IF NOT EXISTS `debitor_mapping` (
+CREATE TABLE IF NOT EXISTS `debtor_mapping` (
     `id` INT(11) AUTO_INCREMENT NOT NULL,
     `expense_id` INT(11) NOT NULL,
-    `debitor_name` CHAR(8) NOT NULL,
+    `debtor_name` CHAR(8) NOT NULL,
     PRIMARY KEY (`id`),
-    CONSTRAINT `fk_debitor_name` FOREIGN KEY (`debitor_name`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
+    CONSTRAINT `fk_debtor_name` FOREIGN KEY (`debtor_name`) REFERENCES `users` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
