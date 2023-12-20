@@ -2,7 +2,7 @@ package smart.housing.enums;
 
 public enum UserRole {
 
-    ADMIN("ADMIN", 1), SUPREME("SUPREME", 2), USER("USER", 3);
+    ADMIN("ADMIN", 1), COORDINATOR("COORDINATOR", 2), USER("USER", 3);
 
     public static final UserRole DEFAULT_ROLE = UserRole.USER;
 

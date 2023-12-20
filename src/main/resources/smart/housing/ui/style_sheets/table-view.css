@@ -49,18 +49,15 @@
 
 /* rows */
 .table-row-cell:odd .filler {
-    -fx-background-color: WHITE;
-    -fx-opacity: 0.05;
+    -fx-background-color: TRANSPARENT;
 }
 
 .table-row-cell:even .filler {
-    -fx-background-color: WHITE;
-    -fx-opacity: 0.1;
+    -fx-background-color: TRANSPARENT
 }
 
 .table-row-cell:hover {
-    -fx-background-color: WHITE;
-    -fx-opacity: 0.2;
+    -fx-background-color: TRANSPARENT
 }
 
 .table-row-cell:hover .table-cell {

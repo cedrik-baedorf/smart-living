@@ -15,7 +15,7 @@ import smart.housing.ui.*;
 import java.util.List;
 
 /**
- * Controller to view 'modify_dialog.fxml'
+ * Controller to view 'modify_task_dialog.fxml'
  * @author I551381
  * @version 1.0
  */
@@ -38,7 +38,7 @@ public class ModifyTaskController extends DialogController {
     @FXML StyledTextField taskNameField;
     @FXML DatePicker dueDatePicker;
     @FXML StyledCheckComboBox<User> assigneeComboBox;
-    @FXML ErrorMessage errorMessage;
+    @FXML StyledMessage errorMessage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this

@@ -55,8 +55,8 @@ public class Expense implements Serializable {
         // Default constructor
     }
 
-    public Expense(Set<User> debitors, User creditor, String product, double cost) {
-        this.debtors = debitors;
+    public Expense(Set<User> debtors, User creditor, String product, double cost) {
+        this.debtors = debtors;
         this.creditor = creditor;
         this.product = product;
         this.cost = cost;
@@ -85,6 +85,7 @@ public class Expense implements Serializable {
     }
 
     public void removeDebtor(User roommate) {
+
         debtors.remove(roommate);
     }
 

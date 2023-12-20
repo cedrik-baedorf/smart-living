@@ -38,7 +38,7 @@ public class ModifyExpenseDialogController extends DialogController {
     @FXML public StyledTextField costField;
     @FXML public StyledComboBox<User> creditor;
     @FXML public StyledCheckComboBox<User> debtors;
-    @FXML ErrorMessage errorMessage;
+    @FXML StyledMessage errorMessage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
