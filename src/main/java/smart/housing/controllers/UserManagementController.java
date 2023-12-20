@@ -127,7 +127,7 @@ public class UserManagementController extends SmartHousingController {
         User userToBeModified = userTable.getSelectionModel().getSelectedItem();
         try {
             new UserDataDialog("Modify User", SERVICE.getServiceUser(), userToBeModified).showAndWait().ifPresent(user ->
-                    new ConfirmPasswordDialog("Confirm password to modify", "Yes, commit changes", "No, undo changes",
+                    new ConfirmPasswordDialog("Confirm password to modify", "Yes, commit", "No, undo",
                             SERVICE.getServiceUser(), SERVICE.getDatabaseConnector()
                     ).showAndWait().ifPresent(aBoolean -> {
                         if (aBoolean)

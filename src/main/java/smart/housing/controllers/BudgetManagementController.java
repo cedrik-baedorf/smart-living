@@ -223,7 +223,12 @@ public class BudgetManagementController extends SmartHousingController {
     }
 
     private void removeItemFromList(Expense expense) {
-        BUDGET_SERVICE.delete(expense);
+        new ConfirmDialog(
+            "Delete selected expense?", "Delete", "Keep"
+        ).showAndWait().ifPresent(aBoolean -> {
+            if(aBoolean)
+                BUDGET_SERVICE.delete(expense);
+        });
         loadExpenseList();
         loadDebtsOverviewList();
     }
