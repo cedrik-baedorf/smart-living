@@ -95,6 +95,10 @@ public class Task {
     private boolean completed;
 
     public Task (String taskName, Set<User> assignees){
+        if (taskName == null)
+            throw new RuntimeException("Task Name cannot be null");
+        if (assignees == null)
+            throw new RuntimeException("Assignees cannot be null");
         this.taskName = taskName;
         this.assignees = assignees == null ? new HashSet<>() : assignees;
         this.completed = false;
@@ -115,10 +119,6 @@ public class Task {
 
     public void addAssignee(User roommate){
         assignees.add(roommate);
-    }
-
-    public void removeAssignee(User roommate) {
-        assignees.remove(roommate);
     }
 
     public void markAsCompleted(){
@@ -157,6 +157,27 @@ public class Task {
 
     public String toString(){
         return "(" + taskName + "; " + dueDate + "; " + (completed ? "completed" : "not completed") + ")";
+    }
+
+    public Object getId() {
+        return this.taskID;
+    }
+
+    public void setId(int i) {
+        this.taskID = i;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj != null && obj.getClass().equals(getClass())) {
+            Task task = (Task) obj;
+            return
+                taskName != null && taskName.equals(task.getTaskName()) &&
+                dueDate != null && dueDate.equals(task.getDueDate()) &&
+                assignees != null && assignees.equals(task.getAssignees()) &&
+                completed == task.getCompleted();
+        }
+        return false;
     }
 
 }
