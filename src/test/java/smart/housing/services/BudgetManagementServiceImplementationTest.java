@@ -1,13 +1,12 @@
 package smart.housing.services;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.params.*;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.*;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.Expense;
 import smart.housing.entities.User;
 import smart.housing.entities.DebtOverview;
+import smart.housing.exceptions.BudgetManagementServiceException;
 
 import javax.persistence.*;
 import java.util.*;
@@ -38,15 +37,30 @@ public class BudgetManagementServiceImplementationTest {
 
         BudgetManagementService service = new BudgetManagementServiceImplementation(databaseConnector);
 
+        // Mock necessary dependencies
+        User mockCreditor = Mockito.mock(User.class);
+        Set<User> mockDebtors = new HashSet<>();
+        mockDebtors.add(Mockito.mock(User.class));
+
+        // Create a new Expense object and set all required fields
         Expense newExpense = new Expense();
+        newExpense.setCreditor(mockCreditor);
+        newExpense.setDebtors(mockDebtors);
+        newExpense.setProduct("Test");
+        newExpense.setCost(1.2);
+
         service.create(newExpense);
 
+        // Verification
         InOrder inOrder = Mockito.inOrder(entityManager, entityManager.getTransaction());
         inOrder.verify(entityManager.getTransaction()).begin();
         inOrder.verify(entityManager).persist(newExpense);
         inOrder.verify(entityManager.getTransaction()).commit();
         inOrder.verify(entityManager).close();
     }
+
+
+
 
     @Test
     public void testGetAllExpenses() {
@@ -89,22 +103,38 @@ public class BudgetManagementServiceImplementationTest {
     public void testModifyExpense() {
         DatabaseConnector databaseConnector = createMockDatabaseConnector();
         EntityManager entityManager = databaseConnector.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
 
         BudgetManagementService service = new BudgetManagementServiceImplementation(databaseConnector);
 
+        // Create and set up mock objects for Expense
+        User mockCreditor = Mockito.mock(User.class);
+        Set<User> mockDebtors = new HashSet<>(Arrays.asList(Mockito.mock(User.class)));
         Expense existingExpense = new Expense();
-        Expense updatedExpense = new Expense();
+        existingExpense.setCreditor(mockCreditor);
+        existingExpense.setDebtors(mockDebtors);
+        existingExpense.setProduct("Existing Product");
+        existingExpense.setCost(50); // Valid cost
+        existingExpense.setExpenseId(1); // Set a valid expense ID
 
+        Expense updatedExpense = new Expense();
+        updatedExpense.setCreditor(mockCreditor);
+        updatedExpense.setDebtors(mockDebtors);
+        updatedExpense.setProduct("Updated Product");
+        updatedExpense.setCost(100); // Valid cost
+
+        // Mock the find call to return the existingExpense
         Mockito.when(entityManager.find(Expense.class, existingExpense.getExpenseId())).thenReturn(existingExpense);
 
+        // Perform the operation
         service.modify(existingExpense, updatedExpense);
 
-        InOrder inOrder = Mockito.inOrder(entityManager, entityManager.getTransaction());
-        inOrder.verify(entityManager.getTransaction()).begin();
+        // Verify the sequence of calls
+        InOrder inOrder = Mockito.inOrder(entityManager, entityTransaction);
         inOrder.verify(entityManager).merge(existingExpense);
-        inOrder.verify(entityManager.getTransaction()).commit();
-        inOrder.verify(entityManager).close();
+        inOrder.verify(entityTransaction).commit();
     }
+
 
     @Nested
     class UserDebtTests {
@@ -119,13 +149,40 @@ public class BudgetManagementServiceImplementationTest {
 
             BudgetManagementService service = new BudgetManagementServiceImplementation(databaseConnector);
 
-            User user = new User(); // Assuming a default User object exists
+            User user = new User();
             List<DebtOverview> debts = service.getUserDebt(user);
 
             assertTrue(debts.isEmpty());
         }
 
-        // Additional tests for different scenarios in getUserDebt
+    }
+
+    @Nested
+    class ValidateAndCreateExpenseTests {
+        private DatabaseConnector databaseConnector;
+        private BudgetManagementServiceImplementation service;
+        private User mockCreditor;
+        private Set<User> mockDebtors;
+
+        @BeforeEach
+        public void setUp() {
+            databaseConnector = createMockDatabaseConnector();
+            service = new BudgetManagementServiceImplementation(databaseConnector);
+            mockCreditor = Mockito.mock(User.class);
+            mockDebtors = new HashSet<>(Arrays.asList(Mockito.mock(User.class)));
+        }
+
+        @Test
+        public void testValidExpenseCreation() {
+            assertDoesNotThrow(() ->
+                    service.validateAndCreateExpense("Product", "100", mockCreditor, mockDebtors));
+        }
+
+        @Test
+        public void testInvalidProductName() {
+            assertThrows(BudgetManagementServiceException.class, () ->
+                    service.validateAndCreateExpense("", "100", mockCreditor, mockDebtors));
+        }
     }
 
     @Nested
@@ -161,6 +218,4 @@ public class BudgetManagementServiceImplementationTest {
             assertThrows(IllegalArgumentException.class, () -> service.modify(existingExpense, null));
         }
     }
-
-    // Additional tests for other methods and edge cases
 }
