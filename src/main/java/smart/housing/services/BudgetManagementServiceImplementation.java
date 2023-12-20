@@ -1,6 +1,5 @@
 package smart.housing.services;
 
-import smart.housing.controllers.BudgetManagementController;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.entities.DebtOverview;
 import smart.housing.entities.Expense;
