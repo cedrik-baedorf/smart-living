@@ -254,15 +254,32 @@ public class BudgetManagementController extends SmartHousingController {
         DebtOverview selectedDebt = debtsOverview.getSelectionModel().getSelectedItem();
 
         if (selectedDebt != null) {
-            User contrary = selectedDebt.getCreditor();
+            User contrary = selectedDebt.getDebtor();
             List<Expense> expenseList = BUDGET_SERVICE.getAllExpenses()
                 .stream()
                 .filter(expense ->
                     (expense.getCreditor().equals(contrary) && expense.getDebtors().contains(USER_SERVICE.getServiceUser())) ||
                     (expense.getCreditor().equals(USER_SERVICE.getServiceUser()) && expense.getDebtors().contains(contrary))
                 ).toList();
-            for(Expense expense : expenseList)
-                BUDGET_SERVICE.delete(expense);
+            for(Expense expense : expenseList) {
+                if(expense.getDebtors().size() == 1 || (expense.getDebtors().size() == 2 && expense.getDebtors().contains(expense.getCreditor())))
+                    BUDGET_SERVICE.delete(expense);
+                else {
+                    Expense newExpense = new Expense(
+                        expense.getDebtors(),
+                        expense.getCreditor(),
+                        expense.getProduct(),
+                        expense.getCost()
+                    );
+                    if(newExpense.getCreditor().equals(USER_SERVICE.getServiceUser()))
+                        newExpense.getDebtors().remove(contrary);
+                    else
+                        newExpense.getDebtors().remove(USER_SERVICE.getServiceUser());
+                    newExpense.setCost(newExpense.getCost() / (newExpense.getDebtors().size() + 1) * newExpense.getDebtors().size());
+
+                    BUDGET_SERVICE.modify(expense, newExpense);
+                }
+            };
             update();
         }
     }

@@ -68,8 +68,7 @@ INSERT INTO `debtor_mapping` (`id`, `expense_id`, `debtor_name`) VALUES
         (0, 0, 'cbaedorf'),
         (1, 1, 'nrg'),
         (2, 2, 'ivano'),
-        (3, 2, 'lienchen'),
-        ( 4, 3, 'heyden');
+        (3, 2, 'lienchen');
 
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;

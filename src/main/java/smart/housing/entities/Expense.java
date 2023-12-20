@@ -31,9 +31,9 @@ public class Expense implements Serializable {
      */
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "debitor_mapping",
+            name = "debtor_mapping",
             joinColumns = @JoinColumn(name = "expense_id"),
-            inverseJoinColumns = @JoinColumn(name = "debitor_name")
+            inverseJoinColumns = @JoinColumn(name = "debtor_name")
     )
     private Set<User> debtors;
 
