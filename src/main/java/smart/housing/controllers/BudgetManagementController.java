@@ -26,6 +26,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Controller to view 'budget_management.fxml'
@@ -76,17 +77,6 @@ public class BudgetManagementController extends SmartHousingController {
      */
     public void initialize() {
         setBackgroundImage();
-
-        // Set up listener for multiple selections
-        debtors.getCheckModel().getCheckedItems().addListener((ListChangeListener<? super User>) change -> {
-            while (change.next()) {
-                if (change.wasAdded()) {
-                    System.out.println("Selected Debtors: " + change.getAddedSubList());
-                } else if (change.wasRemoved()) {
-                    System.out.println("Deselected Debtors: " + change.getRemoved());
-                }
-            }
-        });
 
         // Set up listener for selection in debtsOverview
         debtsOverview.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -267,29 +257,16 @@ public class BudgetManagementController extends SmartHousingController {
         DebtOverview selectedDebt = debtsOverview.getSelectionModel().getSelectedItem();
 
         if (selectedDebt != null) {
-            try {
-                User creditor = selectedDebt.creditor();
-                User debtor = selectedDebt.debtor();
-                double openDebt = selectedDebt.getAmount();
-
-                // Add an expense with the Name "Settled Debt"
-                BUDGET_SERVICE.create(new Expense(Set.of(debtor), creditor, "Settled Debt", (openDebt*-1)));
-
-                // Display success message
-                buttonDisplay(true, settleDebtButton);
-
-            } catch (Exception e) {
-                // Display error message
-                buttonDisplay(false, settleDebtButton);
-                e.printStackTrace();
-            } finally {
-                clearExpenses();
-                loadExpenseList();
-                loadDebtsOverviewList();
-            }
-        } else {
-            // No row selected, display error message
-            buttonDisplay(false, settleDebtButton);
+            User contrary = selectedDebt.getCreditor();
+            List<Expense> expenseList = BUDGET_SERVICE.getAllExpenses()
+                .stream()
+                .filter(expense ->
+                    (expense.getCreditor().equals(contrary) && expense.getDebtors().contains(USER_SERVICE.getServiceUser())) ||
+                    (expense.getCreditor().equals(USER_SERVICE.getServiceUser()) && expense.getDebtors().contains(contrary))
+                ).toList();
+            for(Expense expense : expenseList)
+                BUDGET_SERVICE.delete(expense);
+            update();
         }
     }
 
