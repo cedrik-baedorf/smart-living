@@ -15,7 +15,7 @@ public class LoginServiceImplementationTest {
     private DatabaseConnector mockDatabaseConnector() {
         EntityManager entityManager = Mockito.mock(EntityManager.class);
 
-        HashAlgorithm hashAlgorithm = UserManagementServiceImplementation.HASH_ALGORITHM;
+        HashAlgorithm hashAlgorithm = LoginServiceImplementation.HASH_ALGORITHM;
 
         User user = new User("username", "password", hashAlgorithm);
 
@@ -71,7 +71,7 @@ public class LoginServiceImplementationTest {
 
         LoginService loginService = new LoginServiceImplementation(mockDatabaseConnector());
 
-        User expectedUser = new User(username, password, UserManagementServiceImplementation.HASH_ALGORITHM);
+        User expectedUser = new User(username, password, LoginServiceImplementation.HASH_ALGORITHM);
 
         assertEquals(expectedUser, loginService.userLogin(username, password));
     }

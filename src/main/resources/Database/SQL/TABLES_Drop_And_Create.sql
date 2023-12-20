@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `password` CHAR(64) NOT NULL,
     `last_name` VARCHAR(24) DEFAULT NULL,
     `first_name` VARCHAR(24) DEFAULT NULL,
-    `role` VARCHAR(8) DEFAULT NULL,
+    `role` VARCHAR(16) DEFAULT NULL,
     `email` VARCHAR(128) DEFAULT NULL,
     PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
