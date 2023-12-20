@@ -7,8 +7,7 @@ import javafx.scene.input.KeyCode;
 import org.hibernate.service.spi.ServiceException;
 import smart.housing.database.DatabaseConnector;
 import smart.housing.database.DatabaseConnectorImplementation;
-import smart.housing.ui.BackgroundDialogPane;
-import smart.housing.ui.ErrorMessage;
+import smart.housing.ui.StyledMessage;
 import smart.housing.ui.StyledPasswordField;
 import smart.housing.ui.StyledTextField;
 
@@ -30,13 +29,11 @@ public class DatabaseDialogController extends DialogController {
     private final Dialog<DatabaseConnector> DIALOG;
 
     @FXML
-    BackgroundDialogPane dialogPane;
-    @FXML
     StyledTextField usernameField, jdbcDriverField, urlField;
     @FXML
     StyledPasswordField passwordField;
     @FXML
-    ErrorMessage errorMessage;
+    StyledMessage errorMessage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this
@@ -52,7 +49,6 @@ public class DatabaseDialogController extends DialogController {
      */
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
-        dialogPane.setBackgroundImage("smart/housing/ui/images/database_dialog_background.jpg");
         errorMessage.clear();
         initializeKeyMappings();
     }

@@ -80,11 +80,12 @@ public class Expense implements Serializable {
         this.debtors = debtors;
     }
 
-    public void addDebitor(User roommate){
+    public void addDebtor(User roommate){
         debtors.add(roommate);
     }
 
-    public void removeDebitor(User roommate) {
+    public void removeDebtor(User roommate) {
+
         debtors.remove(roommate);
     }
 

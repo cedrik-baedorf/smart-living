@@ -10,7 +10,7 @@ import smart.housing.entities.User;
 import smart.housing.exceptions.EmptyFieldException;
 import smart.housing.services.TaskManagementService;
 import smart.housing.services.UserManagementService;
-import smart.housing.ui.ErrorMessage;
+import smart.housing.ui.StyledMessage;
 import smart.housing.ui.StyledCheckComboBox;
 import smart.housing.ui.StyledDatePicker;
 import smart.housing.ui.StyledTextField;
@@ -39,7 +39,8 @@ public class NewTaskDialogController extends DialogController {
     @FXML StyledTextField taskNameField;
     @FXML StyledDatePicker dueDatePicker;
     @FXML StyledCheckComboBox<User> assigneeComboBox;
-    @FXML ErrorMessage errorMessage;
+    @FXML
+    StyledMessage errorMessage;
 
     /**
      * Constructor for this controller passing the <code>Application</code> object this

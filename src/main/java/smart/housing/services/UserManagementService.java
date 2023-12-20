@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface UserManagementService extends SmartLivingService {
 
-    String MSG_CREATE_LOWER_RANK = "Role %s of current user is not able to create user with role %s";
-    String MSG_CREATE_NULL = "Attempted to persist User but %s was null";
+    String MSG_LOWER_RANK = "Role %s of current user is not able to %s user with role %s";
     String MSG_CREATE_USERNAME_EXISTS = "Attempted to persist User but username %s already exists";
+    String MSG_NULL_VALUE = "cannot %s %s when %s is null";
 
     /**
      * This method takes an object of class <code>User</code> and persists it in the database, if
@@ -51,6 +51,14 @@ public interface UserManagementService extends SmartLivingService {
      * @return <code>{@link List}</code> object of type <code>{@link User}</code>
      */
     List<User> getUsers();
+
+    /**
+     * This method shall return the <code>{@link User}</code> object from the database
+     * with the username provided.
+     * If no <code>{@link User}</code> is found, this method shall return null.
+     * @return {@link User} object
+     */
+    User getUser(String username);
 
     /**
      * Getter method for this.USER

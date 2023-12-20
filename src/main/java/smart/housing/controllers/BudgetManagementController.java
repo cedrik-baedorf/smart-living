@@ -160,8 +160,10 @@ public class BudgetManagementController extends SmartHousingController {
     private void addExpenseButtonClicked() {
         try {
             String product = productNameField.getText();
-            double cost = Double.parseDouble(costField.getText());
+            String costInput = costField.getText().replace(',', '.');
+            double cost = Double.parseDouble(costInput);
             User selectedCreditor = creditors.getValue();
+
             Set<User> selectedDebtors = new HashSet<>(debtors.getCheckModel().getCheckedItems());
             if(product == null)
                 throw new BudgetManagementServiceException("Please enter a product");
@@ -300,6 +302,11 @@ public class BudgetManagementController extends SmartHousingController {
     }
 
     private void sendEmail() {
+        // Absender
+        // Empfänger
+        // Schuldenhöhe
+        // BUDGET_SERVICE.sendReminderEmail(absender, empfänger, shculdenhöhe)
+
         // Get the selected row from the debtsOverview table
         DebtOverview selectedDebt = debtsOverview.getSelectionModel().getSelectedItem();
 

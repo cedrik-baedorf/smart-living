@@ -63,8 +63,8 @@ INSERT INTO `expenses` (`expense_id`, `creditor_name`, `product`, `cost`) VALUES
         (1, 'nrg','Butter', '4.50'),
         (2, 'ivano', 'Milk', '1.20');
 
-DELETE FROM `debitor_mapping`;
-INSERT INTO `debitor_mapping` (`id`, `expense_id`, `debitor_name`) VALUES
+DELETE FROM `debtor_mapping`;
+INSERT INTO `debtor_mapping` (`id`, `expense_id`, `debtor_name`) VALUES
         (0, 0, 'cbaedorf'),
         (1, 1, 'nrg'),
         (2, 2, 'ivano'),
