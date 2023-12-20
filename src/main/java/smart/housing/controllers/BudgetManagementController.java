@@ -20,6 +20,8 @@ import smart.housing.services.UserManagementService;
 import smart.housing.ui.*;
 import javafx.collections.ListChangeListener;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -147,7 +149,6 @@ public class BudgetManagementController extends SmartHousingController {
         event.consume();
         addExpenseButtonClicked();
     }
-
 
     private void addExpenseButtonClicked() {
         try {
@@ -295,12 +296,14 @@ public class BudgetManagementController extends SmartHousingController {
     private void sendEmail() {
         // Get the selected row from the debtsOverview table
         DebtOverview selectedDebt = debtsOverview.getSelectionModel().getSelectedItem();
-        String senderFirstName = USER_SERVICE.getServiceUser().getFirstName();
-        String senderLastName = USER_SERVICE.getServiceUser().getLastName();
 
         if (selectedDebt != null) {
-            BUDGET_SERVICE.sendReminderMail(selectedDebt, senderFirstName, senderLastName);
-            buttonDisplay(true, emailButton);
+            try {
+                BUDGET_SERVICE.sendReminderEmail(USER_SERVICE.getServiceUser(), selectedDebt);
+                buttonDisplay(true, emailButton);
+            } catch (IOException | URISyntaxException e) {
+                buttonDisplay(false, emailButton);
+            }
         } else {
             buttonDisplay(false, emailButton);
         }

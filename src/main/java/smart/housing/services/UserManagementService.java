@@ -12,7 +12,7 @@ public interface UserManagementService extends SmartLivingService {
     String MSG_NULL_VALUE = "cannot %s %s when %s is null";
 
     /**
-     * This method takes an object of class <code>User</code> and persists it in the database, if
+     * This method takes an object of class <code>{@link User}</code> and persists it in the database, if
      *  its <i>user</i> is not equal to <code>null</code>,
      *  its <i>username</i> does not exist in the database
      *  its <i>password</i> is not equal to <code>null</code>
@@ -35,11 +35,12 @@ public interface UserManagementService extends SmartLivingService {
     /**
      * This method modifies an object of class <code>{@link User}</code> in the database.
      * The <code>{@link User}</code> to be modified is determined by the <code>user</code>
-     * parameter provided in the method signature. The update user data is taken from the
-     * <code>modifiedUser</code> parameter. Every attribute from <code>modified</code> will be
+     * parameter provided in the method signature. The updated user data is taken from the
+     * <code>modifiedUser</code> parameter. Every attribute from <code>modifiedUser</code> will be
      * transferred to <code>user</code> and persisted to the database except the <code>username</code>.
      * Otherwise, this method will throw a {@link UserManagementServiceException}
-     * @param user user that shall be deleted
+     * @param user user that shall be modfieid
+     * @param modifiedUser user containing the updated user data
      */
     void modify(User user, User modifiedUser) throws UserManagementServiceException;
 

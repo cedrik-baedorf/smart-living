@@ -129,61 +129,26 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
     }
 
     @Override
-    public void modify(Expense oldExpense, Expense updateExpense) {
+    public void modify(Expense expense, Expense modifiedExpense) {
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
 
-        if (oldExpense == null || updateExpense == null || updateExpense.getCost()==0) {
+        if (expense == null || modifiedExpense == null || modifiedExpense.getCost()==0) {
             throw new IllegalArgumentException("Modify Parameteres are not valid");
         }
 
         try {
             entityManager.getTransaction().begin();
-            oldExpense = entityManager.merge(oldExpense);
-            oldExpense.setProduct(updateExpense.getProduct());
-            oldExpense.setCreditor(updateExpense.getCreditor());
-            oldExpense.setCost(updateExpense.getCost());
-            oldExpense.setDebtors(updateExpense.getDebtors());
+            expense = entityManager.merge(expense);
+            expense.setProduct(modifiedExpense.getProduct());
+            expense.setCreditor(modifiedExpense.getCreditor());
+            expense.setCost(modifiedExpense.getCost());
+            expense.setDebtors(modifiedExpense.getDebtors());
 
             entityManager.getTransaction().commit();
         } catch (Exception e){
             e.getStackTrace();
         }
         entityManager.close();
-    }
-
-    @Override
-    public void sendReminderMail(DebtOverview selectedDebt, String senderFirstName, String senderLastName){
-
-        try {
-            String debtorFirstName = selectedDebt.debtor().getFirstName();
-            String debtorLastName = selectedDebt.debtor().getLastName();
-            String creditorFirstName = selectedDebt.creditor().getFirstName();
-            String debtorEmail = selectedDebt.debtor().getEmail();
-            String subject = "You owe money!";
-
-            // Include debt amount in the email body
-            double debtAmount = selectedDebt.getAmount();
-            String body = "Dear " + debtorFirstName + " " + debtorLastName +
-                    ",\n\nYou owe €" + String.format("%.2f", Math.abs(debtAmount)) +
-                    " to " + creditorFirstName +
-                    ". Please settle the amount at your earliest convenience.\n\nSincerely,\nYour Budget Management System\n"
-                    + "on behalf of: " + senderFirstName + " " + senderLastName;
-
-            // Encode the subject and body parameters
-            String encodedSubject = URLEncoder.encode(subject, StandardCharsets.UTF_8).replace("+", "%20");
-            String encodedBody = URLEncoder.encode(body, StandardCharsets.UTF_8).replace("+", "%20");
-
-            // Create a mailto URI with properly encoded subject and body
-            URI mailtoUri = new URI("mailto:" + debtorEmail + "?subject=" + encodedSubject + "&body=" + encodedBody);
-
-            // Open the default email client
-            Desktop desktop = Desktop.getDesktop();
-            desktop.mail(mailtoUri);
-
-        } catch (IOException | URISyntaxException e) {
-            // Display error message
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -216,6 +181,36 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
         }
 
         create(new Expense(debtors, creditor, product, cost));
+    }
+
+
+    @Override
+    public void sendReminderEmail(User sender, DebtOverview debt) throws IOException, URISyntaxException {
+        User debtor = debt.getDebtor(), creditor = debt.getCreditor();
+
+        String debtorName = debtor.getFirstName() + ' ' + debtor.getLastName();
+        String creditorName = creditor.getFirstName() + ' ' + creditor.getLastName();
+        String senderName = sender.getFirstName() + ' ' + sender.getLastName();
+
+        String subject = "You owe money!";
+
+        String body = "Dear " + debtorName + ",\n\n" +
+                "You owe €" + String.format("%.2f", Math.abs(debt.getAmount())) + " to " + creditorName + "\n." +
+                "Please settle the amount at your earliest convenience.\n\n" +
+                "Sincerely\n" +
+                "Your Budget Management System\n" +
+                "on behalf of: " + senderName;
+
+        // Encode the subject and body parameters
+        String encodedSubject = URLEncoder.encode(subject, StandardCharsets.UTF_8).replace("+", "%20");
+        String encodedBody = URLEncoder.encode(body, StandardCharsets.UTF_8).replace("+", "%20");
+
+        // Create a mailto URI with properly encoded subject and body
+        URI mailtoUri = new URI("mailto:" + debtor.getEmail() + "?subject=" + encodedSubject + "&body=" + encodedBody);
+
+        // Open the default email client
+        Desktop desktop = Desktop.getDesktop();
+        desktop.mail(mailtoUri);
     }
 
 }
