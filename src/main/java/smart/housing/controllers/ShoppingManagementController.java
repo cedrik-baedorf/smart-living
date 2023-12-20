@@ -31,7 +31,6 @@ public class ShoppingManagementController extends SmartHousingController {
     @FXML private StyledButton hinzufuegenButton;
     @FXML private StyledButton loeschenButton;
     @FXML private StyledComboBox<String> einheitComboBox;
-    @FXML private StyledButton aenderungButton;
     @FXML private StyledTableView<ShoppingListItem> tableView;
     @FXML private StyledTextField anzahlField;
     @FXML private StyledButton modifyButton;
@@ -61,8 +60,8 @@ public class ShoppingManagementController extends SmartHousingController {
                 "l",
                 " "
         );
-        einheitComboBox.setItems(itemsList);
 
+        einheitComboBox.setItems(itemsList);
         artikelTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             hinzufuegenButton.setDisable(service.isInList(newValue));
         });
