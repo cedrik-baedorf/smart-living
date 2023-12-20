@@ -88,6 +88,9 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
 
     @Override
     public void create (Expense expense){
+        if (expense == null || expense.getCost() == 0) {
+            throw new IllegalArgumentException("Expense is null");
+        }
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
         entityManager.getTransaction().begin();
         entityManager.persist(expense);
@@ -97,7 +100,13 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
 
     @Override
     public void delete (Expense expense) {
+
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
+
+        if (entityManager.find(Expense.class, expense.getExpenseId()) == null) {
+            throw new IllegalArgumentException("Expense not found");
+        }
+
         Expense expenseToBeRemoved = entityManager.find(Expense.class, expense.getExpenseId());
         entityManager.getTransaction().begin();
         entityManager.remove(expenseToBeRemoved);
@@ -108,6 +117,10 @@ public class BudgetManagementServiceImplementation implements BudgetManagementSe
     @Override
     public void modify(Expense oldExpense, Expense updateExpense) {
         EntityManager entityManager = DATABASE_CONNECTOR.createEntityManager();
+
+        if (oldExpense == null || updateExpense == null || updateExpense.getCost()==0) {
+            throw new IllegalArgumentException("Modify Parameteres are not valid");
+        }
 
         try {
             entityManager.getTransaction().begin();
