@@ -59,10 +59,6 @@ public class ShoppingListItem {
         this("default");
     }
 
-    public boolean checkIfItemIsInList (String item) {
-        return true;
-    }
-
     public String getItem() {
         return item;
     }
@@ -85,9 +81,13 @@ public class ShoppingListItem {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj != null && obj.getClass().equals(getClass())) {
-            return obj.toString().equals(this.toString());
+        if (this == obj) {
+            return true;
         }
-        return false;
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        ShoppingListItem other = (ShoppingListItem) obj;
+        return item.equals(other.item);
     }
 }

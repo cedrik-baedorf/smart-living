@@ -270,8 +270,6 @@ public class ShoppingManagementServiceImplementationTest {
             assertThrows(IllegalArgumentException.class, () -> service.create(item));
         }
 
-
-
         @ParameterizedTest
         @ValueSource(doubles = { -1.0, 100000.0 }) // Example set of valid amounts
         void testModifyItemWithVariousInvalidAmounts(double newAmount) {

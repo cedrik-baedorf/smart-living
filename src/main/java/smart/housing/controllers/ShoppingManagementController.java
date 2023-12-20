@@ -89,7 +89,7 @@ public class ShoppingManagementController extends SmartHousingController {
     private void hinzufuegenButtonClicked() {
         try {
             String artikel = artikelTextField.getText();
-            double anzahl = Double.parseDouble(anzahlField.getText());
+            double anzahl = Double.parseDouble(anzahlField.getText().replace(',', '.'));
             String einheit = einheitComboBox.getValue();
 
         if (artikel != null && !artikel.isEmpty() && anzahl != 0.0 && !einheit.isEmpty()
