@@ -113,7 +113,6 @@ public class Expense implements Serializable {
         this.cost = cost;
     }
 
-
     public double getDebtorShare(User debtor) {
         int numberOfDebtors = debtors.size();
         if (numberOfDebtors > 0) {
@@ -121,6 +120,33 @@ public class Expense implements Serializable {
         } else {
             return 0.0;
         }
+    }
+
+    @Override
+    public String toString() {
+        return
+            creditor + " -> "
+            + debtors.toString() + " for "
+            + product + " at "
+            + cost + "€";
+    }
+
+    @Override
+    public int hashCode() {
+        return toString().hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj != null && obj.getClass().equals(getClass())) {
+            Expense expense = (Expense) obj;
+            return
+                creditor != null && creditor.equals(expense.getCreditor()) &&
+                debtors != null && debtors.equals(expense.getDebtors()) &&
+                product != null && product.equals(expense.getProduct()) &&
+                cost == expense.getCost();
+        }
+        return false;
     }
 
 }

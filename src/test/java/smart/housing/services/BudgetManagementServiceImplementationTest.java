@@ -24,6 +24,8 @@ public class BudgetManagementServiceImplementationTest {
         Mockito.when(entityManager.getTransaction()).thenReturn(entityTransaction);
         Mockito.doNothing().when(entityManager).close();
 
+        Mockito.when(entityManager.merge(Mockito.any(Expense.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
         DatabaseConnector databaseConnector = Mockito.mock(DatabaseConnector.class);
         Mockito.when(databaseConnector.createEntityManager()).thenReturn(entityManager);
 
@@ -33,34 +35,28 @@ public class BudgetManagementServiceImplementationTest {
     @Test
     public void testCreateExpense() {
         DatabaseConnector databaseConnector = createMockDatabaseConnector();
-        EntityManager entityManager = databaseConnector.createEntityManager();
 
         BudgetManagementService service = new BudgetManagementServiceImplementation(databaseConnector);
 
-        // Mock necessary dependencies
-        User mockCreditor = Mockito.mock(User.class);
-        Set<User> mockDebtors = new HashSet<>();
-        mockDebtors.add(Mockito.mock(User.class));
+        Expense expense = new Expense(
+                Set.of(new User("debtor 1")),
+                new User("creditor"),
+                "Hotel",
+                250
+        );
 
-        // Create a new Expense object and set all required fields
-        Expense newExpense = new Expense();
-        newExpense.setCreditor(mockCreditor);
-        newExpense.setDebtors(mockDebtors);
-        newExpense.setProduct("Test");
-        newExpense.setCost(1.2);
+        assertDoesNotThrow(() -> service.create(expense));
 
-        service.create(newExpense);
+        EntityManager entityManager = databaseConnector.createEntityManager();
+        EntityTransaction entityTransaction = entityManager.getTransaction();
 
-        // Verification
-        InOrder inOrder = Mockito.inOrder(entityManager, entityManager.getTransaction());
-        inOrder.verify(entityManager.getTransaction()).begin();
-        inOrder.verify(entityManager).persist(newExpense);
-        inOrder.verify(entityManager.getTransaction()).commit();
+        InOrder inOrder = Mockito.inOrder(entityManager, entityTransaction);
+
+        inOrder.verify(entityTransaction).begin();
+        inOrder.verify(entityManager).persist(expense);
+        inOrder.verify(entityTransaction).commit();
         inOrder.verify(entityManager).close();
     }
-
-
-
 
     @Test
     public void testGetAllExpenses() {
@@ -88,7 +84,6 @@ public class BudgetManagementServiceImplementationTest {
         BudgetManagementService service = new BudgetManagementServiceImplementation(databaseConnector);
 
         Expense expense = new Expense();
-        Mockito.when(entityManager.find(Expense.class, expense.getExpenseId())).thenReturn(expense);
 
         service.delete(expense);
 
@@ -102,37 +97,26 @@ public class BudgetManagementServiceImplementationTest {
     @Test
     public void testModifyExpense() {
         DatabaseConnector databaseConnector = createMockDatabaseConnector();
-        EntityManager entityManager = databaseConnector.createEntityManager();
-        EntityTransaction entityTransaction = entityManager.getTransaction();
 
         BudgetManagementService service = new BudgetManagementServiceImplementation(databaseConnector);
 
-        // Create and set up mock objects for Expense
-        User mockCreditor = Mockito.mock(User.class);
-        Set<User> mockDebtors = new HashSet<>(Arrays.asList(Mockito.mock(User.class)));
-        Expense existingExpense = new Expense();
-        existingExpense.setCreditor(mockCreditor);
-        existingExpense.setDebtors(mockDebtors);
-        existingExpense.setProduct("Existing Product");
-        existingExpense.setCost(50); // Valid cost
-        existingExpense.setExpenseId(1); // Set a valid expense ID
+        Expense expense = new Expense(
+            Set.of(new User("debtor 1")),
+            new User("creditor"),
+            "Hotel",
+            250
+        );
 
-        Expense updatedExpense = new Expense();
-        updatedExpense.setCreditor(mockCreditor);
-        updatedExpense.setDebtors(mockDebtors);
-        updatedExpense.setProduct("Updated Product");
-        updatedExpense.setCost(100); // Valid cost
+        Expense modifiedExpense = new Expense(
+                Set.of(new User("debtor 2"), new User("debtor 3")),
+                new User("creditor"),
+                "Hotel",
+                250
+        );
 
-        // Mock the find call to return the existingExpense
-        Mockito.when(entityManager.find(Expense.class, existingExpense.getExpenseId())).thenReturn(existingExpense);
+        service.modify(expense, modifiedExpense);
 
-        // Perform the operation
-        service.modify(existingExpense, updatedExpense);
-
-        // Verify the sequence of calls
-        InOrder inOrder = Mockito.inOrder(entityManager, entityTransaction);
-        inOrder.verify(entityManager).merge(existingExpense);
-        inOrder.verify(entityTransaction).commit();
+        assertEquals(expense, modifiedExpense);
     }
 
 

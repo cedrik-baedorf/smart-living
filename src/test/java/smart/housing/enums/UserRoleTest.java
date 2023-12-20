@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class RoleTest {
+public class UserRoleTest {
 
     @Test
     public void testParseRole_validRoleName() {
