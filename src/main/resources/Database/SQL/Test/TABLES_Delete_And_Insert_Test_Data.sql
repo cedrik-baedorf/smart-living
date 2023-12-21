@@ -43,32 +43,23 @@ INSERT INTO shopping_list_items (item, amount, unit) VALUES
          ('Flour', 3, 'kg'),
          ('Rice', 2, 'kg'),
          ('Pasta', 4, 'kg'),
-         ('Beans', 1, 'kg'),
-         ('Lentils', 2, 'kg'),
-         ('Tomato Sauce', 3, 'l'),
-         ('Vegetable Oil', 5, 'l'),
-         ('Apple Juice', 2, 'l'),
-         ('Orange Juice', 2, 'l'),
-         ('Soy Sauce', 1, 'l'),
-         ('Vinegar', 1, 'l'),
-         ('Water', 10, 'l'),
-         ('Honey', 1, 'kg'),
-         ('Salt', 1, 'kg'),
-         ('Oatmeal', 2, 'kg');
+         ('Beans', 1, 'kg');
 
 
 DELETE FROM `expenses`;
 INSERT INTO `expenses` (`expense_id`, `creditor_name`, `product`, `cost`) VALUES
-        (0, 'cbaedorf','Chocolate', '1.70'),
-        (1, 'nrg','Butter', '4.50'),
-        (2, 'ivano', 'Milk', '1.20');
+        (0, 'cbaedorf','Hotel', '250'),
+        (1, 'nrg','Dinner', '70'),
+        (2, 'cbaedorf', 'Poker', '150');
 
 DELETE FROM `debtor_mapping`;
 INSERT INTO `debtor_mapping` (`id`, `expense_id`, `debtor_name`) VALUES
-        (0, 0, 'cbaedorf'),
-        (1, 1, 'nrg'),
-        (2, 2, 'ivano'),
-        (3, 2, 'lienchen');
+        (0, 0, 'ivano'),
+        (1, 0, 'cbaedorf'),
+        (2, 1, 'cbaedorf'),
+        (3, 2, 'cbaedorf'),
+        (4, 2, 'ivano'),
+        (5, 2, 'heyden');
 
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
