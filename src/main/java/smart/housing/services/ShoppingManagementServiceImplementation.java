@@ -20,13 +20,13 @@ public class ShoppingManagementServiceImplementation implements ShoppingManageme
 
         if (shoppingListItem.getAmount() <= 0 || shoppingListItem.getAmount()>100000.0) {
             throw new IllegalArgumentException("Amount cannot be negative nor over 100000");
-        } else if (shoppingListItem.getItem() == null || shoppingListItem.getItem().trim().isEmpty()) {
+        } else if (shoppingListItem.getItemName() == null || shoppingListItem.getItemName().trim().isEmpty()) {
             throw new IllegalArgumentException("Item name cannot be empty");
         }
 
         em = databaseConnector.createEntityManager();
         em.getTransaction().begin();
-        ShoppingListItem existingItem = em.find(ShoppingListItem.class, shoppingListItem.getItem());
+        ShoppingListItem existingItem = em.find(ShoppingListItem.class, shoppingListItem.getItemName());
 
         if (existingItem != null) {
             if (existingItem.getUnit().compareTo(shoppingListItem.getUnit())!=0) {
@@ -46,7 +46,7 @@ public class ShoppingManagementServiceImplementation implements ShoppingManageme
     @Override
     public void delete (ShoppingListItem shoppingListItem) {
         em = databaseConnector.createEntityManager();
-        ShoppingListItem itemToBeRemoved = em.find(ShoppingListItem.class, shoppingListItem.getItem());
+        ShoppingListItem itemToBeRemoved = em.find(ShoppingListItem.class, shoppingListItem.getItemName());
 
         if (itemToBeRemoved == null) {
             throw new IllegalArgumentException("Item not found");
@@ -76,7 +76,7 @@ public class ShoppingManagementServiceImplementation implements ShoppingManageme
         }
 
         EntityManager em = databaseConnector.createEntityManager();
-        ShoppingListItem modifiedItem = em.find(ShoppingListItem.class, shoppingListItem.getItem());
+        ShoppingListItem modifiedItem = em.find(ShoppingListItem.class, shoppingListItem.getItemName());
 
         if (modifiedItem == null) {
             throw new IllegalArgumentException("Item not found in the database");

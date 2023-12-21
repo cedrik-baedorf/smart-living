@@ -84,7 +84,7 @@ public class User {
     }
 
     /**
-     * Overloaded constructor accepting a value for the username
+     * Overloaded constructor accepting a value for the <code>username</code> property
      * @param username identifier of the user
      */
     public User(String username) {
@@ -220,9 +220,8 @@ public class User {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj != null && obj.getClass().equals(getClass())) {
-            return obj.toString().equals(this.toString());
-        }
+        if(obj != null && obj.getClass().equals(getClass()))
+            return this.toString().equals(((User) obj).toString());
         return false;
     }
 

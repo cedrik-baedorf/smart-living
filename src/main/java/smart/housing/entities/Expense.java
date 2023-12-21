@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
+/**
+ * This entity represents one row of table <i>Expenses</i>
+ */
 @Entity
 @Table(name = "expenses")
 @NamedQueries({

@@ -1,5 +1,7 @@
 package smart.housing.enums;
 
+import smart.housing.entities.User;
+
 public enum UserRole {
 
     ADMIN("ADMIN", 1), COORDINATOR("COORDINATOR", 2), USER("USER", 3);

@@ -69,8 +69,8 @@ public class ShoppingManagementServiceImplementationTest {
 
         assertNotNull(itemList);
         assertEquals(2, itemList.size());
-        assertEquals("Apple",itemList.get(0).getItem());
-        assertEquals("Banana",itemList.get(1).getItem());
+        assertEquals("Apple",itemList.get(0).getItemName());
+        assertEquals("Banana",itemList.get(1).getItemName());
         Mockito.verify(entityManager).close();
     }
 
@@ -104,7 +104,7 @@ public class ShoppingManagementServiceImplementationTest {
             String unit = "kg";
             ShoppingListItem item = new ShoppingListItem(itemName, amount, unit);
 
-            assertEquals(itemName, item.getItem());
+            assertEquals(itemName, item.getItemName());
             assertEquals(amount, item.getAmount());
             assertEquals(unit, item.getUnit());
         }
@@ -117,7 +117,7 @@ public class ShoppingManagementServiceImplementationTest {
         @Test
         public void testDefaultConstructor() {
             ShoppingListItem item = new ShoppingListItem();
-            assertEquals("default", item.getItem());
+            assertEquals("default", item.getItemName());
         }
     }
 
