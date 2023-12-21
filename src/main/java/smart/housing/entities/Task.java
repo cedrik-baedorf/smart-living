@@ -37,7 +37,6 @@ import java.util.Set;
                         """
         )
 })
-
 public class Task {
 
     /**
@@ -83,16 +82,31 @@ public class Task {
     private Set<User> assignees;
 
     /**
-     * Due date of this reoccurring task
+     * Due date of this reoccurring task.
      */
     @Column(name = "due_date")
     private LocalDate dueDate;
 
     /**
-     * Information about whether the task is completed or not
+     * Information about whether the task is completed or not.
      */
     @Column(name = "completed")
     private boolean completed;
+
+    /**
+     * Default constructor for an object of this class setting the taskName to 'unnamed Task'.
+     */
+    public Task() {
+        this("unnamed Task");
+    }
+
+    /**
+     * Overloaded constructor accepting a value for the <code>taskName</code> property.
+     * @param taskName name of the task
+     */
+    public Task (String taskName){
+        this(taskName, new HashSet<>());
+    }
 
     public Task (String taskName, Set<User> assignees){
         if (taskName == null)
@@ -104,67 +118,108 @@ public class Task {
         this.completed = false;
     }
 
-    public Task (String taskName){
-        this(taskName, new HashSet<>());
-    }
-
-    public Task() {
-        this("unnamed Task");
-    }
-
+    /**
+     * Setter for the <code>assignees</code> attribute. Replaces all current assignees.
+     * @param assignees assignees of this task
+     */
     public void setAssignees(Set<User> assignees) {
         this.assignees.clear();
         this.assignees.addAll(assignees);
     }
 
+    /**
+     * Setter for the <code>assignees</code> attribute. Adds the new assignee.
+     * @param roommate new assignees of this task
+     */
     public void addAssignee(User roommate){
         assignees.add(roommate);
     }
 
+    /**
+     * Setter for the <code>completed</code> attribute. Sets the value of the attribute to <code>true</code>.
+     */
     public void markAsCompleted(){
         if (this.getAssignees() == null || this.getAssignees().isEmpty())
             throw new IllegalStateException("A task must be assigned to at least one roommate before marking it as completed");
         else
             this.setCompleted(true);
     }
+
+    /**
+     * Getter for the <code>completed</code> attribute.
+     * @return completion status of this task
+     */
     public boolean getCompleted() {
         return this.completed;
     }
 
+    /**
+     * Setter for the <code>completed</code> attribute.
+     * @param completed completion status of this task
+     */
     public void setCompleted(boolean completed) {
         this.completed = completed;
     }
 
+    /**
+     * Getter for the <code>taskName</code> attribute.
+     * @return name of this task
+     */
     public String getTaskName(){
         return this.taskName;
     }
 
+    /**
+     * Setter for the <code>taskName</code> attribute.
+     * @param taskName name of this task
+     */
     public void setTaskName(String taskName){
         this.taskName = taskName;
     }
 
+    /**
+     * Getter for the <code>assignees</code> attribute.
+     * @return assignees of this task
+     */
     public Set<User> getAssignees() {
         return assignees;
     }
 
+    /**
+     * Getter for the <code>dueDate</code> attribute.
+     * @return due date of this task
+     */
     public LocalDate getDueDate(){
         return this.dueDate;
     }
 
+    /**
+     * Setter for the <code>duaDate</code> attribute.
+     * @param dueDate due date of this task
+     */
     public void setDueDate(LocalDate dueDate) {
         this.dueDate = dueDate;
     }
 
-    public String toString(){
-        return "(" + taskName + "; " + dueDate + "; " + (completed ? "completed" : "not completed") + ")";
-    }
-
+    /**
+     * Getter for the <code>taskID</code> attribute.
+     * @return id of this task
+     */
     public Object getId() {
         return this.taskID;
     }
 
-    public void setId(int i) {
-        this.taskID = i;
+    /**
+     * Setter for the <code>taskID</code> attribute.
+     * @param taskID id of this task
+     */
+    public void setId(int taskID) {
+        this.taskID = taskID;
+    }
+
+    @Override
+    public String toString(){
+        return "(" + taskName + "; " + dueDate + "; " + (completed ? "completed" : "not completed") + ")";
     }
 
     @Override

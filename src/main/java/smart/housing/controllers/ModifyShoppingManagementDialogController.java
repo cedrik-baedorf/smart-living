@@ -47,7 +47,7 @@ public class ModifyShoppingManagementDialogController extends DialogController{
     public void initialize() {
         super.setOnCloseRequest(DIALOG);
 
-        itemField.setText("New Amount for Item: "+ selectedItem.getItem());
+        itemField.setText("New Amount for Item: "+ selectedItem.getItemName());
         unitField.setText(selectedItem.getUnit());
     }
 
